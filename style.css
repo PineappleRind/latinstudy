@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    --bg-l0: #fff;
+    --bg-l1: #f1f1f1;
+    
+    --txt-s0: #111;
+    --txt-s1: #333;
+    --txt-s2: #777;
+    --txt-inv: #f5f5f5;
+
+    --txt-xs: 0.7em;
+    --txt-s: 1em;
+    --txt-l: 1.4em;
+    --txt-xl: 2.4em;
+
+    --btn-bg: #3d6dff;
+    --btn-bgh: #1d4ee1;
+    --btn-rad: var(--rad-m);
+
+    --rad-m: 12px; 
+    --rad-l: calc(var(--rad-m) * 2);
+
+    --shadowh: 0 5px 10px rgba(0,0,0,0.2);
+    --tr: 0.2s;
+    --tr-l: 0.4s;
+}
+
+body {
+    background: var(--bg-l0);
+    color: var(--txt-s1);
+    font-size: var(--txt-s);
+}
+
+header {
+    position: fixed;
+    top: 10px;
+    text-align: center;
+    width: 100vw;
+    color: var(--txt-s2);
+}
+
+#app {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+button {
+    border: 0;
+    background: 0;
+}
+
+.btn {
+    background: var(--btn-bg);
+    border-radius: var(--rad-m);
+    padding: 8px 15px;
+    font-weight: 700;
+    font-size: var(--txt-s);
+    cursor: pointer;
+    color: var(--txt-inv);
+    transition: var(--tr);
+    margin: 5px;
+}
+
+.btn:hover {
+    box-shadow: var(--shadowh);
+    background: var(--btn-bgh);
+}
+
+.back {
+    font-size: var(--text-s);
+    color: var(--txt-s2);
+    cursor: pointer;
+    transition: var(--tr);
+}
+
+.back:hover {
+    color: var(--txt-s0);
+}
+
+.back::before {
+    content: '← ';
+    transition: var(--tr);
+    display: inline-block;
+    translate: -2px 0;
+}
+
+.back:hover::before {
+    translate: -4px 0;
+}
+
+.flex {
+    display: flex;
+}
+
+.pane {
+    position: absolute;
+    transition: var(--tr-l);
+    opacity: 0;
+    scale: 0.9;
+    pointer-events: none;
+    translate: 0px 10px;
+}
+
+.showing {
+    opacity: 1;
+    scale: 1;
+    translate: 0;
+    pointer-events: all;
+}
