@@ -10,7 +10,9 @@ class Switcher {
   listen() {
     this.indexPanes();
     for (const trigger of this.triggers)
-      trigger.onclick = () => this.showPane(trigger.dataset.pane);
+      trigger.addEventListener("click", () =>
+        this.showPane(trigger.dataset.pane)
+      );
     return this;
   }
   indexPanes() {
@@ -29,4 +31,26 @@ class Switcher {
   }
 }
 
-let s = new Switcher().listen().showPane("begin");
+class QuizManager {
+  constructor() {
+    this.options = {
+      declensions: $(".quiz-declension-option", 1),
+      vocabNum: $(".quiz-vocab-count"),
+    };
+  }
+
+  fetchData() {
+    fetch('./data/declensions.json').then(m=>m.json()).then(m=>console.log(m))
+  }
+
+  listenSettings() {
+    for (const opt in this.options.declensions) {
+      //TODO
+    }
+  }
+}
+
+let s = new Switcher(),
+  qm = new QuizManager();
+
+s.listen().showPane("begin");

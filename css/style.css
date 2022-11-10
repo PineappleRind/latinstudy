@@ -8,13 +8,14 @@ body {
     --bg-l0: #fff;
     --bg-l1: #f1f1f1;
     
-    --txt-s0: #111;
-    --txt-s1: #333;
-    --txt-s2: #777;
+    --txt-c0: #111;
+    --txt-c1: #333;
+    --txt-c2: #777;
     --txt-inv: #f5f5f5;
 
     --txt-xs: 0.7em;
-    --txt-s: 1em;
+    --txt-s: 0.85em;
+    --txt-m: 1em;
     --txt-l: 1.4em;
     --txt-xl: 2.4em;
 
@@ -25,6 +26,7 @@ body {
     --rad-m: 12px; 
     --rad-l: calc(var(--rad-m) * 2);
 
+    --light-border: rgba(0,0,0,0.2);
     --shadowh: 0 5px 10px rgba(0,0,0,0.2);
     --tr: 0.2s;
     --tr-l: 0.4s;
@@ -32,8 +34,20 @@ body {
 
 body {
     background: var(--bg-l0);
-    color: var(--txt-s1);
+    color: var(--txt-c1);
+    font-size: var(--txt-m);
+}
+
+h3 {
+    text-transform: uppercase;
+    font-weight: 300;
+    position: relative;
+    color: var(--txt-c2);
     font-size: var(--txt-s);
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+    margin-top: 2px;
+    border-bottom: 1px solid var(--light-border);
 }
 
 header {
@@ -41,7 +55,7 @@ header {
     top: 10px;
     text-align: center;
     width: 100vw;
-    color: var(--txt-s2);
+    color: var(--txt-c2);
 }
 
 #app {
@@ -63,7 +77,7 @@ button {
     border-radius: var(--rad-m);
     padding: 8px 15px;
     font-weight: 700;
-    font-size: var(--txt-s);
+    font-size: var(--txt-m);
     cursor: pointer;
     color: var(--txt-inv);
     transition: var(--tr);
@@ -77,13 +91,13 @@ button {
 
 .back {
     font-size: var(--text-s);
-    color: var(--txt-s2);
+    color: var(--txt-c2);
     cursor: pointer;
     transition: var(--tr);
 }
 
 .back:hover {
-    color: var(--txt-s0);
+    color: var(--txt-c0);
 }
 
 .back::before {
@@ -106,6 +120,12 @@ button {
     transition: var(--tr-l);
     opacity: 0;
     scale: 0.9;
+    padding: 20px;
+    max-width: 500px;
+    max-height: 250px;
+    overflow-y: auto;
+    box-shadow: var(--shadowh);
+    border-radius: 20px;
     pointer-events: none;
     translate: 0px 10px;
 }
@@ -115,4 +135,22 @@ button {
     scale: 1;
     translate: 0;
     pointer-events: all;
+}
+
+.quiz-declension-select {
+    display: flex;
+    padding: 2px;
+}
+
+.quiz-declension-option {
+    padding: 3px 6px;
+    margin: 2px;
+    border: 1px solid var(--light-border);
+    border-radius: var(--rad-m);
+}
+
+.quiz-declension-option.selected {
+    background: var(--txt-c1);
+    color: var(--txt-inv);
+    font-weight: bold;
 }

@@ -1,0 +1,141 @@
+{
+    "1": {
+        "feminine": {
+            "singular": {
+                "nom": "a",
+                "gen": "æ",
+                "dat": "æ",
+                "acc": "am",
+                "abl": "ā"
+            },
+            "plural": {
+                "nom": "æ",
+                "gen": "arum",
+                "dat": "īs",
+                "acc": "as",
+                "abl": "īs"
+            }
+        }
+    },
+    "2": {
+        "masculine/neuter": {
+            "singular": {
+                "gen": "ī",
+                "dat": "ō",
+                "acc": "um",
+                "abl": "ō"
+            },
+            "plural": {
+                "gen": "ōrum",
+                "dat": "īs",
+                "abl": "īs"
+            }
+        },
+        "masculine": {
+            "singular": {
+                "nom": "us"
+            },
+            "plural": {
+                "nom": "ī",
+                "acc": "ōs"
+            }
+        },
+        "neuter": {
+            "singular": {
+                "nom": "um"
+            },
+            "plural": {
+                "nom": "a",
+                "acc": "a"
+            }
+        }
+    },
+    "3": {
+        "masculine/feminine/neuter": {
+            "singular": {
+                "gen": "is",
+                "dat": "ī",
+                "acc": "em",
+                "abl": "e"
+            },
+            "plural": {
+                "nom": "ēs",
+                "dat": "ibus",
+                "acc": "ēs",
+                "abl": "ibus"
+            }
+        },
+        "masculine": {
+            "plural": {
+                "gen": "um"
+            }
+        },
+        "feminine": {
+            "plural": {
+                "gen": "ium"
+            }
+        },
+        "neuter": {
+            "singular": {
+                "acc": "-"
+            },
+            "plural": {
+                "nom": "a",
+                "acc": "a"
+            }
+        }
+    },
+    "4": {
+        "masculine/neuter": {
+            "singular": {
+                "gen": "ūs",
+                "abl": "ū"
+            },
+            "plural": {
+                "gen": "uum",
+                "dat": "ibus",
+                "abl": "ibus"
+            }
+        },
+        "masculine": {
+            "singular": {
+                "nom": "us",
+                "dat": "uī",
+                "acc": "um"
+            },
+            "plural": {
+                "nom": "ūs",
+                "acc": "ūs"
+            }
+        },
+        "neuter": {
+            "singular": {
+                "nom": "u",
+                "dat": "ū",
+                "acc": "ū"
+            },
+            "plural": {
+                "nom": "ū",
+                "acc": "ua"
+            }
+        }
+    },
+    "5": {
+        "feminine": {
+            "singular": {
+                "nom": "-",
+                "gen": "eī",
+                "dat": "eī",
+                "acc": "em",
+                "abl": "ē"
+            },
+            "plural": {
+                "nom": "ēs",
+                "gen": "ērum",
+                "dat": "ēbus",
+                "acc": "ēs",
+                "abl": "ēbus"
+            }
+        }
+    }
+}
