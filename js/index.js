@@ -85,7 +85,7 @@ const Quiz = {
       // Only get from the declensions enabled
       let getFrom = {};
       // For every declension enabled
-      for (let j = 0; j < Math.log2(16) + 1; j++) { // 5 declensions 
+      for (let j = 0; j < Math.log2(16) + 1; j++) { // 5 declensions; base-2 logarithm of 16 = 4 
         let bj = 2 ** j; // 2 to the power of J is its binary counterpart
 
         // If  1, 2, 4, 8, or 16 is found, then enable
@@ -98,10 +98,9 @@ const Quiz = {
       // TODO 
       // this.questionGenerators.vocab(vocab, options.vocabNum);
 
-      /* TODO
-      for (let declnum in getFrom) 
-        this.questions.push(this.questionGenerators.declensions(declnum + 1, getFrom[declnum]))
-        */
+      //TODO
+      //for (let declnum in getFrom) 
+        //this.questions.push(this.questionGenerators.declensions(+declnum + 1, getFrom[declnum]))
     }
 
     questionGenerators = {
@@ -123,10 +122,9 @@ const Quiz = {
       // Unfinished
       declensions(declnum, data, cur, curType = 0, questions) {
         /***
-         * 0 = decl num, contents
-         * 1 = gender, contents
-         * 2 = singular/plural, contents
-         * 3 = case, ending
+         * first (level 0) = gender, contents
+         * second (level 1) = singular/plural, contents
+         * third (level 2) = case, ending (? times)
          */
         questions ??= [];
         // Set current to the data
@@ -135,14 +133,15 @@ const Quiz = {
         if (cur !== Object(cur)) return console.log(questions);
         // For each key in the data
         for (const [k, v] of Object.entries(cur)) {
-          questions.push({});
-
-          if (curType === 0) questions.fill({ question: `What's the ${ord(+k + 1)} declension` })
-          else if (curType === 1) questions.at(-1)
-          // Now increment curType to change for next time
-          curType += 1;
-
-          if (v === Object(v)) this.declensions(declnum, data, v, curType, questions);
+          console.log(k,v,curType)
+          
+          if (curType === 0) {
+            questions.push({}); // Add an object
+            questions[questions.length - 1] = ({ question: `What's the ${ord(declnum)} declension` })
+          }
+          else if (curType === 1 || curType === 2) questions[questions.length - 1].question += ` ${k}`
+          if (curType === 2) questions[questions.length - 1].question += ` ending?`;
+          if (v === Object(v)) this.declensions(declnum, data, v, curType + 1, questions);
           else questions.name += `${v} `;
         }
         console.log(questions)

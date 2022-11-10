@@ -2,139 +2,139 @@
     "1": {
         "feminine": {
             "singular": {
-                "nom": "a",
-                "gen": "æ",
-                "dat": "æ",
-                "acc": "am",
-                "abl": "ā"
+                "nominative": "a",
+                "genitive": "æ",
+                "dative": "æ",
+                "accusative": "am",
+                "ablative": "ā"
             },
             "plural": {
-                "nom": "æ",
-                "gen": "arum",
-                "dat": "īs",
-                "acc": "as",
-                "abl": "īs"
+                "nominative": "æ",
+                "genitive": "arum",
+                "dative": "īs",
+                "accusative": "as",
+                "ablative": "īs"
             }
         }
     },
     "2": {
         "masculine/neuter": {
             "singular": {
-                "gen": "ī",
-                "dat": "ō",
-                "acc": "um",
-                "abl": "ō"
+                "genitive": "ī",
+                "dative": "ō",
+                "accusative": "um",
+                "ablative": "ō"
             },
             "plural": {
-                "gen": "ōrum",
-                "dat": "īs",
-                "abl": "īs"
+                "genitive": "ōrum",
+                "dative": "īs",
+                "ablative": "īs"
             }
         },
         "masculine": {
             "singular": {
-                "nom": "us"
+                "nominative": "us"
             },
             "plural": {
-                "nom": "ī",
-                "acc": "ōs"
+                "nominative": "ī",
+                "accusative": "ōs"
             }
         },
         "neuter": {
             "singular": {
-                "nom": "um"
+                "nominative": "um"
             },
             "plural": {
-                "nom": "a",
-                "acc": "a"
+                "nominative": "a",
+                "accusative": "a"
             }
         }
     },
     "3": {
         "masculine/feminine/neuter": {
             "singular": {
-                "gen": "is",
-                "dat": "ī",
-                "acc": "em",
-                "abl": "e"
+                "genitive": "is",
+                "dative": "ī",
+                "accusative": "em",
+                "ablative": "e"
             },
             "plural": {
-                "nom": "ēs",
-                "dat": "ibus",
-                "acc": "ēs",
-                "abl": "ibus"
+                "nominative": "ēs",
+                "dative": "ibus",
+                "accusative": "ēs",
+                "ablative": "ibus"
             }
         },
         "masculine": {
             "plural": {
-                "gen": "um"
+                "genitive": "um"
             }
         },
         "feminine": {
             "plural": {
-                "gen": "ium"
+                "genitive": "ium"
             }
         },
         "neuter": {
             "singular": {
-                "acc": "-"
+                "accusative": "-"
             },
             "plural": {
-                "nom": "a",
-                "acc": "a"
+                "nominative": "a",
+                "accusative": "a"
             }
         }
     },
     "4": {
         "masculine/neuter": {
             "singular": {
-                "gen": "ūs",
-                "abl": "ū"
+                "genitive": "ūs",
+                "ablative": "ū"
             },
             "plural": {
-                "gen": "uum",
-                "dat": "ibus",
-                "abl": "ibus"
+                "genitive": "uum",
+                "dative": "ibus",
+                "ablative": "ibus"
             }
         },
         "masculine": {
             "singular": {
-                "nom": "us",
-                "dat": "uī",
-                "acc": "um"
+                "nominative": "us",
+                "dative": "uī",
+                "accusative": "um"
             },
             "plural": {
-                "nom": "ūs",
-                "acc": "ūs"
+                "nominative": "ūs",
+                "accusative": "ūs"
             }
         },
         "neuter": {
             "singular": {
-                "nom": "u",
-                "dat": "ū",
-                "acc": "ū"
+                "nominative": "u",
+                "dative": "ū",
+                "accusative": "ū"
             },
             "plural": {
-                "nom": "ū",
-                "acc": "ua"
+                "nominative": "ū",
+                "accusative": "ua"
             }
         }
     },
     "5": {
         "feminine": {
             "singular": {
-                "nom": "-",
-                "gen": "eī",
-                "dat": "eī",
-                "acc": "em",
-                "abl": "ē"
+                "nominative": "-",
+                "genitive": "eī",
+                "dative": "eī",
+                "accusative": "em",
+                "ablative": "ē"
             },
             "plural": {
-                "nom": "ēs",
-                "gen": "ērum",
-                "dat": "ēbus",
-                "acc": "ēs",
-                "abl": "ēbus"
+                "nominative": "ēs",
+                "genitive": "ērum",
+                "dative": "ēbus",
+                "accusative": "ēs",
+                "ablative": "ēbus"
             }
         }
     }
