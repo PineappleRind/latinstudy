@@ -25,15 +25,15 @@
             <h2>Quiz</h2>
             <h3>Quiz on declensions...</h3>
             <div class="quiz-declension-select">
-                <div class="quiz-declension-option" value="1">1st</div>
-                <div class="quiz-declension-option" value="2">2nd</div>
-                <div class="quiz-declension-option" value="3">3rd</div>
-                <div class="quiz-declension-option" value="4">4th</div>
-                <div class="quiz-declension-option" value="5">5th</div>
+                <div class="quiz-declension-option" data-value="1">1st</div>
+                <div class="quiz-declension-option" data-value="2">2nd</div>
+                <div class="quiz-declension-option" data-value="3">3rd</div>
+                <div class="quiz-declension-option" data-value="4">4th</div>
+                <div class="quiz-declension-option" data-value="5">5th</div>
             </div>
             <h3>Vocabulary</h3>
             <div class="quiz-vocab-select">
-                <input type="number" id="quiz-vocab-count"><label># of vocabulary words (randomized — 0 for off)</label>
+                <input type="number" class="quiz-vocab-count"><label># of vocabulary words (randomized — 0 for off)</label>
             </div>
             <br>
             <button class="btn pane-trigger quiz-begin" data-pane="quiz">Begin</button>
@@ -47,6 +47,6 @@
             <p>Unknown pane</p>
         </div>
     </div>
-    <script src="js/index.js"></script>
+    <script type="module" src="js/index.js"></script>
 </body>
 </html>

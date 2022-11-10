@@ -1,4 +1,4 @@
-const $ = (s, a) => document[`querySelector${a ? "All" : ""}`](s);
+import { $, fetchToJSON, ord } from './utils.js'
 
 class Switcher {
   constructor() {
@@ -31,26 +31,130 @@ class Switcher {
   }
 }
 
-class QuizManager {
-  constructor() {
-    this.options = {
-      declensions: $(".quiz-declension-option", 1),
-      vocabNum: $(".quiz-vocab-count"),
-    };
-  }
 
-  fetchData() {
-    fetch('./data/declensions.json').then(m=>m.json()).then(m=>console.log(m))
-  }
+const Quiz = {
+  // PreBegin fetches data, gets the user's settings, and 
+  // sends both to Begin using a callback.
+  PreBegin: class {
+    constructor() {
+      this.optEls = {
+        declensions: $(".quiz-declension-option", 1),
+        vocabNum: $(".quiz-vocab-count"),
+      };
+      this.options = {
+        declensions: 0b00000,
+        vocabNum: 0
+      };
 
-  listenSettings() {
-    for (const opt in this.options.declensions) {
-      //TODO
+      return this
+    }
+
+    async initialize(c) {
+      // first, deal with the user's settings
+      this.settingsListen();
+      // Then the data
+      let declensions = await fetchToJSON('./data/declensions.json'),
+        vocab = await fetchToJSON('./data/vocab.json');
+
+      this.fetched = { declensions, vocab }
+    }
+
+    settingsListen() {
+      // Deal with selecting different declensions
+      for (const opt of Object.values(this.optEls.declensions)) {
+        opt.addEventListener('click', e => {
+          e.target.classList.toggle('selected');
+          this.options.declensions ^= 0b00001 << (+e.target.dataset.value - 1);
+        })
+      }
+      // Deal with entering different numbers of vocabulary
+      this.optEls.vocabNum.addEventListener('input', (e) => {
+        this.options.vocabNum = e.target.value;
+      })
+      return this;
+    }
+  },
+  // Begin handles the questions showing, stores the user's
+  // answers, and sends the answers to Finish using a callback.
+  Begin: class {
+    constructor() {
+      this.questions = []
+    }
+
+    initialize(declensions, vocab, options) {
+      // Only get from the declensions enabled
+      let getFrom = {};
+      // For every declension enabled
+      for (let j = 0; j < Math.log2(16) + 1; j++) { // 5 declensions 
+        let bj = 2 ** j; // 2 to the power of J is its binary counterpart
+
+        // If  1, 2, 4, 8, or 16 is found, then enable
+        // declensions 1, 2, 3, 4, or 5, respectively
+        if ((bj & options.declensions) === bj) {
+          getFrom[j] = declensions[j + 1];
+        }
+      }
+
+      // TODO 
+      // this.questionGenerators.vocab(vocab, options.vocabNum);
+
+      /* TODO
+      for (let declnum in getFrom) 
+        this.questions.push(this.questionGenerators.declensions(declnum + 1, getFrom[declnum]))
+        */
+    }
+
+    questionGenerators = {
+      // Unfinished
+      vocab(vocab, num) {
+        // For as many as the user wants,
+        for (let i = 0; i < num; i++) {
+          // get a random vocab word from the vocab JSON
+          let r = vocab[Math.floor(Math.random() * vocab.length)];
+          // then generate 1 of 3 vocab question types
+          this.questions.push({
+            type: 'vocab',
+            question: r.word,
+            answer: r.translation
+          })
+        }
+      },
+
+      // Unfinished
+      declensions(declnum, data, cur, curType = 0, questions) {
+        /***
+         * 0 = decl num, contents
+         * 1 = gender, contents
+         * 2 = singular/plural, contents
+         * 3 = case, ending
+         */
+        questions ??= [];
+        // Set current to the data
+        if (!cur) cur = data;
+        // Done? return
+        if (cur !== Object(cur)) return console.log(questions);
+        // For each key in the data
+        for (const [k, v] of Object.entries(cur)) {
+          questions.push({});
+
+          if (curType === 0) questions.fill({ question: `What's the ${ord(+k + 1)} declension` })
+          else if (curType === 1) questions.at(-1)
+          // Now increment curType to change for next time
+          curType += 1;
+
+          if (v === Object(v)) this.declensions(declnum, data, v, curType, questions);
+          else questions.name += `${v} `;
+        }
+        console.log(questions)
+      }
     }
   }
 }
-
 let s = new Switcher(),
-  qm = new QuizManager();
-
+  qpb = new Quiz.PreBegin(),
+  qb = new Quiz.Begin();
+qpb.initialize();
+$('.pane-trigger.quiz-begin').addEventListener('click', () => {
+  qb.initialize(qpb.fetched.declensions, qpb.fetched.vocab, qpb.options)
+})
 s.listen().showPane("begin");

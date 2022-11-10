@@ -1,6 +1,8 @@
 * {
     margin: 0;
     box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
     font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -124,7 +126,7 @@ button {
     max-width: 500px;
     max-height: 250px;
     overflow-y: auto;
-    box-shadow: var(--shadowh);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
     border-radius: 20px;
     pointer-events: none;
     translate: 0px 10px;
@@ -144,13 +146,32 @@ button {
 
 .quiz-declension-option {
     padding: 3px 6px;
+    transition: var(--tr-l);
+    cursor: pointer;
     margin: 2px;
+    width: 45px;
+    text-align: center;
     border: 1px solid var(--light-border);
     border-radius: var(--rad-m);
+    animation: scale-smaller var(--tr-l);
 }
 
 .quiz-declension-option.selected {
     background: var(--txt-c1);
     color: var(--txt-inv);
+    animation: scale-bigger var(--tr-l);
     font-weight: bold;
+}
+@keyframes scale-bigger {
+    50% {
+        scale: 1.2;
+        rotate: 10deg;
+        box-shadow: 0 0 10px 3px rgba(0,0,0,0.2);
+    }
+}
+@keyframes scale-smaller {
+    50% {
+        scale: 0.5;
+        rotate: -10deg;
+    }
 }
