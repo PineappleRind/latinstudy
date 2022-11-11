@@ -1,4 +1,4 @@
-import { $, fetchToJSON, ord } from './utils.js'
+import { $, fetchToJSON, ord } from "./utils.js";
 
 class Switcher {
   constructor() {
@@ -31,9 +31,8 @@ class Switcher {
   }
 }
 
-
 const Quiz = {
-  // PreBegin fetches data, gets the user's settings, and 
+  // PreBegin fetches data, gets the user's settings, and
   // sends both to Begin using a callback.
   PreBegin: class {
     constructor() {
@@ -43,34 +42,34 @@ const Quiz = {
       };
       this.options = {
         declensions: 0b00000,
-        vocabNum: 0
+        vocabNum: 0,
       };
 
-      return this
+      return this;
     }
 
     async initialize(c) {
       // first, deal with the user's settings
       this.settingsListen();
       // Then the data
-      let declensions = await fetchToJSON('./data/declensions.json'),
-        vocab = await fetchToJSON('./data/vocab.json');
+      let declensions = await fetchToJSON("./data/declensions.json"),
+        vocab = await fetchToJSON("./data/vocab.json");
 
-      this.fetched = { declensions, vocab }
+      this.fetched = { declensions, vocab };
     }
 
     settingsListen() {
       // Deal with selecting different declensions
       for (const opt of Object.values(this.optEls.declensions)) {
-        opt.addEventListener('click', e => {
-          e.target.classList.toggle('selected');
+        opt.addEventListener("click", (e) => {
+          e.target.classList.toggle("selected");
           this.options.declensions ^= 0b00001 << (+e.target.dataset.value - 1);
-        })
+        });
       }
       // Deal with entering different numbers of vocabulary
-      this.optEls.vocabNum.addEventListener('input', (e) => {
+      this.optEls.vocabNum.addEventListener("input", (e) => {
         this.options.vocabNum = e.target.value;
-      })
+      });
       return this;
     }
   },
@@ -78,14 +77,14 @@ const Quiz = {
   // answers, and sends the answers to Finish using a callback.
   Begin: class {
     constructor() {
-      this.questions = []
+      this.questions = [];
     }
 
     initialize(declensions, vocab, options) {
       // Only get from the declensions enabled
       let getFrom = {};
       // For every declension enabled
-      for (let j = 0; j < Math.log2(16) + 1; j++) { // 5 declensions; base-2 logarithm of 16 = 4 
+      for (let j = 0; j < Math.log2(16) + 1; j++) { // 5 declensions; base-2 logarithm of 16 = 4
         let bj = 2 ** j; // 2 to the power of J is its binary counterpart
 
         // If  1, 2, 4, 8, or 16 is found, then enable
@@ -95,12 +94,15 @@ const Quiz = {
         }
       }
 
-      // TODO 
+      // TODO
       // this.questionGenerators.vocab(vocab, options.vocabNum);
 
-      //TODO
-      //for (let declnum in getFrom) 
-        //this.questions.push(this.questionGenerators.declensions(+declnum + 1, getFrom[declnum]))
+      // UNCOMMENT WHEN FRONTEND READY
+      //for (let declnum in getFrom)
+        //this.questions.push(
+          //this.questionGenerators.declensions(+declnum + 1, getFrom[declnum])
+       // );
+
     }
 
     questionGenerators = {
@@ -112,15 +114,22 @@ const Quiz = {
           let r = vocab[Math.floor(Math.random() * vocab.length)];
           // then generate 1 of 3 vocab question types
           this.questions.push({
-            type: 'vocab',
+            type: "vocab",
             question: r.word,
-            answer: r.translation
-          })
+            answer: r.translation,
+          });
         }
       },
 
-      // Unfinished
-      declensions(declnum, data, cur, curType = 0, questions) {
+      declensions(
+        declnum,
+        data,
+        cur,
+        curType = 0,
+        curQuestion,
+        curGender,
+        questions
+      ) {
         /***
          * first (level 0) = gender, contents
          * second (level 1) = singular/plural, contents
@@ -129,31 +138,49 @@ const Quiz = {
         questions ??= [];
         // Set current to the data
         if (!cur) cur = data;
-        // Done? return
-        if (cur !== Object(cur)) return console.log(questions);
         // For each key in the data
         for (const [k, v] of Object.entries(cur)) {
-          console.log(k,v,curType)
-          
-          if (curType === 0) {
-            questions.push({}); // Add an object
-            questions[questions.length - 1] = ({ question: `What's the ${ord(declnum)} declension` })
+          // New gender? Set it
+          if (curType === 0) curGender = k;
+          // if it's on an ending
+          if (curType === 2) {
+            curQuestion = { question: `Enter the ${ord(declnum)} declension` };
+            questions.push(curQuestion); // Next one!
+
+            // finish the string
+            curQuestion.question += ` ${k} ending (${curGender})`;
+            // add the answer
+            curQuestion.answer = v;
+            // apply changes
+            questions[questions.length - 1] = curQuestion;
           }
-          else if (curType === 1 || curType === 2) questions[questions.length - 1].question += ` ${k}`
-          if (curType === 2) questions[questions.length - 1].question += ` ending?`;
-          if (v === Object(v)) this.declensions(declnum, data, v, curType + 1, questions);
-          else questions.name += `${v} `;
-        }
-        console.log(questions)
-      }
-    }
-  }
-}
+
+          // Not finished? Recurse
+          if (v === Object(v))
+            this.declensions(
+              declnum,
+              data,
+              v,
+              curType + 1,
+              curQuestion,
+              curGender,
+              questions
+            );
+          }
+          // Finished? Return!
+          return questions;
+      },
+    };
+  },
+};
 let s = new Switcher(),
   qpb = new Quiz.PreBegin(),
   qb = new Quiz.Begin();
+
 qpb.initialize();
-$('.pane-trigger.quiz-begin').addEventListener('click', () => {
-  qb.initialize(qpb.fetched.declensions, qpb.fetched.vocab, qpb.options)
-})
+
+$(".pane-trigger.quiz-begin").addEventListener("click", () => {
+  qb.initialize(qpb.fetched.declensions, qpb.fetched.vocab, qpb.options);
+});
+
 s.listen().showPane("begin");

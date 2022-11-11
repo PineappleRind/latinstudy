@@ -1,6 +1,6 @@
 {
     "1": {
-        "feminine": {
+        "f": {
             "singular": {
                 "nominative": "a",
                 "genitive": "æ",
@@ -18,7 +18,7 @@
         }
     },
     "2": {
-        "masculine/neuter": {
+        "m/n": {
             "singular": {
                 "genitive": "ī",
                 "dative": "ō",
@@ -31,7 +31,7 @@
                 "ablative": "īs"
             }
         },
-        "masculine": {
+        "m": {
             "singular": {
                 "nominative": "us"
             },
@@ -40,7 +40,7 @@
                 "accusative": "ōs"
             }
         },
-        "neuter": {
+        "n": {
             "singular": {
                 "nominative": "um"
             },
@@ -51,7 +51,7 @@
         }
     },
     "3": {
-        "masculine/feminine/neuter": {
+        "m/f/n": {
             "singular": {
                 "genitive": "is",
                 "dative": "ī",
@@ -65,17 +65,17 @@
                 "ablative": "ibus"
             }
         },
-        "masculine": {
+        "m": {
             "plural": {
                 "genitive": "um"
             }
         },
-        "feminine": {
+        "f": {
             "plural": {
                 "genitive": "ium"
             }
         },
-        "neuter": {
+        "n": {
             "singular": {
                 "accusative": "-"
             },
@@ -86,7 +86,7 @@
         }
     },
     "4": {
-        "masculine/neuter": {
+        "m/n": {
             "singular": {
                 "genitive": "ūs",
                 "ablative": "ū"
@@ -97,7 +97,7 @@
                 "ablative": "ibus"
             }
         },
-        "masculine": {
+        "m": {
             "singular": {
                 "nominative": "us",
                 "dative": "uī",
@@ -108,7 +108,7 @@
                 "accusative": "ūs"
             }
         },
-        "neuter": {
+        "n": {
             "singular": {
                 "nominative": "u",
                 "dative": "ū",
@@ -121,7 +121,7 @@
         }
     },
     "5": {
-        "feminine": {
+        "f": {
             "singular": {
                 "nominative": "-",
                 "genitive": "eī",
