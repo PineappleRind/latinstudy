@@ -9,6 +9,7 @@
 body {
     --bg-l0: #fff;
     --bg-l1: #f1f1f1;
+    --bg-l2: #e4e4e4;
     
     --txt-c0: #111;
     --txt-c1: #333;
@@ -41,6 +42,10 @@ body {
 }
 
 h3 {
+    font-weight: 300;
+}
+
+h4 {
     text-transform: uppercase;
     font-weight: 300;
     position: relative;
@@ -52,6 +57,10 @@ h3 {
     border-bottom: 1px solid var(--light-border);
 }
 
+small {
+    font-style: italic;
+    color: var(--txt-c2);
+}
 header {
     position: fixed;
     top: 10px;
@@ -67,6 +76,17 @@ header {
     position: relative;
     width: 100vw;
     height: 100vh;
+}
+
+input[type=number], input[type=text] {
+    padding: 8px 15px;
+    margin: 2px;
+    border: 1px solid var(--light-border);
+    border-radius: var(--rad-m);
+}
+
+input[type=text] {
+    width: 100%;
 }
 
 button {
@@ -89,6 +109,19 @@ button {
 .btn:hover {
     box-shadow: var(--shadowh);
     background: var(--btn-bgh);
+}
+
+.btn-gray {
+    background: var(--bg-l1);
+    color: var(--txt-c1);
+}
+
+.btn-gray:hover {
+    background: var(--bg-l2)
+}
+
+.btn.hidden {
+    display: none;
 }
 
 .back {
@@ -162,6 +195,7 @@ button {
     animation: scale-bigger var(--tr-l);
     font-weight: bold;
 }
+
 @keyframes scale-bigger {
     50% {
         scale: 1.2;
@@ -174,4 +208,15 @@ button {
         scale: 0.5;
         rotate: -10deg;
     }
+}
+
+.quiz-content-outer {
+    opacity: 1;
+    scale: 1;
+    transition: var(--tr);
+}
+
+.quiz-content-outer.hidden {
+    opacity: 0;
+    scale: 0.9;
 }

@@ -1,4 +1,4 @@
-import { $, fetchToJSON, ord } from "./utils.js";
+import { $, fetchToJSON, ord, createElement } from "./utils.js";
 
 class Switcher {
   constructor() {
@@ -32,9 +32,9 @@ class Switcher {
 }
 
 const Quiz = {
-  // PreBegin fetches data, gets the user's settings, and
+  // Initializer fetches data, gets the user's settings, and
   // sends both to Begin using a callback.
-  PreBegin: class {
+  Initializer: class {
     constructor() {
       this.optEls = {
         declensions: $(".quiz-declension-option", 1),
@@ -73,9 +73,9 @@ const Quiz = {
       return this;
     }
   },
-  // Begin handles the questions showing, stores the user's
-  // answers, and sends the answers to Finish using a callback.
-  Begin: class {
+  // Formulator handles the formulation of the questions based on
+  // JSON data, and sends them to WalkthroughMan to start the quiz.
+  Formulator: class {
     constructor() {
       this.questions = [];
     }
@@ -84,7 +84,8 @@ const Quiz = {
       // Only get from the declensions enabled
       let getFrom = {};
       // For every declension enabled
-      for (let j = 0; j < Math.log2(16) + 1; j++) { // 5 declensions; base-2 logarithm of 16 = 4
+      for (let j = 0; j < Math.log2(16) + 1; j++) {
+        // 5 declensions; base-2 logarithm of 16 = 4
         let bj = 2 ** j; // 2 to the power of J is its binary counterpart
 
         // If  1, 2, 4, 8, or 16 is found, then enable
@@ -97,12 +98,12 @@ const Quiz = {
       // TODO
       // this.questionGenerators.vocab(vocab, options.vocabNum);
 
-      // UNCOMMENT WHEN FRONTEND READY
-      //for (let declnum in getFrom)
-        //this.questions.push(
-          //this.questionGenerators.declensions(+declnum + 1, getFrom[declnum])
-       // );
+      for (let declnum in getFrom)
+        this.questions.push(
+          ...this.questionGenerators.declensions.bind(this)(+declnum + 1, getFrom[declnum])
+        );
 
+      new Quiz.WalkthroughMan().initialize(this.questions);
     }
 
     questionGenerators = {
@@ -130,11 +131,6 @@ const Quiz = {
         curGender,
         questions
       ) {
-        /***
-         * first (level 0) = gender, contents
-         * second (level 1) = singular/plural, contents
-         * third (level 2) = case, ending (? times)
-         */
         questions ??= [];
         // Set current to the data
         if (!cur) cur = data;
@@ -143,21 +139,28 @@ const Quiz = {
           // New gender? Set it
           if (curType === 0) curGender = k;
           // if it's on an ending
-          if (curType === 2) {
-            curQuestion = { question: `Enter the ${ord(declnum)} declension` };
-            questions.push(curQuestion); // Next one!
+          onEnding: {
+            if (curType === 2) {
+              if (v === "-") break onEnding;
+              curQuestion = {
+                question: `Enter the ${ord(declnum)} declension`,
+              };
+              questions.push(curQuestion); // Next one!
 
-            // finish the string
-            curQuestion.question += ` ${k} ending (${curGender})`;
-            // add the answer
-            curQuestion.answer = v;
-            // apply changes
-            questions[questions.length - 1] = curQuestion;
+              // finish the string
+              curQuestion.question += ` ${k} ending (${curGender})`;
+              // add the answer
+              curQuestion.answer = v;
+              // add HTML
+              curQuestion.html = this.htmlGenerator(curQuestion);
+              // apply changes
+              questions[questions.length - 1] = curQuestion;
+            }
           }
 
           // Not finished? Recurse
           if (v === Object(v))
-            this.declensions(
+            this.questionGenerators.declensions.bind(this)(
               declnum,
               data,
               v,
@@ -166,21 +169,87 @@ const Quiz = {
               curGender,
               questions
             );
-          }
-          // Finished? Return!
-          return questions;
+        }
+        // Finished? Return!
+        return questions;
       },
     };
+
+    htmlGenerator(questionData) {
+      let title = createElement(
+          "h3",
+          "class:quiz-question-title",
+          questionData.question
+        ),
+        input = createElement(
+          "input",
+          "placeholder:Enter...;type:text;class:quiz-question-input"
+        ),
+        container = createElement("div", "class:quiz-content-inner");
+      input.correct = questionData.answer;
+
+      container.append(title, input);
+      return container;
+    }
   },
+  // WalkthroughMan handles the showing of the questions to the
+  // user, records the user's response, and sends them to Grader.
+  WalkthroughMan: class {
+    constructor() {
+      this.curQuestionIndex = -1;
+      this.container = $(".quiz-content-outer");
+      this.btns = {
+        prev: $('.quiz-prev'),
+        next: $('.quiz-next')
+      }
+    }
+
+    initialize(questions) {
+      this.questions = questions;
+      this.container.append(this.questions[++this.curQuestionIndex].html);
+      this.container.classList.remove("hidden");
+      this.updatePrevBtn()
+    }
+
+    nextQuestion() {
+      this.curQuestionIndex += 1;
+      this.loadQuestion(this.curQuestionIndex);
+    }
+
+    prevQuestion() {
+      this.curQuestionIndex -= 1;
+      this.loadQuestion(this.curQuestionIndex);
+    }
+
+    loadQuestion(index) {
+      if (!this.questions[index]) return;
+      this.updatePrevBtn()
+      this.container.classList.add("hidden");
+      setTimeout((() => {
+        if (this.container.children[0]) this.container.children[0].remove();
+
+        this.container.append(this.questions[index].html);
+        this.container.classList.remove("hidden");
+      }).bind(this), 400);
+    }
+
+    updatePrevBtn() {
+      if (this.curQuestionIndex === 0) this.btns.prev.classList.add('hidden');
+      else this.btns.prev.classList.remove('hidden');
+    }
+  },
+  // Grader recieves the responses from WalkthroughMan, compares
+  // them to the questions, grades, and shows the grade to the user.
+  Grader: class {},
 };
 let s = new Switcher(),
-  qpb = new Quiz.PreBegin(),
-  qb = new Quiz.Begin();
+  qpb = new Quiz.Initializer(),
+  qf = new Quiz.Formulator();
 
 qpb.initialize();
 
 $(".pane-trigger.quiz-begin").addEventListener("click", () => {
-  qb.initialize(qpb.fetched.declensions, qpb.fetched.vocab, qpb.options);
+  qf.initialize(qpb.fetched.declensions, qpb.fetched.vocab, qpb.options);
 });
 
 s.listen().showPane("begin");
