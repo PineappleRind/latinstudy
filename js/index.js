@@ -1,4 +1,4 @@
-import { $, fetchToJSON, ord, createElement } from "./utils.js";
+import { $, fetchToJSON, ord, createElement, wait } from "./utils.js";
 
 class Switcher {
   constructor() {
@@ -100,7 +100,10 @@ const Quiz = {
 
       for (let declnum in getFrom)
         this.questions.push(
-          ...this.questionGenerators.declensions.bind(this)(+declnum + 1, getFrom[declnum])
+          ...this.questionGenerators.declensions.bind(this)(
+            +declnum + 1,
+            getFrom[declnum]
+          )
         );
 
       new Quiz.WalkthroughMan().initialize(this.questions);
@@ -141,9 +144,14 @@ const Quiz = {
           // if it's on an ending
           if (curType === 2) {
             if (v === "-") break;
-            let formatter = new Intl.ListFormat('en', { style: 'long', type: 'disjunction' })
+            let formatter = new Intl.ListFormat("en", {
+              style: "long",
+              type: "disjunction",
+            });
             curQuestion = {
-              question: `${ord(declnum)} declension ${formatter.format(curGender.split('/').map(this.expandGender))} ${k} ending`,
+              question: `${ord(declnum)} declension ${formatter.format(
+                curGender.split("/").map(this.expandGender)
+              )} ${k} ending`,
             };
             // add the answer
             curQuestion.answer = v;
@@ -172,10 +180,10 @@ const Quiz = {
 
     htmlGenerator(questionData) {
       let title = createElement(
-        "h3",
-        "class:quiz-question-title",
-        questionData.question
-      ),
+          "h3",
+          "class:quiz-question-title",
+          questionData.question
+        ),
         input = createElement(
           "input",
           "placeholder:Enter...;type:text;class:quiz-question-input"
@@ -186,7 +194,7 @@ const Quiz = {
       container.append(title, input);
       return container;
     }
-    expandGender = n => "n" === n ? "neuter" : ("m" === n ? "masculine" : ("f" === n ? "feminine" : ""))
+    expandGender = (n) => "n" === n ? "neuter" : "m" === n ? "masculine" : "f" === n ? "feminine" : "";
   },
   // WalkthroughMan handles the showing of the questions to the
   // user, records the user's response, and sends them to Grader.
@@ -195,53 +203,95 @@ const Quiz = {
       this.curQuestionIndex = -1;
       this.container = $(".quiz-content-outer");
       this.btns = {
-        prev: $('.quiz-prev'),
-        next: $('.quiz-next')
-      }
+        prev: $(".quiz-prev"),
+        next: $(".quiz-next"),
+      };
+      this.userAnswers = [];
+      this.questionTransition = 200; // ms
     }
 
     initialize(questions) {
       this.questions = questions;
-      this.toQuestion(1, 1);
-      this.updateBtns()
+      this.toQuestion(1, 0);
+      this.updateBtns();
 
-      this.btns.next.addEventListener('click', this.toQuestion.bind(this, 1))
-      this.btns.prev.addEventListener('click', this.toQuestion.bind(this, -1))
+      this.btns.next.addEventListener(
+        "click",
+        this.toQuestion.bind(this, 1, this.questionTransition)
+      );
+      this.btns.prev.addEventListener(
+        "click",
+        this.toQuestion.bind(this, -1, this.questionTransition)
+      );
     }
 
-    toQuestion(n) {
+    toQuestion(n, d) {
       this.curQuestionIndex += n;
-      this.loadQuestion(this.curQuestionIndex);
+      this.loadQuestion(
+        this.curQuestionIndex,
+        d === 0 || d ? d : this.questionTransition,
+        n
+      ); //.then();
     }
 
-    loadQuestion(index, delay) {
-      console.log('On question ' + (this.curQuestionIndex - index) + ', going to ' + this.curQuestionIndex)
-      if (!this.questions[index]) return this.curQuestionIndex -= index;
-      this.updateBtns()
+    loadQuestion(index, delay, n) {
+      if (!this.questions[index]) {
+        this.curQuestionIndex -= n;
+        return this.finishQuiz();
+      }
+
+      this.curInput = this.questions[index].html.querySelector("input");
+      this.updateBtns();
       this.container.classList.add("hidden");
-      this.container.style.width = `${this.getHTMLWidth(this.questions[index].html)}px`
-      setTimeout((() => {
+      this.container.style.width = `${this.getHTMLDimensions(
+        this.questions[index].html,
+        "width"
+      )}px`;
+
+      wait(delay).then(() => {
         if (this.container.children[0]) this.container.children[0].remove();
         this.container.append(this.questions[index].html);
+        this.inputListen();
         this.container.classList.remove("hidden");
-      }).bind(this), delay ? delay : 200);
+      });
     }
 
-    getHTMLWidth(html) {
+    getHTMLDimensions(html, prop) {
       document.body.append(html);
-      let size = html.getBoundingClientRect().width
-      html.remove()
+      let size = html.getBoundingClientRect()[prop];
+      html.remove();
       return size;
     }
 
     updateBtns() {
-      if (this.curQuestionIndex === 0) this.btns.prev.classList.add('hidden');
-      else this.btns.prev.classList.remove('hidden');
+      if (this.curQuestionIndex === 0) this.btns.prev.disabled = true;
+      else this.btns.prev.disabled = false;
+
+      if (!this.curInput?.value.replaceAll(" ", ""))
+        this.btns.next.disabled = true;
+      else this.btns.next.disabled = false;
+    }
+
+    inputListen() {
+      this.curInput.onkeyup = (e) => {
+        this.updateBtns();
+        this.userAnswers[this.curQuestionIndex] = {
+          response: this.curInput.value,
+          graded: false,
+        };
+      };
+    }
+
+    finishQuiz() {
+      new Quiz.Grader().initialize(this.userAnswers, this.questions);
     }
   },
   // Grader recieves the responses from WalkthroughMan, compares
   // them to the questions, grades, and shows the grade to the user.
-  Grader: class {},
+  Grader: class {
+    constructor() {}
+    initialize(userAnswers, questions) {}
+  },
 };
 let s = new Switcher(),
   qpb = new Quiz.Initializer(),

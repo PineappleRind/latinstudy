@@ -24,3 +24,5 @@ export const createElement = (tag, attrs, value) => {
   el.innerHTML = value || "";
   return el;
 };
+
+export const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

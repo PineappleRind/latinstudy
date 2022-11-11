@@ -33,7 +33,7 @@
             </div>
             <h4>Vocabulary</h4>
             <div class="quiz-vocab-select">
-                <input type="number" placeholder="# of vocabulary words" class="quiz-vocab-count"><label><small> (0 for off)</small></label>
+                <input type="number" placeholder="# of vocabulary words" class="quiz-vocab-count"><label><small> (0 for all, -1 for off)</small></label>
             </div>
             <br>
             <button class="btn pane-trigger quiz-begin" data-pane="quiz">Begin</button>
@@ -42,8 +42,8 @@
             <h2>Quiz</h2>
             <div class="quiz-content-outer"></div>
             <div class="flex">
-                <button class="btn btn-gray hidden quiz-prev">Previous</button>
-                <button class="btn quiz-next">Next</button>
+                <button disabled class="btn btn-gray quiz-prev">Previous</button>
+                <button disabled class="btn quiz-next">Next</button>
             </div>
         </div>
         <div class="pane" id="404">
