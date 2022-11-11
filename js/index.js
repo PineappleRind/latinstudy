@@ -139,23 +139,18 @@ const Quiz = {
           // New gender? Set it
           if (curType === 0) curGender = k;
           // if it's on an ending
-          onEnding: {
-            if (curType === 2) {
-              if (v === "-") break onEnding;
-              curQuestion = {
-                question: `Enter the ${ord(declnum)} declension`,
-              };
-              questions.push(curQuestion); // Next one!
-
-              // finish the string
-              curQuestion.question += ` ${k} ending (${curGender})`;
-              // add the answer
-              curQuestion.answer = v;
-              // add HTML
-              curQuestion.html = this.htmlGenerator(curQuestion);
-              // apply changes
-              questions[questions.length - 1] = curQuestion;
-            }
+          if (curType === 2) {
+            if (v === "-") break;
+            let formatter = new Intl.ListFormat('en', { style: 'long', type: 'disjunction' })
+            curQuestion = {
+              question: `${ord(declnum)} declension ${formatter.format(curGender.split('/').map(this.expandGender))} ${k} ending`,
+            };
+            // add the answer
+            curQuestion.answer = v;
+            // add HTML
+            curQuestion.html = this.htmlGenerator(curQuestion);
+            // apply changes
+            questions.push(curQuestion);
           }
 
           // Not finished? Recurse
@@ -177,10 +172,10 @@ const Quiz = {
 
     htmlGenerator(questionData) {
       let title = createElement(
-          "h3",
-          "class:quiz-question-title",
-          questionData.question
-        ),
+        "h3",
+        "class:quiz-question-title",
+        questionData.question
+      ),
         input = createElement(
           "input",
           "placeholder:Enter...;type:text;class:quiz-question-input"
@@ -191,6 +186,7 @@ const Quiz = {
       container.append(title, input);
       return container;
     }
+    expandGender = n => "n" === n ? "neuter" : ("m" === n ? "masculine" : ("f" === n ? "feminine" : ""))
   },
   // WalkthroughMan handles the showing of the questions to the
   // user, records the user's response, and sends them to Grader.
@@ -206,34 +202,39 @@ const Quiz = {
 
     initialize(questions) {
       this.questions = questions;
-      this.container.append(this.questions[++this.curQuestionIndex].html);
-      this.container.classList.remove("hidden");
-      this.updatePrevBtn()
+      this.toQuestion(1, 1);
+      this.updateBtns()
+
+      this.btns.next.addEventListener('click', this.toQuestion.bind(this, 1))
+      this.btns.prev.addEventListener('click', this.toQuestion.bind(this, -1))
     }
 
-    nextQuestion() {
-      this.curQuestionIndex += 1;
+    toQuestion(n) {
+      this.curQuestionIndex += n;
       this.loadQuestion(this.curQuestionIndex);
     }
 
-    prevQuestion() {
-      this.curQuestionIndex -= 1;
-      this.loadQuestion(this.curQuestionIndex);
-    }
-
-    loadQuestion(index) {
-      if (!this.questions[index]) return;
-      this.updatePrevBtn()
+    loadQuestion(index, delay) {
+      console.log('On question ' + (this.curQuestionIndex - index) + ', going to ' + this.curQuestionIndex)
+      if (!this.questions[index]) return this.curQuestionIndex -= index;
+      this.updateBtns()
       this.container.classList.add("hidden");
+      this.container.style.width = `${this.getHTMLWidth(this.questions[index].html)}px`
       setTimeout((() => {
         if (this.container.children[0]) this.container.children[0].remove();
-
         this.container.append(this.questions[index].html);
         this.container.classList.remove("hidden");
-      }).bind(this), 400);
+      }).bind(this), delay ? delay : 200);
     }
 
-    updatePrevBtn() {
+    getHTMLWidth(html) {
+      document.body.append(html);
+      let size = html.getBoundingClientRect().width
+      html.remove()
+      return size;
+    }
+
+    updateBtns() {
       if (this.curQuestionIndex === 0) this.btns.prev.classList.add('hidden');
       else this.btns.prev.classList.remove('hidden');
     }

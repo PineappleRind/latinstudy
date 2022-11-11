@@ -32,7 +32,7 @@
         {"word":"Rōmānus","genitive":"-ī",                  "gender":"m", "translation":"a Roman"},
         {"word":"servus","genitive":"-ī",                   "gender":"m", "translation":["slave","servant"]},
         {"word":"bellum","genitive":"-ī",                   "gender":"n", "translation":"war"},
-        {"word":"caelum","genitive":"-ī",                   "gender":"n", "translation":["sky","heaven"]},
+        {"word":"cælum","genitive":"-ī",                   "gender":"n", "translation":["sky","heaven"]},
         {"word":"frūmentum","genitive":"-ī",                "gender":"n", "translation":["grain","crops|plural"]},
         {"word":"imperium","genitive":"-ī",                 "gender":"n", "translation":["command","power","empire"]},
         {"word":"oppidum","genitive":"-ī",                  "gender":"n", "translation":"town"},
@@ -44,7 +44,7 @@
         {"word":"impedīmenta","genitive":"impedīmentōrum",  "gender":"n", "translation":["baggage","baggage train"]}
     ],
     "3":[
-        {"word":"Caesar","genitive":"Caesaris",             "gender":"m", "translation":"Caesar"},
+        {"word":"Cæsar","genitive":"Cæsaris",             "gender":"m", "translation":"Cæsar"},
         {"word":"clāmor","genitive":"clāmōris",             "gender":"m", "translation":["shouting","shout"]},
         {"word":"dux","genitive":"ducis",                   "gender":"f", "translation":"leader"},
         {"word":"eques","genitive":"equitis",               "gender":"f", "translation":["horseman","cavalry|plural"]},
