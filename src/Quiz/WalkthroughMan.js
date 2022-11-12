@@ -1,5 +1,5 @@
 import { $, createElement, wait } from '../utils.js'
-import Quiz from './index.js';
+import Grader from './Grader.js';
 
 // WalkthroughMan handles the showing of the questions to the
 // user, records the user's response, and sends them to Grader.
@@ -15,7 +15,7 @@ export default class WalkthroughMan {
         };
         this.userAnswers = [];
         this.questionTransition = 200; // ms
-        this.grader = new Quiz.Grader();
+        this.grader = new Grader();
     }
 
     initialize(questions) {

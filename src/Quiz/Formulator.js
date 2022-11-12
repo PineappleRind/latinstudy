@@ -1,5 +1,5 @@
 import { createElement, ord } from "../utils.js";
-import Quiz from "./index.js";
+import WalkthroughMan from "./WalkthroughMan.js";
 
 // Formulator handles the formulation of the questions based on
 // JSON data, and sends them to WalkthroughMan to start the quiz.
@@ -35,7 +35,7 @@ export default class Formulator {
                 )
             );
 
-        new Quiz.WalkthroughMan().initialize(this.questions);
+        new WalkthroughMan().initialize(this.questions);
     }
 
     questionGenerators = {
