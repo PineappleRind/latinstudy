@@ -26,3 +26,5 @@ export const createElement = (tag, attrs, value) => {
 };
 
 export const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const purify = str => str.trim().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace('æ', 'ae')

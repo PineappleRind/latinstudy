@@ -36,6 +36,11 @@ body {
     --shadowh: 0 5px 10px rgba(0,0,0,0.2);
     --tr: 0.2s;
     --tr-l: 0.4s;
+
+    --input-wrong-bg: rgba(255, 0, 0, 0.2);
+    --input-wrong-border: 1px solid rgba(255, 0, 0, 0.6);
+    --input-correct-bg: rgba(0, 255, 0, 0.2);
+    --input-correct-border: 1px solid rgba(0, 255, 0, 0.6);
 }
 
 body {
@@ -127,7 +132,7 @@ button {
 }
 
 .back {
-    font-size: var(--text-s);
+    font-size: var(--txt-s);
     color: var(--txt-c2);
     cursor: pointer;
     transition: var(--tr);
@@ -221,7 +226,8 @@ button {
 
 .quiz-content-outer {
     opacity: 1;
-    min-width: 300px ;
+    min-width: 300px;
+    margin-bottom: 5px;
     transition: var(--tr-l);
 }
 
@@ -239,8 +245,56 @@ button {
     white-space: nowrap;
     font-size: 17px;
 }
+
+.quiz-grade {
+    display: inline-block;
+    color: var(--txt-c2);
+    font-size: var(--txt-s);
+    text-decoration: underline;
+    margin-left: 5px;
+}
+
+.quiz-grade:hover {
+    color: var(--txt-c1);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.quiz-question-input.correct {
+    background: var(--input-correct-bg);
+    border: var(--input-correct-border);
+}
+
+.quiz-question-input.wrong {
+    background: var(--input-wrong-bg);
+    border: var(--input-wrong-border);
+    color: red;
+}
+
 .invisible {
     opacity: 0;
     pointer-events: none;
     position: fixed;
+}
+
+.quiz-correct-answer {
+    padding: 3px;
+    margin: 2px;
+    animation: correct-answer-load 0.5s;
+    background: var(--bg-l1);
+    border-radius: var(--rad-m);
+}
+
+.quiz-correct-answer::before {
+    content: 'Correct answer: ';
+    color: var(--txt-c2);
+    font-style: italic;
+    font-size: var(--txt-s);
+}
+
+@keyframes correct-answer-load {
+    from {
+        opacity: 0;
+        translate: -4px 0;
+    }
 }
