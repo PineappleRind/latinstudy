@@ -2,4 +2,4 @@
 
 helps to study latin declensions
 
-make sure to bundle before running
+make sure to build before running
