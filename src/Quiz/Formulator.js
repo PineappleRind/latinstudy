@@ -54,39 +54,31 @@ export default class Formulator {
             }
         },
 
-        declensions(
-            declnum,
-            data,
-            curData,
-            dataLevel = 0,
-            formulation,
-            cur = {},
-            questions
-        ) {
+        declensions(declnum, data, dataLevel = 0, formulation, cur = {}, questions) {
+            // start off
             questions ??= [];
-            // Set current to the data
-            if (!curData) curData = data;
-            // For each key in the data
-            for (const [k, v] of Object.entries(curData)) {
+            cur.level ||= data;
+            // For each key in the current level
+            for (const [key, value] of Object.entries(cur.level)) {
                 // New gender? Set it
-                if (dataLevel === 0) cur.gender = k;
+                if (dataLevel === 0) cur.gender = key;
                 // New grammatical number? Set it
-                if (dataLevel === 1) cur.gnumber = k;
+                if (dataLevel === 1) cur.gnumber = key;
                 // if it's on an ending
                 if (dataLevel === 2) {
-                    if (v === "-") break;
+                    if (value === "-") break;
+
+                    // list formatter (e.g. "one, two, or three")
                     let formatter = new Intl.ListFormat("en", {
                         style: "long",
                         type: "disjunction",
                     });
-                    
+                    // format the question
                     formulation = {
-                        question: `${ord(declnum)} declension ${cur.gnumber} ${formatter.format(
-                            cur.gender.split("/").map(this.expandGender)
-                        )} ${k} ending`,
+                        question: `${ord(declnum)} declension ${cur.gnumber} ${formatter.format(cur.gender.split("/").map(this.expandGender))} ${key} ending`,
                     };
                     // add the answer
-                    formulation.answer = v;
+                    formulation.answer = value;
                     // add HTML
                     formulation.html = this.htmlGenerator(formulation);
                     // apply changes
@@ -94,16 +86,10 @@ export default class Formulator {
                 }
 
                 // Not finished? Recurse
-                if (v === Object(v))
-                    this.questionGenerators.declensions.bind(this)(
-                        declnum,
-                        data,
-                        v,
-                        dataLevel + 1,
-                        formulation,
-                        cur,
-                        questions
-                    );
+                if (value === Object(value)) {
+                    cur.level = value;
+                    this.questionGenerators.declensions.bind(this)(declnum, data, dataLevel + 1, formulation, cur, questions);
+                }
             }
             // Finished? Return!
             return questions;

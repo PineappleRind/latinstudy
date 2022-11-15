@@ -55,15 +55,17 @@ export default class WalkthroughMan {
         // store some elements
         this.curInput = this.questions[index].html.querySelector("input");
         this.btns.curGrade = this.questions[index].html.querySelector('.quiz-grade');
+        // add event listener to grade button
         this.btns.curGrade.addEventListener('click', this.showPreliminaryGrade.bind(this));
         this.updateBtns();
+        
         this.container.classList.add("hidden");
         this.container.style.width = `${this.getHTMLDimensions(
             this.questions[index].html,
             "width"
         )}px`;
 
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             wait(delay).then(() => {
                 if (this.container.children[0]) this.container.children[0].remove();
                 this.container.append(this.questions[index].html);
@@ -105,10 +107,10 @@ export default class WalkthroughMan {
 
     showPreliminaryGrade() {
         let cur = this.questions[this.curQuestionIndex];
+        if (cur.graded) return;
         // Disable the input
         this.curInput.disabled = true;
         // Check if user is correct or wrong
-        console.log(this.userAnswers)
         let grade = this.grader.gradeQ(cur, this.userAnswers.map(m => m.response)[this.curQuestionIndex])
         // Add class to input depending on grade
         this.curInput.classList.add(grade ? 'correct' : 'wrong');
@@ -117,6 +119,8 @@ export default class WalkthroughMan {
         let nh = this.getHTMLDimensions(correct, 'height');
         this.container.style.height = this.defaultHeight + nh + 'px';
         this.container.children[0].append(correct);
+        // Finally set the current question to graded
+        this.questions[this.curQuestionIndex].graded = true;
     }
 
     finishQuiz() {

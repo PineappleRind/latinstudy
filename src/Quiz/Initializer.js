@@ -1,4 +1,6 @@
+import Message from '../components/Message.js';
 import { $, fetchToJSON } from '../utils.js';
+import Formulator from './Formulator.js';
 
 // Initializer fetches data and gets the user's settings.
 export default class Initializer {
@@ -37,6 +39,16 @@ export default class Initializer {
         this.optEls.vocabNum.addEventListener("input", (e) => {
             this.options.vocabNum = e.target.value;
         });
+
+        // On click
+        $(".pane-trigger.quiz-begin").addEventListener("click", () => {
+           // if (this.quizIsEmpty) return;
+            new Formulator().initialize(this.fetched.declensions, this.fetched.vocab, this.options);
+        })
+
         return this;
     }
+
+    quizIsEmpty = () => !declensions && !vocabNum;
 }
+

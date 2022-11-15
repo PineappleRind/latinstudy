@@ -60,45 +60,49 @@ class Switcher {
     }
 }
 
-// Initializer fetches data and gets the user's settings.
-class Initializer {
-    constructor() {
-        this.optEls = {
-            declensions: $(".quiz-declension-option", 1),
-            vocabNum: $(".quiz-vocab-count"),
-        };
-        this.options = {
-            declensions: 0b00000,
-            vocabNum: 0,
-        };
+let typeMap = ['info', 'success', 'error'],
+    queue = [],
+    id = 0,
+    container = createElement('div', 'class:toast-container');
 
-        return this;
+$('#app').append(container);
+
+class Message {
+    constructor(content, type, duration, title) {
+        // Create a message
+        let el = createElement('div', `class:toast ${typeMap[type]}`);
+        if (title) el.append(createElement('h3', 'class:toast-header', title));
+        el.append(createElement('p', `class:toast-description ${title ? 'smaller' : ''}`, content));
+
+        this.el = el,
+            this.duration = duration,
+            this.id = (id++).toString(16);
+        // Add it to the queue
+        queue.push(this);
+        // Call the manager 😡
+        wantToShow(this.id);
     }
+}
+function wantToShow() {
+    if (!queue.length) return;
 
-    async initialize(c) {
-        // first, deal with the user's settings
-        this.settingsListen();
-        // Then the data
-        let declensions = await fetchToJSON("./data/declensions.json"),
-            vocab = await fetchToJSON("./data/vocab.json");
+    showMessage(queue[0]).then(() => {
+        queue.shift();
+        console.log(queue);
+        wantToShow();
+    });
+}
 
-        this.fetched = { declensions, vocab };
-    }
-
-    settingsListen() {
-        // Deal with selecting different declensions
-        for (const opt of Object.values(this.optEls.declensions)) {
-            opt.addEventListener("click", (e) => {
-                e.target.classList.toggle("selected");
-                this.options.declensions ^= 0b00001 << (+e.target.dataset.value - 1);
-            });
-        }
-        // Deal with entering different numbers of vocabulary
-        this.optEls.vocabNum.addEventListener("input", (e) => {
-            this.options.vocabNum = e.target.value;
+function showMessage({ el, duration }) {
+    return new Promise(async r => {
+        container.append(el);
+        await wait(duration);
+        el.classList.add('hidden');
+        wait(200).then(() => {
+            el.remove();
+            r();
         });
-        return this;
-    }
+    })
 }
 
 // Grader recieves the responses from WalkthroughMan, compares
@@ -175,15 +179,17 @@ class WalkthroughMan {
         // store some elements
         this.curInput = this.questions[index].html.querySelector("input");
         this.btns.curGrade = this.questions[index].html.querySelector('.quiz-grade');
+        // add event listener to grade button
         this.btns.curGrade.addEventListener('click', this.showPreliminaryGrade.bind(this));
         this.updateBtns();
+        
         this.container.classList.add("hidden");
         this.container.style.width = `${this.getHTMLDimensions(
             this.questions[index].html,
             "width"
         )}px`;
 
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             wait(delay).then(() => {
                 if (this.container.children[0]) this.container.children[0].remove();
                 this.container.append(this.questions[index].html);
@@ -225,10 +231,10 @@ class WalkthroughMan {
 
     showPreliminaryGrade() {
         let cur = this.questions[this.curQuestionIndex];
+        if (cur.graded) return;
         // Disable the input
         this.curInput.disabled = true;
         // Check if user is correct or wrong
-        console.log(this.userAnswers);
         let grade = this.grader.gradeQ(cur, this.userAnswers.map(m => m.response)[this.curQuestionIndex]);
         // Add class to input depending on grade
         this.curInput.classList.add(grade ? 'correct' : 'wrong');
@@ -237,6 +243,8 @@ class WalkthroughMan {
         let nh = this.getHTMLDimensions(correct, 'height');
         this.container.style.height = this.defaultHeight + nh + 'px';
         this.container.children[0].append(correct);
+        // Finally set the current question to graded
+        this.questions[this.curQuestionIndex].graded = true;
     }
 
     finishQuiz() {
@@ -297,39 +305,31 @@ class Formulator {
             }
         },
 
-        declensions(
-            declnum,
-            data,
-            curData,
-            dataLevel = 0,
-            formulation,
-            cur = {},
-            questions
-        ) {
+        declensions(declnum, data, dataLevel = 0, formulation, cur = {}, questions) {
+            // start off
             questions ??= [];
-            // Set current to the data
-            if (!curData) curData = data;
-            // For each key in the data
-            for (const [k, v] of Object.entries(curData)) {
+            cur.level ||= data;
+            // For each key in the current level
+            for (const [key, value] of Object.entries(cur.level)) {
                 // New gender? Set it
-                if (dataLevel === 0) cur.gender = k;
+                if (dataLevel === 0) cur.gender = key;
                 // New grammatical number? Set it
-                if (dataLevel === 1) cur.gnumber = k;
+                if (dataLevel === 1) cur.gnumber = key;
                 // if it's on an ending
                 if (dataLevel === 2) {
-                    if (v === "-") break;
+                    if (value === "-") break;
+
+                    // list formatter (e.g. "one, two, or three")
                     let formatter = new Intl.ListFormat("en", {
                         style: "long",
                         type: "disjunction",
                     });
-                    
+                    // format the question
                     formulation = {
-                        question: `${ord(declnum)} declension ${cur.gnumber} ${formatter.format(
-                            cur.gender.split("/").map(this.expandGender)
-                        )} ${k} ending`,
+                        question: `${ord(declnum)} declension ${cur.gnumber} ${formatter.format(cur.gender.split("/").map(this.expandGender))} ${key} ending`,
                     };
                     // add the answer
-                    formulation.answer = v;
+                    formulation.answer = value;
                     // add HTML
                     formulation.html = this.htmlGenerator(formulation);
                     // apply changes
@@ -337,16 +337,10 @@ class Formulator {
                 }
 
                 // Not finished? Recurse
-                if (v === Object(v))
-                    this.questionGenerators.declensions.bind(this)(
-                        declnum,
-                        data,
-                        v,
-                        dataLevel + 1,
-                        formulation,
-                        cur,
-                        questions
-                    );
+                if (value === Object(value)) {
+                    cur.level = value;
+                    this.questionGenerators.declensions.bind(this)(declnum, data, dataLevel + 1, formulation, cur, questions);
+                }
             }
             // Finished? Return!
             return questions;
@@ -373,18 +367,62 @@ class Formulator {
     expandGender = (n) => "n" === n ? "neuter" : "m" === n ? "masculine" : "f" === n ? "feminine" : "";
 }
 
+// Initializer fetches data and gets the user's settings.
+class Initializer {
+    constructor() {
+        this.optEls = {
+            declensions: $(".quiz-declension-option", 1),
+            vocabNum: $(".quiz-vocab-count"),
+        };
+        this.options = {
+            declensions: 0b00000,
+            vocabNum: 0,
+        };
+
+        return this;
+    }
+
+    async initialize(c) {
+        // first, deal with the user's settings
+        this.settingsListen();
+        // Then the data
+        let declensions = await fetchToJSON("./data/declensions.json"),
+            vocab = await fetchToJSON("./data/vocab.json");
+
+        this.fetched = { declensions, vocab };
+    }
+
+    settingsListen() {
+        // Deal with selecting different declensions
+        for (const opt of Object.values(this.optEls.declensions)) {
+            opt.addEventListener("click", (e) => {
+                e.target.classList.toggle("selected");
+                this.options.declensions ^= 0b00001 << (+e.target.dataset.value - 1);
+            });
+        }
+        // Deal with entering different numbers of vocabulary
+        this.optEls.vocabNum.addEventListener("input", (e) => {
+            this.options.vocabNum = e.target.value;
+        });
+
+        // On click
+        $(".pane-trigger.quiz-begin").addEventListener("click", () => {
+           // if (this.quizIsEmpty) return;
+            new Formulator().initialize(this.fetched.declensions, this.fetched.vocab, this.options);
+        });
+
+        return this;
+    }
+
+    quizIsEmpty = () => !declensions && !vocabNum;
+}
+
 var Quiz = {
     Initializer, Formulator, WalkthroughMan, Grader
 };
 
-let s = new Switcher(),
-  qpb = new Quiz.Initializer(),
-  qf = new Quiz.Formulator();
-
-qpb.initialize();
-
-$(".pane-trigger.quiz-begin").addEventListener("click", () => {
-  qf.initialize(qpb.fetched.declensions, qpb.fetched.vocab, qpb.options);
-});
-
+let s = new Switcher();
 s.listen().showPane("begin");
+
+new Message();
+new Quiz.Initializer().initialize();
