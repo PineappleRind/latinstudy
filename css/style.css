@@ -251,6 +251,7 @@ button {
 .quiz-content-inner h3 {
     white-space: nowrap;
     font-size: 17px;
+    min-width: 300px;
 }
 
 .quiz-grade {
@@ -265,6 +266,10 @@ button {
     color: var(--txt-c1);
     text-decoration: none;
     cursor: pointer;
+}
+
+.quiz-question-input {
+    width: 100%;
 }
 
 .quiz-question-input.correct {

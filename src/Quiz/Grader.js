@@ -7,15 +7,28 @@ export default class Grader {
     constructor() { }
     initialize(userAnswers, questions) { }
     gradeQ(question, userAnswer) {
+        console.log(question, userAnswer)
         // Empty input? Come on, User! :(
         if (!userAnswer) return false;
         // Remove accents to compare with correct answer
         userAnswer = purify(userAnswer);
-        // Get correct answer and normalize that too
-        let correct = purify(question.answer);
-        // Isn't correct? Return wrong
-        if (userAnswer !== correct) return false;
+
+        // If there are multiple answers
+        if (question.answer.constructor === Array) {
+            let correct = question.answer.map(purify);
+            if (!correct.includes(userAnswer)) return { isCorrect: false, answer: question.answer };
+            else return { isCorrect: true, answer: question.answer.join(', ') };
+        }
+        // if there's only 1 answer
+        else {
+            let correct = purify(question.answer);
+            if (userAnswer !== correct) return { isCorrect: false, answer: question.answer };
+            else return { isCorrect: true, answer: question.answer };
+        }
         // Correct? Return right
-        return true;
+    }
+    finish(answers, questions) {
+        // switch to results pane
+        window.latinstudier.switcher.showPane("quiz-results");
     }
 }

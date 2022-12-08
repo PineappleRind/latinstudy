@@ -28,3 +28,14 @@ export const createElement = (tag, attrs, value) => {
 export const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const purify = str => str.trim().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace('æ', 'ae')
+
+//https://stackoverflow.com/a/12646864
+export function shuffleArray(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+  return array;
+}

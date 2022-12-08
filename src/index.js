@@ -1,7 +1,16 @@
 import Switcher from "./components/Switcher.js";
 import Quiz from './Quiz/index.js';
 
-let s = new Switcher();
-s.listen().showPane("begin");
+class Studier {
+    constructor() {
+        this.switcher = new Switcher();
+        this.quizInitializer = new Quiz.Initializer();
+    }
+    initialize() {
+        this.switcher.listen().showPane("begin");
+        this.quizInitializer.initialize();
+    }
+}
 
-new Quiz.Initializer().initialize();
+window.latinstudier = new Studier();
+latinstudier.initialize();

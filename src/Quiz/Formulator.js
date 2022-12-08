@@ -1,17 +1,21 @@
-import { createElement, ord } from "../utils.js";
+import { $, createElement, ord } from "../utils.js";
 import WalkthroughMan from "./WalkthroughMan.js";
-
+// question generators
+import declensions from './formulators/declensions.js';
+import vocab from './formulators/vocab.js';
 // Formulator handles the formulation of the questions based on
 // JSON data, and sends them to WalkthroughMan to start the quiz.
 
 export default class Formulator {
-    constructor() {
+    constructor(options) {
+        this.options = options;
         this.questions = [];
     }
 
-    initialize(declensions, vocab, options) {
+    initialize(declensions, vocab) {
         // Only get from the declensions enabled
         let getFrom = {};
+        console.log(this.options.declensions)
         // For every declension enabled
         for (let j = 0; j < Math.log2(16) + 1; j++) {
             // 5 declensions; base-2 logarithm of 16 = 4
@@ -19,13 +23,11 @@ export default class Formulator {
 
             // If  1, 2, 4, 8, or 16 is found, then enable
             // declensions 1, 2, 3, 4, or 5, respectively
-            if ((bj & options.declensions) === bj) {
+            if ((bj & this.options.declensions) === bj) 
                 getFrom[j] = declensions[j + 1];
-            }
         }
 
-        // TODO
-        // this.questionGenerators.vocab(vocab, options.vocabNum);
+        this.questions.push(...this.questionGenerators.vocab(vocab, this.options.vocabNum));
 
         for (let declnum in getFrom)
             this.questions.push(
@@ -35,83 +37,13 @@ export default class Formulator {
                 )
             );
 
-        new WalkthroughMan().initialize(this.questions);
+        new WalkthroughMan().initialize(this.questions, this.options);
     }
 
     questionGenerators = {
-        // Unfinished
-        vocab(vocab, num) {
-            // For as many as the user wants,
-            for (let i = 0; i < num; i++) {
-                // get a random vocab word from the vocab JSON
-                let r = vocab[Math.floor(Math.random() * vocab.length)];
-                // then generate 1 of 3 vocab question types
-                this.questions.push({
-                    type: "vocab",
-                    question: r.word,
-                    answer: r.translation,
-                });
-            }
-        },
-
-        declensions(declnum, data, dataLevel = 0, formulation, cur = {}, questions) {
-            // start off
-            questions ??= [];
-            cur.level ||= data;
-            // For each key in the current level
-            for (const [key, value] of Object.entries(cur.level)) {
-                // New gender? Set it
-                if (dataLevel === 0) cur.gender = key;
-                // New grammatical number? Set it
-                if (dataLevel === 1) cur.gnumber = key;
-                // if it's on an ending
-                if (dataLevel === 2) {
-                    if (value === "-") break;
-
-                    // list formatter (e.g. "one, two, or three")
-                    let formatter = new Intl.ListFormat("en", {
-                        style: "long",
-                        type: "disjunction",
-                    });
-                    // format the question
-                    formulation = {
-                        question: `${ord(declnum)} declension ${cur.gnumber} ${formatter.format(cur.gender.split("/").map(this.expandGender))} ${key} ending`,
-                    };
-                    // add the answer
-                    formulation.answer = value;
-                    // add HTML
-                    formulation.html = this.htmlGenerator(formulation);
-                    // apply changes
-                    questions.push(formulation);
-                }
-
-                // Not finished? Recurse
-                if (value === Object(value)) {
-                    cur.level = value;
-                    this.questionGenerators.declensions.bind(this)(declnum, data, dataLevel + 1, formulation, cur, questions);
-                }
-            }
-            // Finished? Return!
-            return questions;
-        },
+        vocab, declensions,
     };
 
-    htmlGenerator(questionData) {
-        let title = createElement(
-            "h3",
-            "class:quiz-question-title",
-            questionData.question
-        ),
-            input = createElement(
-                "input",
-                "placeholder:Enter...;type:text;class:quiz-question-input"
-            ),
-            grader = createElement('div', 'class:quiz-grade', 'Grade'),
-            container = createElement("div", "class:quiz-content-inner");
-        input.correct = questionData.answer;
-
-        container.append(title, input, grader);
-        return container;
-    }
+    
     expandGender = (n) => "n" === n ? "neuter" : "m" === n ? "masculine" : "f" === n ? "feminine" : "";
 }
