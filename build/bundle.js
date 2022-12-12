@@ -108,6 +108,7 @@ class Grader {
   constructor() {}
   initialize(userAnswers, questions) {}
   gradeQ(question, userAnswer) {
+    console.log(question, userAnswer);
     // Empty input? Come on, User! :(
     if (!userAnswer) return false;
     // Remove accents to compare with correct answer
@@ -193,6 +194,7 @@ class WalkthroughMan {
     this.updateDisable();
 
     this.btns.next.addEventListener("click", () => {
+      console.log(this.timeTo);
       // ready to grade, if necessary
       if (this.timeTo === 1) {
         this.gradeQuestion();
@@ -406,6 +408,7 @@ function declensions(
   // Finished? Return!
   return questions;
 }
+
 function generateDeclHTML(questionData) {
   let title = createElement(
       "h3",
