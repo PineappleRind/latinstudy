@@ -304,6 +304,22 @@ button {
     font-size: var(--txt-s);
 }
 
+.quiz-results-q-wrong {
+    color: red;
+    font-weight: 300;
+    text-decoration: line-through;
+    margin-right: 4px;
+    display: inline-block;
+}
+
+.quiz-results-q-correct {
+    color: green;
+    font-weight: 600;
+}
+
+.quiz-results-q-correct::after {
+    content: '✓'
+}
 @keyframes correct-answer-load {
     from {
         opacity: 0;

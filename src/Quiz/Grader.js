@@ -1,4 +1,4 @@
-import { purify } from '../utils.js'
+import { $, createElement, purify, renderAnswer } from '../utils.js'
 
 // Grader recieves the responses from WalkthroughMan, compares
 // them to the questions, grades, and shows the grade to the user.
@@ -27,8 +27,26 @@ export default class Grader {
         }
         // Correct? Return right
     }
-    finish(answers, questions) {
+    finish(questions) {
         // switch to results pane
         window.latinstudier.switcher.showPane("quiz-results");
+        let numCorrect = 0;
+
+        for (let [i, question] of questions.entries()) {
+            let qSum = createElement('div', 'class:quiz-results-q', `${i + 1}. ${question.question}: `),
+                qWrong = createElement('span', 'class:quiz-results-q-wrong', question.graded.userAnswer),
+                qCorrect = createElement('span', 'class:quiz-results-q-correct');
+
+            qCorrect.append(renderAnswer(question.answer))
+
+            if (question.graded.isCorrect === true) numCorrect++;
+            else qSum.append(qWrong);
+            qSum.append(qCorrect);
+            $('#quiz-results-questions-inner').append(qSum);
+        }
+
+        $('#quiz-results-percentage').textContent = Math.round(numCorrect / questions.length * 1000) / 10
+        $('#quiz-results-num-correct').textContent = numCorrect;
+        $('#quiz-results-total').textContent = questions.length;
     }
 }

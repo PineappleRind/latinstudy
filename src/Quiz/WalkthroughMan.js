@@ -1,5 +1,5 @@
 import Grader from './Grader.js';
-import { $, createElement, wait, shuffleArray } from '../utils.js'
+import { $, createElement, wait, shuffleArray, renderAnswer } from '../utils.js'
 
 // WalkthroughMan handles the showing of the questions to the
 // user, records the user's response, and sends them to Grader.
@@ -22,25 +22,34 @@ export default class WalkthroughMan {
         this.questions = shuffleArray(questions);
         this.options = options;
 
+        //  1 = grade then next, 2 = next, 3 = finish
+        this.timeTo = this.options.immediateGrade ? 1 : 2;
+
         // Load the first question
         this.loadQuestion(0, 0, 1)
             .then(() => this.defaultHeight = this.container.getBoundingClientRect().height);
-        this.updateBtns();
+        this.updateDisable();
 
         this.btns.next.addEventListener("click", () => {
+            console.log(this.timeTo)
             // ready to grade, if necessary
-            if (this.options.immediateGrade && this.btns.next.innerHTML === 'Grade') {
+            if (this.timeTo === 1) {
                 this.gradeQuestion();
-                this.btns.next.innerHTML = 'Next';
+                this.timeTo = this.curQuestionIndex === this.questions.length - 1 ? 3 : 2;
             }
-            // time to finish? 
-            else if (this.btns.next.innerHTML === 'Finish')
-                this.grader.finish(this.userAnswers, questions);
-            // finished grading and need to go to the next question?
-            else if (this.btns.next.innerHTML !== 'Grade')
-                this.toQuestion.apply(this, [1, this.questionTransition])
 
-            if (this.curQuestionIndex === this.questions.length - 1) this.btns.next.innerHTML = 'Finish';
+            // done grading and expecting to go to the next question?
+            else if (this.timeTo === 2) {
+                this.toQuestion.apply(this, [1, this.questionTransition])
+                if (this.options.immediateGrade) this.timeTo = 1;
+            }
+
+            // finished grading and time to finish? 
+            else if (this.timeTo === 3) {
+                return this.grader.finish(questions);
+            }
+
+            this.updateNextBtn();
         });
         this.btns.prev.addEventListener("click", this.toQuestion.bind(this, -1, this.questionTransition));
         // If grading after each question is enabled
@@ -73,7 +82,7 @@ export default class WalkthroughMan {
         this.container.style.height = this.defaultHeight + cor + 'px';
         // store some elements
         this.curInput = this.questions[index].html.querySelector("input");
-        this.updateBtns();
+        this.updateDisable();
 
         // Hide the container's contents and prepare it for the next content
         this.container.classList.add("hidden");
@@ -105,7 +114,7 @@ export default class WalkthroughMan {
         return size;
     }
 
-    updateBtns() {
+    updateDisable() {
         // disable the previous button if needed
         if (this.curQuestionIndex === 0) this.btns.prev.disabled = true;
         else this.btns.prev.disabled = false;
@@ -114,18 +123,18 @@ export default class WalkthroughMan {
             this.btns.next.disabled = true;
 
         else this.btns.next.disabled = false;
+    }
 
-        // finished?
-        if (this.curQuestionIndex === this.questions.length - 1
-            &&
-            !this.options.immediateGrade) {
-            this.btns.next.innerHTML = 'Finish'
-        }
+    updateNextBtn() {
+        if (this.timeTo === 1) this.btns.next.innerHTML = 'Grade';
+        else if (this.timeTo === 2) this.btns.next.innerHTML = 'Next';
+        else if (this.timeTo === 3) this.btns.next.innerHTML = 'Finish';
     }
 
     inputListen() {
         this.curInput.onkeyup = (e) => {
-            this.updateBtns();
+            if (e.key === 'Enter') return this.btns.next.click();
+            this.updateDisable();
             this.userAnswers[this.curQuestionIndex] = {
                 response: this.curInput.value,
                 graded: null,
@@ -139,14 +148,16 @@ export default class WalkthroughMan {
         if (cur.graded && !this.options.immediateGrade) return;
 
         // get grade
+        let userAnswer = this.userAnswers.map(m => m.response)[this.curQuestionIndex];
         let { isCorrect, answer } = this.grader.gradeQ(cur, this.userAnswers.map(m => m.response)[this.curQuestionIndex])
-        console.log(isCorrect, answer)
+
         function visualUpdate() {
             this.curInput.disabled = true;
             this.curInput.classList.add(isCorrect ? 'correct' : 'wrong');
             // Measure the new height once the correct answer is added
             // for a lovely animation. 😍
-            let correct = createElement('div', 'class:quiz-correct-answer', answer)
+            let correct = createElement('div', 'class:quiz-correct-answer')
+            correct.append(renderAnswer(answer));
             let nh = this.getHTMLDimensions(correct, 'height');
             this.container.style.height = this.defaultHeight + nh + 'px';
             this.container.children[0].append(correct);
@@ -155,12 +166,17 @@ export default class WalkthroughMan {
         if (this.options.immediateGrade) visualUpdate.apply(this);
 
         // Finally set the current question to graded
-        this.questions[this.curQuestionIndex].graded = { isCorrect, answer };
+        this.questions[this.curQuestionIndex].graded = { isCorrect, answer, userAnswer };
         // and update the buttons
-        this.updateBtns()
+        this.updateDisable()
     }
 
     finishQuiz() {
-        this.grader.finish(this.userAnswers, this.questions);
+        this.grader.finish(this.questions);
+        this.questions = [];
+
+        // reset
+        this.timeTo = 1;
+        this.userAnswers = [];
     }
 }

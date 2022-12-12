@@ -27,17 +27,37 @@ const createElement = (tag, attrs, value) => {
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const purify = str => str.trim().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace('æ', 'ae');
+const purify = str => str.trim().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace('æ', 'ae').toLowerCase();
 
 //https://stackoverflow.com/a/12646864
 function shuffleArray(array) {
   for (var i = array.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
   }
   return array;
+}
+
+function renderAnswer(str) {
+  let res = createElement('span', 'class:rendered-answer');
+  const process = (str, answer, i) => {
+    let broken = answer.split('|');
+    let word = broken[0],
+      note = broken[1];
+
+    res.append(word);
+    if (note) res.append(createElement('span', 'class:answer-note', `(${note})`));
+
+    if (i !== ((str ?? answer).length - 1)) 
+      res.append(', ');
+  };
+
+  if (str.constructor === Array) str.forEach((a, i) => process(str, a, i));
+  else process('', str, -1);
+
+  return res;
 }
 
 class Switcher {
@@ -101,9 +121,27 @@ class Grader {
         }
         // Correct? Return right
     }
-    finish(answers, questions) {
+    finish(questions) {
         // switch to results pane
         window.latinstudier.switcher.showPane("quiz-results");
+        let numCorrect = 0;
+
+        for (let [i, question] of questions.entries()) {
+            let qSum = createElement('div', 'class:quiz-results-q', `${i + 1}. ${question.question}: `),
+                qWrong = createElement('span', 'class:quiz-results-q-wrong', question.graded.userAnswer),
+                qCorrect = createElement('span', 'class:quiz-results-q-correct');
+
+            qCorrect.append(renderAnswer(question.answer));
+
+            if (question.graded.isCorrect === true) numCorrect++;
+            else qSum.append(qWrong);
+            qSum.append(qCorrect);
+            $('#quiz-results-questions-inner').append(qSum);
+        }
+
+        $('#quiz-results-percentage').textContent = Math.round(numCorrect / questions.length * 1000) / 10;
+        $('#quiz-results-num-correct').textContent = numCorrect;
+        $('#quiz-results-total').textContent = questions.length;
     }
 }
 
@@ -128,25 +166,33 @@ class WalkthroughMan {
         this.questions = shuffleArray(questions);
         this.options = options;
 
+        //  1 = grade then next, 2 = next, 3 = finish
+        this.timeTo = this.options.immediateGrade ? 1 : 2;
+
         // Load the first question
         this.loadQuestion(0, 0, 1)
             .then(() => this.defaultHeight = this.container.getBoundingClientRect().height);
-        this.updateBtns();
+        this.updateDisable();
 
         this.btns.next.addEventListener("click", () => {
             // ready to grade, if necessary
-            if (this.options.immediateGrade && this.btns.next.innerHTML === 'Grade') {
+            if (this.timeTo === 1) {
                 this.gradeQuestion();
-                this.btns.next.innerHTML = 'Next';
+                this.timeTo = this.curQuestionIndex === this.questions.length - 1 ? 3 : 2;
             }
-            // time to finish? 
-            else if (this.btns.next.innerHTML === 'Finish')
-                this.grader.finish(this.userAnswers, questions);
-            // finished grading and need to go to the next question?
-            else if (this.btns.next.innerHTML !== 'Grade')
-                this.toQuestion.apply(this, [1, this.questionTransition]);
 
-            if (this.curQuestionIndex === this.questions.length - 1) this.btns.next.innerHTML = 'Finish';
+            // done grading and expecting to go to the next question?
+            else if (this.timeTo === 2) {
+                this.toQuestion.apply(this, [1, this.questionTransition]);
+                if (this.options.immediateGrade) this.timeTo = 1;
+            }
+
+            // finished grading and time to finish? 
+            else if (this.timeTo === 3) {
+                return this.grader.finish(questions);
+            }
+
+            this.updateNextBtn();
         });
         this.btns.prev.addEventListener("click", this.toQuestion.bind(this, -1, this.questionTransition));
         // If grading after each question is enabled
@@ -179,7 +225,7 @@ class WalkthroughMan {
         this.container.style.height = this.defaultHeight + cor + 'px';
         // store some elements
         this.curInput = this.questions[index].html.querySelector("input");
-        this.updateBtns();
+        this.updateDisable();
 
         // Hide the container's contents and prepare it for the next content
         this.container.classList.add("hidden");
@@ -211,7 +257,7 @@ class WalkthroughMan {
         return size;
     }
 
-    updateBtns() {
+    updateDisable() {
         // disable the previous button if needed
         if (this.curQuestionIndex === 0) this.btns.prev.disabled = true;
         else this.btns.prev.disabled = false;
@@ -220,18 +266,18 @@ class WalkthroughMan {
             this.btns.next.disabled = true;
 
         else this.btns.next.disabled = false;
+    }
 
-        // finished?
-        if (this.curQuestionIndex === this.questions.length - 1
-            &&
-            !this.options.immediateGrade) {
-            this.btns.next.innerHTML = 'Finish';
-        }
+    updateNextBtn() {
+        if (this.timeTo === 1) this.btns.next.innerHTML = 'Grade';
+        else if (this.timeTo === 2) this.btns.next.innerHTML = 'Next';
+        else if (this.timeTo === 3) this.btns.next.innerHTML = 'Finish';
     }
 
     inputListen() {
         this.curInput.onkeyup = (e) => {
-            this.updateBtns();
+            if (e.key === 'Enter') return this.btns.next.click();
+            this.updateDisable();
             this.userAnswers[this.curQuestionIndex] = {
                 response: this.curInput.value,
                 graded: null,
@@ -245,14 +291,16 @@ class WalkthroughMan {
         if (cur.graded && !this.options.immediateGrade) return;
 
         // get grade
+        let userAnswer = this.userAnswers.map(m => m.response)[this.curQuestionIndex];
         let { isCorrect, answer } = this.grader.gradeQ(cur, this.userAnswers.map(m => m.response)[this.curQuestionIndex]);
-        console.log(isCorrect, answer);
+
         function visualUpdate() {
             this.curInput.disabled = true;
             this.curInput.classList.add(isCorrect ? 'correct' : 'wrong');
             // Measure the new height once the correct answer is added
             // for a lovely animation. 😍
-            let correct = createElement('div', 'class:quiz-correct-answer', answer);
+            let correct = createElement('div', 'class:quiz-correct-answer');
+            correct.append(renderAnswer(answer));
             let nh = this.getHTMLDimensions(correct, 'height');
             this.container.style.height = this.defaultHeight + nh + 'px';
             this.container.children[0].append(correct);
@@ -261,13 +309,18 @@ class WalkthroughMan {
         if (this.options.immediateGrade) visualUpdate.apply(this);
 
         // Finally set the current question to graded
-        this.questions[this.curQuestionIndex].graded = { isCorrect, answer };
+        this.questions[this.curQuestionIndex].graded = { isCorrect, answer, userAnswer };
         // and update the buttons
-        this.updateBtns();
+        this.updateDisable();
     }
 
     finishQuiz() {
-        this.grader.finish(this.userAnswers, this.questions);
+        this.grader.finish(this.questions);
+        this.questions = [];
+
+        // reset
+        this.timeTo = 1;
+        this.userAnswers = [];
     }
 }
 

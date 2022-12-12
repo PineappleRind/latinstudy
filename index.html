@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>LatinStudier™</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <header>LatinStudier™ v<span id="version">0</span></header>
     <div id="app">
@@ -33,11 +35,13 @@
             </div>
             <h4>Vocabulary</h4>
             <div class="quiz-vocab-select">
-                <input type="number" placeholder="# of vocabulary words" class="quiz-vocab-count"><label><small> (0 for all, -1 for off)</small></label>
+                <input type="number" placeholder="# of vocabulary words" class="quiz-vocab-count"><label><small> (0 for
+                        all, -1 for off)</small></label>
             </div>
             <h4>More settings</h4>
             <div class="quiz-immediate-grade-select">
-                <input checked type="checkbox" id="quiz-immediate-grade"> <label for="quiz-immediate-grade">Grade each question after submit</label>
+                <input checked type="checkbox" id="quiz-immediate-grade"> <label for="quiz-immediate-grade">Grade each
+                    question after submit</label>
             </div>
             <br>
             <button class="btn pane-trigger quiz-begin" data-pane="quiz">Begin</button>
@@ -54,6 +58,14 @@
             <button class="back pane-trigger" data-pane="begin">Home</button>
             <div class="quiz-results-inner">
                 <h2>Finish</h2>
+                <h4>Your grade</h4>
+                <p><span id="quiz-results-percentage"></span>% | <span id="quiz-results-num-correct"></span>/<span
+                        id="quiz-results-total"></span></p>
+                <h4>Questions</h4>
+                <div id="quiz-results-questions-inner">
+
+                </div>
+                <button class="btn pane-trigger" data-pane="begin">Back home</button>
             </div>
         </div>
         <div class="pane" id="404">
@@ -65,4 +77,5 @@
     <!-- <script type="module" src="build/bundle.min.js"></script> -->
     <script type="module" src="src/index.js"></script>
 </body>
+
 </html>
