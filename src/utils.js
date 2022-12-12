@@ -9,7 +9,7 @@ export const fetchToJSON = async (url) => {
 export const ord = (n) =>
   n +
   { e: "st", o: "nd", w: "rd", h: "th" }[
-  new Intl.PluralRules("en", { type: "ordinal" }).select(n)[2]
+    new Intl.PluralRules("en", { type: "ordinal" }).select(n)[2]
   ];
 
 export const createElement = (tag, attrs, value) => {
@@ -27,7 +27,13 @@ export const createElement = (tag, attrs, value) => {
 
 export const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const purify = str => str.trim().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace('æ', 'ae').toLowerCase()
+export const purify = (str) =>
+  str
+    .trim()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace("æ", "ae")
+    .toLowerCase();
 
 //https://stackoverflow.com/a/12646864
 export function shuffleArray(array) {
@@ -41,21 +47,21 @@ export function shuffleArray(array) {
 }
 
 export function renderAnswer(str) {
-  let res = createElement('span', 'class:rendered-answer');
+  let res = createElement("span", "class:rendered-answer");
   const process = (str, answer, i) => {
-    let broken = answer.split('|');
+    let broken = answer.split("|");
     let word = broken[0],
       note = broken[1];
 
     res.append(word);
-    if (note) res.append(createElement('span', 'class:answer-note', `(${note})`));
+    if (note)
+      res.append(createElement("span", "class:answer-note", `(${note})`));
 
-    if (i !== ((str ?? answer).length - 1)) 
-      res.append(', ');
-  }
+    if (i !== (str ?? answer).length - 1) res.append(", ");
+  };
 
   if (str.constructor === Array) str.forEach((a, i) => process(str, a, i));
-  else process('', str, -1)
+  else process("", str, -1);
 
   return res;
 }

@@ -1,81 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LatinStudier™</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-<body>
+  <body>
     <header>LatinStudier™ v<span id="version">0</span></header>
     <div id="app">
-        <div class="pane showing" id="begin">
-            <div class="flex">
-                <button class="btn pane-trigger" data-pane="view">View</button>
-                <button class="btn pane-trigger" data-pane="quiz-start">Quiz</button>
-            </div>
+      <div class="pane showing" id="begin">
+        <div class="flex">
+          <button class="btn pane-trigger" data-pane="view">View</button>
+          <button class="btn pane-trigger" data-pane="quiz-start">Quiz</button>
         </div>
-        <div class="pane" id="view">
-            <button class="back pane-trigger" data-pane=".">Back</button>
-            <h2>View declension endings</h2>
+      </div>
+      <div class="pane" id="view">
+        <button class="back pane-trigger" data-pane=".">Back</button>
+        <h2>View declension endings</h2>
+      </div>
+      <div class="pane" id="quiz-start">
+        <button class="back pane-trigger" data-pane=".">Back</button>
+        <h2>Quiz</h2>
+        <h4>Quiz on declensions...</h4>
+        <div class="quiz-declension-select">
+          <div class="quiz-declension-option" data-value="1">1st</div>
+          <div class="quiz-declension-option" data-value="2">2nd</div>
+          <div class="quiz-declension-option" data-value="3">3rd</div>
+          <div class="quiz-declension-option" data-value="4">4th</div>
+          <div class="quiz-declension-option" data-value="5">5th</div>
         </div>
-        <div class="pane" id="quiz-start">
-            <button class="back pane-trigger" data-pane=".">Back</button>
-            <h2>Quiz</h2>
-            <h4>Quiz on declensions...</h4>
-            <div class="quiz-declension-select">
-                <div class="quiz-declension-option" data-value="1">1st</div>
-                <div class="quiz-declension-option" data-value="2">2nd</div>
-                <div class="quiz-declension-option" data-value="3">3rd</div>
-                <div class="quiz-declension-option" data-value="4">4th</div>
-                <div class="quiz-declension-option" data-value="5">5th</div>
-            </div>
-            <h4>Vocabulary</h4>
-            <div class="quiz-vocab-select">
-                <input type="number" placeholder="# of vocabulary words" class="quiz-vocab-count"><label><small> (0 for
-                        all, -1 for off)</small></label>
-            </div>
-            <h4>More settings</h4>
-            <div class="quiz-immediate-grade-select">
-                <input checked type="checkbox" id="quiz-immediate-grade"> <label for="quiz-immediate-grade">Grade each
-                    question after submit</label>
-            </div>
-            <br>
-            <button class="btn pane-trigger quiz-begin" data-pane="quiz">Begin</button>
+        <h4>Vocabulary</h4>
+        <div class="quiz-vocab-select">
+          <input
+            type="number"
+            placeholder="# of vocabulary words"
+            class="quiz-vocab-count"
+          /><label><small> (0 for all, -1 for off)</small></label>
         </div>
-        <div class="pane" id="quiz">
-            <h2>Quiz</h2>
-            <div class="quiz-content-outer"></div>
-            <div class="flex">
-                <button disabled class="btn btn-gray quiz-prev">Previous</button>
-                <button disabled class="btn quiz-next">Next</button>
-            </div>
+        <h4>More settings</h4>
+        <div class="quiz-immediate-grade-select">
+          <input checked type="checkbox" id="quiz-immediate-grade" />
+          <label for="quiz-immediate-grade"
+            >Grade each question after submit</label
+          >
         </div>
-        <div class="pane" id="quiz-results">
-            <button class="back pane-trigger" data-pane="begin">Home</button>
-            <div class="quiz-results-inner">
-                <h2>Finish</h2>
-                <h4>Your grade</h4>
-                <p><span id="quiz-results-percentage"></span>% | <span id="quiz-results-num-correct"></span>/<span
-                        id="quiz-results-total"></span></p>
-                <h4>Questions</h4>
-                <div id="quiz-results-questions-inner">
-
-                </div>
-                <button class="btn pane-trigger" data-pane="begin">Back home</button>
-            </div>
+        <br />
+        <button class="btn pane-trigger quiz-begin" data-pane="quiz">
+          Begin
+        </button>
+      </div>
+      <div class="pane" id="quiz">
+        <h2>Quiz</h2>
+        <div class="quiz-content-outer"></div>
+        <div class="flex">
+          <button disabled class="btn btn-gray quiz-prev">Previous</button>
+          <button disabled class="btn quiz-next">Next</button>
         </div>
-        <div class="pane" id="404">
-            <button class="back pane-trigger" data-pane=".">Back</button>
-            <h2>Error</h2>
-            <p>Unknown pane</p>
+      </div>
+      <div class="pane" id="quiz-results">
+        <button class="back pane-trigger" data-pane="begin">Home</button>
+        <div class="quiz-results-inner">
+          <h2>Finish</h2>
+          <h4>Your grade</h4>
+          <p>
+            <span id="quiz-results-percentage"></span>% |
+            <span id="quiz-results-num-correct"></span>/<span
+              id="quiz-results-total"
+            ></span>
+          </p>
+          <h4>Questions</h4>
+          <div id="quiz-results-questions-inner"></div>
+          <button class="btn pane-trigger" data-pane="begin">Back home</button>
         </div>
+      </div>
+      <div class="pane" id="404">
+        <button class="back pane-trigger" data-pane=".">Back</button>
+        <h2>Error</h2>
+        <p>Unknown pane</p>
+      </div>
     </div>
     <!-- <script type="module" src="build/bundle.min.js"></script> -->
     <script type="module" src="src/index.js"></script>
-</body>
-
+  </body>
 </html>

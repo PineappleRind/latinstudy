@@ -1,843 +1,738 @@
 [
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "copia",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": [
-            "supply",
-            "abundance"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "copiæ",
-        "genitive": "-ārum",
-        "gender": "f",
-        "translation": [
-            "troops",
-            "forces"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "Gallia",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": "Gaul"
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "glōria",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": [
-            "fame",
-            "glory"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "grātia",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": [
-            "favor",
-            "influence",
-            "grace|in Christian Latin"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "grātiæ",
-        "genitive": "-ārum",
-        "gender": "f",
-        "translation": "thanks"
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "inopia",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": [
-            "scarcity",
-            "want"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "Marīa",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": "Mary"
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "nauta",
-        "genitive": "-æ",
-        "gender": "m",
-        "translation": "sailor"
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "porta",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": "gate"
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "prōvincia",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": "province"
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "Rōma",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": "Rome"
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "silva",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": "forest"
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "terra",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": [
-            "earth",
-            "land"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "via",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": [
-            "road",
-            "way"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "1",
-        "word": "victōria",
-        "genitive": "-æ",
-        "gender": "f",
-        "translation": "victory"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "amīcus",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": "friend"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "Chrīstiānus",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": "Christian"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "Chrīstus",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": "Christ"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "Deus",
-        "genitive": "Deī",
-        "gender": "m",
-        "translation": "God"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "dominus",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": [
-            "master",
-            "Lord"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "fīlius",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": "son"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "Gallus",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": "a Gaul"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "gladius",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": "sword"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "mundus",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": "world"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "mūrus",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": "wall"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "populus",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": [
-            "people",
-            "nation"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "Rōmānus",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": "a Roman"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "servus",
-        "genitive": "-ī",
-        "gender": "m",
-        "translation": [
-            "slave",
-            "servant"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "bellum",
-        "genitive": "-ī",
-        "gender": "n",
-        "translation": "war"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "cælum",
-        "genitive": "-ī",
-        "gender": "n",
-        "translation": [
-            "sky",
-            "heaven"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "frūmentum",
-        "genitive": "-ī",
-        "gender": "n",
-        "translation": [
-            "grain",
-            "crops|plural"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "imperium",
-        "genitive": "-ī",
-        "gender": "n",
-        "translation": [
-            "command",
-            "power",
-            "empire"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "oppidum",
-        "genitive": "-ī",
-        "gender": "n",
-        "translation": "town"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "perīculum",
-        "genitive": "-ī",
-        "gender": "n",
-        "translation": "danger"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "præmium",
-        "genitive": "-ī",
-        "gender": "n",
-        "translation": "reward"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "rēgnum",
-        "genitive": "-ī",
-        "gender": "n",
-        "translation": [
-            "kingdom",
-            "royal power"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "signum",
-        "genitive": "-ī",
-        "gender": "n",
-        "translation": [
-            "standard",
-            "signal",
-            "sign"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "castra",
-        "genitive": "-ōrum",
-        "gender": "n",
-        "translation": "camp"
-    },
-    {
-        "type": "noun",
-        "declension": "2",
-        "word": "impedīmenta",
-        "genitive": "impedīmentōrum",
-        "gender": "n",
-        "translation": [
-            "baggage",
-            "baggage train"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "Cæsar",
-        "genitive": "Cæsaris",
-        "gender": "m",
-        "translation": "Cæsar"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "clāmor",
-        "genitive": "clāmōris",
-        "gender": "m",
-        "translation": [
-            "shouting",
-            "shout"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "dux",
-        "genitive": "ducis",
-        "gender": "f",
-        "translation": "leader"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "eques",
-        "genitive": "equitis",
-        "gender": "f",
-        "translation": [
-            "horseman",
-            "cavalry|plural"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "frāter",
-        "genitive": "frātris (pl. frātrum)",
-        "gender": "m",
-        "translation": "brother"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "homō",
-        "genitive": "hominis",
-        "gender": "f",
-        "translation": "man"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "imperātor",
-        "genitive": "imperātōris",
-        "gender": "m",
-        "translation": [
-            "commander in chief",
-            "general"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "legiō",
-        "genitive": "legiōnis",
-        "gender": "f",
-        "translation": "legion"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "lēx",
-        "genitive": "lēgis",
-        "gender": "f",
-        "translation": "law"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "lūx",
-        "genitive": "lūcis",
-        "gender": "f",
-        "translation": "light"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "māter",
-        "genitive": "mātris (pl. mātrum)",
-        "gender": "f",
-        "translation": "mother"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "mīles",
-        "genitive": "mīlitis",
-        "gender": "m",
-        "translation": "soldier"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "pater",
-        "genitive": "patris (pl. patrum)",
-        "gender": "m",
-        "translation": "father"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "pāx",
-        "genitive": "pācis",
-        "gender": "f",
-        "translation": "peace"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "prīnceps",
-        "genitive": "prīncipis",
-        "gender": "f",
-        "translation": [
-            "chief",
-            "leading man"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "rēx",
-        "genitive": "rēgis",
-        "gender": "m",
-        "translation": "king"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "salūs",
-        "genitive": "salūtis",
-        "gender": "f",
-        "translation": [
-            "safety",
-            "welfare",
-            "salvation"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "vēritās",
-        "genitive": "vēritātis",
-        "gender": "f",
-        "translation": "truth"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "virtūs",
-        "genitive": "virtūtis",
-        "gender": "f",
-        "translation": [
-            "courage",
-            "virtue"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "vōx",
-        "genitive": "vōcis",
-        "gender": "f",
-        "translation": [
-            "voice",
-            "cry"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "cædēs",
-        "genitive": "cædis",
-        "gender": "f",
-        "translation": "slaughter"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "collis",
-        "genitive": "collis",
-        "gender": "m",
-        "translation": "hill"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "gēns",
-        "genitive": "gentis",
-        "gender": "f",
-        "translation": "tribe"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "hostis",
-        "genitive": "hostis",
-        "gender": "f",
-        "translation": "enemy|in war"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "mōns",
-        "genitive": "montis",
-        "gender": "m",
-        "translation": "mountain"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "pars",
-        "genitive": "partis",
-        "gender": "f",
-        "translation": "part"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "pōns",
-        "genitive": "pontis",
-        "gender": "m",
-        "translation": "bridge"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "urbs",
-        "genitive": "urbis",
-        "gender": "f",
-        "translation": "city"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "agmen",
-        "genitive": "agminis",
-        "gender": "n",
-        "translation": [
-            "column|of soldiers",
-            "army|on the march"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "corpus",
-        "genitive": "corporis",
-        "gender": "n",
-        "translation": "body"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "flūmen",
-        "genitive": "flūminis",
-        "gender": "n",
-        "translation": "river"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "iter",
-        "genitive": "itineris",
-        "gender": "n",
-        "translation": [
-            "journey",
-            "march",
-            "route"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "nōmen",
-        "genitive": "nōminis",
-        "gender": "n",
-        "translation": "name"
-    },
-    {
-        "type": "noun",
-        "declension": "3",
-        "word": "vulnus",
-        "genitive": "vulneris",
-        "gender": "n",
-        "translation": "wound"
-    },
-    {
-        "type": "noun",
-        "declension": "4",
-        "word": "adventus",
-        "genitive": "-ūs",
-        "gender": "m",
-        "translation": [
-            "arrival",
-            "coming"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "4",
-        "word": "equitātus",
-        "genitive": "-ūs",
-        "gender": "m",
-        "translation": "cavalry"
-    },
-    {
-        "type": "noun",
-        "declension": "4",
-        "word": "exercitus",
-        "genitive": "-ūs",
-        "gender": "m",
-        "translation": "carmy"
-    },
-    {
-        "type": "noun",
-        "declension": "4",
-        "word": "impetus",
-        "genitive": "-ūs",
-        "gender": "m",
-        "translation": "attack"
-    },
-    {
-        "type": "noun",
-        "declension": "4",
-        "word": "metus",
-        "genitive": "-ūs",
-        "gender": "m",
-        "translation": "fear"
-    },
-    {
-        "type": "noun",
-        "declension": "4",
-        "word": "portus",
-        "genitive": "-ūs",
-        "gender": "m",
-        "translation": "harbor"
-    },
-    {
-        "type": "noun",
-        "declension": "4",
-        "word": "senātus",
-        "genitive": "-ūs",
-        "gender": "m",
-        "translation": "senate"
-    },
-    {
-        "type": "noun",
-        "declension": "4",
-        "word": "spīritus",
-        "genitive": "-ūs",
-        "gender": "m",
-        "translation": [
-            "breath",
-            "spirit"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "5",
-        "word": "aciēs",
-        "genitive": "aciēī",
-        "gender": "f",
-        "translation": "battle line"
-    },
-    {
-        "type": "noun",
-        "declension": "5",
-        "word": "fidēs",
-        "genitive": "fideī",
-        "gender": "f",
-        "translation": [
-            "faith",
-            "reliability",
-            "faithfulness"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "5",
-        "word": "rēs",
-        "genitive": "reī",
-        "gender": "f",
-        "translation": [
-            "thing",
-            "affair"
-        ]
-    },
-    {
-        "type": "noun",
-        "declension": "5",
-        "word": "spēs",
-        "genitive": "speī",
-        "gender": "f",
-        "translation": "hope"
-    },
-    {
-        "type": "adjective",
-        "declension": "1/2",
-        "word": "magnus",
-        "translation": [
-            "great",
-            "large"
-        ]
-    },
-    {
-        "type": "adjective",
-        "declension": "1/2",
-        "word": "altus",
-        "translation": [
-            "high",
-            "deep"
-        ]
-    },
-    {
-        "type": "adjective",
-        "declension": "1/2",
-        "word": "sānctus",
-        "translation": [
-            "holy",
-            "saint"
-        ]
-    },
-    {
-        "type": "adjective",
-        "declension": "1/2",
-        "word": "bonus",
-        "translation": "good"
-    },
-    {
-        "type": "adjective",
-        "declension": "1/2",
-        "word": "longus",
-        "translation": "long"
-    },
-    {
-        "type": "adjective",
-        "declension": "1/2",
-        "word": "malus",
-        "translation": "bad"
-    },
-    {
-        "type": "adjective",
-        "declension": "1/2",
-        "word": "bonus",
-        "translation": [
-            "much",
-            "many|plural"
-        ]
-    },
-    {
-        "type": "adjective",
-        "declension": "1/2",
-        "word": "prīmus",
-        "translation": "good"
-    }
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "copia",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": ["supply", "abundance"]
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "copiæ",
+    "genitive": "-ārum",
+    "gender": "f",
+    "translation": ["troops", "forces"]
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "Gallia",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": "Gaul"
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "glōria",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": ["fame", "glory"]
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "grātia",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": ["favor", "influence", "grace|in Christian Latin"]
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "grātiæ",
+    "genitive": "-ārum",
+    "gender": "f",
+    "translation": "thanks"
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "inopia",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": ["scarcity", "want"]
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "Marīa",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": "Mary"
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "nauta",
+    "genitive": "-æ",
+    "gender": "m",
+    "translation": "sailor"
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "porta",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": "gate"
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "prōvincia",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": "province"
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "Rōma",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": "Rome"
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "silva",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": "forest"
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "terra",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": ["earth", "land"]
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "via",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": ["road", "way"]
+  },
+  {
+    "type": "noun",
+    "declension": "1",
+    "word": "victōria",
+    "genitive": "-æ",
+    "gender": "f",
+    "translation": "victory"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "amīcus",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": "friend"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "Chrīstiānus",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": "Christian"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "Chrīstus",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": "Christ"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "Deus",
+    "genitive": "Deī",
+    "gender": "m",
+    "translation": "God"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "dominus",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": ["master", "Lord"]
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "fīlius",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": "son"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "Gallus",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": "a Gaul"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "gladius",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": "sword"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "mundus",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": "world"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "mūrus",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": "wall"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "populus",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": ["people", "nation"]
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "Rōmānus",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": "a Roman"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "servus",
+    "genitive": "-ī",
+    "gender": "m",
+    "translation": ["slave", "servant"]
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "bellum",
+    "genitive": "-ī",
+    "gender": "n",
+    "translation": "war"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "cælum",
+    "genitive": "-ī",
+    "gender": "n",
+    "translation": ["sky", "heaven"]
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "frūmentum",
+    "genitive": "-ī",
+    "gender": "n",
+    "translation": ["grain", "crops|plural"]
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "imperium",
+    "genitive": "-ī",
+    "gender": "n",
+    "translation": ["command", "power", "empire"]
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "oppidum",
+    "genitive": "-ī",
+    "gender": "n",
+    "translation": "town"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "perīculum",
+    "genitive": "-ī",
+    "gender": "n",
+    "translation": "danger"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "præmium",
+    "genitive": "-ī",
+    "gender": "n",
+    "translation": "reward"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "rēgnum",
+    "genitive": "-ī",
+    "gender": "n",
+    "translation": ["kingdom", "royal power"]
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "signum",
+    "genitive": "-ī",
+    "gender": "n",
+    "translation": ["standard", "signal", "sign"]
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "castra",
+    "genitive": "-ōrum",
+    "gender": "n",
+    "translation": "camp"
+  },
+  {
+    "type": "noun",
+    "declension": "2",
+    "word": "impedīmenta",
+    "genitive": "impedīmentōrum",
+    "gender": "n",
+    "translation": ["baggage", "baggage train"]
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "Cæsar",
+    "genitive": "Cæsaris",
+    "gender": "m",
+    "translation": "Cæsar"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "clāmor",
+    "genitive": "clāmōris",
+    "gender": "m",
+    "translation": ["shouting", "shout"]
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "dux",
+    "genitive": "ducis",
+    "gender": "f",
+    "translation": "leader"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "eques",
+    "genitive": "equitis",
+    "gender": "f",
+    "translation": ["horseman", "cavalry|plural"]
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "frāter",
+    "genitive": "frātris (pl. frātrum)",
+    "gender": "m",
+    "translation": "brother"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "homō",
+    "genitive": "hominis",
+    "gender": "f",
+    "translation": "man"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "imperātor",
+    "genitive": "imperātōris",
+    "gender": "m",
+    "translation": ["commander in chief", "general"]
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "legiō",
+    "genitive": "legiōnis",
+    "gender": "f",
+    "translation": "legion"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "lēx",
+    "genitive": "lēgis",
+    "gender": "f",
+    "translation": "law"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "lūx",
+    "genitive": "lūcis",
+    "gender": "f",
+    "translation": "light"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "māter",
+    "genitive": "mātris (pl. mātrum)",
+    "gender": "f",
+    "translation": "mother"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "mīles",
+    "genitive": "mīlitis",
+    "gender": "m",
+    "translation": "soldier"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "pater",
+    "genitive": "patris (pl. patrum)",
+    "gender": "m",
+    "translation": "father"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "pāx",
+    "genitive": "pācis",
+    "gender": "f",
+    "translation": "peace"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "prīnceps",
+    "genitive": "prīncipis",
+    "gender": "f",
+    "translation": ["chief", "leading man"]
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "rēx",
+    "genitive": "rēgis",
+    "gender": "m",
+    "translation": "king"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "salūs",
+    "genitive": "salūtis",
+    "gender": "f",
+    "translation": ["safety", "welfare", "salvation"]
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "vēritās",
+    "genitive": "vēritātis",
+    "gender": "f",
+    "translation": "truth"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "virtūs",
+    "genitive": "virtūtis",
+    "gender": "f",
+    "translation": ["courage", "virtue"]
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "vōx",
+    "genitive": "vōcis",
+    "gender": "f",
+    "translation": ["voice", "cry"]
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "cædēs",
+    "genitive": "cædis",
+    "gender": "f",
+    "translation": "slaughter"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "collis",
+    "genitive": "collis",
+    "gender": "m",
+    "translation": "hill"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "gēns",
+    "genitive": "gentis",
+    "gender": "f",
+    "translation": "tribe"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "hostis",
+    "genitive": "hostis",
+    "gender": "f",
+    "translation": "enemy|in war"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "mōns",
+    "genitive": "montis",
+    "gender": "m",
+    "translation": "mountain"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "pars",
+    "genitive": "partis",
+    "gender": "f",
+    "translation": "part"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "pōns",
+    "genitive": "pontis",
+    "gender": "m",
+    "translation": "bridge"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "urbs",
+    "genitive": "urbis",
+    "gender": "f",
+    "translation": "city"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "agmen",
+    "genitive": "agminis",
+    "gender": "n",
+    "translation": ["column|of soldiers", "army|on the march"]
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "corpus",
+    "genitive": "corporis",
+    "gender": "n",
+    "translation": "body"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "flūmen",
+    "genitive": "flūminis",
+    "gender": "n",
+    "translation": "river"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "iter",
+    "genitive": "itineris",
+    "gender": "n",
+    "translation": ["journey", "march", "route"]
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "nōmen",
+    "genitive": "nōminis",
+    "gender": "n",
+    "translation": "name"
+  },
+  {
+    "type": "noun",
+    "declension": "3",
+    "word": "vulnus",
+    "genitive": "vulneris",
+    "gender": "n",
+    "translation": "wound"
+  },
+  {
+    "type": "noun",
+    "declension": "4",
+    "word": "adventus",
+    "genitive": "-ūs",
+    "gender": "m",
+    "translation": ["arrival", "coming"]
+  },
+  {
+    "type": "noun",
+    "declension": "4",
+    "word": "equitātus",
+    "genitive": "-ūs",
+    "gender": "m",
+    "translation": "cavalry"
+  },
+  {
+    "type": "noun",
+    "declension": "4",
+    "word": "exercitus",
+    "genitive": "-ūs",
+    "gender": "m",
+    "translation": "carmy"
+  },
+  {
+    "type": "noun",
+    "declension": "4",
+    "word": "impetus",
+    "genitive": "-ūs",
+    "gender": "m",
+    "translation": "attack"
+  },
+  {
+    "type": "noun",
+    "declension": "4",
+    "word": "metus",
+    "genitive": "-ūs",
+    "gender": "m",
+    "translation": "fear"
+  },
+  {
+    "type": "noun",
+    "declension": "4",
+    "word": "portus",
+    "genitive": "-ūs",
+    "gender": "m",
+    "translation": "harbor"
+  },
+  {
+    "type": "noun",
+    "declension": "4",
+    "word": "senātus",
+    "genitive": "-ūs",
+    "gender": "m",
+    "translation": "senate"
+  },
+  {
+    "type": "noun",
+    "declension": "4",
+    "word": "spīritus",
+    "genitive": "-ūs",
+    "gender": "m",
+    "translation": ["breath", "spirit"]
+  },
+  {
+    "type": "noun",
+    "declension": "5",
+    "word": "aciēs",
+    "genitive": "aciēī",
+    "gender": "f",
+    "translation": "battle line"
+  },
+  {
+    "type": "noun",
+    "declension": "5",
+    "word": "fidēs",
+    "genitive": "fideī",
+    "gender": "f",
+    "translation": ["faith", "reliability", "faithfulness"]
+  },
+  {
+    "type": "noun",
+    "declension": "5",
+    "word": "rēs",
+    "genitive": "reī",
+    "gender": "f",
+    "translation": ["thing", "affair"]
+  },
+  {
+    "type": "noun",
+    "declension": "5",
+    "word": "spēs",
+    "genitive": "speī",
+    "gender": "f",
+    "translation": "hope"
+  },
+  {
+    "type": "adjective",
+    "declension": "1/2",
+    "word": "magnus",
+    "translation": ["great", "large"]
+  },
+  {
+    "type": "adjective",
+    "declension": "1/2",
+    "word": "altus",
+    "translation": ["high", "deep"]
+  },
+  {
+    "type": "adjective",
+    "declension": "1/2",
+    "word": "sānctus",
+    "translation": ["holy", "saint"]
+  },
+  {
+    "type": "adjective",
+    "declension": "1/2",
+    "word": "bonus",
+    "translation": "good"
+  },
+  {
+    "type": "adjective",
+    "declension": "1/2",
+    "word": "longus",
+    "translation": "long"
+  },
+  {
+    "type": "adjective",
+    "declension": "1/2",
+    "word": "malus",
+    "translation": "bad"
+  },
+  {
+    "type": "adjective",
+    "declension": "1/2",
+    "word": "bonus",
+    "translation": ["much", "many|plural"]
+  },
+  {
+    "type": "adjective",
+    "declension": "1/2",
+    "word": "prīmus",
+    "translation": "good"
+  }
 ]

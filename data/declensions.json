@@ -1,141 +1,141 @@
 {
-    "1": {
-        "f": {
-            "singular": {
-                "nominative": "a",
-                "genitive": "æ",
-                "dative": "æ",
-                "accusative": "am",
-                "ablative": "ā"
-            },
-            "plural": {
-                "nominative": "æ",
-                "genitive": "arum",
-                "dative": "īs",
-                "accusative": "as",
-                "ablative": "īs"
-            }
-        }
-    },
-    "2": {
-        "m/n": {
-            "singular": {
-                "genitive": "ī",
-                "dative": "ō",
-                "accusative": "um",
-                "ablative": "ō"
-            },
-            "plural": {
-                "genitive": "ōrum",
-                "dative": "īs",
-                "ablative": "īs"
-            }
-        },
-        "m": {
-            "singular": {
-                "nominative": "us"
-            },
-            "plural": {
-                "nominative": "ī",
-                "accusative": "ōs"
-            }
-        },
-        "n": {
-            "singular": {
-                "nominative": "um"
-            },
-            "plural": {
-                "nominative": "a",
-                "accusative": "a"
-            }
-        }
-    },
-    "3": {
-        "m/f/n": {
-            "singular": {
-                "genitive": "is",
-                "dative": "ī",
-                "accusative": "em",
-                "ablative": "e"
-            },
-            "plural": {
-                "nominative": "ēs",
-                "dative": "ibus",
-                "accusative": "ēs",
-                "ablative": "ibus"
-            }
-        },
-        "m": {
-            "plural": {
-                "genitive": "um"
-            }
-        },
-        "f": {
-            "plural": {
-                "genitive": "ium"
-            }
-        },
-        "n": {
-            "singular": {
-                "accusative": "-"
-            },
-            "plural": {
-                "nominative": "a",
-                "accusative": "a"
-            }
-        }
-    },
-    "4": {
-        "m/n": {
-            "singular": {
-                "genitive": "ūs",
-                "ablative": "ū"
-            },
-            "plural": {
-                "genitive": "uum",
-                "dative": "ibus",
-                "ablative": "ibus"
-            }
-        },
-        "m": {
-            "singular": {
-                "nominative": "us",
-                "dative": "uī",
-                "accusative": "um"
-            },
-            "plural": {
-                "nominative": "ūs",
-                "accusative": "ūs"
-            }
-        },
-        "n": {
-            "singular": {
-                "nominative": "u",
-                "dative": "ū",
-                "accusative": "ū"
-            },
-            "plural": {
-                "nominative": "ū",
-                "accusative": "ua"
-            }
-        }
-    },
-    "5": {
-        "f": {
-            "singular": {
-                "nominative": "-",
-                "genitive": "eī",
-                "dative": "eī",
-                "accusative": "em",
-                "ablative": "ē"
-            },
-            "plural": {
-                "nominative": "ēs",
-                "genitive": "ērum",
-                "dative": "ēbus",
-                "accusative": "ēs",
-                "ablative": "ēbus"
-            }
-        }
+  "1": {
+    "f": {
+      "singular": {
+        "nominative": "a",
+        "genitive": "æ",
+        "dative": "æ",
+        "accusative": "am",
+        "ablative": "ā"
+      },
+      "plural": {
+        "nominative": "æ",
+        "genitive": "arum",
+        "dative": "īs",
+        "accusative": "as",
+        "ablative": "īs"
+      }
     }
+  },
+  "2": {
+    "m/n": {
+      "singular": {
+        "genitive": "ī",
+        "dative": "ō",
+        "accusative": "um",
+        "ablative": "ō"
+      },
+      "plural": {
+        "genitive": "ōrum",
+        "dative": "īs",
+        "ablative": "īs"
+      }
+    },
+    "m": {
+      "singular": {
+        "nominative": "us"
+      },
+      "plural": {
+        "nominative": "ī",
+        "accusative": "ōs"
+      }
+    },
+    "n": {
+      "singular": {
+        "nominative": "um"
+      },
+      "plural": {
+        "nominative": "a",
+        "accusative": "a"
+      }
+    }
+  },
+  "3": {
+    "m/f/n": {
+      "singular": {
+        "genitive": "is",
+        "dative": "ī",
+        "accusative": "em",
+        "ablative": "e"
+      },
+      "plural": {
+        "nominative": "ēs",
+        "dative": "ibus",
+        "accusative": "ēs",
+        "ablative": "ibus"
+      }
+    },
+    "m": {
+      "plural": {
+        "genitive": "um"
+      }
+    },
+    "f": {
+      "plural": {
+        "genitive": "ium"
+      }
+    },
+    "n": {
+      "singular": {
+        "accusative": "-"
+      },
+      "plural": {
+        "nominative": "a",
+        "accusative": "a"
+      }
+    }
+  },
+  "4": {
+    "m/n": {
+      "singular": {
+        "genitive": "ūs",
+        "ablative": "ū"
+      },
+      "plural": {
+        "genitive": "uum",
+        "dative": "ibus",
+        "ablative": "ibus"
+      }
+    },
+    "m": {
+      "singular": {
+        "nominative": "us",
+        "dative": "uī",
+        "accusative": "um"
+      },
+      "plural": {
+        "nominative": "ūs",
+        "accusative": "ūs"
+      }
+    },
+    "n": {
+      "singular": {
+        "nominative": "u",
+        "dative": "ū",
+        "accusative": "ū"
+      },
+      "plural": {
+        "nominative": "ū",
+        "accusative": "ua"
+      }
+    }
+  },
+  "5": {
+    "f": {
+      "singular": {
+        "nominative": "-",
+        "genitive": "eī",
+        "dative": "eī",
+        "accusative": "em",
+        "ablative": "ē"
+      },
+      "plural": {
+        "nominative": "ēs",
+        "genitive": "ērum",
+        "dative": "ēbus",
+        "accusative": "ēs",
+        "ablative": "ēbus"
+      }
+    }
+  }
 }
