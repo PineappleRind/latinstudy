@@ -1,5 +1,4 @@
-import { ord, createElement } from "../../utils.js";
-
+import { map, ord, createElement } from "../../utils.js";
 export default function declensions(declnum, endings) {
   let questions = [];
   for (const [type, ending] of Object.entries(endings)) {
@@ -38,13 +37,7 @@ function generateDeclHTML(questionData) {
 
 function toQuestion(declnum, gender, gnumber, $case) {
   let map = (e) => {
-    return {
-      "n": "neuter",
-      "m": "masculine",
-      "f": "feminine",
-      "s": "singular",
-      "p": "plural",
-    }[e]
+    return map[e]
   }
-  return `${ord(declnum)} declension ${$case} ${map(gnumber)} ending (${gender.split('').map(map).join('/')})`;
+  return `${ord(declnum)} declension ${map($case)} ${map(gnumber)} ending (${gender.split('').map(map).join('/')})`;
 }

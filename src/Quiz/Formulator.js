@@ -46,13 +46,4 @@ export default class Formulator {
     vocab,
     declensions,
   };
-
-  expandGender = (n) =>
-    "n" === n
-      ? "neuter"
-      : "m" === n
-      ? "masculine"
-      : "f" === n
-      ? "feminine"
-      : "";
 }

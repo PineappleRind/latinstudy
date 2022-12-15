@@ -9,7 +9,7 @@ export const fetchToJSON = async (url) => {
 export const ord = (n) =>
   n +
   { e: "st", o: "nd", w: "rd", h: "th" }[
-    new Intl.PluralRules("en", { type: "ordinal" }).select(n)[2]
+  new Intl.PluralRules("en", { type: "ordinal" }).select(n)[2]
   ];
 
 export const createElement = (tag, attrs, value) => {
@@ -64,4 +64,17 @@ export function renderAnswer(str) {
   else process("", str, -1);
 
   return res;
+}
+
+export const map = {
+  "n": "neuter",
+  "m": "masculine",
+  "f": "feminine",
+  "s": "singular",
+  "p": "plural",
+  "nom": "nominative",
+  "gen": "genitive",
+  "dat": "dative",
+  "acc": "accusative",
+  "abl": "ablative",
 }
