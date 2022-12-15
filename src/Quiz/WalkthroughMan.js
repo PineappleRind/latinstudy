@@ -95,10 +95,9 @@ export default class WalkthroughMan {
 
     // Hide the container's contents and prepare it for the next content
     this.container.classList.add("hidden");
-    this.container.style.width = `${this.getHTMLDimensions(
-      this.questions[index].html,
-      "width"
-    )}px`;
+    this.container.style.width
+      = this.questions[index].html.querySelector('h3').style.width
+      = `${this.getHTMLDimensions(this.questions[index].html, "width")}px`;
 
     return new Promise((resolve) => {
       // Wait a bit

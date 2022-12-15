@@ -1,141 +1,73 @@
 {
   "1": {
-    "f": {
-      "singular": {
-        "nominative": "a",
-        "genitive": "æ",
-        "dative": "æ",
-        "accusative": "am",
-        "ablative": "ā"
-      },
-      "plural": {
-        "nominative": "æ",
-        "genitive": "arum",
-        "dative": "īs",
-        "accusative": "as",
-        "ablative": "īs"
-      }
-    }
+    "f|s|nominative": "a",
+    "f|s|genitive": "æ",
+    "f|s|dative": "æ",
+    "f|s|accusative": "am",
+    "f|s|ablative": "ā",
+    "f|p|nominative": "æ",
+    "f|p|genitive": "arum",
+    "f|p|dative": "īs",
+    "f|p|accusative": "as",
+    "f|p|ablative": "īs"
   },
   "2": {
-    "m/n": {
-      "singular": {
-        "genitive": "ī",
-        "dative": "ō",
-        "accusative": "um",
-        "ablative": "ō"
-      },
-      "plural": {
-        "genitive": "ōrum",
-        "dative": "īs",
-        "ablative": "īs"
-      }
-    },
-    "m": {
-      "singular": {
-        "nominative": "us"
-      },
-      "plural": {
-        "nominative": "ī",
-        "accusative": "ōs"
-      }
-    },
-    "n": {
-      "singular": {
-        "nominative": "um"
-      },
-      "plural": {
-        "nominative": "a",
-        "accusative": "a"
-      }
-    }
+    "mn|s|genitive": "ī",
+    "mn|s|dative": "ō",
+    "mn|s|accusative": "um",
+    "mn|s|ablative": "ō",
+    "mn|p|genitive": "ōrum",
+    "mn|p|dative": "īs",
+    "mn|p|ablative": "īs",
+    "m|s|nominative": "us",
+    "m|p|nominative": "ī",
+    "m|p|accusative": "ōs",
+    "n|s|nominative": "um",
+    "n|p|nominative": "a",
+    "n|p|accusative": "a"
   },
   "3": {
-    "m/f/n": {
-      "singular": {
-        "genitive": "is",
-        "dative": "ī",
-        "accusative": "em",
-        "ablative": "e"
-      },
-      "plural": {
-        "nominative": "ēs",
-        "dative": "ibus",
-        "accusative": "ēs",
-        "ablative": "ibus"
-      }
-    },
-    "m": {
-      "plural": {
-        "genitive": "um"
-      }
-    },
-    "f": {
-      "plural": {
-        "genitive": "ium"
-      }
-    },
-    "n": {
-      "singular": {
-        "accusative": "-"
-      },
-      "plural": {
-        "nominative": "a",
-        "accusative": "a"
-      }
-    }
+    "mfn|s|genitive": "is",
+    "mfn|s|dative": "ī",
+    "mfn|s|accusative": "em",
+    "mfn|s|ablative": "e",
+    "mfn|p|nominative": "ēs",
+    "mfn|p|dative": "ibus",
+    "mfn|p|accusative": "ēs",
+    "mfn|p|ablative": "ibus",
+    "m|p|genitive": "um",
+    "f|p|genitive": "ium",
+    "n|s|accusative": "-",
+    "n|p|nominative": "a",
+    "n|p|accusative": "a"
   },
   "4": {
-    "m/n": {
-      "singular": {
-        "genitive": "ūs",
-        "ablative": "ū"
-      },
-      "plural": {
-        "genitive": "uum",
-        "dative": "ibus",
-        "ablative": "ibus"
-      }
-    },
-    "m": {
-      "singular": {
-        "nominative": "us",
-        "dative": "uī",
-        "accusative": "um"
-      },
-      "plural": {
-        "nominative": "ūs",
-        "accusative": "ūs"
-      }
-    },
-    "n": {
-      "singular": {
-        "nominative": "u",
-        "dative": "ū",
-        "accusative": "ū"
-      },
-      "plural": {
-        "nominative": "ū",
-        "accusative": "ua"
-      }
-    }
+    "mn|s|genitive": "ūs",
+    "mn|s|ablative": "ū",
+    "mn|p|genitive": "uum",
+    "mn|p|dative": "ibus",
+    "mn|p|ablative": "ibus",
+    "m|s|nominative": "us",
+    "m|s|dative": "uī",
+    "m|s|accusative": "um",
+    "m|p|nominative": "ūs",
+    "m|p|accusative": "ūs",
+    "n|s|nominative": "u",
+    "n|s|dative": "ū",
+    "n|s|accusative": "ū",
+    "n|p|nominative": "ū",
+    "n|p|accusative": "ua"
   },
   "5": {
-    "f": {
-      "singular": {
-        "nominative": "-",
-        "genitive": "eī",
-        "dative": "eī",
-        "accusative": "em",
-        "ablative": "ē"
-      },
-      "plural": {
-        "nominative": "ēs",
-        "genitive": "ērum",
-        "dative": "ēbus",
-        "accusative": "ēs",
-        "ablative": "ēbus"
-      }
-    }
+    "f|s|nominative": "-",
+    "f|s|genitive": "eī",
+    "f|s|dative": "eī",
+    "f|s|accusative": "em",
+    "f|s|ablative": "ē",
+    "f|p|nominative": "ēs",
+    "f|p|genitive": "ērum",
+    "f|p|dative": "ēbus",
+    "f|p|accusative": "ēs",
+    "f|p|ablative": "ēbus"
   }
 }

@@ -13,7 +13,7 @@
     <div id="app">
       <div class="pane showing" id="begin">
         <div class="flex">
-          <button class="btn pane-trigger" data-pane="view">View</button>
+          <button class="btn pane-trigger" id="view-trigger" data-pane="view">View</button>
           <button class="btn pane-trigger" data-pane="quiz-start">Quiz</button>
         </div>
       </div>
@@ -38,6 +38,7 @@
             type="number"
             placeholder="# of vocabulary words"
             class="quiz-vocab-count"
+            value="-1"
           /><label><small> (0 for all, -1 for off)</small></label>
         </div>
         <h4>More settings</h4>

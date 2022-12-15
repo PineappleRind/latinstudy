@@ -1,63 +1,31 @@
 import { ord, createElement } from "../../utils.js";
 
-export default function declensions(
-  declnum,
-  data,
-  dataLevel = 0,
-  formulation,
-  cur = {},
-  questions
-) {
-  // start off
-  questions ??= [];
-  cur.level ||= data;
-  // For each key in the current level
-  for (const [key, value] of Object.entries(cur.level)) {
-    // New gender? Set it
-    if (dataLevel === 0) cur.gender = key;
-    // New grammatical number? Set it
-    if (dataLevel === 1) cur.gnumber = key;
-    // if it's on an ending
-    if (dataLevel === 2) {
-      if (value === "-") continue;
-      // format the question
-      formulation = {
-        question: `${ord(declnum)} declension ${cur.gnumber} ${key} ending (${
-          cur.gender
-        })`,
-      };
-      // add the answer
-      formulation.answer = value;
-      // add HTML
-      formulation.html = generateDeclHTML(formulation);
-      // apply changes
-      console.log(formulation);
-      questions.push(formulation);
-    }
-
-    // Not finished? Recurse
-    if (value === Object(value)) {
-      cur.level = value;
-      declensions.bind(this)(
-        declnum,
-        data,
-        dataLevel + 1,
-        formulation,
-        cur,
-        questions
-      );
-    }
+export default function declensions(declnum, endings) {
+  let questions = [];
+  for (const [type, ending] of Object.entries(endings)) {
+    if (ending === "-") continue;
+    let [gender, gnumber, $case] = type.split('|');
+    // format the question
+    let formulation = {
+      question: toQuestion(declnum, gender, gnumber, $case),
+      answer: ending
+    };
+    // add the answer & html
+    formulation.html = generateDeclHTML(formulation);
+    // apply changes
+    questions.push(formulation);
   }
   // Finished? Return!
+  console.log(questions)
   return questions;
 }
 
 function generateDeclHTML(questionData) {
   let title = createElement(
-      "h3",
-      "class:quiz-question-title",
-      questionData.question
-    ),
+    "h3",
+    "class:quiz-question-title",
+    questionData.question
+  ),
     input = createElement(
       "input",
       "placeholder:What is it? Enter...;type:text;class:quiz-question-input"
@@ -66,4 +34,17 @@ function generateDeclHTML(questionData) {
 
   container.append(title, input);
   return container;
+}
+
+function toQuestion(declnum, gender, gnumber, $case) {
+  let map = (e) => {
+    return {
+      "n": "neuter",
+      "m": "masculine",
+      "f": "feminine",
+      "s": "singular",
+      "p": "plural",
+    }[e]
+  }
+  return `${ord(declnum)} declension ${$case} ${map(gnumber)} ending (${gender.split('').map(map).join('/')})`;
 }

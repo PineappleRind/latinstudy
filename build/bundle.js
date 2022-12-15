@@ -251,10 +251,9 @@ class WalkthroughMan {
 
     // Hide the container's contents and prepare it for the next content
     this.container.classList.add("hidden");
-    this.container.style.width = `${this.getHTMLDimensions(
-      this.questions[index].html,
-      "width"
-    )}px`;
+    this.container.style.width
+      = this.questions[index].html.querySelector('h3').style.width
+      = `${this.getHTMLDimensions(this.questions[index].html, "width")}px`;
 
     return new Promise((resolve) => {
       // Wait a bit
@@ -357,64 +356,32 @@ class WalkthroughMan {
   }
 }
 
-function declensions(
-  declnum,
-  data,
-  dataLevel = 0,
-  formulation,
-  cur = {},
-  questions
-) {
-  // start off
-  questions ??= [];
-  cur.level ||= data;
-  // For each key in the current level
-  for (const [key, value] of Object.entries(cur.level)) {
-    // New gender? Set it
-    if (dataLevel === 0) cur.gender = key;
-    // New grammatical number? Set it
-    if (dataLevel === 1) cur.gnumber = key;
-    // if it's on an ending
-    if (dataLevel === 2) {
-      if (value === "-") continue;
-      // format the question
-      formulation = {
-        question: `${ord(declnum)} declension ${cur.gnumber} ${key} ending (${
-          cur.gender
-        })`,
-      };
-      // add the answer
-      formulation.answer = value;
-      // add HTML
-      formulation.html = generateDeclHTML(formulation);
-      // apply changes
-      console.log(formulation);
-      questions.push(formulation);
-    }
-
-    // Not finished? Recurse
-    if (value === Object(value)) {
-      cur.level = value;
-      declensions.bind(this)(
-        declnum,
-        data,
-        dataLevel + 1,
-        formulation,
-        cur,
-        questions
-      );
-    }
+function declensions(declnum, endings) {
+  let questions = [];
+  for (const [type, ending] of Object.entries(endings)) {
+    if (ending === "-") continue;
+    let [gender, gnumber, $case] = type.split('|');
+    // format the question
+    let formulation = {
+      question: toQuestion(declnum, gender, gnumber, $case),
+      answer: ending
+    };
+    // add the answer & html
+    formulation.html = generateDeclHTML(formulation);
+    // apply changes
+    questions.push(formulation);
   }
   // Finished? Return!
+  console.log(questions);
   return questions;
 }
 
 function generateDeclHTML(questionData) {
   let title = createElement(
-      "h3",
-      "class:quiz-question-title",
-      questionData.question
-    ),
+    "h3",
+    "class:quiz-question-title",
+    questionData.question
+  ),
     input = createElement(
       "input",
       "placeholder:What is it? Enter...;type:text;class:quiz-question-input"
@@ -423,6 +390,19 @@ function generateDeclHTML(questionData) {
 
   container.append(title, input);
   return container;
+}
+
+function toQuestion(declnum, gender, gnumber, $case) {
+  let map = (e) => {
+    return {
+      "n": "neuter",
+      "m": "masculine",
+      "f": "feminine",
+      "s": "singular",
+      "p": "plural",
+    }[e]
+  };
+  return `${ord(declnum)} declension ${$case} ${map(gnumber)} ending (${gender.split('').map(map).join('/')})`;
 }
 
 function vocab(vocab, num) {
@@ -535,16 +515,11 @@ class Initializer {
     return this;
   }
 
-  async initialize() {
+  async initialize(data) {
     // first, deal with the user's settings
     this.settingsListen();
     // Then the data
-    let declensions = await fetchToJSON("./data/declensions.json"),
-      vocab = await fetchToJSON("./data/vocab.json");
-
-    Promise.all([declensions, vocab]).then((values) => {
-      this.fetched = values;
-    });
+    this.fetched = data;
   }
 
   settingsListen() {
@@ -555,15 +530,6 @@ class Initializer {
         this.options.declensions ^= 0b00001 << (+e.target.dataset.value - 1);
       });
     }
-    // Deal with entering different numbers of vocabulary
-    this.optEls.vocabNum.addEventListener("input", (e) => {
-      this.options.vocabNum = e.target.value;
-    });
-
-    // Immediate grade checkbox
-    this.optEls.immediateGrade.addEventListener("input", (e) => {
-      this.options.immediateGrade = e.target.checked;
-    });
 
     // On click
     $(".pane-trigger.quiz-begin").addEventListener("click", (e) => {
@@ -572,6 +538,9 @@ class Initializer {
         // a bit of a hacky way to override Switcher...
         return window.latinstudier.switcher.showPane("quiz-start");
       }
+      this.options.immediateGrade = this.optEls.immediateGrade.checked;
+      this.options.vocabNum = this.optEls.vocabNum.value;
+
       new Formulator(this.options).initialize(this.fetched[0], this.fetched[1]);
     });
 
@@ -590,16 +559,42 @@ var Quiz = {
   Grader,
 };
 
+class Loader {
+    constructor() {
+        this.pane = $('.pane#view');
+    }
+    async initialize(data) {
+        // listen for view button clicks
+        $('#view-trigger').onclick = this.load.bind(this, data);
+    }
+
+    load() {
+
+    }
+}
+
+var View = { Loader };
+
 class Studier {
   constructor() {
     this.switcher = new Switcher();
-    this.quizInitializer = new Quiz.Initializer();
+    this.dependents = [new Quiz.Initializer(), new View.Loader()];
+
+    if (this.fetching) return this.fetching;
+
+    let declensions = fetchToJSON("./data/declensions.json"),
+      vocab = fetchToJSON("./data/vocab.json");
+
+    Promise.all([declensions, vocab]).then((values) => {
+      return this.initialize(values);
+    });
   }
-  initialize() {
+  initialize(data) {
     this.switcher.listen().showPane("begin");
-    this.quizInitializer.initialize();
+    this.dependents.forEach(a => a.initialize(data));
   }
 }
 
+
+
 window.latinstudier = new Studier();
-latinstudier.initialize();

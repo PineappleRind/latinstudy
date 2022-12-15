@@ -167,7 +167,7 @@ button {
   opacity: 0;
   scale: 0.9;
   padding: 20px;
-  max-width: 500px;
+  max-width: min(500px, 100vw);
   max-height: 250px;
   overflow-y: auto;
   box-shadow: 0 40px 70px rgba(0, 0, 0, 0.2);
@@ -209,7 +209,7 @@ button {
 }
 
 .quiz-declension-option.selected {
-  background: var(--txt-c1);
+  background: var(--btn-bg);
   color: var(--txt-inv);
   animation: scale-bigger var(--tr-l);
   font-weight: bold;
@@ -217,16 +217,16 @@ button {
 
 @keyframes scale-bigger {
   50% {
-    scale: 1.2;
-    rotate: 10deg;
-    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
+    scale: 1.1;
+    rotate: 2deg;
+    box-shadow: 0 0 20px -3px rgba(43, 0, 255, 0.2);
   }
 }
 
 @keyframes scale-smaller {
   50% {
-    scale: 0.5;
-    rotate: -10deg;
+    scale: 0.9;
+    rotate: -2deg;
   }
 }
 
@@ -248,7 +248,6 @@ button {
 }
 
 .quiz-content-inner h3 {
-  white-space: nowrap;
   font-size: 17px;
   min-width: 300px;
 }
@@ -370,7 +369,7 @@ input[type="checkbox"]:checked::before {
 
 input[type="checkbox"]:checked {
   border: 1px solid var(--light-border);
-  background: var(--txt-c1);
+  background: var(--btn-bg)
 }
 
 input[type="checkbox"]:focus {
