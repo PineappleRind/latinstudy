@@ -36,8 +36,5 @@ function generateDeclHTML(questionData) {
 }
 
 function toQuestion(declnum, gender, gnumber, $case) {
-  let map = (e) => {
-    return map[e]
-  }
-  return `${ord(declnum)} declension ${map($case)} ${map(gnumber)} ending (${gender.split('').map(map).join('/')})`;
+  return `${ord(declnum)} declension ${map[$case]} ${map[gnumber]} ending (${gender.split('').map(g=>map[g]).join('/')})`;
 }
