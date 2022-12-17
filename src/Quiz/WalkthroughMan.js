@@ -54,7 +54,7 @@ export default class WalkthroughMan {
 
       // finished grading and time to finish?
       else if (this.timeTo === 3) {
-        return this.grader.finish(questions);
+        return this.finishQuiz();
       }
 
       this.updateNextBtn();
@@ -91,6 +91,7 @@ export default class WalkthroughMan {
     this.container.style.height = this.defaultHeight + cor + "px";
     // store some elements
     this.curInput = this.questions[index].html.querySelector("input");
+    this.curInput.focus();
     this.updateDisable();
 
     // Hide the container's contents and prepare it for the next content
@@ -142,8 +143,10 @@ export default class WalkthroughMan {
   }
 
   inputListen() {
-    this.curInput.onkeyup = (e) => {
+    onkeyup = (e) => {
       if (e.key === "Enter") return this.btns.next.click();
+    }
+    this.curInput.onkeyup = (e) => {
       this.updateDisable();
       this.userAnswers[this.curQuestionIndex] = {
         response: this.curInput.value,
@@ -161,18 +164,20 @@ export default class WalkthroughMan {
     let userAnswer = this.userAnswers.map((m) => m.response)[
       this.curQuestionIndex
     ];
-    let { isCorrect, answer } = this.grader.gradeQ(
+    let isCorrect = this.grader.gradeQ(
       cur,
       this.userAnswers.map((m) => m.response)[this.curQuestionIndex]
     );
 
+    let typeofAnswer = ["wrong", "partial-correct", "correct"][isCorrect]
+    console.log(typeofAnswer);
     function visualUpdate() {
       this.curInput.disabled = true;
-      this.curInput.classList.add(isCorrect ? "correct" : "wrong");
+      this.curInput.classList.add(typeofAnswer);
       // Measure the new height once the correct answer is added
       // for a lovely animation. 😍
       let correct = createElement("div", "class:quiz-correct-answer");
-      correct.append(renderAnswer(answer));
+      correct.append(renderAnswer(cur.answer));
       let nh = this.getHTMLDimensions(correct, "height");
       this.container.style.height = this.defaultHeight + nh + "px";
       this.container.children[0].append(correct);
@@ -183,7 +188,7 @@ export default class WalkthroughMan {
     // Finally set the current question to graded
     this.questions[this.curQuestionIndex].graded = {
       isCorrect,
-      answer,
+      answer: cur.answer,
       userAnswer,
     };
     // and update the buttons
@@ -192,10 +197,11 @@ export default class WalkthroughMan {
 
   finishQuiz() {
     this.grader.finish(this.questions);
-    this.questions = [];
-
+    
     // reset
+    this.questions = [];
     this.timeTo = 1;
     this.userAnswers = [];
+    this.grader = new Grader();
   }
 }

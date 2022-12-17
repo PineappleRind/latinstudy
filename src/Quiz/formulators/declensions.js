@@ -2,8 +2,11 @@ import { map, ord, createElement } from "../../utils.js";
 export default function declensions(declnum, endings) {
   let questions = [];
   for (const [type, ending] of Object.entries(endings)) {
-    if (ending === "-") continue;
+    // split the key into its information components
     let [gender, gnumber, $case] = type.split('|');
+
+    if (ending === "-" || gender !== 'm') continue; // no ending? continue
+    
     // format the question
     let formulation = {
       question: toQuestion(declnum, gender, gnumber, $case),
@@ -15,7 +18,6 @@ export default function declensions(declnum, endings) {
     questions.push(formulation);
   }
   // Finished? Return!
-  console.log(questions)
   return questions;
 }
 

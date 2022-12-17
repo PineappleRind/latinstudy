@@ -9,7 +9,7 @@ const fetchToJSON = async (url) => {
 const ord = (n) =>
   n +
   { e: "st", o: "nd", w: "rd", h: "th" }[
-    new Intl.PluralRules("en", { type: "ordinal" }).select(n)[2]
+  new Intl.PluralRules("en", { type: "ordinal" }).select(n)[2]
   ];
 
 const createElement = (tag, attrs, value) => {
@@ -66,6 +66,19 @@ function renderAnswer(str) {
   return res;
 }
 
+const map = {
+  "n": "neuter",
+  "m": "masculine",
+  "f": "feminine",
+  "s": "singular",
+  "p": "plural",
+  "nom": "nominative",
+  "gen": "genitive",
+  "dat": "dative",
+  "acc": "accusative",
+  "abl": "ablative",
+};
+
 class Switcher {
   constructor() {
     this.panes = $(".pane", 1);
@@ -105,10 +118,9 @@ $("#app").append(container);
 // them to the questions, grades, and shows the grade to the user.
 
 class Grader {
-  constructor() {}
-  initialize(userAnswers, questions) {}
+  constructor() { }
+  initialize(userAnswers, questions) { }
   gradeQ(question, userAnswer) {
-    console.log(question, userAnswer);
     // Empty input? Come on, User! :(
     if (!userAnswer) return false;
     // Remove accents to compare with correct answer
@@ -116,31 +128,36 @@ class Grader {
 
     // If there are multiple answers
     if (question.answer.constructor === Array) {
-      let correct = question.answer.map(purify);
-      if (!correct.includes(userAnswer))
-        return { isCorrect: false, answer: question.answer };
-      else return { isCorrect: true, answer: question.answer.join(", ") };
+      let correct = question.answer;
+      let directEquals = correct.some(el=>purify(el) === purify(userAnswer)),
+        fuzzyEquals = correct.some(el=>this.equals(el,userAnswer));
+
+      if (directEquals) return 2;
+      else if (fuzzyEquals) return 1;
+      else return 0;
     }
     // if there's only 1 answer
     else {
-      let correct = purify(question.answer);
-      if (userAnswer !== correct)
-        return { isCorrect: false, answer: question.answer };
-      else return { isCorrect: true, answer: question.answer };
+      let directEquals = userAnswer === purify(question.answer),
+        fuzzyEquals = this.equals(userAnswer, question.answer);
+      if (directEquals) return 2;
+      else if (fuzzyEquals) return 1;
+      else return 0;
     }
     // Correct? Return right
   }
   finish(questions) {
+    console.log(questions);
     // switch to results pane
     window.latinstudier.switcher.showPane("quiz-results");
     let numCorrect = 0;
-
+    $('#quiz-results-questions-inner').innerHTML = '';
     for (let [i, question] of questions.entries()) {
       let qSum = createElement(
-          "div",
-          "class:quiz-results-q",
-          `${i + 1}. ${question.question}: `
-        ),
+        "div",
+        "class:quiz-results-q",
+        `${i + 1}. ${question.question}: `
+      ),
         qWrong = createElement(
           "span",
           "class:quiz-results-q-wrong",
@@ -150,7 +167,7 @@ class Grader {
 
       qCorrect.append(renderAnswer(question.answer));
 
-      if (question.graded.isCorrect === true) numCorrect++;
+      if (question.graded.isCorrect > 0) numCorrect++;
       else qSum.append(qWrong);
       qSum.append(qCorrect);
       $("#quiz-results-questions-inner").append(qSum);
@@ -160,6 +177,23 @@ class Grader {
       Math.round((numCorrect / questions.length) * 1000) / 10;
     $("#quiz-results-num-correct").textContent = numCorrect;
     $("#quiz-results-total").textContent = questions.length;
+  }
+  equals(word1, word2) {
+    word1 = purify(word1);
+    word2 = purify(word2);
+
+    if (word1 === word2)
+      return true;
+
+    let foundMistakes = 1; // only allow 1 character difference
+    for (let i = 0; i < word1.length; i++) {
+      if (word1.charAt(i) === word2.charAt(i)) continue;
+
+      foundMistakes--;
+      if (foundMistakes < 0) return false;
+    }
+
+    return true;
   }
 }
 
@@ -210,7 +244,7 @@ class WalkthroughMan {
 
       // finished grading and time to finish?
       else if (this.timeTo === 3) {
-        return this.grader.finish(questions);
+        return this.finishQuiz();
       }
 
       this.updateNextBtn();
@@ -247,6 +281,7 @@ class WalkthroughMan {
     this.container.style.height = this.defaultHeight + cor + "px";
     // store some elements
     this.curInput = this.questions[index].html.querySelector("input");
+    this.curInput.focus();
     this.updateDisable();
 
     // Hide the container's contents and prepare it for the next content
@@ -298,8 +333,10 @@ class WalkthroughMan {
   }
 
   inputListen() {
-    this.curInput.onkeyup = (e) => {
+    onkeyup = (e) => {
       if (e.key === "Enter") return this.btns.next.click();
+    };
+    this.curInput.onkeyup = (e) => {
       this.updateDisable();
       this.userAnswers[this.curQuestionIndex] = {
         response: this.curInput.value,
@@ -317,18 +354,20 @@ class WalkthroughMan {
     let userAnswer = this.userAnswers.map((m) => m.response)[
       this.curQuestionIndex
     ];
-    let { isCorrect, answer } = this.grader.gradeQ(
+    let isCorrect = this.grader.gradeQ(
       cur,
       this.userAnswers.map((m) => m.response)[this.curQuestionIndex]
     );
 
+    let typeofAnswer = ["wrong", "partial-correct", "correct"][isCorrect];
+    console.log(typeofAnswer);
     function visualUpdate() {
       this.curInput.disabled = true;
-      this.curInput.classList.add(isCorrect ? "correct" : "wrong");
+      this.curInput.classList.add(typeofAnswer);
       // Measure the new height once the correct answer is added
       // for a lovely animation. 😍
       let correct = createElement("div", "class:quiz-correct-answer");
-      correct.append(renderAnswer(answer));
+      correct.append(renderAnswer(cur.answer));
       let nh = this.getHTMLDimensions(correct, "height");
       this.container.style.height = this.defaultHeight + nh + "px";
       this.container.children[0].append(correct);
@@ -339,7 +378,7 @@ class WalkthroughMan {
     // Finally set the current question to graded
     this.questions[this.curQuestionIndex].graded = {
       isCorrect,
-      answer,
+      answer: cur.answer,
       userAnswer,
     };
     // and update the buttons
@@ -347,20 +386,25 @@ class WalkthroughMan {
   }
 
   finishQuiz() {
+    console.log(this);
     this.grader.finish(this.questions);
-    this.questions = [];
-
+    
     // reset
+    this.questions = [];
     this.timeTo = 1;
     this.userAnswers = [];
+    this.grader = new Grader();
   }
 }
 
 function declensions(declnum, endings) {
   let questions = [];
   for (const [type, ending] of Object.entries(endings)) {
-    if (ending === "-") continue;
+    // split the key into its information components
     let [gender, gnumber, $case] = type.split('|');
+
+    if (ending === "-" || gender !== 'm') continue; // no ending? continue
+    
     // format the question
     let formulation = {
       question: toQuestion(declnum, gender, gnumber, $case),
@@ -372,7 +416,6 @@ function declensions(declnum, endings) {
     questions.push(formulation);
   }
   // Finished? Return!
-  console.log(questions);
   return questions;
 }
 
@@ -393,16 +436,7 @@ function generateDeclHTML(questionData) {
 }
 
 function toQuestion(declnum, gender, gnumber, $case) {
-  let map = (e) => {
-    return {
-      "n": "neuter",
-      "m": "masculine",
-      "f": "feminine",
-      "s": "singular",
-      "p": "plural",
-    }[e]
-  };
-  return `${ord(declnum)} declension ${$case} ${map(gnumber)} ending (${gender.split('').map(map).join('/')})`;
+  return `${ord(declnum)} declension ${map[$case]} ${map[gnumber]} ending (${gender.split('').map(g=>map[g]).join('/')})`;
 }
 
 function vocab(vocab, num) {
@@ -538,9 +572,7 @@ class Initializer {
     return this;
   }
 
-  quizIsEmpty = () => {
-    !this.options.declensions && !this.options.vocabNum;
-  };
+  quizIsEmpty = () => !this.options.declensions && (!this.optEls.vocabNum.value || this.optEls.vocabNum.value === "-1")
 }
 
 var Quiz = {
@@ -552,16 +584,74 @@ var Quiz = {
 
 class Loader {
     constructor() {
-        this.pane = $('.pane#view');
-    }
-    async initialize(data) {
-        // listen for view button clicks
-        $('#view-trigger').onclick = this.load.bind(this, data);
+        this.pane = $(".pane#view");
+        this.options = {
+            type: $("#view-type"),
+            declType: $("#view-declension-type"),
+        };
+        this.vocabLoaded = false;
     }
 
-    load() {
-        
+    async initialize(data) {
+        // listen for view button clicks
+        $("#view-trigger").onclick = (e) =>
+            this.update[this.options.type.value].apply(this, [data]);
+        // listen for changes in select menues
+        this.options.type.oninput = (e) => {
+            this.options.declType.classList.toggle("hidden");
+            this.update[e.target.value](data);
+            for (const table of $('.view-decl-table', 1))
+                table.style.display = (e.target.value === 'vocab' ? 'none' : 'table');
+        };
+
+        this.options.declType.oninput = (e) => {
+            this.update[this.options.type.value](data);
+        };
     }
+
+    update = {
+        declensions: ([declensions]) => {
+            let cur = declensions[this.options.declType.value];
+            let genders = new Set();
+            for (const [key, ending] of Object.entries(cur)) {
+                let [gender, gnumber, $case] = key.split("|");
+                if (key === "note") {
+                    $("#view-note").innerHTML = ending;
+                    continue;
+                }
+                $(
+                    `.view-table-field.${map[gender]}.${map[gnumber]}.${map[$case]}`
+                ).textContent = ending;
+
+                genders.add(gender);
+            }
+            // expand all contractions
+            genders = Array.from(genders).map((n) => map[n]);
+            // show every gender
+            Array.from($(`.view-table-head, .view-table-field`, 1)).forEach(
+                (e) => (e.style.display = "table-cell")
+            );
+            // hide every gender that isn't part of the declension
+            Array.from(
+                $(
+                    `.view-table-head:not(.${genders.join("):not(.")}), 
+            .view-table-field:not(.${genders.join("):not(.")})`,
+                    1
+                )
+            ).forEach((e) => (e.style.display = "none"));
+        },
+        vocab: ([_declensions, vocab]) => {
+            if (this.vocabLoaded === true) return;
+            for (const voc of vocab) {
+                let word = createElement('div', 'class:view-vocab-word', `${voc.word}${voc.genitive ? ', ' + voc.genitive : ''}`);
+                word.append(renderAnswer(voc.translation));
+                $('.view-vocab').append(
+                    word
+                );
+            }
+            this.vocabLoaded = true;
+        }
+    };
 }
 
 var View = { Loader };

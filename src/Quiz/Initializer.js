@@ -51,7 +51,5 @@ export default class Initializer {
     return this;
   }
 
-  quizIsEmpty = () => {
-    !this.options.declensions && !this.options.vocabNum;
-  };
+  quizIsEmpty = () => !this.options.declensions && (!this.optEls.vocabNum.value || this.optEls.vocabNum.value === "-1")
 }
