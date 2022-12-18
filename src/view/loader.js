@@ -16,8 +16,9 @@ export default class Loader {
             this.update[this.options.type.value].apply(this, [data]);
         // listen for changes in select menues
         this.options.type.oninput = (e) => {
-            this.options.declType.classList.toggle("hidden");
             $('.view-note').innerHTML = '';
+            this.options.declType.classList.toggle("hidden");
+            
             this.update[e.target.value](data);
             $('.view-decl').style.display = (e.target.value === 'vocab' ? 'none' : 'block');
             $('.view-vocab').style.display = (e.target.value !== 'vocab' ? 'none' : 'block');
@@ -27,8 +28,6 @@ export default class Loader {
             $('.view-note').innerHTML = '';
             this.update[this.options.type.value](data);
         };
-
-        // this.options.vocabSort.oninput = e => this.vocabSort(e.target.value);
     }
 
     update = {
@@ -49,18 +48,16 @@ export default class Loader {
                 genders.add(gender);
             }
             // expand all contractions in the genders set
-            genders = Array.from(genders).map((n) => map[n]);
+            genders = Array.from(genders).map(n => map[n]);
             // show every gender
-            Array.from($(`.view-table-head, .view-table-field`, 1)).forEach(
-                (e) => (e.style.display = "table-cell")
-            );
+            Array.from($(`.view-table-head, .view-table-field`, 1)).forEach(e => e.style.display = "table-cell");
             // hide every gender that isn't part of the declension
             Array.from(
                 $(`.view-table-head:not(.${genders.join("):not(.")}), 
                     .view-table-field:not(.${genders.join("):not(.")})`, 1)
             ).forEach((e) => (e.style.display = "none"));
         },
-        vocab: ([_declensions, vocab]) => {
+        vocab: ([_, vocab]) => {
             if (this.vocabLoaded === true) return;
             for (const voc of vocab) {
                 let word = createElement('div', 'class:view-vocab-word', `${voc.word}${voc.dictionary ? ', ' + voc.dictionary : ''}`);
@@ -70,12 +67,7 @@ export default class Loader {
 
                 $('.view-vocab').append(word);
             }
-            //    this.vocabSort('type');
             this.vocabLoaded = true;
         }
     };
-
-    //vocabSort(by) {
-    //  let words = $()
-    //}
 }
