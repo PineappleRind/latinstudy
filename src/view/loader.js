@@ -20,11 +20,14 @@ export default class Loader {
             this.update[e.target.value](data);
             for (const table of $('.view-decl-table', 1))
                 table.style.display = (e.target.value === 'vocab' ? 'none' : 'table');
+            $('.view-vocab').style.display = (e.target.value !== 'vocab' ? 'none' : 'block')
         };
 
         this.options.declType.oninput = (e) => {
             this.update[this.options.type.value](data);
         };
+
+       // this.options.vocabSort.oninput = e => this.vocabSort(e.target.value);
     }
 
     update = {
@@ -37,9 +40,7 @@ export default class Loader {
                     $("#view-note").innerHTML = ending;
                     continue;
                 }
-                $(
-                    `.view-table-field.${map[gender]}.${map[gnumber]}.${map[$case]}`
-                ).textContent = ending;
+                $(`.view-table-field.${map[gender]}.${map[gnumber]}.${map[$case]}`).textContent = ending;
 
                 genders.add(gender);
             }
@@ -51,23 +52,26 @@ export default class Loader {
             );
             // hide every gender that isn't part of the declension
             Array.from(
-                $(
-                    `.view-table-head:not(.${genders.join("):not(.")}), 
-            .view-table-field:not(.${genders.join("):not(.")})`,
-                    1
-                )
+                $(`.view-table-head:not(.${genders.join("):not(.")}), 
+                    .view-table-field:not(.${genders.join("):not(.")})`, 1)
             ).forEach((e) => (e.style.display = "none"));
         },
         vocab: ([_declensions, vocab]) => {
             if (this.vocabLoaded === true) return;
             for (const voc of vocab) {
-                let word = createElement('div', 'class:view-vocab-word', `${voc.word}${voc.genitive ? ', ' + voc.genitive : ''}`);
+                let word = createElement('div', 'class:view-vocab-word', `${voc.word}${voc.dictionary ? ', ' + voc.dictionary : ''}`);
+                word.dataset.declension = voc.declension || "0";
+                word.dataset.type = voc.type || "other";
                 word.append(renderAnswer(voc.translation))
-                $('.view-vocab').append(
-                    word
-                )
+
+                $('.view-vocab').append(word);
             }
+        //    this.vocabSort('type');
             this.vocabLoaded = true;
         }
     };
+
+    //vocabSort(by) {
+      //  let words = $()
+    //}
 }

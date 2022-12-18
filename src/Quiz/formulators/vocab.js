@@ -27,14 +27,15 @@ function generateVocabHTML(questionData) {
   let title = createElement(
       "h3",
       "class:quiz-question-title",
-      `What does <b>${questionData.word}</b> mean?`
+      `${questionData.word}${questionData.dictionary ? ", " + questionData.dictionary : ""}`
     ),
     input = createElement(
       "input",
       "placeholder:What's the translation? Enter...;type:text;class:quiz-question-input"
     ),
-    container = createElement("div", "class:quiz-content-inner");
+    header = createElement("h4", "class:quiz-question-super", `translate the ${questionData.type}`),
+    container = createElement("div", "class:animator-inner");
 
-  container.append(title, input);
+  container.append(header, title, input);
   return container;
 }

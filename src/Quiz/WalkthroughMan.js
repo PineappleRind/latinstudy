@@ -6,6 +6,7 @@ import {
   shuffleArray,
   renderAnswer,
 } from "../utils.js";
+import Animator from "./walkthroughHelpers/Animator.js";
 
 // WalkthroughMan handles the showing of the questions to the
 // user, records the user's response, and sends them to Grader.
@@ -22,6 +23,9 @@ export default class WalkthroughMan {
     this.userAnswers = [];
     this.questionTransition = 200; // ms
     this.grader = new Grader();
+    this.animator = new Animator(this.container, {
+      minWidth: 300
+    });
   }
 
   initialize(questions, options) {
@@ -31,41 +35,22 @@ export default class WalkthroughMan {
     //  1 = grade then next, 2 = next, 3 = finish
     this.timeTo = this.options.immediateGrade ? 1 : 2;
 
+    // If grading after each question is enabled
+    // change "Next" button to "Grade"
+    if (this.options.immediateGrade) this.btns.next.innerHTML = "Grade";
+
+    // update current question indicator
+    $("#count-total").textContent = this.questions.length;
+    $("#count-current").textContent = "1";
+
     // Load the first question
     this.loadQuestion(0, 0, 1).then(
       () => (this.defaultHeight = this.container.getBoundingClientRect().height)
     );
     this.updateDisable();
 
-    this.btns.next.addEventListener("click", () => {
-      console.log(this.timeTo);
-      // ready to grade, if necessary
-      if (this.timeTo === 1) {
-        this.gradeQuestion();
-        this.timeTo =
-          this.curQuestionIndex === this.questions.length - 1 ? 3 : 2;
-      }
-
-      // done grading and expecting to go to the next question?
-      else if (this.timeTo === 2) {
-        this.toQuestion.apply(this, [1, this.questionTransition]);
-        if (this.options.immediateGrade) this.timeTo = 1;
-      }
-
-      // finished grading and time to finish?
-      else if (this.timeTo === 3) {
-        return this.finishQuiz();
-      }
-
-      this.updateNextBtn();
-    });
-    this.btns.prev.addEventListener(
-      "click",
-      this.toQuestion.bind(this, -1, this.questionTransition)
-    );
-    // If grading after each question is enabled
-    // change "Next" button to "Grade"
-    if (this.options.immediateGrade) this.btns.next.innerHTML = "Grade";
+    this.btns.next.addEventListener("click", this.listen.next.bind(this));
+    this.btns.prev.addEventListener("click", this.listen.prev.bind(this));
   }
 
   toQuestion(n) {
@@ -79,48 +64,19 @@ export default class WalkthroughMan {
       this.curQuestionIndex -= n;
       return this.finishQuiz();
     }
-    // Reset the height of the container
-    let cor = 0;
-    // if question is already graded add the height of the correct answer box
-    if (
-      Math.sign(n) < 0 &&
-      this.options.immediateGrade &&
-      this.questions[index].graded !== null
-    )
-      cor = 25.5;
-    this.container.style.height = this.defaultHeight + cor + "px";
+
+    // update the question indicator
+    $("#count-current").textContent = (index + 1).toString();
+
     // store some elements
     this.curInput = this.questions[index].html.querySelector("input");
-    this.curInput.focus();
     this.updateDisable();
 
-    // Hide the container's contents and prepare it for the next content
-    this.container.classList.add("hidden");
-    this.container.style.width
-      = this.questions[index].html.querySelector('h3').style.width
-      = `${this.getHTMLDimensions(this.questions[index].html, "width")}px`;
-
-    return new Promise((resolve) => {
-      // Wait a bit
-      wait(delay).then(() => {
-        // then replace the content and unhide
-        if (this.container.children[0]) this.container.children[0].remove();
-        this.container.append(this.questions[index].html);
-        this.inputListen();
-        this.container.classList.remove("hidden");
-        resolve();
-      });
+    return new Promise(async (resolve) => {
+      await this.animator.animateTo(this.questions[index].html, delay);
+      this.listen.input();
+      resolve();
     });
-  }
-
-  getHTMLDimensions(html, prop) {
-    // Clone the node & measure it
-    html.classList.add("invisible");
-    document.body.append(html);
-    let size = html.getBoundingClientRect()[prop];
-    html.classList.remove("invisible");
-    html.remove();
-    return size;
   }
 
   updateDisable() {
@@ -142,17 +98,55 @@ export default class WalkthroughMan {
     else if (this.timeTo === 3) this.btns.next.innerHTML = "Finish";
   }
 
-  inputListen() {
-    onkeyup = (e) => {
-      if (e.key === "Enter") return this.btns.next.click();
-    }
-    this.curInput.onkeyup = (e) => {
-      this.updateDisable();
-      this.userAnswers[this.curQuestionIndex] = {
-        response: this.curInput.value,
-        graded: null,
+  listen = {
+    next: () => {
+      // ready to grade, if necessary
+      if (this.timeTo === 1) {
+        this.gradeQuestion();
+        this.timeTo =
+          this.curQuestionIndex === this.questions.length - 1 ? 3 : 2;
+      }
+
+      // done grading and expecting to go to the next question?
+      else if (this.timeTo === 2) {
+        this.toQuestion.apply(this, [1, this.questionTransition]);
+        if (this.options.immediateGrade) this.timeTo = 1;
+      }
+
+      // finished grading and time to finish?
+      else if (this.timeTo === 3) return this.finishQuiz();
+
+      this.updateNextBtn();
+    },
+    prev: () => {
+      this.toQuestion.apply(this, [-1, this.questionTransition]);
+    },
+    input: () => {
+      onkeyup = (e) => {
+        if (e.key === "Enter") return this.btns.next.click();
       };
-    };
+      this.curInput.onkeyup = (e) => {
+        this.updateDisable();
+        this.userAnswers[this.curQuestionIndex] = {
+          response: this.curInput.value,
+          graded: null,
+        };
+      };
+    },
+  };
+
+  updateGrade(isCorrect, answer) {
+    // get the result
+    let typeofAnswer = ["wrong", "partial-correct", "correct"][isCorrect];
+
+    this.curInput.disabled = true;
+    this.curInput.classList.add(typeofAnswer);
+    // add correct answer
+    let correct = createElement("div", "class:quiz-correct-answer");
+    correct.append(renderAnswer(answer));
+    // Measure the new height once the correct answer is added
+    // for a lovely animation. 😍
+    this.animator.animateAppend(correct, 200);
   }
 
   gradeQuestion() {
@@ -169,21 +163,8 @@ export default class WalkthroughMan {
       this.userAnswers.map((m) => m.response)[this.curQuestionIndex]
     );
 
-    let typeofAnswer = ["wrong", "partial-correct", "correct"][isCorrect]
-    console.log(typeofAnswer);
-    function visualUpdate() {
-      this.curInput.disabled = true;
-      this.curInput.classList.add(typeofAnswer);
-      // Measure the new height once the correct answer is added
-      // for a lovely animation. 😍
-      let correct = createElement("div", "class:quiz-correct-answer");
-      correct.append(renderAnswer(cur.answer));
-      let nh = this.getHTMLDimensions(correct, "height");
-      this.container.style.height = this.defaultHeight + nh + "px";
-      this.container.children[0].append(correct);
-    }
     // only update visually if immediate grading was specified
-    if (this.options.immediateGrade) visualUpdate.apply(this);
+    if (this.options.immediateGrade) this.updateGrade(isCorrect, cur.answer);
 
     // Finally set the current question to graded
     this.questions[this.curQuestionIndex].graded = {
@@ -197,7 +178,7 @@ export default class WalkthroughMan {
 
   finishQuiz() {
     this.grader.finish(this.questions);
-    
+
     // reset
     this.questions = [];
     this.timeTo = 1;

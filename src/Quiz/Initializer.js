@@ -28,7 +28,7 @@ export default class Initializer {
 
   settingsListen() {
     // Deal with selecting different declensions
-    for (const opt of Object.values(this.optEls.declensions)) {
+    for (const opt of this.optEls.declensions) {
       opt.addEventListener("click", (e) => {
         e.target.classList.toggle("selected");
         this.options.declensions ^= 0b00001 << (+e.target.dataset.value - 1);

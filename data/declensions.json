@@ -13,24 +13,27 @@
   },
   "2": {
     "m|s|nom": "us",
-    "n|s|nom": "um",
     "m|s|gen": "ī",
     "m|s|dat": "ō",
     "m|s|acc": "um",
     "m|s|abl": "ō",
+    
+    "n|s|nom": "um",
     "n|s|gen": "ī",
     "n|s|dat": "ō",
     "n|s|acc": "um",
     "n|s|abl": "ō",
+
+    "m|p|nom": "ī",
     "m|p|gen": "ōrum",
     "m|p|dat": "īs",
+    "m|p|acc": "ōs",
     "m|p|abl": "īs",
+    
     "n|p|gen": "ōrum",
     "n|p|dat": "īs",
     "n|p|abl": "īs",
-    "m|p|nom": "ī",
     "n|p|nom": "a",
-    "m|p|acc": "ōs",
     "n|p|acc": "a"
   },
   "3": {

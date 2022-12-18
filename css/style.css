@@ -165,17 +165,23 @@ button {
 
 .pane {
   position: absolute;
-  transition: var(--tr-l);
+  transition: var(--tr-l) all;
   opacity: 0;
-  scale: 0.9;
+  scale: 0.96;
   padding: 20px;
   max-width: min(500px, 100vw);
+  min-width: 300px;
   max-height: 450px;
   overflow-y: auto;
   box-shadow: 0 40px 70px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   pointer-events: none;
-  translate: 0px 10px;
+  translate: 0px 1px;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+.pane#begin {
+  min-width: 200px;
 }
 
 .pane#quiz {
@@ -235,7 +241,6 @@ button {
 .quiz-content-outer {
   opacity: 1;
   min-width: 300px;
-  margin-bottom: 5px;
   transition: var(--tr-l);
 }
 
@@ -244,15 +249,16 @@ button {
   translate: 0px 3px;
 }
 
-.quiz-content-inner {
+.quiz-content-outer h3 {
+  font-size: 17px;
+  min-width: 300px;
+}
+
+.animator-inner {
   display: inline-block;
   width: fit-content;
 }
 
-.quiz-content-inner h3 {
-  font-size: 17px;
-  min-width: 300px;
-}
 
 .quiz-grade {
   display: inline-block;
@@ -268,6 +274,15 @@ button {
   cursor: pointer;
 }
 
+.quiz-question-title {
+  font-weight: 500;
+}
+
+.quiz-question-super {
+  margin-bottom: 3px;
+  border-bottom: 0 !important;
+  padding-bottom:0;
+}
 .quiz-question-input {
   width: 100%;
 }
