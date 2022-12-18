@@ -6,9 +6,7 @@ import { fetchToJSON } from "./utils.js";
 class Studier {
   constructor() {
     this.switcher = new Switcher();
-    this.dependents = [new Quiz.Initializer(), new View.Loader()];
-
-    if (this.fetching) return this.fetching;
+    this.loaders = [new Quiz.Initializer(), new View.Loader()];
 
     let declensions = fetchToJSON("./data/declensions.json"),
       vocab = fetchToJSON("./data/vocab.json");
@@ -19,7 +17,7 @@ class Studier {
   }
   initialize(data) {
     this.switcher.listen().showPane("begin");
-    this.dependents.forEach(a => a.initialize(data));
+    this.loaders.forEach(a => a.initialize(data));
   }
 }
 

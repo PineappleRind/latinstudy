@@ -23,17 +23,18 @@ export default function declensions(declnum, endings) {
 
 function generateDeclHTML(questionData) {
   let title = createElement(
-      "h3",
-      "class:quiz-question-title",
-      questionData.question
-    ),
+    "h3",
+    "class:quiz-question-title",
+    questionData.question
+  ),
     input = createElement(
       "input",
       "placeholder:What is it? Enter...;type:text;class:quiz-question-input"
     ),
-    container = createElement("div", "class:animator-content-inner");
+    header = createElement("h4", "class:quiz-question-super", `what's the ending?`),
+    container = createElement("div", "class:animator-inner");
 
-  container.append(title, input);
+  container.append(header, title, input);
   return container;
 }
 
@@ -42,7 +43,6 @@ function toQuestion(declnum, gender, gnumber, $case) {
     .split("")
     .map((g) => map[g])
     .join("/");
-  return `${ord(declnum)} declension ${map[$case]} ${
-    map[gnumber]
-  } ending (${genders})`;
+  return `${ord(declnum)} declension ${map[$case]} ${map[gnumber]
+    } (${genders})`;
 }

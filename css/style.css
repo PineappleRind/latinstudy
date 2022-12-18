@@ -55,6 +55,7 @@ body {
 h2 {
   font-size: var(--txt-xl);
 }
+
 h3 {
   font-weight: 300;
 }
@@ -82,6 +83,16 @@ header {
   text-align: center;
   width: 100vw;
   color: var(--txt-c2);
+  font-size: 14px;
+  z-index: 2;
+}
+
+header a {
+  color: var(--txt-c2);
+}
+
+header a:hover {
+  color: var(--txt-c1);
 }
 
 #app {
@@ -167,7 +178,7 @@ button {
   position: absolute;
   transition: var(--tr-l) all;
   opacity: 0;
-  scale: 0.96;
+  scale: 0.98;
   padding: 20px;
   max-width: min(500px, 100vw);
   min-width: 300px;
@@ -177,7 +188,7 @@ button {
   border-radius: 20px;
   pointer-events: none;
   translate: 0px 1px;
-  border: 1px solid rgba(0,0,0,0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .pane#begin {
@@ -281,8 +292,9 @@ button {
 .quiz-question-super {
   margin-bottom: 3px;
   border-bottom: 0 !important;
-  padding-bottom:0;
+  padding-bottom: 0;
 }
+
 .quiz-question-input {
   width: 100%;
 }
@@ -297,6 +309,7 @@ button {
   border: var(--wrong-border);
   color: red;
 }
+
 .quiz-question-input.partial-correct {
   background: var(--partial-correct-bg);
   border: var(--partial-correct-border);
@@ -339,6 +352,7 @@ button {
 .quiz-results-q-correct::after {
   content: "✓";
 }
+
 @keyframes correct-answer-load {
   from {
     opacity: 0;
@@ -347,7 +361,7 @@ button {
 }
 
 /* Custom checkbox styles! */
-input[type="checkbox"] + label {
+input[type="checkbox"]+label {
   cursor: pointer;
   font-size: 90%;
 }
@@ -410,8 +424,8 @@ input[type="checkbox"]:focus {
 
 .toast {
   width: fit-content;
-  margin-bottom: 5px;
-  padding: 4px 8px;
+  margin-bottom: 15px;
+  padding: 7px 14px;
   background: var(--bg-l1);
   border: 1px solid var(--light-border);
   border-radius: var(--rad-m);
@@ -429,10 +443,12 @@ input[type="checkbox"]:focus {
   background: var(--wrong-bg);
   border: var(--wrong-border);
 }
+
 .toast.success {
   background: var(--correct-bg);
   border: var(--correct-border);
 }
+
 .toast-description.smaller {
   font-size: var(--txt-s);
   color: var(--txt-c2);
@@ -465,7 +481,8 @@ select.hidden {
   pointer-events: none;
 }
 
-td, th {
+td,
+th {
   border: 1px solid var(--light-border);
   padding: 5px 9px;
 }
@@ -487,6 +504,12 @@ table {
   padding: 5px 0;
 }
 
+.view-decl-super {
+  border-bottom: 0;
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
 .view-vocab-word {
   margin: 1px;
   padding: 4px 8px;
@@ -496,14 +519,25 @@ table {
 .view-vocab-word:last-child {
   border-bottom: 0;
 }
+
+.view-vocab-word .rendered-answer {
+  margin-left: 10px;
+}
+
+
 .rendered-answer {
-  font-size: 13px;
-  opacity:0.9;
+  opacity: 0.6;
   margin-left: 3px;
   display: inline-block;
-  font-style: italic;
 }
+
+.quiz-content-outer .rendered-answer {
+  font-size: 13px;
+  opacity: 1;
+}
+
 .answer-note {
+  font-style: italic;
   font-size: 12px;
   opacity: 0.7;
 }

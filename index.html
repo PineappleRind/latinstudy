@@ -6,16 +6,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LatinStudier™</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 </head>
 
 <body>
-  <header>LatinStudier™ v<span id="version">0</span></header>
+  <header>LatinStudier™ v<span id="version">0.1</span> | <a
+      href="https://github.com/pineapplerind/latinstudy">GitHub</a> | by <a
+      href="https://pineapplerind.xyz">PineappleRind</a></header>
   <div id="app">
     <div class="pane showing" id="begin">
+      <h2>LatinStudier™</h2>
+      <p style="max-width:300px;">Study helper for vocabulary and declension endings</p>
+      <br>
       <div class="flex">
-        <button class="btn pane-trigger" id="view-trigger" data-pane="view">View</button>
+        <button class="btn pane-trigger" id="view-trigger" data-pane="view">Learn</button>
         <button class="btn pane-trigger" data-pane="quiz-start">Quiz</button>
       </div>
     </div>
@@ -37,82 +42,86 @@
           <option value="adj3">3rd (Adjectives)</option>
         </select>
       </div>
-      <table class="view-decl-table singular">
-        <tr>
-          <th></th>
-          <th class="view-table-head singular masculine">Masculine</th>
-          <th class="view-table-head singular feminine">Feminine</th>
-          <th class="view-table-head singular neuter">Neuter</th>
-        </tr>
-        <tr>
-          <td>Nominative</td>
-          <td class="view-table-field singular nominative masculine"></td>
-          <td class="view-table-field singular nominative feminine"></td>
-          <td class="view-table-field singular nominative neuter"></td>
-        </tr>
-        <tr>
-          <td>Genitive</td>
-          <td class="view-table-field singular genitive masculine"></td>
-          <td class="view-table-field singular genitive feminine"></td>
-          <td class="view-table-field singular genitive neuter"></td>
-        </tr>
-        <tr>
-          <td>Dative</td>
-          <td class="view-table-field singular dative masculine"></td>
-          <td class="view-table-field singular dative feminine"></td>
-          <td class="view-table-field singular dative neuter"></td>
-        </tr>
-        <tr>
-          <td>Accusative</td>
-          <td class="view-table-field singular accusative masculine"></td>
-          <td class="view-table-field singular accusative feminine"></td>
-          <td class="view-table-field singular accusative neuter"></td>
-        </tr>
-        <tr>
-          <td>Ablative</td>
-          <td class="view-table-field singular ablative masculine"></td>
-          <td class="view-table-field singular ablative feminine"></td>
-          <td class="view-table-field singular ablative neuter"></td>
-        </tr>
-      </table>
-      <table class="view-decl-table plural">
-        <tr>
-          <th></th>
-          <th class="view-table-head plural masculine">Masculine</th>
-          <th class="view-table-head plural feminine">Feminine</th>
-          <th class="view-table-head plural neuter">Neuter</th>
-        </tr>
-        <tr>
-          <td>Nominative</td>
-          <td class="view-table-field plural nominative masculine"></td>
-          <td class="view-table-field plural nominative feminine"></td>
-          <td class="view-table-field plural nominative neuter"></td>
-        </tr>
-        <tr>
-          <td>Genitive</td>
-          <td class="view-table-field plural genitive masculine"></td>
-          <td class="view-table-field plural genitive feminine"></td>
-          <td class="view-table-field plural genitive neuter"></td>
-        </tr>
-        <tr>
-          <td>Dative</td>
-          <td class="view-table-field plural dative masculine"></td>
-          <td class="view-table-field plural dative feminine"></td>
-          <td class="view-table-field plural dative neuter"></td>
-        </tr>
-        <tr>
-          <td>Accusative</td>
-          <td class="view-table-field plural accusative masculine"></td>
-          <td class="view-table-field plural accusative feminine"></td>
-          <td class="view-table-field plural accusative neuter"></td>
-        </tr>
-        <tr>
-          <td>Ablative</td>
-          <td class="view-table-field plural ablative masculine"></td>
-          <td class="view-table-field plural ablative feminine"></td>
-          <td class="view-table-field plural ablative neuter"></td>
-        </tr>
-      </table>
+      <div class="view-decl">
+        <h4 class="view-decl-super">singular</h4>
+        <table class="view-decl-table singular">
+          <tr>
+            <th></th>
+            <th class="view-table-head singular masculine">Masculine</th>
+            <th class="view-table-head singular feminine">Feminine</th>
+            <th class="view-table-head singular neuter">Neuter</th>
+          </tr>
+          <tr>
+            <td>Nominative</td>
+            <td class="view-table-field singular nominative masculine"></td>
+            <td class="view-table-field singular nominative feminine"></td>
+            <td class="view-table-field singular nominative neuter"></td>
+          </tr>
+          <tr>
+            <td>Genitive</td>
+            <td class="view-table-field singular genitive masculine"></td>
+            <td class="view-table-field singular genitive feminine"></td>
+            <td class="view-table-field singular genitive neuter"></td>
+          </tr>
+          <tr>
+            <td>Dative</td>
+            <td class="view-table-field singular dative masculine"></td>
+            <td class="view-table-field singular dative feminine"></td>
+            <td class="view-table-field singular dative neuter"></td>
+          </tr>
+          <tr>
+            <td>Accusative</td>
+            <td class="view-table-field singular accusative masculine"></td>
+            <td class="view-table-field singular accusative feminine"></td>
+            <td class="view-table-field singular accusative neuter"></td>
+          </tr>
+          <tr>
+            <td>Ablative</td>
+            <td class="view-table-field singular ablative masculine"></td>
+            <td class="view-table-field singular ablative feminine"></td>
+            <td class="view-table-field singular ablative neuter"></td>
+          </tr>
+        </table>
+        <h4 class="view-decl-super">Plural</h4>
+        <table class="view-decl-table plural">
+          <tr>
+            <th></th>
+            <th class="view-table-head plural masculine">Masculine</th>
+            <th class="view-table-head plural feminine">Feminine</th>
+            <th class="view-table-head plural neuter">Neuter</th>
+          </tr>
+          <tr>
+            <td>Nominative</td>
+            <td class="view-table-field plural nominative masculine"></td>
+            <td class="view-table-field plural nominative feminine"></td>
+            <td class="view-table-field plural nominative neuter"></td>
+          </tr>
+          <tr>
+            <td>Genitive</td>
+            <td class="view-table-field plural genitive masculine"></td>
+            <td class="view-table-field plural genitive feminine"></td>
+            <td class="view-table-field plural genitive neuter"></td>
+          </tr>
+          <tr>
+            <td>Dative</td>
+            <td class="view-table-field plural dative masculine"></td>
+            <td class="view-table-field plural dative feminine"></td>
+            <td class="view-table-field plural dative neuter"></td>
+          </tr>
+          <tr>
+            <td>Accusative</td>
+            <td class="view-table-field plural accusative masculine"></td>
+            <td class="view-table-field plural accusative feminine"></td>
+            <td class="view-table-field plural accusative neuter"></td>
+          </tr>
+          <tr>
+            <td>Ablative</td>
+            <td class="view-table-field plural ablative masculine"></td>
+            <td class="view-table-field plural ablative feminine"></td>
+            <td class="view-table-field plural ablative neuter"></td>
+          </tr>
+        </table>
+      </div>
       <p id="view-note"></p>
       <div class="view-vocab"></div>
     </div>
@@ -144,7 +153,8 @@
       </button>
     </div>
     <div class="pane" id="quiz">
-      <h2>Quiz <span style="font-size: 12px;opacity:0.6"><span id="count-current"></span>/<span id="count-total"></span></span></h2>
+      <h2>Quiz <span style="font-size: 12px;opacity:0.6"><span id="count-current"></span>/<span
+            id="count-total"></span></span></h2>
       <div class="quiz-content-outer"></div>
       <div class="flex">
         <button disabled class="btn btn-gray quiz-prev">Previous</button>
@@ -171,8 +181,10 @@
       <p>Unknown pane</p>
     </div>
   </div>
-  <!-- <script type="module" src="build/bundle.min.js"></script> -->
-  <script type="module" src="src/index.js"></script>
+  <!-- interested in the code? check out /src/index.js OR the GitHub: -->
+  <!-- https://github.com/pineapplerind/latinstudy -->
+  <script type="module" src="build/bundle.min.js"></script>
+  <!-- <script type="module" src="/src/index.js"></script> -->
 </body>
 
 </html>

@@ -6,17 +6,15 @@ import { $, createElement, purify, renderAnswer } from "../utils.js";
 export default class Grader {
   constructor() { }
   initialize(userAnswers, questions) { }
-  gradeQ(question, userAnswer) {
-    // Empty input? Come on, User! :(
+  gradeQuestion(question, userAnswer) {
     if (!userAnswer) return false;
     // Remove accents to compare with correct answer
     userAnswer = purify(userAnswer);
-
     // If there are multiple answers
     if (question.answer.constructor === Array) {
       let correct = question.answer;
-      let directEquals = correct.some(el=>purify(el) === purify(userAnswer)),
-        fuzzyEquals = correct.some(el=>this.equals(el,userAnswer))
+      let directEquals = correct.some(el => purify(el) === userAnswer),
+        fuzzyEquals = correct.some(el => this.equals(userAnswer, el))
 
       if (directEquals) return 2;
       else if (fuzzyEquals) return 1;
@@ -30,8 +28,29 @@ export default class Grader {
       else if (fuzzyEquals) return 1;
       else return 0;
     }
-    // Correct? Return right
   }
+
+  equals(word1, correct) {
+    word1 = purify(word1);
+    correct = purify(correct);
+
+    if (word1 === correct)
+      return true;
+    // if the word is really short, we can't tell if the user
+    // actually made a typo but got it correct- so mark wrong
+    else if (correct < 2) return false;
+
+    let foundMistakes = 1; // only allow 1 character difference
+    for (let i = 0; i < word1.length; i++) {
+      if (word1.charAt(i) === correct.charAt(i)) continue;
+
+      foundMistakes--;
+      if (foundMistakes < 0) return false;
+    }
+
+    return true;
+  }
+
   finish(questions) {
     console.log(questions)
     // switch to results pane
@@ -63,22 +82,5 @@ export default class Grader {
       Math.round((numCorrect / questions.length) * 1000) / 10;
     $("#quiz-results-num-correct").textContent = numCorrect;
     $("#quiz-results-total").textContent = questions.length;
-  }
-  equals(word1, word2) {
-    word1 = purify(word1);
-    word2 = purify(word2);
-
-    if (word1 === word2)
-      return true;
-
-    let foundMistakes = 1; // only allow 1 character difference
-    for (let i = 0; i < word1.length; i++) {
-      if (word1.charAt(i) === word2.charAt(i)) continue;
-
-      foundMistakes--;
-      if (foundMistakes < 0) return false;
-    }
-
-    return true;
   }
 }

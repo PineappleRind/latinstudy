@@ -21,19 +21,22 @@ export default class Message {
       )
     );
 
-    (this.el = el), (this.duration = duration), (this.id = (id++).toString(16));
+    this.el = el;
+    this.duration = duration
+    this.id = (id++).toString(16);
     // Add it to the queue
     queue.push(this);
     // Call the manager 😡
     wantToShow(this.id);
   }
 }
+
 function wantToShow() {
   if (!queue.length) return;
-
+  if (showing) return setTimeout(wantToShow, queue[0].duration)
   showMessage(queue[0]).then(() => {
     queue.shift();
-    console.log(queue);
+    showing = false;
     wantToShow();
   });
 }
@@ -41,6 +44,7 @@ function wantToShow() {
 function showMessage({ el, duration }) {
   return new Promise(async (r) => {
     container.append(el);
+    showing = true;
     await wait(duration);
     el.classList.add("hidden");
     wait(200).then(() => {

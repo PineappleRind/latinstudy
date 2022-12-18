@@ -18,8 +18,7 @@ export default class Loader {
         this.options.type.oninput = (e) => {
             this.options.declType.classList.toggle("hidden");
             this.update[e.target.value](data);
-            for (const table of $('.view-decl-table', 1))
-                table.style.display = (e.target.value === 'vocab' ? 'none' : 'table');
+            $('.view-decl').style.display = (e.target.value === 'vocab' ? 'none' : 'block');
             $('.view-vocab').style.display = (e.target.value !== 'vocab' ? 'none' : 'block')
         };
 

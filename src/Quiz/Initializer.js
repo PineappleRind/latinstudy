@@ -38,7 +38,7 @@ export default class Initializer {
     // On click
     $(".pane-trigger.quiz-begin").addEventListener("click", (e) => {
       if (this.quizIsEmpty()) {
-        alert("No declensions and/or vocabulary question number specified.");
+        new Message("No declensions and/or vocabulary question number specified.", 2, 4000);
         // a bit of a hacky way to override Switcher...
         return window.latinstudier.switcher.showPane("quiz-start");
       }

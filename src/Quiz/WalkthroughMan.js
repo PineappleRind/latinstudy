@@ -68,7 +68,10 @@ export default class WalkthroughMan {
     // update the question indicator
     $("#count-current").textContent = (index + 1).toString();
 
-    // store some elements
+    // if question is already graded make sure the button says Next and not Grade
+    if (this.questions[index].graded) this.timeTo = 2;
+    this.updateNextBtn();
+
     this.curInput = this.questions[index].html.querySelector("input");
     this.updateDisable();
 
@@ -93,14 +96,13 @@ export default class WalkthroughMan {
   }
 
   updateNextBtn() {
-    if (this.timeTo === 1) this.btns.next.innerHTML = "Grade";
-    else if (this.timeTo === 2) this.btns.next.innerHTML = "Next";
-    else if (this.timeTo === 3) this.btns.next.innerHTML = "Finish";
+    let map = ["Grade", "Next", "Finish"];
+    this.btns.next.innerHTML = map[this.timeTo - 1];
   }
 
   listen = {
     next: () => {
-      // ready to grade, if necessary
+      // time to grade
       if (this.timeTo === 1) {
         this.gradeQuestion();
         this.timeTo =
@@ -109,6 +111,9 @@ export default class WalkthroughMan {
 
       // done grading and expecting to go to the next question?
       else if (this.timeTo === 2) {
+        // grade if the user has disabled immediate grading and it didn't grade before
+        if (!this.options.immediateGrade) this.gradeQuestion();
+        // next question
         this.toQuestion.apply(this, [1, this.questionTransition]);
         if (this.options.immediateGrade) this.timeTo = 1;
       }
@@ -158,7 +163,7 @@ export default class WalkthroughMan {
     let userAnswer = this.userAnswers.map((m) => m.response)[
       this.curQuestionIndex
     ];
-    let isCorrect = this.grader.gradeQ(
+    let isCorrect = this.grader.gradeQuestion(
       cur,
       this.userAnswers.map((m) => m.response)[this.curQuestionIndex]
     );

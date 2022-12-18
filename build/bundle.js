@@ -110,9 +110,59 @@ class Switcher {
   }
 }
 
-let container = createElement("div", "class:toast-container");
+let typeMap = ["info", "success", "error"],
+  queue = [],
+  showing = false,
+  id = 0,
+  container = createElement("div", "class:toast-container");
 
 $("#app").append(container);
+
+class Message {
+  constructor(content, type, duration, title) {
+    // Create a message
+    let el = createElement("div", `class:toast ${typeMap[type]}`);
+    if (title) el.append(createElement("h3", "class:toast-header", title));
+    el.append(
+      createElement(
+        "p",
+        `class:toast-description ${title ? "smaller" : ""}`,
+        content
+      )
+    );
+
+    this.el = el;
+    this.duration = duration;
+    this.id = (id++).toString(16);
+    // Add it to the queue
+    queue.push(this);
+    // Call the manager 😡
+    wantToShow(this.id);
+  }
+}
+
+function wantToShow() {
+  if (!queue.length) return;
+  if (showing) return setTimeout(wantToShow, queue[0].duration)
+  showMessage(queue[0]).then(() => {
+    queue.shift();
+    showing = false;
+    wantToShow();
+  });
+}
+
+function showMessage({ el, duration }) {
+  return new Promise(async (r) => {
+    container.append(el);
+    showing = true;
+    await wait(duration);
+    el.classList.add("hidden");
+    wait(200).then(() => {
+      el.remove();
+      r();
+    });
+  });
+}
 
 // Grader recieves the responses from WalkthroughMan, compares
 // them to the questions, grades, and shows the grade to the user.
@@ -120,17 +170,15 @@ $("#app").append(container);
 class Grader {
   constructor() { }
   initialize(userAnswers, questions) { }
-  gradeQ(question, userAnswer) {
-    // Empty input? Come on, User! :(
+  gradeQuestion(question, userAnswer) {
     if (!userAnswer) return false;
     // Remove accents to compare with correct answer
     userAnswer = purify(userAnswer);
-
     // If there are multiple answers
     if (question.answer.constructor === Array) {
       let correct = question.answer;
-      let directEquals = correct.some(el=>purify(el) === purify(userAnswer)),
-        fuzzyEquals = correct.some(el=>this.equals(el,userAnswer));
+      let directEquals = correct.some(el => purify(el) === userAnswer),
+        fuzzyEquals = correct.some(el => this.equals(userAnswer, el));
 
       if (directEquals) return 2;
       else if (fuzzyEquals) return 1;
@@ -144,8 +192,29 @@ class Grader {
       else if (fuzzyEquals) return 1;
       else return 0;
     }
-    // Correct? Return right
   }
+
+  equals(word1, correct) {
+    word1 = purify(word1);
+    correct = purify(correct);
+
+    if (word1 === correct)
+      return true;
+    // if the word is really short, we can't tell if the user
+    // actually made a typo but got it correct- so mark wrong
+    else if (correct < 2) return false;
+
+    let foundMistakes = 1; // only allow 1 character difference
+    for (let i = 0; i < word1.length; i++) {
+      if (word1.charAt(i) === correct.charAt(i)) continue;
+
+      foundMistakes--;
+      if (foundMistakes < 0) return false;
+    }
+
+    return true;
+  }
+
   finish(questions) {
     console.log(questions);
     // switch to results pane
@@ -178,22 +247,60 @@ class Grader {
     $("#quiz-results-num-correct").textContent = numCorrect;
     $("#quiz-results-total").textContent = questions.length;
   }
-  equals(word1, word2) {
-    word1 = purify(word1);
-    word2 = purify(word2);
+}
 
-    if (word1 === word2)
-      return true;
+class Animator {
+  constructor(target, settings) {
+    this.outer = target; // outer
+    this.settings = settings;
 
-    let foundMistakes = 1; // only allow 1 character difference
-    for (let i = 0; i < word1.length; i++) {
-      if (word1.charAt(i) === word2.charAt(i)) continue;
+    let possibleInner = this.outer.querySelector('.animator-inner');
+    if (possibleInner) possibleInner.remove();
 
-      foundMistakes--;
-      if (foundMistakes < 0) return false;
-    }
+    this.inner = createElement("div", "class:animator-inner");
+    this.outer.append(this.inner);
+  }
+  animateTo(html, delay) {
+    // get dimensions
+    let dimensions = this.getHTMLDimensions(html);
+    // Hide the container's contents and prepare it for the next content
+    this.outer.classList.add("hidden");
+    this.outer.style.width = `${Math.max(dimensions.width, this.settings.minWidth || 0)}px`;
+    this.outer.style.height = `${dimensions.height}px`;
 
-    return true;
+    return new Promise((resolve) => {
+      // Wait a bit
+      wait(delay).then(() => {
+        // then replace the content and unhide
+        this.outer.replaceChild(html, this.inner);
+        this.outer.classList.remove("hidden");
+        // save current inner
+        this.inner = html;
+        resolve(html);
+      });
+    });
+  }
+
+  animateAppend(toappend, delay) {
+    // create a clone and add the element
+    let clone = this.inner.cloneNode(true);
+    clone.append(toappend);
+    // get hypothetical dimensions and update outer
+    let dimensions = this.getHTMLDimensions(clone);
+    this.outer.style.width = `${dimensions.width}px`;
+    this.outer.style.height = `${dimensions.height}px`;
+    // append the content
+    this.inner.append(toappend);
+  }
+
+  getHTMLDimensions(html) {
+    // Clone the node & measure it
+    html.classList.add("invisible");
+    document.body.append(html);
+    let size = html.getBoundingClientRect();
+    html.classList.remove("invisible");
+    html.remove();
+    return size;
   }
 }
 
@@ -212,6 +319,9 @@ class WalkthroughMan {
     this.userAnswers = [];
     this.questionTransition = 200; // ms
     this.grader = new Grader();
+    this.animator = new Animator(this.container, {
+      minWidth: 300
+    });
   }
 
   initialize(questions, options) {
@@ -221,41 +331,22 @@ class WalkthroughMan {
     //  1 = grade then next, 2 = next, 3 = finish
     this.timeTo = this.options.immediateGrade ? 1 : 2;
 
+    // If grading after each question is enabled
+    // change "Next" button to "Grade"
+    if (this.options.immediateGrade) this.btns.next.innerHTML = "Grade";
+
+    // update current question indicator
+    $("#count-total").textContent = this.questions.length;
+    $("#count-current").textContent = "1";
+
     // Load the first question
     this.loadQuestion(0, 0, 1).then(
       () => (this.defaultHeight = this.container.getBoundingClientRect().height)
     );
     this.updateDisable();
 
-    this.btns.next.addEventListener("click", () => {
-      console.log(this.timeTo);
-      // ready to grade, if necessary
-      if (this.timeTo === 1) {
-        this.gradeQuestion();
-        this.timeTo =
-          this.curQuestionIndex === this.questions.length - 1 ? 3 : 2;
-      }
-
-      // done grading and expecting to go to the next question?
-      else if (this.timeTo === 2) {
-        this.toQuestion.apply(this, [1, this.questionTransition]);
-        if (this.options.immediateGrade) this.timeTo = 1;
-      }
-
-      // finished grading and time to finish?
-      else if (this.timeTo === 3) {
-        return this.finishQuiz();
-      }
-
-      this.updateNextBtn();
-    });
-    this.btns.prev.addEventListener(
-      "click",
-      this.toQuestion.bind(this, -1, this.questionTransition)
-    );
-    // If grading after each question is enabled
-    // change "Next" button to "Grade"
-    if (this.options.immediateGrade) this.btns.next.innerHTML = "Grade";
+    this.btns.next.addEventListener("click", this.listen.next.bind(this));
+    this.btns.prev.addEventListener("click", this.listen.prev.bind(this));
   }
 
   toQuestion(n) {
@@ -269,48 +360,22 @@ class WalkthroughMan {
       this.curQuestionIndex -= n;
       return this.finishQuiz();
     }
-    // Reset the height of the container
-    let cor = 0;
-    // if question is already graded add the height of the correct answer box
-    if (
-      Math.sign(n) < 0 &&
-      this.options.immediateGrade &&
-      this.questions[index].graded !== null
-    )
-      cor = 25.5;
-    this.container.style.height = this.defaultHeight + cor + "px";
-    // store some elements
+
+    // update the question indicator
+    $("#count-current").textContent = (index + 1).toString();
+
+    // if question is already graded make sure the button says Next and not Grade
+    if (this.questions[index].graded) this.timeTo = 2;
+    this.updateNextBtn();
+
     this.curInput = this.questions[index].html.querySelector("input");
-    this.curInput.focus();
     this.updateDisable();
 
-    // Hide the container's contents and prepare it for the next content
-    this.container.classList.add("hidden");
-    this.container.style.width
-      = this.questions[index].html.querySelector('h3').style.width
-      = `${this.getHTMLDimensions(this.questions[index].html, "width")}px`;
-
-    return new Promise((resolve) => {
-      // Wait a bit
-      wait(delay).then(() => {
-        // then replace the content and unhide
-        if (this.container.children[0]) this.container.children[0].remove();
-        this.container.append(this.questions[index].html);
-        this.inputListen();
-        this.container.classList.remove("hidden");
-        resolve();
-      });
+    return new Promise(async (resolve) => {
+      await this.animator.animateTo(this.questions[index].html, delay);
+      this.listen.input();
+      resolve();
     });
-  }
-
-  getHTMLDimensions(html, prop) {
-    // Clone the node & measure it
-    html.classList.add("invisible");
-    document.body.append(html);
-    let size = html.getBoundingClientRect()[prop];
-    html.classList.remove("invisible");
-    html.remove();
-    return size;
   }
 
   updateDisable() {
@@ -327,22 +392,62 @@ class WalkthroughMan {
   }
 
   updateNextBtn() {
-    if (this.timeTo === 1) this.btns.next.innerHTML = "Grade";
-    else if (this.timeTo === 2) this.btns.next.innerHTML = "Next";
-    else if (this.timeTo === 3) this.btns.next.innerHTML = "Finish";
+    let map = ["Grade", "Next", "Finish"];
+    this.btns.next.innerHTML = map[this.timeTo - 1];
   }
 
-  inputListen() {
-    onkeyup = (e) => {
-      if (e.key === "Enter") return this.btns.next.click();
-    };
-    this.curInput.onkeyup = (e) => {
-      this.updateDisable();
-      this.userAnswers[this.curQuestionIndex] = {
-        response: this.curInput.value,
-        graded: null,
+  listen = {
+    next: () => {
+      // time to grade
+      if (this.timeTo === 1) {
+        this.gradeQuestion();
+        this.timeTo =
+          this.curQuestionIndex === this.questions.length - 1 ? 3 : 2;
+      }
+
+      // done grading and expecting to go to the next question?
+      else if (this.timeTo === 2) {
+        // grade if the user has disabled immediate grading and it didn't grade before
+        if (!this.options.immediateGrade) this.gradeQuestion();
+        // next question
+        this.toQuestion.apply(this, [1, this.questionTransition]);
+        if (this.options.immediateGrade) this.timeTo = 1;
+      }
+
+      // finished grading and time to finish?
+      else if (this.timeTo === 3) return this.finishQuiz();
+
+      this.updateNextBtn();
+    },
+    prev: () => {
+      this.toQuestion.apply(this, [-1, this.questionTransition]);
+    },
+    input: () => {
+      onkeyup = (e) => {
+        if (e.key === "Enter") return this.btns.next.click();
       };
-    };
+      this.curInput.onkeyup = (e) => {
+        this.updateDisable();
+        this.userAnswers[this.curQuestionIndex] = {
+          response: this.curInput.value,
+          graded: null,
+        };
+      };
+    },
+  };
+
+  updateGrade(isCorrect, answer) {
+    // get the result
+    let typeofAnswer = ["wrong", "partial-correct", "correct"][isCorrect];
+
+    this.curInput.disabled = true;
+    this.curInput.classList.add(typeofAnswer);
+    // add correct answer
+    let correct = createElement("div", "class:quiz-correct-answer");
+    correct.append(renderAnswer(answer));
+    // Measure the new height once the correct answer is added
+    // for a lovely animation. 😍
+    this.animator.animateAppend(correct, 200);
   }
 
   gradeQuestion() {
@@ -354,26 +459,13 @@ class WalkthroughMan {
     let userAnswer = this.userAnswers.map((m) => m.response)[
       this.curQuestionIndex
     ];
-    let isCorrect = this.grader.gradeQ(
+    let isCorrect = this.grader.gradeQuestion(
       cur,
       this.userAnswers.map((m) => m.response)[this.curQuestionIndex]
     );
 
-    let typeofAnswer = ["wrong", "partial-correct", "correct"][isCorrect];
-    console.log(typeofAnswer);
-    function visualUpdate() {
-      this.curInput.disabled = true;
-      this.curInput.classList.add(typeofAnswer);
-      // Measure the new height once the correct answer is added
-      // for a lovely animation. 😍
-      let correct = createElement("div", "class:quiz-correct-answer");
-      correct.append(renderAnswer(cur.answer));
-      let nh = this.getHTMLDimensions(correct, "height");
-      this.container.style.height = this.defaultHeight + nh + "px";
-      this.container.children[0].append(correct);
-    }
     // only update visually if immediate grading was specified
-    if (this.options.immediateGrade) visualUpdate.apply(this);
+    if (this.options.immediateGrade) this.updateGrade(isCorrect, cur.answer);
 
     // Finally set the current question to graded
     this.questions[this.curQuestionIndex].graded = {
@@ -386,9 +478,8 @@ class WalkthroughMan {
   }
 
   finishQuiz() {
-    console.log(this);
     this.grader.finish(this.questions);
-    
+
     // reset
     this.questions = [];
     this.timeTo = 1;
@@ -401,14 +492,14 @@ function declensions(declnum, endings) {
   let questions = [];
   for (const [type, ending] of Object.entries(endings)) {
     // split the key into its information components
-    let [gender, gnumber, $case] = type.split('|');
+    let [gender, gnumber, $case] = type.split("|");
 
-    if (ending === "-" || gender !== 'm') continue; // no ending? continue
-    
+    if (ending === "-") continue; // no ending? continue
+
     // format the question
     let formulation = {
       question: toQuestion(declnum, gender, gnumber, $case),
-      answer: ending
+      answer: ending,
     };
     // add the answer & html
     formulation.html = generateDeclHTML(formulation);
@@ -421,22 +512,29 @@ function declensions(declnum, endings) {
 
 function generateDeclHTML(questionData) {
   let title = createElement(
-    "h3",
-    "class:quiz-question-title",
-    questionData.question
-  ),
+      "h3",
+      "class:quiz-question-title",
+      questionData.question
+    ),
     input = createElement(
       "input",
       "placeholder:What is it? Enter...;type:text;class:quiz-question-input"
     ),
-    container = createElement("div", "class:quiz-content-inner");
+    header = createElement("h4", "class:quiz-question-super", `what's the ending?`), 
+    container = createElement("div", "class:animator-inner");
 
-  container.append(title, input);
+  container.append(header,title, input);
   return container;
 }
 
 function toQuestion(declnum, gender, gnumber, $case) {
-  return `${ord(declnum)} declension ${map[$case]} ${map[gnumber]} ending (${gender.split('').map(g=>map[g]).join('/')})`;
+  let genders = gender
+    .split("")
+    .map((g) => map[g])
+    .join("/");
+  return `${ord(declnum)} declension ${map[$case]} ${
+    map[gnumber]
+  } (${genders})`;
 }
 
 function vocab(vocab, num) {
@@ -466,15 +564,16 @@ function generateVocabHTML(questionData) {
   let title = createElement(
       "h3",
       "class:quiz-question-title",
-      `What does <b>${questionData.word}</b> mean?`
+      `${questionData.word}${questionData.dictionary ? ", " + questionData.dictionary : ""}`
     ),
     input = createElement(
       "input",
       "placeholder:What's the translation? Enter...;type:text;class:quiz-question-input"
     ),
-    container = createElement("div", "class:quiz-content-inner");
+    header = createElement("h4", "class:quiz-question-super", `translate the ${questionData.type}`),
+    container = createElement("div", "class:animator-inner");
 
-  container.append(title, input);
+  container.append(header, title, input);
   return container;
 }
 
@@ -549,7 +648,7 @@ class Initializer {
 
   settingsListen() {
     // Deal with selecting different declensions
-    for (const opt of Object.values(this.optEls.declensions)) {
+    for (const opt of this.optEls.declensions) {
       opt.addEventListener("click", (e) => {
         e.target.classList.toggle("selected");
         this.options.declensions ^= 0b00001 << (+e.target.dataset.value - 1);
@@ -559,7 +658,7 @@ class Initializer {
     // On click
     $(".pane-trigger.quiz-begin").addEventListener("click", (e) => {
       if (this.quizIsEmpty()) {
-        alert("No declensions and/or vocabulary question number specified.");
+        new Message("No declensions and/or vocabulary question number specified.", 2, 4000);
         // a bit of a hacky way to override Switcher...
         return window.latinstudier.switcher.showPane("quiz-start");
       }
@@ -600,13 +699,15 @@ class Loader {
         this.options.type.oninput = (e) => {
             this.options.declType.classList.toggle("hidden");
             this.update[e.target.value](data);
-            for (const table of $('.view-decl-table', 1))
-                table.style.display = (e.target.value === 'vocab' ? 'none' : 'table');
+            $('.view-decl').style.display = (e.target.value === 'vocab' ? 'none' : 'block');
+            $('.view-vocab').style.display = (e.target.value !== 'vocab' ? 'none' : 'block');
         };
 
         this.options.declType.oninput = (e) => {
             this.update[this.options.type.value](data);
         };
+
+       // this.options.vocabSort.oninput = e => this.vocabSort(e.target.value);
     }
 
     update = {
@@ -619,9 +720,7 @@ class Loader {
                     $("#view-note").innerHTML = ending;
                     continue;
                 }
-                $(
-                    `.view-table-field.${map[gender]}.${map[gnumber]}.${map[$case]}`
-                ).textContent = ending;
+                $(`.view-table-field.${map[gender]}.${map[gnumber]}.${map[$case]}`).textContent = ending;
 
                 genders.add(gender);
             }
@@ -633,25 +732,28 @@ class Loader {
             );
             // hide every gender that isn't part of the declension
             Array.from(
-                $(
-                    `.view-table-head:not(.${genders.join("):not(.")}), 
-            .view-table-field:not(.${genders.join("):not(.")})`,
-                    1
-                )
+                $(`.view-table-head:not(.${genders.join("):not(.")}), 
+                    .view-table-field:not(.${genders.join("):not(.")})`, 1)
             ).forEach((e) => (e.style.display = "none"));
         },
         vocab: ([_declensions, vocab]) => {
             if (this.vocabLoaded === true) return;
             for (const voc of vocab) {
-                let word = createElement('div', 'class:view-vocab-word', `${voc.word}${voc.genitive ? ', ' + voc.genitive : ''}`);
+                let word = createElement('div', 'class:view-vocab-word', `${voc.word}${voc.dictionary ? ', ' + voc.dictionary : ''}`);
+                word.dataset.declension = voc.declension || "0";
+                word.dataset.type = voc.type || "other";
                 word.append(renderAnswer(voc.translation));
-                $('.view-vocab').append(
-                    word
-                );
+
+                $('.view-vocab').append(word);
             }
+        //    this.vocabSort('type');
             this.vocabLoaded = true;
         }
     };
+
+    //vocabSort(by) {
+      //  let words = $()
+    //}
 }
 
 var View = { Loader };
@@ -659,9 +761,7 @@ var View = { Loader };
 class Studier {
   constructor() {
     this.switcher = new Switcher();
-    this.dependents = [new Quiz.Initializer(), new View.Loader()];
-
-    if (this.fetching) return this.fetching;
+    this.loaders = [new Quiz.Initializer(), new View.Loader()];
 
     let declensions = fetchToJSON("./data/declensions.json"),
       vocab = fetchToJSON("./data/vocab.json");
@@ -672,7 +772,7 @@ class Studier {
   }
   initialize(data) {
     this.switcher.listen().showPane("begin");
-    this.dependents.forEach(a => a.initialize(data));
+    this.loaders.forEach(a => a.initialize(data));
   }
 }
 
