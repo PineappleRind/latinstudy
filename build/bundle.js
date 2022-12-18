@@ -512,18 +512,18 @@ function declensions(declnum, endings) {
 
 function generateDeclHTML(questionData) {
   let title = createElement(
-      "h3",
-      "class:quiz-question-title",
-      questionData.question
-    ),
+    "h3",
+    "class:quiz-question-title",
+    questionData.question
+  ),
     input = createElement(
       "input",
       "placeholder:What is it? Enter...;type:text;class:quiz-question-input"
     ),
-    header = createElement("h4", "class:quiz-question-super", `what's the ending?`), 
+    header = createElement("h4", "class:quiz-question-super", `what's the ending?`),
     container = createElement("div", "class:animator-inner");
 
-  container.append(header,title, input);
+  container.append(header, title, input);
   return container;
 }
 
@@ -532,9 +532,8 @@ function toQuestion(declnum, gender, gnumber, $case) {
     .split("")
     .map((g) => map[g])
     .join("/");
-  return `${ord(declnum)} declension ${map[$case]} ${
-    map[gnumber]
-  } (${genders})`;
+  return `${ord(declnum)} declension ${map[$case]} ${map[gnumber]
+    } (${genders})`;
 }
 
 function vocab(vocab, num) {
@@ -701,18 +700,22 @@ class Loader {
             this.update[e.target.value](data);
             $('.view-decl').style.display = (e.target.value === 'vocab' ? 'none' : 'block');
             $('.view-vocab').style.display = (e.target.value !== 'vocab' ? 'none' : 'block');
+            $('.view-note').innerHTML = '';
         };
 
         this.options.declType.oninput = (e) => {
             this.update[this.options.type.value](data);
         };
 
-       // this.options.vocabSort.oninput = e => this.vocabSort(e.target.value);
+        // this.options.vocabSort.oninput = e => this.vocabSort(e.target.value);
     }
 
     update = {
         declensions: ([declensions]) => {
             let cur = declensions[this.options.declType.value];
+            // store Set of genders (every element is unique)
+            // this is used to determine the genders that 
+            // *aren't* part of the current declenison and hide them accordingly
             let genders = new Set();
             for (const [key, ending] of Object.entries(cur)) {
                 let [gender, gnumber, $case] = key.split("|");
@@ -724,7 +727,7 @@ class Loader {
 
                 genders.add(gender);
             }
-            // expand all contractions
+            // expand all contractions in the genders set
             genders = Array.from(genders).map((n) => map[n]);
             // show every gender
             Array.from($(`.view-table-head, .view-table-field`, 1)).forEach(
@@ -746,13 +749,13 @@ class Loader {
 
                 $('.view-vocab').append(word);
             }
-        //    this.vocabSort('type');
+            //    this.vocabSort('type');
             this.vocabLoaded = true;
         }
     };
 
     //vocabSort(by) {
-      //  let words = $()
+    //  let words = $()
     //}
 }
 

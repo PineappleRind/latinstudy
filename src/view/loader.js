@@ -19,19 +19,23 @@ export default class Loader {
             this.options.declType.classList.toggle("hidden");
             this.update[e.target.value](data);
             $('.view-decl').style.display = (e.target.value === 'vocab' ? 'none' : 'block');
-            $('.view-vocab').style.display = (e.target.value !== 'vocab' ? 'none' : 'block')
+            $('.view-vocab').style.display = (e.target.value !== 'vocab' ? 'none' : 'block');
+            $('.view-note').innerHTML = '';
         };
 
         this.options.declType.oninput = (e) => {
             this.update[this.options.type.value](data);
         };
 
-       // this.options.vocabSort.oninput = e => this.vocabSort(e.target.value);
+        // this.options.vocabSort.oninput = e => this.vocabSort(e.target.value);
     }
 
     update = {
         declensions: ([declensions]) => {
             let cur = declensions[this.options.declType.value];
+            // store Set of genders (every element is unique)
+            // this is used to determine the genders that 
+            // *aren't* part of the current declenison and hide them accordingly
             let genders = new Set();
             for (const [key, ending] of Object.entries(cur)) {
                 let [gender, gnumber, $case] = key.split("|");
@@ -43,7 +47,7 @@ export default class Loader {
 
                 genders.add(gender);
             }
-            // expand all contractions
+            // expand all contractions in the genders set
             genders = Array.from(genders).map((n) => map[n]);
             // show every gender
             Array.from($(`.view-table-head, .view-table-field`, 1)).forEach(
@@ -65,12 +69,12 @@ export default class Loader {
 
                 $('.view-vocab').append(word);
             }
-        //    this.vocabSort('type');
+            //    this.vocabSort('type');
             this.vocabLoaded = true;
         }
     };
 
     //vocabSort(by) {
-      //  let words = $()
+    //  let words = $()
     //}
 }
