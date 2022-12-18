@@ -705,6 +705,7 @@ class Loader {
 
         this.options.declType.oninput = (e) => {
             this.update[this.options.type.value](data);
+            $('.view-note').innerHTML = '';
         };
 
         // this.options.vocabSort.oninput = e => this.vocabSort(e.target.value);
