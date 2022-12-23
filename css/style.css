@@ -54,6 +54,7 @@ body {
 
 h2 {
   font-size: var(--txt-xl);
+  color: var(--txt-c0);
 }
 
 h3 {
@@ -109,7 +110,15 @@ input[type="text"] {
   padding: 8px 15px;
   margin: 2px;
   border: 1px solid var(--light-border);
+  background: var(--bg-l0);
   border-radius: var(--rad-m);
+}
+input::placeholder,
+input::-webkit-input-placeholder {
+  color: var(--txt-c2)
+}
+input, select {
+  color: var(--txt-c1);
 }
 
 button {
@@ -188,7 +197,8 @@ button {
   border-radius: 20px;
   pointer-events: none;
   translate: 0px 1px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--light-border);
+  background: var(--bg-l1);
 }
 
 .pane#begin {
@@ -540,4 +550,18 @@ table {
   font-style: italic;
   font-size: 12px;
   opacity: 0.7;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --bg-l0: rgb(24, 24, 24);
+    --bg-l1: rgb(37, 37, 37);
+    --bg-l2: rgb(57, 57, 57);
+
+    --txt-c0: #eee;
+    --txt-c1: #aaa;
+    --txt-c2: #777;
+
+    --light-border: rgb(60,60,60)
+  }
 }
