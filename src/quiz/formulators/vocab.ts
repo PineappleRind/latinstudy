@@ -1,12 +1,12 @@
 import { createElement, shuffleArray } from "../../utils.js";
-import { QuizQuestion } from "../types.js";
+import { QuizQuestion } from "../../types.js";
 
 export default function vocab(vocab, num: number) {
   let result: QuizQuestion[] = [];
   num = +num;
 
   if (num === 0) num = vocab.length;
-  else if (num === -1) num = 0;
+  else if (!num) num = 0;
   // shuffle
   shuffleArray(vocab);
   // For as many as the user wants,
@@ -26,8 +26,7 @@ export default function vocab(vocab, num: number) {
 
 function generateVocabHTML(questionData) {
   let title = createElement(
-      "h3",
-      "class:quiz-question-title",
+      "h3", "class:quiz-question-title",
       `${questionData.word}${questionData.dictionary ? ", " + questionData.dictionary : ""}`
     ),
     input = createElement(

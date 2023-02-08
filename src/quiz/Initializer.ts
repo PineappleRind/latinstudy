@@ -1,10 +1,10 @@
 import Message from "../components/Message.js";
 import { $, $$, fetchToJSON } from "../utils.js";
 import Formulator from "./Formulator.js";
-import { QuizOptions } from "./types.js";
+import { QuizOptions } from "../types.js";
 
 // Initializer fetches data and gets the user's settings.
-export default class Initializer {
+export class Initializer {
   optEls: { [key: string]: any };
   options: QuizOptions;
   fetched: any;
@@ -41,7 +41,7 @@ export default class Initializer {
     }
 
     // On click
-    $(".pane-trigger.quiz-begin").addEventListener("click", (e) => {
+    $(".pane-trigger.quiz-begin").addEventListener("click", () => {
       if (this.quizIsEmpty()) {
         new Message("No declensions and/or vocabulary question number specified.", 2, 4000);
         // a bit of a hacky way to override Switcher...
@@ -56,5 +56,7 @@ export default class Initializer {
     return this;
   }
 
-  quizIsEmpty = () => !this.options.declensions && (!this.optEls.vocabNum.value || this.optEls.vocabNum.value === "-1")
+  // If declension selection is empty AND vocab is set to off
+  quizIsEmpty = () => 
+    !this.options.declensions && !this.optEls.vocabNum.value
 }

@@ -1,5 +1,5 @@
 export const $ = (s: string): any => {
-  let el = document.querySelector(s); 
+  let el = document.querySelector(s);
   if (!el) throw new Error('element not found');
   return el
 }
@@ -55,9 +55,7 @@ export function renderAnswer(str: string | string[]) {
   let res = createElement("span", "class:rendered-answer");
 
   const process = (str: string[], answer: string, i: number) => {
-    let broken = answer.split("|");
-    let word = broken[0],
-      note = broken[1];
+    let [word, note] = answer.split("|");
 
     res.append(word);
     if (note)

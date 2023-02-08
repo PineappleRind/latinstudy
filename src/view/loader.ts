@@ -1,6 +1,6 @@
 import { $, $$, createElement, map, renderAnswer } from "../utils.js";
 
-export default class Loader {
+export class Loader {
   pane: Element;
   options: { type: HTMLSelectElement; declType: HTMLSelectElement; };
   note: Element;
@@ -59,7 +59,7 @@ export default class Loader {
       // *aren't* part of the current declenison and hide them accordingly
       let genders: Set<string> = new Set();
       for (const [key, ending] of Object.entries(selectedDeclension)) {
-        let [gender, gnumber, $case] = key.split("|");
+        let [gender, gnumber, $case] = key.split("/");
         if (key === "note") {
           $("#view-note").innerHTML = ending;
           continue;

@@ -1,6 +1,7 @@
+
 import Switcher from "./components/Switcher.js";
-import Quiz from "./quiz/index";
-import View from "./view/index";
+import { Initializer } from "./quiz";
+import { Loader } from "./view/index.js";
 import { fetchToJSON } from "./utils.js";
 
 declare global {
@@ -9,14 +10,14 @@ declare global {
 
 class Studier {
   switcher: Switcher;
-  quizInitializer: Quiz.Initializer;
-  viewLoader: View.Loader;
-  
+  quizInitializer: Initializer;
+  viewLoader: Loader;
+
   constructor() {
     this.switcher = new Switcher();
-    
-    this.quizInitializer = new Quiz.Initializer();
-    this.viewLoader = new View.Loader();
+
+    this.quizInitializer = new Initializer();
+    this.viewLoader = new Loader();
 
     let endings = fetchToJSON("./data/endings.json"),
       vocab = fetchToJSON("./data/vocab.json");

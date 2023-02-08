@@ -7,7 +7,7 @@ import {
   renderAnswer,
 } from "../utils.js";
 import Animator from "./walkthroughHelpers/Animator.js";
-import { QuizOptions, QuizQuestion } from "./types";
+import { QuizOptions, QuizQuestion } from "../types";
 
 // WalkthroughMan handles the showing of the questions to the
 // user, records the user's response, and sends them to Grader.
@@ -15,7 +15,7 @@ import { QuizOptions, QuizQuestion } from "./types";
 export default class WalkthroughMan {
   curQuestionIndex: number;
   questionTransition: number;
-  
+
   container: HTMLDivElement;
   btns: { prev: HTMLButtonElement; next: HTMLButtonElement; };
   userAnswers: any[];
@@ -43,7 +43,7 @@ export default class WalkthroughMan {
     });
   }
 
-  initialize(questions, options) {
+  initialize(questions: any[], options: { declensions: number; vocabNum: number; immediateGrade: boolean; }) {
     this.questions = shuffleArray(questions);
     this.options = options;
 
@@ -59,22 +59,21 @@ export default class WalkthroughMan {
     $("#count-current").textContent = "1";
 
     // Load the first question
-    this.loadQuestion(0, 0, 1).then(
-      () => (this.defaultHeight = this.container.getBoundingClientRect().height)
-    );
+    this.loadQuestion(0, 0, 1)
+      .then(() => (this.defaultHeight = this.container.getBoundingClientRect().height));
     this.updateDisable();
 
     this.btns.next.addEventListener("click", this.listen.next.bind(this));
     this.btns.prev.addEventListener("click", this.listen.prev.bind(this));
   }
 
-  toQuestion(n) {
+  toQuestion(n: number) {
     if (this.options.immediateGrade) this.btns.next.innerHTML = "Grade";
     this.curQuestionIndex += n;
     this.loadQuestion(this.curQuestionIndex, this.questionTransition, n);
   }
 
-  loadQuestion(index, delay, n) {
+  loadQuestion(index: number, delay: number, n: number) {
     if (!this.questions[index]) {
       this.curQuestionIndex -= n;
       return this.finishQuiz();
@@ -145,7 +144,7 @@ export default class WalkthroughMan {
       onkeyup = (e) => {
         if (e.key === "Enter") return this.btns.next.click();
       };
-      this.curInput.onkeyup = (e) => {
+      this.curInput.onkeyup = (e: any) => {
         this.updateDisable();
         this.userAnswers[this.curQuestionIndex] = {
           response: this.curInput.value,
@@ -155,7 +154,7 @@ export default class WalkthroughMan {
     },
   };
 
-  updateGrade(isCorrect, answer) {
+  updateGrade(isCorrect: number, answer: string | string[]) {
     // get the result
     let typeofAnswer = ["wrong", "partial-correct", "correct"][isCorrect];
 
@@ -197,7 +196,7 @@ export default class WalkthroughMan {
   }
 
   finishQuiz() {
-    this.grader.finish(this.questions);
+    this.grader.showResults(this.questions);
 
     // reset
     this.questions = [];

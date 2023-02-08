@@ -1,11 +1,11 @@
 import { map, ord, createElement } from "../../utils.js";
-import { QuizQuestion } from "../types.js";
+import { QuizQuestion } from "../../types.js";
 
 export default function declensions(declnum, endings) {
   let questions: QuizQuestion[] = [];
   for (const [type, ending] of Object.entries(endings)) {
     // split the key into its information components
-    let [gender, gnumber, $case] = type.split("|");
+    let [gender, gnumber, $case] = type.split("/");
 
     if (ending === "-" || !ending) continue; // no ending? continue
 

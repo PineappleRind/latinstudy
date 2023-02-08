@@ -4,6 +4,8 @@
         "module": "ES2015",
         "lib": ["dom", "es2021"],
         "target": "es2021",
-        "outDir": "build/ts/"
+        "outDir": "build/ts/",
+        "moduleResolution": "node",
+        "skipLibCheck": true
     }
 }
