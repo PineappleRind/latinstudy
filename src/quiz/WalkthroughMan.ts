@@ -7,11 +7,26 @@ import {
   renderAnswer,
 } from "../utils.js";
 import Animator from "./walkthroughHelpers/Animator.js";
+import { QuizOptions, QuizQuestion } from "./types";
 
 // WalkthroughMan handles the showing of the questions to the
 // user, records the user's response, and sends them to Grader.
 
 export default class WalkthroughMan {
+  curQuestionIndex: number;
+  questionTransition: number;
+  
+  container: HTMLDivElement;
+  btns: { prev: HTMLButtonElement; next: HTMLButtonElement; };
+  userAnswers: any[];
+  grader: Grader;
+  animator: Animator;
+  questions: QuizQuestion[];
+  options: QuizOptions;
+  timeTo: number;
+  defaultHeight: number;
+  curInput: any;
+
   constructor() {
     // when walkthroughMan is initialized, load question 0
     this.curQuestionIndex = 0;
@@ -75,7 +90,7 @@ export default class WalkthroughMan {
     this.curInput = this.questions[index].html.querySelector("input");
     this.updateDisable();
 
-    return new Promise(async (resolve) => {
+    return new Promise<void>(async (resolve) => {
       await this.animator.animateTo(this.questions[index].html, delay);
       this.listen.input();
       resolve();

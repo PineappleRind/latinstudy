@@ -1,9 +1,13 @@
-import { $ } from "../utils.js";
+import { $$ } from "../utils.js";
 
 export default class Switcher {
+  panes: any;
+  triggers: any;
+  history: any[];
+
   constructor() {
-    this.panes = $(".pane", 1);
-    this.triggers = $(".pane-trigger", 1);
+    this.panes = $$(".pane");
+    this.triggers = $$(".pane-trigger");
     this.history = [];
     return this;
   }

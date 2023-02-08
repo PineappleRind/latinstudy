@@ -23,8 +23,8 @@ body {
   --txt-xs: 0.7em;
   --txt-s: 0.85em;
   --txt-m: 1em;
-  --txt-l: 1.4em;
-  --txt-xl: 1.8em;
+  --txt-l: 1.1em;
+  --txt-xl: 2em;
 
   --btn-bg: #3d6dff;
   --btn-bgh: #1d4ee1;
@@ -66,7 +66,7 @@ h4 {
   font-weight: 300;
   position: relative;
   color: var(--txt-c2);
-  font-size: var(--txt-m);
+  font-size: var(--txt-l);
   padding-bottom: 3px;
   margin-bottom: 3px;
   margin-top: 2px;
@@ -220,28 +220,60 @@ button {
   pointer-events: all;
 }
 
-.quiz-declension-select {
+.quiz-option-select {
   display: flex;
   padding: 2px;
 }
 
-.quiz-declension-option {
+.quiz-option {
   padding: 3px 6px;
   transition: var(--tr-l);
   cursor: pointer;
   margin: 2px;
-  width: 45px;
+  min-width: 45px;
   text-align: center;
   border: 1px solid var(--light-border);
   border-radius: var(--rad-m);
   animation: scale-smaller var(--tr-l);
 }
 
-.quiz-declension-option.selected {
+.quiz-option.selected {
   background: var(--btn-bg);
   color: var(--txt-inv);
   animation: scale-bigger var(--tr-l);
   font-weight: bold;
+}
+
+fieldset {
+  border: 1px solid var(--light-border);
+  border-radius: var(--rad-l);
+  padding: 10px;
+  margin: 6px 3px;
+  background: var(--bg-l2)
+}
+
+[construction] {
+  position: relative;
+}
+
+[construction]::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(15px);
+  content: "w.i.p.";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--txt-l);
+  font-style: italic;
+  z-index: 3;
+  border-radius: var(--rad-l)
 }
 
 @keyframes scale-bigger {
@@ -279,7 +311,6 @@ button {
   display: inline-block;
   width: fit-content;
 }
-
 
 .quiz-grade {
   display: inline-block;
@@ -554,14 +585,14 @@ table {
 
 @media (prefers-color-scheme: dark) {
   body {
-    --bg-l0: rgb(24, 24, 24);
-    --bg-l1: rgb(37, 37, 37);
-    --bg-l2: rgb(57, 57, 57);
+    --bg-l0: rgb(19, 19, 19);
+    --bg-l1: rgb(29, 29, 29);
+    --bg-l2: rgb(39, 39, 39);
 
     --txt-c0: #eee;
-    --txt-c1: #aaa;
+    --txt-c1: rgb(195, 195, 195);
     --txt-c2: #777;
 
-    --light-border: rgb(60,60,60)
+    --light-border: rgb(84, 84, 84);
   }
 }

@@ -1,18 +1,23 @@
-export const $ = (s, a) => document[`querySelector${a ? "All" : ""}`](s);
+export const $ = (s: string): any => {
+  let el = document.querySelector(s); 
+  if (!el) throw new Error('element not found');
+  return el
+}
+export const $$ = (s: string) => document.querySelectorAll(s);
 
-export const fetchToJSON = async (url) => {
+export const fetchToJSON = async (url: string) => {
   let data = await fetch(url).then((r) => r.json());
   return data;
 };
 
 // https://stackoverflow.com/a/57518703
-export const ord = (n) =>
+export const ord = (n: string) =>
   n +
   { e: "st", o: "nd", w: "rd", h: "th" }[
-  new Intl.PluralRules("en", { type: "ordinal" }).select(n)[2]
+  new Intl.PluralRules("en", { type: "ordinal" }).select(parseInt(n))[2]
   ];
 
-export const createElement = (tag, attrs, value) => {
+export const createElement = (tag: string, attrs: string, value?: string) => {
   // shorthand element function
   let el = document.createElement(tag);
   if (attrs)
@@ -25,9 +30,9 @@ export const createElement = (tag, attrs, value) => {
   return el;
 };
 
-export const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const purify = (str) =>
+export const purify = (str: string) =>
   str
     .trim()
     .normalize("NFKD")
@@ -36,7 +41,7 @@ export const purify = (str) =>
     .toLowerCase();
 
 //https://stackoverflow.com/a/12646864
-export function shuffleArray(array) {
+export function shuffleArray(array: any[]) {
   for (var i = array.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
     var temp = array[i];
@@ -46,9 +51,10 @@ export function shuffleArray(array) {
   return array;
 }
 
-export function renderAnswer(str) {
+export function renderAnswer(str: string | string[]) {
   let res = createElement("span", "class:rendered-answer");
-  const process = (str, answer, i) => {
+
+  const process = (str: string[], answer: string, i: number) => {
     let broken = answer.split("|");
     let word = broken[0],
       note = broken[1];
@@ -60,8 +66,8 @@ export function renderAnswer(str) {
     if (i !== (str ?? answer).length - 1) res.append(", ");
   };
 
-  if (str.constructor === Array) str.forEach((a, i) => process(str, a, i));
-  else process("", str, -1);
+  if (str instanceof Array) str.forEach((a, i) => process(str, a, i));
+  else process([], str, -1);
 
   return res;
 }

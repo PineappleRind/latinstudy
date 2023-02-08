@@ -42,11 +42,11 @@
           <option value="adj3">3rd (Adjectives)</option>
         </select>
       </div>
-      <div class="view-decl">
+      <div class="view-decl" data-type="declensions">
         <h4 class="view-decl-super">singular</h4>
         <table class="view-decl-table singular">
           <tr>
-            <th></th>
+            <th>Case</th>
             <th class="view-table-head singular masculine">Masculine</th>
             <th class="view-table-head singular feminine">Feminine</th>
             <th class="view-table-head singular neuter">Neuter</th>
@@ -85,7 +85,7 @@
         <h4 class="view-decl-super">Plural</h4>
         <table class="view-decl-table plural">
           <tr>
-            <th></th>
+            <th>Case</th>
             <th class="view-table-head plural masculine">Masculine</th>
             <th class="view-table-head plural feminine">Feminine</th>
             <th class="view-table-head plural neuter">Neuter</th>
@@ -122,20 +122,47 @@
           </tr>
         </table>
       </div>
-      <div class="view-vocab"></div>
-      <p id="view-note"></p>
+      <div class="view-vocab" data-type="vocab"></div>
+      <p class="view-note"></p>
     </div>
     <div class="pane" id="quiz-start">
       <button class="back pane-trigger" data-pane=".">Back</button>
       <h2>Quiz</h2>
       <h4>Quiz on declensions...</h4>
-      <div class="quiz-declension-select">
-        <div class="quiz-declension-option" data-value="1">1st</div>
-        <div class="quiz-declension-option" data-value="2">2nd</div>
-        <div class="quiz-declension-option" data-value="3">3rd</div>
-        <div class="quiz-declension-option" data-value="4">4th</div>
-        <div class="quiz-declension-option" data-value="5">5th</div>
+      <div class="quiz-option-select">
+        <div class="quiz-option quiz-declension-option" data-value="1">1st</div>
+        <div class="quiz-option quiz-declension-option" data-value="2">2nd</div>
+        <div class="quiz-option quiz-declension-option" data-value="3">3rd</div>
+        <div class="quiz-option quiz-declension-option" data-value="4">4th</div>
+        <div class="quiz-option quiz-declension-option" data-value="5">5th</div>
       </div>
+      <h4>Quiz on conjugations...</h4>
+      <div construction>
+        <div class="quiz-option-select">
+        <div class="quiz-option quiz-conj-option" data-value="1">1st</div>
+        <div class="quiz-option quiz-conj-option" data-value="2">2nd</div>
+        <div class="quiz-option quiz-conj-option" data-value="3">3rd</div>
+        <div class="quiz-option quiz-conj-option" data-value="4">4th</div>
+      </div>
+      <fieldset id="quiz-conj-settings">
+        <p>Include voices...</p>
+        <div class="quiz-option-select">
+          <div class="quiz-option quiz-conj-option" data-value="1">Active</div>
+          <div class="quiz-option quiz-conj-option" data-value="2">Passive</div>
+        </div>
+        <p>Include moods...</p>
+        <div class="quiz-option-select">
+          <div class="quiz-option quiz-conj-mood-option" data-value="1">Indicative</div>
+          <div class="quiz-option quiz-conj-mood-option" data-value="2">Subjunctive</div>
+        </div>
+        <p>Include tenses...</p>
+        <div class="quiz-option-select">
+          <div class="quiz-option quiz-conj-tense-option" data-value="1">Present</div>
+          <div class="quiz-option quiz-conj-tense-option" data-value="2">Imperfect</div>
+          <div class="quiz-option quiz-conj-tense-option" data-value="3">Future</div>
+        </div>
+      </fieldset>
+    </div>
       <h4>Vocabulary</h4>
       <div class="quiz-vocab-select">
         <p># of vocabulary words to quiz on (randomized)</p>
@@ -181,10 +208,9 @@
       <p>Unknown pane</p>
     </div>
   </div>
-  <!-- interested in the code? check out /src/index.js OR the GitHub: -->
+  <!-- interested in the code? check out /build/ts/index.js OR the GitHub: -->
   <!-- https://github.com/pineapplerind/latinstudy -->
-  <script type="module" src="build/bundle.min.js"></script>
-  <!-- <script type="module" src="/src/index.js"></script> -->
+  <script src="build/bundle.min.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,8 @@
 import { createElement, shuffleArray } from "../../utils.js";
+import { QuizQuestion } from "../types.js";
 
-export default function vocab(vocab, num) {
-  let result = [];
+export default function vocab(vocab, num: number) {
+  let result: QuizQuestion[] = [];
   num = +num;
 
   if (num === 0) num = vocab.length;

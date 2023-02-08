@@ -1,5 +1,5 @@
-import { $, createElement, ord } from "../utils.js";
 import WalkthroughMan from "./WalkthroughMan.js";
+import { QuizOptions, QuizQuestion } from "./types.js";
 // question generators
 import declensions from "./formulators/declensions.js";
 import vocab from "./formulators/vocab.js";
@@ -7,15 +7,16 @@ import vocab from "./formulators/vocab.js";
 // JSON data, and sends them to WalkthroughMan to start the quiz.
 
 export default class Formulator {
+  options: QuizOptions;
+  questions: QuizQuestion[];
   constructor(options) {
     this.options = options;
     this.questions = [];
   }
 
-  initialize(declensions, vocab) {
+  initialize(endings, vocab) {
     // Only get from the declensions enabled
     let getFrom = {};
-    console.log(this.options.declensions);
     // For every declension enabled
     for (let j = 0; j < Math.log2(16) + 1; j++) {
       // 5 declensions; base-2 logarithm of 16 = 4
@@ -24,7 +25,7 @@ export default class Formulator {
       // If  1, 2, 4, 8, or 16 is found, then enable
       // declensions 1, 2, 3, 4, or 5, respectively
       if ((bj & this.options.declensions) === bj)
-        getFrom[j] = declensions[j + 1];
+        getFrom[j] = endings.declensions[j + 1];
     }
 
     this.questions.push(

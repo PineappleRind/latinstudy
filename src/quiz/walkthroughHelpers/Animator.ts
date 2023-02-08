@@ -1,6 +1,13 @@
 import { createElement, wait } from "../../utils.js";
 
+type AnimatorSettings = {
+  minWidth?: number
+}
 export default class Animator {
+  outer: any;
+  settings: AnimatorSettings;
+  inner: HTMLElement;
+
   constructor(target, settings) {
     this.outer = target; // outer
     this.settings = settings;
@@ -34,7 +41,7 @@ export default class Animator {
 
   animateAppend(toappend, delay) {
     // create a clone and add the element
-    let clone = this.inner.cloneNode(true);
+    let clone = this.inner.cloneNode(true) as HTMLElement;
     clone.append(toappend);
     // get hypothetical dimensions and update outer
     let dimensions = this.getHTMLDimensions(clone);

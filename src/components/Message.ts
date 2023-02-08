@@ -9,7 +9,11 @@ let typeMap = ["info", "success", "error"],
 $("#app").append(container);
 
 export default class Message {
-  constructor(content, type, duration, title) {
+  el: HTMLElement;
+  duration: any;
+  id: string;
+
+  constructor(content: string, type: number, duration: number, title?: string) {
     // Create a message
     let el = createElement("div", `class:toast ${typeMap[type]}`);
     if (title) el.append(createElement("h3", "class:toast-header", title));
@@ -27,7 +31,7 @@ export default class Message {
     // Add it to the queue
     queue.push(this);
     // Call the manager 😡
-    wantToShow(this.id);
+    wantToShow();
   }
 }
 
@@ -42,7 +46,7 @@ function wantToShow() {
 }
 
 function showMessage({ el, duration }) {
-  return new Promise(async (r) => {
+  return new Promise<void>(async (r) => {
     container.append(el);
     showing = true;
     await wait(duration);

@@ -1,16 +1,21 @@
 import { map, ord, createElement } from "../../utils.js";
+import { QuizQuestion } from "../types.js";
+
 export default function declensions(declnum, endings) {
-  let questions = [];
+  let questions: QuizQuestion[] = [];
   for (const [type, ending] of Object.entries(endings)) {
     // split the key into its information components
     let [gender, gnumber, $case] = type.split("|");
 
-    if (ending === "-") continue; // no ending? continue
+    if (ending === "-" || !ending) continue; // no ending? continue
 
+    let question = toQuestion(declnum, gender, gnumber, $case),
+      answer = ending.toString();
     // format the question
-    let formulation = {
-      question: toQuestion(declnum, gender, gnumber, $case),
-      answer: ending,
+    let formulation: QuizQuestion = {
+      type: "declension",
+      question, answer,
+      html: generateDeclHTML({ question, answer })
     };
     // add the answer & html
     formulation.html = generateDeclHTML(formulation);
@@ -38,7 +43,7 @@ function generateDeclHTML(questionData) {
   return container;
 }
 
-function toQuestion(declnum, gender, gnumber, $case) {
+function toQuestion(declnum, gender, gnumber, $case): string {
   let genders = gender
     .split("")
     .map((g) => map[g])

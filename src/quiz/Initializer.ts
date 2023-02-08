@@ -1,12 +1,17 @@
 import Message from "../components/Message.js";
-import { $, fetchToJSON } from "../utils.js";
+import { $, $$, fetchToJSON } from "../utils.js";
 import Formulator from "./Formulator.js";
+import { QuizOptions } from "./types.js";
 
 // Initializer fetches data and gets the user's settings.
 export default class Initializer {
+  optEls: { [key: string]: any };
+  options: QuizOptions;
+  fetched: any;
+
   constructor() {
     this.optEls = {
-      declensions: $(".quiz-declension-option", 1),
+      declensions: $$(".quiz-declension-option"),
       vocabNum: $(".quiz-vocab-count"),
       immediateGrade: $("#quiz-immediate-grade"),
     };
@@ -29,9 +34,9 @@ export default class Initializer {
   settingsListen() {
     // Deal with selecting different declensions
     for (const opt of this.optEls.declensions) {
-      opt.addEventListener("click", (e) => {
-        e.target.classList.toggle("selected");
-        this.options.declensions ^= 0b00001 << (+e.target.dataset.value - 1);
+      opt.addEventListener("click", () => {
+        opt.classList.toggle("selected");
+        this.options.declensions ^= 0b00001 << (+opt.dataset.value - 1);
       });
     }
 

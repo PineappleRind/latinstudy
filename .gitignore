@@ -1,2 +1,5 @@
 # stupid macOS
 .DS_Store
+
+node_modules
+bun.lockb
