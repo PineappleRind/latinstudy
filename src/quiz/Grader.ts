@@ -4,12 +4,11 @@ import { $, createElement, purify, renderAnswer } from "../utils.js";
 // Grader recieves the responses from WalkthroughMan, compares
 // them to the questions, grades, and shows the grade to the user.
 
-export default class Grader {
+export class Grader {
   constructor() { }
   initialize(userAnswers, questions) { }
 
   gradeQuestion(question: QuizQuestion, userAnswer: string) {
-    if (!userAnswer) return false;
     // Remove accents to compare with correct answer
     userAnswer = purify(userAnswer);
     // If there are multiple answers

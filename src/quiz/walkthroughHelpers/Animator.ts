@@ -3,12 +3,13 @@ import { createElement, wait } from "../../utils.js";
 type AnimatorSettings = {
   minWidth?: number
 }
+
 export default class Animator {
   outer: any;
   settings: AnimatorSettings;
   inner: HTMLElement;
 
-  constructor(target, settings) {
+  constructor(target: HTMLDivElement, settings: AnimatorSettings) {
     this.outer = target; // outer
     this.settings = settings;
 
@@ -18,7 +19,7 @@ export default class Animator {
     this.inner = createElement("div", "class:animator-inner");
     this.outer.append(this.inner);
   }
-  animateTo(html, delay) {
+  animateTo(html: HTMLElement, delay: number) {
     // get dimensions
     let dimensions = this.getHTMLDimensions(html);
     // Hide the container's contents and prepare it for the next content
@@ -39,7 +40,7 @@ export default class Animator {
     });
   }
 
-  animateAppend(toappend, delay) {
+  animateAppend(toappend: HTMLElement) {
     // create a clone and add the element
     let clone = this.inner.cloneNode(true) as HTMLElement;
     clone.append(toappend);
@@ -51,7 +52,7 @@ export default class Animator {
     this.inner.append(toappend);
   }
 
-  getHTMLDimensions(html) {
+  getHTMLDimensions(html: HTMLElement) {
     // Clone the node & measure it
     html.classList.add("invisible");
     document.body.append(html);

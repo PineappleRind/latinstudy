@@ -4,11 +4,7 @@ import { Initializer } from "./quiz";
 import { Loader } from "./view/index.js";
 import { fetchToJSON } from "./utils.js";
 
-declare global {
-  interface Window { latinstudier: Studier; }
-}
-
-class Studier {
+export class Studier {
   switcher: Switcher;
   quizInitializer: Initializer;
   viewLoader: Loader;
@@ -33,6 +29,8 @@ class Studier {
   }
 }
 
-
+declare global {
+  interface Window { latinstudier: Studier; }
+}
 
 window.latinstudier = new Studier();

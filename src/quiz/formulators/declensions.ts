@@ -4,21 +4,18 @@ import { QuizQuestion } from "../../types.js";
 export default function declensions(declnum, endings) {
   let questions: QuizQuestion[] = [];
   for (const [type, ending] of Object.entries(endings)) {
-    // split the key into its information components
-    let [gender, gnumber, $case] = type.split("/");
-
     if (ending === "-" || !ending) continue; // no ending? continue
 
-    let question = toQuestion(declnum, gender, gnumber, $case),
+    let question = formatQuestionString(declnum, type),
       answer = ending.toString();
     // format the question
     let formulation: QuizQuestion = {
       type: "declension",
       question, answer,
-      html: generateDeclHTML({ question, answer })
+      html: generateQuestionHTML({ question, answer })
     };
     // add the answer & html
-    formulation.html = generateDeclHTML(formulation);
+    formulation.html = generateQuestionHTML(formulation);
     // apply changes
     questions.push(formulation);
   }
@@ -26,7 +23,7 @@ export default function declensions(declnum, endings) {
   return questions;
 }
 
-function generateDeclHTML(questionData) {
+function generateQuestionHTML(questionData) {
   let title = createElement(
     "h3",
     "class:quiz-question-title",
@@ -43,11 +40,15 @@ function generateDeclHTML(questionData) {
   return container;
 }
 
-function toQuestion(declnum, gender, gnumber, $case): string {
+function formatQuestionString(declnum: number, type: string): string {
+  // split the key into its information components
+  let [gender, gnumber, $case] = type.split("/");
+  // expand genders
   let genders = gender
     .split("")
     .map((g) => map[g])
     .join("/");
-  return `${ord(declnum)} declension ${map[$case]} ${map[gnumber]
+
+  return `${ord(declnum.toString())} declension ${map[$case]} ${map[gnumber]
     } (${genders})`;
 }

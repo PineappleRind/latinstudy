@@ -1,19 +1,16 @@
 import { createElement, shuffleArray } from "../../utils.js";
 import { QuizQuestion } from "../../types.js";
 
-export default function vocab(vocab, num: number) {
+export default function vocab(vocab, amount: number) {
   let result: QuizQuestion[] = [];
-  num = +num;
-
-  if (num === 0) num = vocab.length;
-  else if (!num) num = 0;
+  if (amount === 0) amount = vocab.length;
   // shuffle
   shuffleArray(vocab);
   // For as many as the user wants,
-  for (let i = 0; i < num; i++) {
+  for (let i = 0; i < amount; i++) {
     // get a random vocab word from the vocab JSON
     let r = vocab[i];
-    // then generate 1 of 3 vocab question types
+    // then generate a vocab question
     result.push({
       type: "vocab",
       question: r.word,

@@ -1,4 +1,4 @@
-import Grader from "./Grader.js";
+import { Grader } from "./";
 import {
   $,
   createElement,
@@ -12,7 +12,7 @@ import { QuizOptions, QuizQuestion } from "../types";
 // WalkthroughMan handles the showing of the questions to the
 // user, records the user's response, and sends them to Grader.
 
-export default class WalkthroughMan {
+export class WalkthroughMan {
   curQuestionIndex: number;
   questionTransition: number;
 
@@ -73,7 +73,7 @@ export default class WalkthroughMan {
     this.loadQuestion(this.curQuestionIndex, this.questionTransition, n);
   }
 
-  loadQuestion(index: number, delay: number, n: number) {
+  async loadQuestion(index: number, delay: number, n: number) {
     if (!this.questions[index]) {
       this.curQuestionIndex -= n;
       return this.finishQuiz();
@@ -89,11 +89,10 @@ export default class WalkthroughMan {
     this.curInput = this.questions[index].html.querySelector("input");
     this.updateDisable();
 
-    return new Promise<void>(async (resolve) => {
-      await this.animator.animateTo(this.questions[index].html, delay);
-      this.listen.input();
-      resolve();
-    });
+    await this.animator.animateTo(this.questions[index].html, delay);
+    this.listen.input();
+    
+    return;
   }
 
   updateDisable() {
@@ -165,7 +164,7 @@ export default class WalkthroughMan {
     correct.append(renderAnswer(answer));
     // Measure the new height once the correct answer is added
     // for a lovely animation. 😍
-    this.animator.animateAppend(correct, 200);
+    this.animator.animateAppend(correct);
   }
 
   gradeQuestion() {
@@ -177,10 +176,7 @@ export default class WalkthroughMan {
     let userAnswer = this.userAnswers.map((m) => m.response)[
       this.curQuestionIndex
     ];
-    let isCorrect = this.grader.gradeQuestion(
-      cur,
-      this.userAnswers.map((m) => m.response)[this.curQuestionIndex]
-    );
+    let isCorrect = this.grader.gradeQuestion(cur, this.userAnswers.map((m) => m.response)[this.curQuestionIndex]);
 
     // only update visually if immediate grading was specified
     if (this.options.immediateGrade) this.updateGrade(isCorrect, cur.answer);

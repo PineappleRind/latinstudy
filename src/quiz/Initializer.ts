@@ -1,13 +1,13 @@
 import Message from "../components/Message.js";
-import { $, $$, fetchToJSON } from "../utils.js";
-import Formulator from "./Formulator.js";
+import { $, $$ } from "../utils.js";
+import { Formulator } from "./";
 import { QuizOptions } from "../types.js";
 
 // Initializer fetches data and gets the user's settings.
 export class Initializer {
   optEls: { [key: string]: any };
   options: QuizOptions;
-  fetched: any;
+  data: any;
 
   constructor() {
     this.optEls = {
@@ -28,7 +28,7 @@ export class Initializer {
     // first, deal with the user's settings
     this.settingsListen();
     // Then the data
-    this.fetched = data;
+    this.data = data;
   }
 
   settingsListen() {
@@ -50,7 +50,7 @@ export class Initializer {
       this.options.immediateGrade = this.optEls.immediateGrade.checked;
       this.options.vocabNum = this.optEls.vocabNum.value;
 
-      new Formulator(this.options).initialize(this.fetched[0], this.fetched[1]);
+      new Formulator(this.options).initialize(this.data[0], this.data[1]);
     });
 
     return this;
