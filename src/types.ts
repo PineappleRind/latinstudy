@@ -1,17 +1,3 @@
-export interface QuizOptions {
-    declensions: number;
-    vocabNum: number;
-    immediateGrade: boolean;
-}
-
-export interface QuizQuestion {
-    type: string
-    question: string,
-    answer: string | string[],
-    html?: HTMLElement,
-    graded?: any;
-}
-
 type wordType = "noun" | "verb" | "adjective" | "preposition" | "conjunction" | "adverb" | "other"
 
 export interface VocabWord {
