@@ -1,7 +1,7 @@
 import Message from "../components/Message.js";
 import { $, $$ } from "../utils.js";
 import { Formulator } from "./";
-import { QuizOptions } from "../types.js";
+import { QuizOptions } from "./types";
 
 // Initializer fetches data and gets the user's settings.
 export class Initializer {
