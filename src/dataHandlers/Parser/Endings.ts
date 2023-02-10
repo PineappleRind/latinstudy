@@ -1,5 +1,8 @@
+//todo
+type ParsedEnding=void;
+
 export default class EndingParser {
-    endings: ParsedEnding[];
+    endings: ParsedEnding//[];
 
     initialize(endings) {
         this.endings = this.parse(endings);
