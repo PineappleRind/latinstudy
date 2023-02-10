@@ -10,19 +10,16 @@ export default class Animator {
   inner: HTMLElement;
 
   constructor(target: HTMLDivElement, settings: AnimatorSettings) {
-    this.outer = target; // outer
+    this.outer = target; // outer container.
     this.settings = settings;
-
-    let possibleInner = this.outer.querySelector('.animator-inner');
-    if (possibleInner) possibleInner.remove();
-
+    // set outer's content to inner
     this.inner = createElement("div", "class:animator-inner");
-    this.outer.append(this.inner);
+    this.outer.replaceChildren(this.inner);
   }
-  animateTo(html: HTMLElement, delay: number) {
+  animateTo(newHTML: HTMLElement, delay: number) {
     // get dimensions
-    let dimensions = this.getHTMLDimensions(html);
-    // Hide the container's contents and prepare it for the next content
+    let dimensions = this.getHTMLDimensions(newHTML);
+    // Hide the container's contents 
     this.outer.classList.add("hidden");
     this.outer.style.width = `${Math.max(dimensions.width, this.settings.minWidth || 0)}px`;
     this.outer.style.height = `${dimensions.height}px`;
@@ -31,11 +28,11 @@ export default class Animator {
       // Wait a bit
       wait(delay).then(() => {
         // then replace the content and unhide
-        this.outer.replaceChild(html, this.inner);
+        this.outer.replaceChild(newHTML, this.inner);
         this.outer.classList.remove("hidden");
         // save current inner
-        this.inner = html;
-        resolve(html);
+        this.inner = newHTML;
+        resolve(newHTML);
       });
     });
   }
@@ -53,7 +50,7 @@ export default class Animator {
   }
 
   getHTMLDimensions(html: HTMLElement) {
-    // Clone the node & measure it
+    // Clone the node & measure it, basically
     html.classList.add("invisible");
     document.body.append(html);
     let size = html.getBoundingClientRect();

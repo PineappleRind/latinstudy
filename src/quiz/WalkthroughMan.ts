@@ -2,7 +2,6 @@ import { Grader } from "./";
 import {
   $,
   createElement,
-  wait,
   shuffleArray,
   renderAnswer,
 } from "../utils.js";
@@ -23,7 +22,7 @@ export class WalkthroughMan {
   animator: Animator;
   questions: QuizQuestion[];
   options: QuizOptions;
-  timeTo: number;
+  nextEvent: number;
   defaultHeight: number;
   curInput: any;
 
@@ -43,12 +42,12 @@ export class WalkthroughMan {
     });
   }
 
-  initialize(questions: any[], options: { declensions: number; vocabNum: number; immediateGrade: boolean; }) {
+  initialize(questions: any[], options: QuizOptions) {
     this.questions = shuffleArray(questions);
     this.options = options;
 
     //  1 = grade then next, 2 = next, 3 = finish
-    this.timeTo = this.options.immediateGrade ? 1 : 2;
+    this.nextEvent = this.options.immediateGrade ? 1 : 2;
 
     // If grading after each question is enabled
     // change "Next" button to "Grade"
@@ -83,7 +82,7 @@ export class WalkthroughMan {
     $("#count-current").textContent = (index + 1).toString();
 
     // if question is already graded make sure the button says Next and not Grade
-    if (this.questions[index].graded) this.timeTo = 2;
+    if (this.questions[index].graded) this.nextEvent = 2;
     this.updateNextBtn();
 
     this.curInput = this.questions[index].html.querySelector("input");
@@ -110,29 +109,29 @@ export class WalkthroughMan {
 
   updateNextBtn() {
     let map = ["Grade", "Next", "Finish"];
-    this.btns.next.innerHTML = map[this.timeTo - 1];
+    this.btns.next.innerHTML = map[this.nextEvent - 1];
   }
 
   listen = {
     next: () => {
       // time to grade
-      if (this.timeTo === 1) {
+      if (this.nextEvent === 1) {
         this.gradeQuestion();
-        this.timeTo =
+        this.nextEvent =
           this.curQuestionIndex === this.questions.length - 1 ? 3 : 2;
       }
 
       // done grading and expecting to go to the next question?
-      else if (this.timeTo === 2) {
+      else if (this.nextEvent === 2) {
         // grade if the user has disabled immediate grading and it didn't grade before
         if (!this.options.immediateGrade) this.gradeQuestion();
         // next question
         this.toQuestion.apply(this, [1, this.questionTransition]);
-        if (this.options.immediateGrade) this.timeTo = 1;
+        if (this.options.immediateGrade) this.nextEvent = 1;
       }
 
       // finished grading and time to finish?
-      else if (this.timeTo === 3) return this.finishQuiz();
+      else if (this.nextEvent === 3) return this.finishQuiz();
 
       this.updateNextBtn();
     },
@@ -196,7 +195,7 @@ export class WalkthroughMan {
 
     // reset
     this.questions = [];
-    this.timeTo = 1;
+    this.nextEvent = 1;
     this.userAnswers = [];
     this.grader = new Grader();
   }
