@@ -1,4 +1,4 @@
-import { ParsedVocabWord } from "../../types";
+//import { ParsedVocabWord } from "../../types";
 
 export default class VocabParser {
     endings: object;
@@ -7,8 +7,8 @@ export default class VocabParser {
         this.endings = endings;
     }
 
-    parseValue(type: string, str: string) {
-
+    parse(data: object) {
+        return data;
     }
 
     inferCase(vocabWord, $case) {

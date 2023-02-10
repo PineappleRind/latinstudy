@@ -1,5 +1,5 @@
-import { createElement } from "../../utils";
-import { QuizQuestion as Formulation } from "../types";
+import { createElement } from "../../utils.js";
+import { QuizQuestion as Formulation } from "../types.js";
 
 interface QuizQuestionHTMLOptions {
     title: string,

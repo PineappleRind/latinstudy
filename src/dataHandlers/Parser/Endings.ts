@@ -9,6 +9,8 @@ export default class EndingParser {
     }
 
     parse(endings) {
+        return endings;
+        // will work on this laters
         for (const decl of endings) {
             
         }
