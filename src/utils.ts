@@ -5,10 +5,6 @@ export const $ = (s: string): any => {
 }
 export const $$ = (s: string) => document.querySelectorAll(s);
 
-export const fetchToJSON = async (url: string) => {
-  let data = await fetch(url).then((r) => r.json());
-  return data;
-};
 
 // https://stackoverflow.com/a/57518703
 export const ord = (n: string) =>
