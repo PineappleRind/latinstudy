@@ -1,4 +1,4 @@
-import { QuizQuestion } from "./types";
+import { QuizQuestion } from "./types.js";
 import { $, createElement, purify, renderAnswer } from "../utils.js";
 
 // Grader recieves the responses from WalkthroughMan, compares

@@ -1,8 +1,9 @@
 import { createElement, shuffleArray } from "../../utils.js";
-import { QuizQuestion } from "../../types.js";
+import QuizQuestion from "../components/QuizQuestion.js";
+import { QuizQuestion as Formulation } from "../types.js";
 
 export default function vocab(vocab, amount: number) {
-  let result: QuizQuestion[] = [];
+  let result: Formulation[] = [];
   if (amount === 0) amount = vocab.length;
   // shuffle
   shuffleArray(vocab);
@@ -15,24 +16,9 @@ export default function vocab(vocab, amount: number) {
       type: "vocab",
       question: r.word,
       answer: r.translation,
-      html: generateVocabHTML(r),
+      html: new QuizQuestion().create({ title: r.dictionary, super: "translate the " + r.type }),
     });
   }
   return result;
 }
 
-function generateVocabHTML(questionData) {
-  let title = createElement(
-      "h3", "class:quiz-question-title",
-      `${questionData.word}${questionData.dictionary ? ", " + questionData.dictionary : ""}`
-    ),
-    input = createElement(
-      "input",
-      "placeholder:What's the translation? Enter...;type:text;class:quiz-question-input"
-    ),
-    header = createElement("h4", "class:quiz-question-super", `translate the ${questionData.type}`),
-    container = createElement("div", "class:animator-inner");
-
-  container.append(header, title, input);
-  return container;
-}
