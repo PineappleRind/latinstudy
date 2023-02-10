@@ -1,6 +1,6 @@
 import { map, ord, createElement } from "../../utils.js";
 import QuizQuestion from "../components/QuizQuestion.js";
-import { QuizQuestion as Formulation } from "../types";
+import { QuizQuestion as Formulation } from "../types.js";
 
 export default function declensions(declnum, endings) {
   let questions: Formulation[] = [];

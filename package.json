@@ -2,10 +2,7 @@
   "devDependencies": {
     "typedoc": "^0.23.24",
     "typedoc-plugin-missing-exports": "^1.0.0",
-    "typescript": "^4.9.5"
-  },
-  "dependencies": {
-    "uglify-js": "^3.17.4",
-    "uglifyjs": "^2.4.11"
+    "typescript": "^4.9.5",
+    "uglify-js": "^3.17.4"
   }
 }

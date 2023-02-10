@@ -1,5 +1,5 @@
 import { createElement, shuffleArray } from "../../utils.js";
-import QuizQuestion from "../components/QuizQuestion";
+import QuizQuestion from "../components/QuizQuestion.js";
 import { QuizQuestion as Formulation } from "../types.js";
 
 export default function vocab(vocab, amount: number) {

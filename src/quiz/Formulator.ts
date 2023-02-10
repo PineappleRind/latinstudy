@@ -1,5 +1,5 @@
-import { WalkthroughMan } from "./";
-import { QuizOptions, QuizQuestion, VocabWord } from "./types";
+import { WalkthroughMan } from "./WalkthroughMan.js";
+import { QuizOptions, QuizQuestion, VocabWord } from "./types.js";
 // question generators
 import declensions from "./formulators/declensions.js";
 import vocab from "./formulators/vocab.js";

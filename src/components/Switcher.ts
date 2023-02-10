@@ -24,7 +24,7 @@ export default class Switcher {
     for (const pane of this.panes) indexed[pane.id] = pane;
     this.panes = indexed;
   }
-  showPane(id) {
+  showPane(id: string) {
     let target = this.panes[id];
     if (id.startsWith(".")) target = this.history[1];
     if (!target) target = this.panes["404"];

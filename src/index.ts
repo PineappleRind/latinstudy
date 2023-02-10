@@ -1,13 +1,15 @@
 
 import Switcher from "./components/Switcher.js";
-import { Initializer } from "./quiz";
+import { Initializer } from "./quiz/index.js";
 import { Loader } from "./view/index.js";
 import { fetchToJSON } from "./utils.js";
+import DataHandler from "./dataHandlers/index.js";
 
-export class Studier {
+class Studier {
   switcher: Switcher;
   quizInitializer: Initializer;
   viewLoader: Loader;
+  data: object; // have type for this later
 
   constructor() {
     this.switcher = new Switcher();
@@ -15,17 +17,14 @@ export class Studier {
     this.quizInitializer = new Initializer();
     this.viewLoader = new Loader();
 
-    let endings = fetchToJSON("./data/endings.json"),
-      vocab = fetchToJSON("./data/vocab.json");
-
-    Promise.all([endings, vocab]).then((values) => {
-      return this.initialize(values);
-    });
+    this.initialize();
   }
-  initialize(data) {
+  async initialize() {
+    this.data = (await new DataHandler().initialize()).parse();
+    console.log(this.data)
     this.switcher.listen().showPane("begin");
-    this.viewLoader.initialize(data);
-    this.quizInitializer.initialize(data);
+    this.viewLoader.initialize(this.data);
+    this.quizInitializer.initialize(this.data);
   }
 }
 

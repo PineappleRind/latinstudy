@@ -1,4 +1,4 @@
-import { Grader } from "./";
+import { Grader } from "./Grader.js";
 import {
   $,
   createElement,
@@ -6,7 +6,7 @@ import {
   renderAnswer,
 } from "../utils.js";
 import Animator from "./walkthroughHelpers/Animator.js";
-import { QuizOptions, QuizQuestion } from "./types";
+import { QuizOptions, QuizQuestion } from "./types.js";
 
 // WalkthroughMan handles the showing of the questions to the
 // user, records the user's response, and sends them to Grader.
