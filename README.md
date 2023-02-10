@@ -17,3 +17,19 @@ Helps to study latin declensions/vocabulary
 *author: PineappleRind*
 
 *(Henle Latin, Christian/Classical)*
+
+## Guide to the codebase
+> A simple index of files and folders. Real docs coming soon (see issue #2)
+- `css`: css style files
+- `data`: json data for endings, vocab, etc
+- `scripts`: shell scripts for local development
+- `src`: main logic
+- - `components`: visual components such as popups
+- - `dataHandlers`: code for dealing with data: fetches the data and parses it
+- - `quiz`: main code for the quiz
+- - - `components`: components specific to the quiz
+- - - `Initializer, Formulator, WalkthroughMan, Grader`: logic dealing with the quiz itself, per-step
+- - - `formulators`: helpers for `Formulator`
+- - - `walkthroughHelpers`: helpers for `WalkthroughMan`
+- - `view`: main code for the view section
+- - - `loader`: main code for this section. split this into multiple files later

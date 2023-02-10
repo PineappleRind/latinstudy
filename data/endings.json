@@ -188,7 +188,7 @@
       "l/a/i/pre/p/1": "āmus",
       "l/a/i/pre/p/2": "ātis",
       "l/a/i/pre/p/3": "ānt",
-      
+
       "l/a/i/imp/s/1": "ābam",
       "l/a/i/imp/s/2": "ābās",
       "l/a/i/imp/s/3": "ābat",
@@ -301,6 +301,7 @@
       "m/s/dat": "eī",
       "m/s/acc": "eum",
       "m/s/abl": "eō",
+      
       "m/p/nom": "eī",
       "m/p/gen": "eōrum",
       "m/p/dat": "eīs",
