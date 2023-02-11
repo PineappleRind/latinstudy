@@ -38,7 +38,6 @@ export class Loader {
       this.update[selectedType](data);
       // Hide and show tables according to e.target.value
       Object.entries(this.tables).forEach(([_, table]) => {
-        console.log(selectedType, table.dataset.type);
         if (selectedType === table.dataset.type)
           table.style.display = "block";
         else table.style.display = "none";
