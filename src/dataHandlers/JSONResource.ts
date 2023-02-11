@@ -1,10 +1,11 @@
 let count = 0;
 
-export default class Resource {
+export default class JSONResource {
   url: string;
-  id: any;
+  id: string;
+  json: any;
 
-  constructor(url: string, id?: any) {
+  constructor(url: string, id?: string) {
     this.url = url;
     this.id = id || (count++).toString(16);
   }
@@ -12,7 +13,8 @@ export default class Resource {
   async load() {
     if (!this.url) throw new Error("No url to load!");
     let req = await fetch(this.url)
-    let json = await req.json();
-    return json;
+    this.json = await req.json();
+    
+    return this;
   }
 }

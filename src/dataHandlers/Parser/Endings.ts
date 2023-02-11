@@ -15,4 +15,6 @@ export default class EndingParser {
             
         }
     }
+
+    static parses = "endings";
 }

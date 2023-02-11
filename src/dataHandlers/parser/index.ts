@@ -2,15 +2,15 @@ import EndingParser from "./Endings.js";
 import VocabParser from "./Vocab.js";
 
 export default class Parser {
-    endings: EndingParser;
-    vocab: VocabParser;
+    parsers: any[];
 
     constructor() {
-        this.endings = new EndingParser();
-        this.vocab = new VocabParser();
+        this.parsers = [EndingParser, VocabParser];
     }
 
-    parse(type: "endings" | "vocab", data) {
-        return this[type].parse(data);
+    parse(data) {
+        let FoundParser = this.parsers.find(el => data.id === el.parses);
+        if (!FoundParser) throw new Error(`No parser found with type ${data!}`)
+        return new FoundParser().parse(data.json);
     }
 }

@@ -1,4 +1,5 @@
 type wordType = "noun" | "verb" | "adjective" | "preposition" | "conjunction" | "adverb" | "other"
+type gender = "m" | "f" | "n";
 
 export interface VocabWord {
     word: string,
@@ -29,6 +30,7 @@ export interface ParsedVocabNoun extends ParsedVocabWord {
         "accusative": string,
         "ablative": string
     },
+    gender: gender
     declension: number,
 }
 

@@ -1,7 +1,7 @@
-//import { ParsedVocabWord } from "../../types";
+import { ParsedVocabNoun, ParsedVocabVerb } from "../../types.js";
 
 export default class VocabParser {
-    endings: object;
+    endings: any;
 
     initialize(endings) {
         this.endings = endings;
@@ -11,18 +11,28 @@ export default class VocabParser {
         return data;
     }
 
-    inferCase(vocabWord, $case) {
+    decline(vocabWord: ParsedVocabNoun, $case) {
         // get word stem
-        const stem = vocabWord.word.split('-')[0];
-        // get corresponding ending;
-        // filter for endings that match 
-        // vocabWord's information AND case
-        let endings = this.endings[vocabWord.declension]
-            .filter(ending =>
-                ending.gender === vocabWord.gender
-                && ending.case === $case);
+        const { stem } = vocabWord;
+        // get ending based on word information
+        let ending = this.endings.declensions[vocabWord.declension]
+            .find(candidate =>
+                candidate.gender === vocabWord.gender
+                && candidate.case === $case);
+        if (!ending) throw new Error("Invalid case/gender!")
 
-        console.log(endings)
-        
+        return stem + ending;
     }
+
+    conjugate(vocabWord: ParsedVocabVerb, person: number, number: number) {
+        const { stem } = vocabWord;
+        // get ending based on person/number
+        let ending = this.endings.conjugations[vocabWord.conjugation]
+            .find(candidate =>
+                candidate.person === person
+                && candidate.number === number);
+        return stem + ending;
+    }
+
+    static parses = "vocab";
 }
