@@ -4,7 +4,7 @@ type AnimatorSettings = {
   minWidth?: number
 }
 
-export default class Animator {
+export class Animator {
   outer: any;
   settings: AnimatorSettings;
   inner: HTMLElement;

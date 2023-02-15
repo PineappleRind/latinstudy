@@ -5,7 +5,7 @@ import {
   shuffleArray,
   renderAnswer,
 } from "../utils.js";
-import Animator from "./walkthroughHelpers/Animator.js";
+import { Animator } from "./walkthroughHelpers/Animator.js";
 import { QuizOptions, QuizQuestion } from "./types.js";
 
 // WalkthroughMan handles the showing of the questions to the

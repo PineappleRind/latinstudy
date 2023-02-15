@@ -18,6 +18,9 @@ Helps to study latin declensions/vocabulary
 
 *(Henle Latin, Christian/Classical)*
 
+## Docs
+To build documentation, run scripts/docs.sh. Documentation is in the .gitignore because it's not part of the project :)
+ 
 ## Guide to the codebase
 > A simple index of files and folders. Real docs coming soon (see issue #2)
 - `css`: css style files
