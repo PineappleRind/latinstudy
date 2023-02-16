@@ -1,8 +1,8 @@
 import parsers from "./parsers/index.js";
-import { Parser } from "./Parser.js";
-import JSONResource from "./JSONResource.js";
+import { Parser } from "./parsers/Parser.js";
+import { JSONResource } from "./JSONResource.js";
 
-export default class ParserManager {
+export class ParserManager {
     parsers: { [key: string]: any };
 
     constructor() {

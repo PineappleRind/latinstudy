@@ -25,18 +25,18 @@ export class WalkthroughMan {
   userAnswers: any[];
   /** Instance of {@link Grader}. */
   grader: Grader;
-  /** Instance of {@link Animator}. */
+  /** Instance of {@link quiz.<internal>.Animator}. */
   animator: Animator;
-  /** List of questions from Formulator. */
+  /** List of questions formulated by {@link Formulator}. */
   questions: QuizQuestion[];
-  /** User's options collected by Initializer. */
+  /** User's options collected by {@link Initializer}. */
   options: QuizOptions;
   /** 
    * What will happen next when the user clicks the next button. 
    * This needs a type! I don't know what to call it. I feel like this whole functionality should be in a walkthroughHelper. 
    * 1 = grade then next, 2 = next question, 3 = finish */
   nextEvent: number;
-  /** The height of animator-outer in its default state. Animator-related. */
+  /** The height of animator-outer in its default state, for {@link quiz.<internal>.Animator}. */
   defaultHeight: number;
   /** The input field of the current question. */
   curInput: any;

@@ -1,5 +1,5 @@
 import { shuffleArray } from "../../utils.js";
-import createQuizQuestion from "../components/QuizQuestion.js";
+import { createQuizQuestion } from "../components/QuizQuestion.js";
 import { QuizQuestion as Formulation } from "../types.js";
 
 /**
@@ -8,7 +8,7 @@ import { QuizQuestion as Formulation } from "../types.js";
  * @param amount Number of words to generate.
  * @returns List of question Formulations.
  */
-export default function vocab(vocab, amount: number) {
+export function formulateVocabQuestion(vocab, amount: number) {
   let result: Formulation[] = [];
   if (amount === 0) amount = vocab.length;
 

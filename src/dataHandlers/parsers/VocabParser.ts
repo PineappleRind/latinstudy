@@ -1,5 +1,5 @@
 import { ParsedVocabNoun, ParsedVocabVerb, ParsedVocabWord } from "../../types.js";
-import { Parser } from "../Parser.js";
+import { Parser } from "./Parser.js";
 /**
  * Parses vocab for easier usage in the main logic.
  * This parser depends on {@link EndingParser}!! 
@@ -8,10 +8,8 @@ import { Parser } from "../Parser.js";
  */
 export default class VocabParser extends Parser {
     data: any;
-    finished: boolean;
 
     async parse(data: object) {
-        this.finished = true;
         return data;
     }
 

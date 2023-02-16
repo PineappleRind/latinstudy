@@ -1,21 +1,24 @@
 import { WalkthroughMan } from "./WalkthroughMan.js";
-import { QuizOptions, QuizQuestion, VocabWord } from "./types.js";
+import { QuizOptions, QuizQuestion } from "./types.js";
 
-import declensions from "./formulators/declensions.js";
-import vocab from "./formulators/vocab.js";
-import JSONResource from "../dataHandlers/JSONResource.js";
+import { declensions, vocab } from './formulators/index.js';
+
+import { JSONResource } from "../dataHandlers/JSONResource.js";
 /**
  * Handles the formulation of the questions based on JSON data, and sends them to WalkthroughMan to start the quiz.
  * */ 
 export class Formulator {
   options: QuizOptions;
+  /** Finished QuizQuestion formulations. */
   questions: QuizQuestion[];
+
   constructor(options: QuizOptions) {
     this.options = options;
     this.questions = [];
   }
+  questionFormulators = { declensions, vocab };
   /**
-   * Generate questions and initialize WalkthgouthMan with them.
+   * Generate questions and initialize WalkthroughMan with them.
    * @param endings JSONResource containing arrays of conjugations, declensions, and personal pronouns. There should be a type for this!
    * @param vocab JSONResource containing an array of all vocab words.
    */
@@ -33,12 +36,12 @@ export class Formulator {
     let enabledDeclensions = this.enabledDeclensions(endings.declensions);
 
     this.questions.push(
-      ...this.questionGenerators.vocab(vocab.json, this.options.vocabNum)
+      ...this.questionFormulators.vocab(vocab.json, this.options.vocabNum)
     );
 
     for (let declnum in enabledDeclensions)
       this.questions.push(
-        ...this.questionGenerators.declensions.bind(this)(
+        ...this.questionFormulators.declensions.bind(this)(
           +declnum + 1,
           enabledDeclensions[declnum]
         )
@@ -65,9 +68,4 @@ export class Formulator {
 
     return enabledDeclensions;
   }
-
-  questionGenerators = {
-    vocab,
-    declensions,
-  };
 }

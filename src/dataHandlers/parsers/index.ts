@@ -1,5 +1,5 @@
-import EndingParser from './Endings.js';
-import VocabParser from './Vocab.js';
+import EndingParser from './EndingParser.js';
+import VocabParser from './VocabParser.js';
 
 export default {
     [EndingParser.id]: EndingParser,

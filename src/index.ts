@@ -2,13 +2,13 @@
 import Switcher from "./components/Switcher.js";
 import { Initializer } from "./quiz/index.js";
 import { Loader } from "./view/index.js";
-import DataHandler from "./dataHandlers/index.js";
+import { DataHandler } from "./dataHandlers/index.js";
 
 /**
  * Base Studier class.
  * Initializes all modules.
  */
-class Studier {
+export class Studier {
   switcher: Switcher;
   quizInitializer: Initializer;
   viewLoader: Loader;

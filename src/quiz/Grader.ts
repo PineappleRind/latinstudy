@@ -1,14 +1,19 @@
-import { QuizQuestion } from "./types.js";
+import { QuizQuestion, QuizQuestionGrade } from "./types.js";
 import { $, createElement, purify, renderAnswer } from "../utils.js";
 
-// Grader recieves the responses from WalkthroughMan, compares
-// them to the questions, grades, and shows the grade to the user.
+/**
+ * Grader recieves the responses from WalkthroughMan, compares them to the questions, grades, and shows the grade to the user.
+ * */ 
 
 export class Grader {
   constructor() { }
   initialize(userAnswers, questions) { }
-
-  gradeQuestion(question: QuizQuestion, userAnswer: string) {
+  /**
+   * Grade the specified question
+   * @param question The question itself
+   * @param userAnswer What the user answered the question with
+   */
+  gradeQuestion(question: QuizQuestion, userAnswer: string): QuizQuestionGrade {
     // Remove accents to compare with correct answer
     userAnswer = purify(userAnswer);
     // If there are multiple answers
@@ -23,6 +28,7 @@ export class Grader {
     else return 0;
   }
 
+  /** Match one string against another string, only allowing 1 mistake to consider them equal */
   fuzzyEquals(target: string, original: string) {
     target = purify(target);
     original = purify(original);
@@ -43,7 +49,7 @@ export class Grader {
 
     return true;
   }
-
+  /** This function is purely HTML manipulation. I'm not sure I like it. Might switch to <template>s and <slot>s. */
   showResults(questions: QuizQuestion[]) {
     // switch to results pane
     window.latinstudier.switcher.showPane("quiz-results");

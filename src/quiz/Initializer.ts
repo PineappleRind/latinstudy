@@ -28,9 +28,9 @@ export class Initializer {
   }
   /**
    * It isn't necessary to pass the data straight through Initializer 
-   * when you can just instantiate {@link Formulator} from {@link Studier}!
+   * when you can just instantiate {@link Formulator} from {@link index.Studier}!
    * But that's complicated and will require awaits and stuff. I haven't figured it out.
-   * @param data JSON data from {@link DataHandler}. 
+   * @param data JSON data from {@link dataHandlers.DataHandler}. 
    */
   async initialize(data) {
     this.data = data;

@@ -1,5 +1,5 @@
 import { map, ord } from "../../utils.js";
-import createQuizQuestion from "../components/QuizQuestion.js";
+import { createQuizQuestion } from "../components/QuizQuestion.js";
 import { QuizQuestion as Formulation } from "../types.js";
 
 /**
@@ -8,7 +8,7 @@ import { QuizQuestion as Formulation } from "../types.js";
  * @param endings Data itself.
  * @returns An array of question Formulations.
  */
-export default function declensions(declnum, endings) {
+export function formulateDeclensionQuestion(declnum, endings) {
   let questions: Formulation[] = [];
   for (const [type, ending] of Object.entries(endings)) {
     if (ending === "-" || !ending) continue; // no ending? continue
