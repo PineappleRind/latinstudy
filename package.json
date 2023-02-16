@@ -1,5 +1,6 @@
 {
-  "name": "LatinStudier",
+  "name": "latinstudier",
+  "type": "module",
   "devDependencies": {
     "typedoc": "^0.23.24",
     "typedoc-plugin-missing-exports": "^1.0.0",

@@ -1,10 +1,10 @@
-import Parser from "./parser/index.js";
+import ParserManager from "./ParserManager.js";
 import JSONResource from "./JSONResource.js";
 
 export default class DataHandler {
     resources: JSONResource[];
     data: any[];
-    parser: Parser;
+    parser: ParserManager;
 
     async initialize() {
         const deps = ["endings", "vocab"]
@@ -16,17 +16,17 @@ export default class DataHandler {
                 return new JSONResource(`/data/${deps[i]}.json`, deps[i]).load()
             })
         );
-        this.parser = new Parser();
+        this.parser = new ParserManager();
         this.data = [];
 
         return this;
     }
 
-    parse() {
+    async parse() {
         // overwrite resources with parsed data
         for (const resource of this.resources)
             this.data.push(this.parser.parse(resource));
-        
-        return this.resources;
+
+        return this.data;
     }
 }

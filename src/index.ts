@@ -4,6 +4,10 @@ import { Initializer } from "./quiz/index.js";
 import { Loader } from "./view/index.js";
 import DataHandler from "./dataHandlers/index.js";
 
+/**
+ * Base Studier class.
+ * Initializes all modules.
+ */
 class Studier {
   switcher: Switcher;
   quizInitializer: Initializer;

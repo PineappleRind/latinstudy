@@ -1,11 +1,12 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "module": "ES2015",
+        "module": "ES2022",
         "lib": ["dom", "es2021"],
         "target": "es2021",
         "outDir": "build/ts/",
         "moduleResolution": "node",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "esModuleInterop": true
     }
 }

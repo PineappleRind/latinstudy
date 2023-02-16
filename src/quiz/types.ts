@@ -12,6 +12,11 @@ export interface QuizQuestion {
     graded?: any;
 }
 
+export interface QuizQuestionHTMLOptions {
+  title: string,
+  super: string
+}
+
 export interface VocabWord {
   word: string,
   type: wordType,

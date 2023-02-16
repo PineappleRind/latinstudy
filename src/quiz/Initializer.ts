@@ -3,7 +3,10 @@ import { $, $$ } from "../utils.js";
 import { Formulator } from "./Formulator.js";
 import { QuizOptions } from "./types.js";
 
-// Initializer fetches data and gets the user's settings.
+/**
+ * Fetches data and gets the user's selected settings.
+ * @category Quiz
+*/ 
 export class Initializer {
   optEls: { [key: string]: any };
   options: QuizOptions;
@@ -23,15 +26,21 @@ export class Initializer {
 
     return this;
   }
-
+  /**
+   * It isn't necessary to pass the data straight through Initializer 
+   * when you can just instantiate {@link Formulator} from {@link Studier}!
+   * But that's complicated and will require awaits and stuff. I haven't figured it out.
+   * @param data JSON data from {@link DataHandler}. 
+   */
   async initialize(data) {
-    // first, deal with the user's settings
-    this.settingsListen();
-    // Then the data
     this.data = data;
+    this.watchSettings();
   }
-
-  settingsListen() {
+  /**
+   * Sets up event handlers for the quiz-begin pane.
+   * @returns Initializer
+   */
+  watchSettings() {
     // Deal with selecting different declensions
     for (const opt of this.optEls.declensions) {
       opt.addEventListener("click", () => {
@@ -40,23 +49,32 @@ export class Initializer {
       });
     }
 
-    // On click
-    $(".pane-trigger.quiz-begin").addEventListener("click", () => {
-      if (this.quizIsEmpty()) {
-        new Message("No declensions and/or vocabulary question number specified.", 2, 4000);
-        // a bit of a hacky way to override Switcher...
-        return window.latinstudier.switcher.showPane("quiz-start");
-      }
-      this.options.immediateGrade = this.optEls.immediateGrade.checked;
-      this.options.vocabNum = this.optEls.vocabNum.value;
-
-      new Formulator(this.options).initialize(this.data[0], this.data[1]);
-    });
+    $(".pane-trigger.quiz-begin").addEventListener("click", this.beginQuiz.bind(this));
 
     return this;
   }
+  /**
+   * Event handler for the .quiz-begin button. Sends options to Formulator.
+   */
+  beginQuiz() {
+    if (this.quizIsEmpty()) {
+      new Message("No declensions and/or vocabulary question number specified.", 2, 4000);
+      // a bit of a hacky way to override Switcher.
+      // since Switcher already switched BEFORE beginQuiz is called,
+      // we have to switch back.
+      window.latinstudier.switcher.showPane("quiz-start");
+      return;
+    }
+    // get settings
+    this.options.immediateGrade = this.optEls.immediateGrade.checked;
+    this.options.vocabNum = this.optEls.vocabNum.value;
 
-  // If declension selection is empty AND vocab is set to off
-  quizIsEmpty = () => 
+    new Formulator(this.options).initialize(this.data[0], this.data[1]);
+  }
+  
+  /**
+   * @returns true if declension selection is empty AND vocab is set to off 
+   * */ 
+  quizIsEmpty = (): boolean => 
     !this.options.declensions && !this.optEls.vocabNum.value
 }

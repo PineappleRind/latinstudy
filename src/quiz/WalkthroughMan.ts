@@ -8,27 +8,41 @@ import {
 import { Animator } from "./walkthroughHelpers/Animator.js";
 import { QuizOptions, QuizQuestion } from "./types.js";
 
-// WalkthroughMan handles the showing of the questions to the
-// user, records the user's response, and sends them to Grader.
-
+/**
+ * Handles the showing of the questions to the user, records the user's response, and sends them to Grader.
+ * It's a monstrous class that should be refactored somehow — like taking some functionality and making it a walkthroughHelper.
+ */
 export class WalkthroughMan {
-  curQuestionIndex: number;
+  /** Keeps track of what question we're on. */
+  currentIndex: number;
+  /** How long it takes for one question to animate to another. */
   questionTransition: number;
-
+  /** animator-outer */
   container: HTMLDivElement;
+  /** Next and previous buttons. */
   btns: { prev: HTMLButtonElement; next: HTMLButtonElement; };
+  /** Stores all answers thus far.  */
   userAnswers: any[];
+  /** Instance of {@link Grader}. */
   grader: Grader;
+  /** Instance of {@link Animator}. */
   animator: Animator;
+  /** List of questions from Formulator. */
   questions: QuizQuestion[];
+  /** User's options collected by Initializer. */
   options: QuizOptions;
+  /** 
+   * What will happen next when the user clicks the next button. 
+   * This needs a type! I don't know what to call it. I feel like this whole functionality should be in a walkthroughHelper. 
+   * 1 = grade then next, 2 = next question, 3 = finish */
   nextEvent: number;
+  /** The height of animator-outer in its default state. Animator-related. */
   defaultHeight: number;
+  /** The input field of the current question. */
   curInput: any;
 
   constructor() {
-    // when walkthroughMan is initialized, load question 0
-    this.curQuestionIndex = 0;
+    this.currentIndex = -1;
     this.container = $(".quiz-content-outer");
     this.btns = {
       prev: $(".quiz-prev"),
@@ -46,7 +60,6 @@ export class WalkthroughMan {
     this.questions = shuffleArray(questions);
     this.options = options;
 
-    //  1 = grade then next, 2 = next, 3 = finish
     this.nextEvent = this.options.immediateGrade ? 1 : 2;
 
     // If grading after each question is enabled
@@ -58,7 +71,7 @@ export class WalkthroughMan {
     $("#count-current").textContent = "1";
 
     // Load the first question
-    this.loadQuestion(0, 0, 1)
+    this.loadQuestion(1)
       .then(() => (this.defaultHeight = this.container.getBoundingClientRect().height));
     this.updateDisable();
 
@@ -66,42 +79,40 @@ export class WalkthroughMan {
     this.btns.prev.addEventListener("click", this.listen.prev.bind(this));
   }
 
-  toQuestion(n: number) {
-    if (this.options.immediateGrade) this.btns.next.innerHTML = "Grade";
-    this.curQuestionIndex += n;
-    this.loadQuestion(this.curQuestionIndex, this.questionTransition, n);
-  }
-
-  async loadQuestion(index: number, delay: number, n: number) {
-    if (!this.questions[index]) {
-      this.curQuestionIndex -= n;
+  async loadQuestion(n: number) {
+    if (!this.questions[this.currentIndex + n])
       return this.finishQuiz();
-    }
+
+    if (this.options.immediateGrade) this.btns.next.innerHTML = "Grade";
+    this.currentIndex += n;
 
     // update the question indicator
-    $("#count-current").textContent = (index + 1).toString();
+    $("#count-current").textContent = (this.currentIndex + 1).toString();
 
     // if question is already graded make sure the button says Next and not Grade
-    if (this.questions[index].graded) this.nextEvent = 2;
+    if (this.questions[this.currentIndex].graded) this.nextEvent = 2;
     this.updateNextBtn();
 
-    this.curInput = this.questions[index].html.querySelector("input");
+    this.curInput = this.questions[this.currentIndex].html.querySelector("input");
     this.updateDisable();
 
-    await this.animator.animateTo(this.questions[index].html, delay);
+    await this.animator.animateTo(
+      this.questions[this.currentIndex].html,
+      this.questionTransition
+    );
     this.listen.input();
-    
+
     return;
   }
 
   updateDisable() {
     // disable the previous button if needed
-    if (this.curQuestionIndex === 0) this.btns.prev.disabled = true;
+    if (this.currentIndex === 0) this.btns.prev.disabled = true;
     else this.btns.prev.disabled = false;
     // no input? disable next button
     if (
       !this.curInput?.value.replaceAll(" ", "") &&
-      !this.questions[this.curQuestionIndex].graded
+      !this.questions[this.currentIndex].graded
     )
       this.btns.next.disabled = true;
     else this.btns.next.disabled = false;
@@ -118,7 +129,7 @@ export class WalkthroughMan {
       if (this.nextEvent === 1) {
         this.gradeQuestion();
         this.nextEvent =
-          this.curQuestionIndex === this.questions.length - 1 ? 3 : 2;
+          this.currentIndex === this.questions.length - 1 ? 3 : 2;
       }
 
       // done grading and expecting to go to the next question?
@@ -126,7 +137,7 @@ export class WalkthroughMan {
         // grade if the user has disabled immediate grading and it didn't grade before
         if (!this.options.immediateGrade) this.gradeQuestion();
         // next question
-        this.toQuestion.apply(this, [1, this.questionTransition]);
+        this.loadQuestion.apply(this, [1]);
         if (this.options.immediateGrade) this.nextEvent = 1;
       }
 
@@ -136,7 +147,7 @@ export class WalkthroughMan {
       this.updateNextBtn();
     },
     prev: () => {
-      this.toQuestion.apply(this, [-1, this.questionTransition]);
+      this.loadQuestion.apply(this, [-1]);
     },
     input: () => {
       onkeyup = (e) => {
@@ -144,7 +155,7 @@ export class WalkthroughMan {
       };
       this.curInput.onkeyup = (e: any) => {
         this.updateDisable();
-        this.userAnswers[this.curQuestionIndex] = {
+        this.userAnswers[this.currentIndex] = {
           response: this.curInput.value,
           graded: null,
         };
@@ -167,21 +178,21 @@ export class WalkthroughMan {
   }
 
   gradeQuestion() {
-    let cur = this.questions[this.curQuestionIndex];
+    let cur = this.questions[this.currentIndex];
     // if the question is already graded AND shown as graded,
     if (cur.graded && !this.options.immediateGrade) return;
 
     // get grade
     let userAnswer = this.userAnswers.map((m) => m.response)[
-      this.curQuestionIndex
+      this.currentIndex
     ];
-    let isCorrect = this.grader.gradeQuestion(cur, this.userAnswers.map((m) => m.response)[this.curQuestionIndex]);
+    let isCorrect = this.grader.gradeQuestion(cur, this.userAnswers.map((m) => m.response)[this.currentIndex]);
 
     // only update visually if immediate grading was specified
     if (this.options.immediateGrade) this.updateGrade(isCorrect, cur.answer);
 
     // Finally set the current question to graded
-    this.questions[this.curQuestionIndex].graded = {
+    this.questions[this.currentIndex].graded = {
       isCorrect,
       answer: cur.answer,
       userAnswer,
