@@ -1,9 +1,15 @@
+export type MagicValue = {
+    data: string[],
+    notes: string[]
+}
+
 /**
  * MagicValues is a class for parsing Magic Values.
  * Magic Values are a special kind of encoded string that encode useful information.
  * Currently only Pipe Notes are supported.
  */
-export default class MagicValue {
+
+export class MagicValueParser {
     /** Characters to look for when parsing different things. */
     chars = {
         DATA_SEP: ",",
@@ -11,8 +17,8 @@ export default class MagicValue {
     };
 
     /** All this does so far is parse pipe notes. */
-    parse(data): ParsedMagicValue {
-        let out: ParsedMagicValue = { data: [], notes: [] };
+    parse(data): MagicValue {
+        let out: MagicValue = { data: [], notes: [] };
         let values = data.split(this.chars.DATA_SEP);
         for (const el of values) {
             let split = el.split(this.chars.PIPE_NOTES),

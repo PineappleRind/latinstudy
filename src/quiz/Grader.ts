@@ -17,7 +17,7 @@ export class Grader {
     // Remove accents to compare with correct answer
     userAnswer = purify(userAnswer);
     // If there are multiple answers
-    let correct: string[] = [].concat(question.answer);
+    let correct: string[] = ([] as string[]).concat(question.answer);
     // if one of the correct answers directly matches user's answer
     let directEquals = correct.some(el => purify(el) === userAnswer),
       // if one of the correct answers fuzzily matches user's answer

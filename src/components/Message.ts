@@ -1,10 +1,10 @@
 import { $, createElement, wait } from "../utils.js";
 
-let typeMap = ["info", "success", "error"],
-  queue = [],
-  showing = false,
-  id = 0,
-  container = createElement("div", "class:toast-container");
+let typeMap: string[] = ["info", "success", "error"],
+  queue: Message[] = [],
+  showing: boolean = false,
+  id: number = 0,
+  container: HTMLElement = createElement("div", "class:toast-container");
 
 $("#app").append(container);
 

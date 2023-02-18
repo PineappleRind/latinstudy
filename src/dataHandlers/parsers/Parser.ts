@@ -3,9 +3,38 @@
  */
 export abstract class Parser {
     data: any;
+    past: any;
+
     id: string;
-    new (data) {
+    constructor(data: object | object[], past: object) {
         this.data = data;
+        this.past = past;
     }
-    abstract parse(d: any[]): any;
+    expand(data: any) {
+        for (const abbr in data) {
+            if (!this.maps[abbr]) continue;
+            data[abbr] = this.maps[abbr][data[abbr]];
+        }
+        return data;
+    }
+    abstract parse(): any;
+
+    maps = {
+        "gender": {
+            "m": "masculine",
+            "f": "feminine",
+            "n": "neuter"
+        },
+        "number": {
+            "s": "singular",
+            "p": "plural"
+        },
+        "case": {
+            "nom": "nominative",
+            "gen": "genitive",
+            "dat": "dative",
+            "acc": "accusative",
+            "abl": "ablative"
+        }
+    }
 }

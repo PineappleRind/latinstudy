@@ -1,7 +1,8 @@
-import EndingParser from './EndingParser.js';
-import VocabParser from './VocabParser.js';
+/* Export these as endings and vocab because:
+To find a parser, ParserManager uses the ID of the 
+fetched JSONResource, which is either endings or vocab. 
 
-export default {
-    [EndingParser.id]: EndingParser,
-    [VocabParser.id]: VocabParser
-}
+And, for the same reason, even though these are
+classes, they're exported as lowercase. */
+export { EndingParser as endings } from './EndingParser.js';
+export { VocabParser as vocab } from './VocabParser.js';

@@ -4,19 +4,15 @@ Helps to study latin declensions/vocabulary
 - For my latin course because when you're looking for something specific, the book feels big, cluttered, and cumbersome to flip through (and I don't like Quizlet)
 - Made by me for me, but if you want to use it, it's hosted [here](https://pineapplerind.xyz/latinstudy)
 
-## Running locally 
-- use scripts/build.sh to build and scripts/run.sh to run (you may need to chmod +x if permission denied)
-- here's what the script does if you for some reason don't want to run it:
-- - compile TypeScript to build/ts 
-- - use rollup or a similar tool to bundle the files to build/bundle.js
-- - use uglify or a similar tool to minify the bundle to build/bundle.min.js
-- - run using python `http.server` (just serves static files)
-
 *current version: 0.1*
 
 *author: PineappleRind*
 
 *(Henle Latin, Christian/Classical)*
+
+## Running locally 
+- use the Runner to run, over at [scripts/build.sh](https://github.com/PineappleRind/latinstudy/blob/main/scripts/build.sh) (you may need to chmod +x if permission denied)
+- run it with the `--help` flag for advanced usage
 
 ## Docs
 To build documentation, run scripts/docs.sh. Documentation is in the .gitignore because it's not part of the project :)
@@ -36,3 +32,30 @@ To build documentation, run scripts/docs.sh. Documentation is in the .gitignore 
 - - - `walkthroughHelpers`: helpers for `WalkthroughMan`
 - - `view`: main code for the view section
 - - - `loader`: main code for this section. split this into multiple files later
+
+## Commits
+Commits should have a list of changes in their description.
+
+An example change:
+
+`fs: move types to their own files`
+
+The left descriptor can be one of `build, refactor, fs, opt, feat, rm`. 
+
+Additional information should be directly under the change and should have "———" 3 em dashes at the beginning, to differentiate it from the other changes.
+
+Example description:
+
+```
+build: run script does not build anymore
+
+fs: move dataHandlers/index.ts to dataHandlers/DataHandler.ts
+—— this is because classes should not be in the index (except root)
+fs: Endings.ts -> EndingParser.ts (same with vocab)
+
+feat: begin MagicValue parser
+```
+
+You don't actually need to follow this, it's just a guideline for consistency. :)
+
+**If your commit does not work,** like if you are working on a new feature, mark it as \[nonfunctional\]. Or just create another branch. I didn't think of that at the time I made some \[nonfunctional\] commits to main — a large open-source project would never have unfinished code in-use on the main branch!

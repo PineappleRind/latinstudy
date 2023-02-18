@@ -10,7 +10,7 @@ export interface QuizQuestion {
     type: string
     question: string,
     answer: string | string[],
-    html?: HTMLElement,
+    html: HTMLElement,
     graded?: any;
 }
 

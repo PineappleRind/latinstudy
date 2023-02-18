@@ -1,12 +1,15 @@
 import { WalkthroughMan } from "./WalkthroughMan.js";
 import { QuizOptions, QuizQuestion } from "./types.js";
 
-import { declensions, vocab } from './formulators/index.js';
+import { 
+  formulateDeclensionQuestion as declensions, 
+  formulateVocabQuestion as vocab 
+} from './formulators/index.js';
 
 import { JSONResource } from "../dataHandlers/JSONResource.js";
 /**
  * Handles the formulation of the questions based on JSON data, and sends them to WalkthroughMan to start the quiz.
- * */ 
+ * */
 export class Formulator {
   options: QuizOptions;
   /** Finished QuizQuestion formulations. */

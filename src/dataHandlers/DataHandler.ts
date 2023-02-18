@@ -24,8 +24,10 @@ export class DataHandler {
 
     async parse() {
         // overwrite resources with parsed data
-        for (const resource of this.resources)
-            this.data.push(this.parser.parse(resource));
+        for (const resource of this.resources) {
+            let parsed = await this.parser.parse(resource)
+            this.data.push(parsed)
+        }
 
         return this.data;
     }
