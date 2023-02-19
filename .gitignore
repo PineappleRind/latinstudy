@@ -6,3 +6,5 @@ bun.lockb
 
 build
 docs
+
+*.ignore.*

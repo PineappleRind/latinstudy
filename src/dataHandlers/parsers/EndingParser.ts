@@ -1,4 +1,4 @@
-import { caseName, gender as genderType } from "../../types";
+import { caseName, gender as genderType, grammaticalNumber } from "../../types";
 import { Parser } from "./Parser";
 
 export interface CaseEnding {
@@ -10,8 +10,38 @@ export interface CaseEnding {
     gender: genderType;
 }
 
+export interface ConjugationEnding {
+    ending: string;
+    conjugation: number;
+    voice: string;
+    mood: string;
+    tense: string;
+    number: string;
+    person: string;
+}
+
+export interface Pronoun {
+    person: string;
+    number: grammaticalNumber;
+    case: caseName;
+    gender?: genderType;
+}
+
+export interface Pronouns { [x: string]: Pronoun[] }
+export interface Conjugations { [x: string]: ConjugationEnding[] }
+export interface Declensions { [x: string]: CaseEnding[] };
+
+// TODO: make this into one generic type
+type DeclensionData = { [x: string]: Declensions };
+type PronounData = { [x: string]: Pronouns };
+type ConjugationData = { [x: string]: Conjugations };
+
 export class EndingParser extends Parser {
-    data: { declensions: { [x: string]: { [x: string]: CaseEnding } } };
+    data: { 
+        declensions: DeclensionData,
+        conjugations: ConjugationData,
+        pronouns: PronounData
+    } 
     public static id: string = "endings";
 
     /**
@@ -19,9 +49,19 @@ export class EndingParser extends Parser {
      * @returns a parsed object with deep layers. Not sure if I'll make a type for it
      */
     async parse() {
-        let declensions: { [x: string]: CaseEnding[] } = {};
+        //todo fix this
+        type ParsedEndingData = { declensions: Declensions, conjugations: Conjugations, Pronouns: PronounData }
+        let parsed: ParsedEndingData = {};
+        parsed.declensions = this.parseDeclensions(this.data.declensions as DeclensionData);
+        parsed.conjugations = this.parseConjugations(this.data.conjugations);
+        parsed.pronouns = this.parsePronouns(this.data.pronouns);
+        return {...this.data, declensions: this.data.declensions};
+    }
+    
+    parseDeclensions(declensions: DeclensionData) {
+        let output: Declensions = {};
         // for each declension
-        for (const [i, decl] of Object.entries(this.data.declensions)) {
+        for (const [i, decl] of Object.entries(declensions)) {
             // for each ending in the declension
             for (const endingKey in decl) {
                 // Ignore notes
@@ -32,11 +72,20 @@ export class EndingParser extends Parser {
                     ending: decl[endingKey],
                     declension: i,
                 };
-                if (!declensions[i]) declensions[i] = [];
-                declensions[i].push(ending);
+                if (!output[i]) output[i] = [];
+                output[i].push(ending);
             }
         }
-        return {...this.data, declensions};
+
+        return output;
+    }
+
+    parsePronouns(pronouns: PronounData)/*: Pronouns*/ {
+
+    }
+
+    parseConjugations(conjugations: ConjugationData)/*: Conjugations*/ {
+
     }
     /** 
      * @param key a key like m/s/abl
