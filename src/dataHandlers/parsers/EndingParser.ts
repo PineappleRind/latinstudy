@@ -31,16 +31,14 @@ export interface Pronouns { [x: string]: Pronoun[] }
 export interface Conjugations { [x: string]: ConjugationEnding[] }
 export interface Declensions { [x: string]: CaseEnding[] };
 
-// TODO: make this into one generic type
-type DeclensionData = { [x: string]: Declensions };
-type PronounData = { [x: string]: Pronouns };
-type ConjugationData = { [x: string]: Conjugations };
+type EndingData<Type> = { [x: string]: Type }
+
 
 export class EndingParser extends Parser {
     data: { 
-        declensions: DeclensionData,
-        conjugations: ConjugationData,
-        pronouns: PronounData
+        declensions: EndingData<Declensions>,
+        conjugations: EndingData<Conjugations>,
+        pronouns: EndingData<Pronouns>
     } 
     public static id: string = "endings";
 
@@ -49,16 +47,17 @@ export class EndingParser extends Parser {
      * @returns a parsed object with deep layers. Not sure if I'll make a type for it
      */
     async parse() {
-        //todo fix this
-        type ParsedEndingData = { declensions: Declensions, conjugations: Conjugations, Pronouns: PronounData }
-        let parsed: ParsedEndingData = {};
-        parsed.declensions = this.parseDeclensions(this.data.declensions as DeclensionData);
-        parsed.conjugations = this.parseConjugations(this.data.conjugations);
-        parsed.pronouns = this.parsePronouns(this.data.pronouns);
-        return {...this.data, declensions: this.data.declensions};
+        type ParsedEndingData = { declensions: Declensions, conjugations: Conjugations, pronouns: Pronouns }
+        let parsed: ParsedEndingData = {
+            declensions: this.parseDeclensions(this.data.declensions),
+            conjugations: this.parseConjugations(this.data.conjugations),
+            pronouns: this.parsePronouns(this.data.pronouns),
+        }
+
+        return parsed;
     }
     
-    parseDeclensions(declensions: DeclensionData) {
+    parseDeclensions(declensions: EndingData<Declensions>) {
         let output: Declensions = {};
         // for each declension
         for (const [i, decl] of Object.entries(declensions)) {
@@ -80,12 +79,12 @@ export class EndingParser extends Parser {
         return output;
     }
 
-    parsePronouns(pronouns: PronounData)/*: Pronouns*/ {
-
+    parsePronouns(pronouns: EndingData<Pronouns>)/*: Pronouns*/ {
+        return pronouns
     }
 
-    parseConjugations(conjugations: ConjugationData)/*: Conjugations*/ {
-
+    parseConjugations(conjugations: EndingData<Conjugations>)/*: Conjugations*/ {
+        return conjugations
     }
     /** 
      * @param key a key like m/s/abl
