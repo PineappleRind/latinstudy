@@ -1,34 +1,26 @@
-import { ParserManager } from "./ParserManager.js";
 import { JSONResource } from "./JSONResource.js";
 
 export class DataHandler {
-    resources: JSONResource[];
-    data: any[];
-    parser: ParserManager;
+  resources: JSONResource[];
+  data: any[];
 
-    async initialize() {
-        const deps = ["endings", "vocab"]
-        // create array of Resources based on deps
-        this.resources = await Promise.all(
-            Array.from({
-                length: deps.length
-            }, (_, i) => {
-                return new JSONResource(`/data/${deps[i]}.json`, deps[i]).load()
-            })
-        );
-        this.parser = new ParserManager();
-        this.data = [];
+  async initialize() {
+    this.resources = await Promise.all([
+      new JSONResource(`/data/endings.json`, "endings").load(),
+      new JSONResource(`/data/vocab.json`, "vocab").load()
+    ]);
+    this.data = [];
 
-        return this;
+    return this;
+  }
+
+  async parse() {
+    // overwrite resources with parsed data
+    for (const resource of this.resources) {
+      let parsed = await this.parser.parse(resource)
+      this.data.push(parsed)
     }
 
-    async parse() {
-        // overwrite resources with parsed data
-        for (const resource of this.resources) {
-            let parsed = await this.parser.parse(resource)
-            this.data.push(parsed)
-        }
-
-        return this.data;
-    }
+    return this.data;
+  }
 }
