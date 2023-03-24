@@ -1,4 +1,4 @@
-import { expandKey } from "./expand";
+import { expandKey } from "./expand.js";
 import type { Declensions, endingType, JSONEndingData, ParsedEndingsData } from "./types";
 
 export function parseEndingData(data: JSONEndingData) {
@@ -6,6 +6,7 @@ export function parseEndingData(data: JSONEndingData) {
     for (const type in data) {
         expanded[type] = expandEndingData(data[type], type as endingType);
     }
+    return expanded;
 }
 
 
@@ -19,7 +20,8 @@ function expandEndingData(data: JSONEndingData[keyof JSONEndingData], type: endi
         // for each ending 
         for (let key in group) {
             let ending = group[key];
-            let expanded = expandKey(ending[key].split("/"), type);
+            let expanded = expandKey(key.split("/"), type);
+            output[number] ??= [];
             output[number].push({ ending, ...expanded });
         }
     }

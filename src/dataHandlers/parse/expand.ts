@@ -3,15 +3,15 @@ import type { endingType } from "./types";
 export function expandKey(data: string[], type: endingType) {
   let output: Record<keyof typeof maps, string> = {} as any;
   for (const [i, contraction] of data.entries()) {
-    let currentType = types[type][i];
-    if (contraction === "-") {
-      output[currentType] = contraction;
+    let mapCategory = types[type][i];
+    if (contraction === "-" || !maps[mapCategory]) {
+      output[mapCategory] = contraction;
       continue;
     }
-    let expanded = maps[currentType][contraction];
+    let expanded = maps[mapCategory][contraction];
     if (!expanded) throw new Error(`Invalid key ${data.join("/")}! Could not find an expansion for ${contraction}.`)
 
-    output[currentType] = expanded;
+    output[mapCategory] = expanded;
   }
   return output;
 }
@@ -37,7 +37,8 @@ const maps = {
     "gen": "genitive",
     "dat": "dative",
     "acc": "accusative",
-    "abl": "ablative"
+    "abl": "ablative",
+    "voc": "vocative"
   },
   "voice": {
     "a": "active",
