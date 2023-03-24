@@ -112,6 +112,14 @@
       "f/p/dat": "ēbus",
       "f/p/acc": "ēs",
       "f/p/abl": "ēbus"
+    },
+    "Jēsūs": {
+      "m/s/nom": "ūs",
+      "m/s/gen": "ū",
+      "m/s/dat": "ū",
+      "m/s/acc": "um",
+      "m/s/abl": "ū",
+      "m/s/voc": "ū"
     }
   },
   "conjugations": {
