@@ -1,4 +1,5 @@
 import { JSONResource } from "./JSONResource.js";
+import { parseEndingData } from "./parse/parseEndingData.js";
 
 export class DataHandler {
   resources: JSONResource[];
@@ -11,16 +12,9 @@ export class DataHandler {
     ]);
     this.data = [];
 
+    let parsedEndings = parseEndingData(this.resources[0].json);
+    this.data.push(parsedEndings, this.resources[1]);
+
     return this;
-  }
-
-  async parse() {
-    // overwrite resources with parsed data
-    for (const resource of this.resources) {
-      let parsed = await this.parser.parse(resource)
-      this.data.push(parsed)
-    }
-
-    return this.data;
   }
 }

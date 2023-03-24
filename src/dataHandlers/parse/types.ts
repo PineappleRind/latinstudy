@@ -1,5 +1,5 @@
 
-import { caseName, gender as genderType, grammaticalNumber } from "../types";
+import { caseName, gender as genderType, grammaticalNumber } from "../../types";
 
 export interface CaseEnding {
   gender: genderType;
