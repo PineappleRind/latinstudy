@@ -13,7 +13,7 @@ export class DataHandler {
     this.data = [];
 
     let parsedEndings = parseEndingData(this.resources[0].json);
-    this.data.push(parsedEndings, this.resources[1]);
+    this.data.push(parsedEndings, this.resources[1].json);
 
     return this;
   }

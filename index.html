@@ -24,7 +24,7 @@
         <button class="btn pane-trigger" data-pane="quiz-start">Quiz</button>
       </div>
     </div>
-    <div class="pane" id="view">
+    <div class="pane" id="view" resizeable>
       <button class="back pane-trigger" data-pane=".">Back</button>
       <h2>View</h2>
       <div class="flex">
@@ -32,98 +32,109 @@
           <option value="declensions" selected>Declension Endings</option>
           <option value="vocab">Vocabulary</option>
         </select>
-        <select id="view-declension-type">
+        <select id="view-declension-type" data-view-association="declensions">
           <option value="1" selected>1st</option>
           <option value="2">2nd</option>
           <option value="3">3rd</option>
           <option value="4">4th</option>
           <option value="5">5th</option>
-          <option value="adj1/2">1st/2nd (Adjectives)</option>
-          <option value="adj3">3rd (Adjectives)</option>
+          <!-- <option value="adj1/2">1st/2nd (Adjectives)</option> -->
+          <!-- <option value="adj3">3rd (Adjectives)</option> -->
+        </select>
+        <select id="view-vocab-type" class="hidden" data-view-association="vocab">
+          <option selected value="*">All</option>
+          <option value="noun">Nouns</option>
+          <option value="verb">Verbs</option>
+          <option value="adjective">Adjectives</option>
+          <option value="preposition">Prepositions</option>
+          <option value="conjunction">Conjunctions</option>
+          <option value="pronoun">Pronouns</option>
+          <option value="other">Sayings & Miscellanous</option>
         </select>
       </div>
-      <div class="view-decl" data-type="declensions">
-        <h4 class="view-decl-super">singular</h4>
-        <table class="view-decl-table singular">
-          <tr>
-            <th>Case</th>
-            <th class="view-table-head singular masculine">Masculine</th>
-            <th class="view-table-head singular feminine">Feminine</th>
-            <th class="view-table-head singular neuter">Neuter</th>
-          </tr>
-          <tr>
-            <td>Nominative</td>
-            <td class="view-table-field singular nominative masculine"></td>
-            <td class="view-table-field singular nominative feminine"></td>
-            <td class="view-table-field singular nominative neuter"></td>
-          </tr>
-          <tr>
-            <td>Genitive</td>
-            <td class="view-table-field singular genitive masculine"></td>
-            <td class="view-table-field singular genitive feminine"></td>
-            <td class="view-table-field singular genitive neuter"></td>
-          </tr>
-          <tr>
-            <td>Dative</td>
-            <td class="view-table-field singular dative masculine"></td>
-            <td class="view-table-field singular dative feminine"></td>
-            <td class="view-table-field singular dative neuter"></td>
-          </tr>
-          <tr>
-            <td>Accusative</td>
-            <td class="view-table-field singular accusative masculine"></td>
-            <td class="view-table-field singular accusative feminine"></td>
-            <td class="view-table-field singular accusative neuter"></td>
-          </tr>
-          <tr>
-            <td>Ablative</td>
-            <td class="view-table-field singular ablative masculine"></td>
-            <td class="view-table-field singular ablative feminine"></td>
-            <td class="view-table-field singular ablative neuter"></td>
-          </tr>
-        </table>
-        <h4 class="view-decl-super">Plural</h4>
-        <table class="view-decl-table plural">
-          <tr>
-            <th>Case</th>
-            <th class="view-table-head plural masculine">Masculine</th>
-            <th class="view-table-head plural feminine">Feminine</th>
-            <th class="view-table-head plural neuter">Neuter</th>
-          </tr>
-          <tr>
-            <td>Nominative</td>
-            <td class="view-table-field plural nominative masculine"></td>
-            <td class="view-table-field plural nominative feminine"></td>
-            <td class="view-table-field plural nominative neuter"></td>
-          </tr>
-          <tr>
-            <td>Genitive</td>
-            <td class="view-table-field plural genitive masculine"></td>
-            <td class="view-table-field plural genitive feminine"></td>
-            <td class="view-table-field plural genitive neuter"></td>
-          </tr>
-          <tr>
-            <td>Dative</td>
-            <td class="view-table-field plural dative masculine"></td>
-            <td class="view-table-field plural dative feminine"></td>
-            <td class="view-table-field plural dative neuter"></td>
-          </tr>
-          <tr>
-            <td>Accusative</td>
-            <td class="view-table-field plural accusative masculine"></td>
-            <td class="view-table-field plural accusative feminine"></td>
-            <td class="view-table-field plural accusative neuter"></td>
-          </tr>
-          <tr>
-            <td>Ablative</td>
-            <td class="view-table-field plural ablative masculine"></td>
-            <td class="view-table-field plural ablative feminine"></td>
-            <td class="view-table-field plural ablative neuter"></td>
-          </tr>
-        </table>
+      <div class="view-panes">
+        <div class="view-pane view-decl" data-view-association="declensions">
+          <h4 class="view-decl-super">singular</h4>
+          <table class="view-decl-table singular">
+            <tr>
+              <th>Case</th>
+              <th class="view-table-head singular masculine">Masculine</th>
+              <th class="view-table-head singular feminine">Feminine</th>
+              <th class="view-table-head singular neuter">Neuter</th>
+            </tr>
+            <tr>
+              <td>Nominative</td>
+              <td class="view-table-field singular nominative masculine"></td>
+              <td class="view-table-field singular nominative feminine"></td>
+              <td class="view-table-field singular nominative neuter"></td>
+            </tr>
+            <tr>
+              <td>Genitive</td>
+              <td class="view-table-field singular genitive masculine"></td>
+              <td class="view-table-field singular genitive feminine"></td>
+              <td class="view-table-field singular genitive neuter"></td>
+            </tr>
+            <tr>
+              <td>Dative</td>
+              <td class="view-table-field singular dative masculine"></td>
+              <td class="view-table-field singular dative feminine"></td>
+              <td class="view-table-field singular dative neuter"></td>
+            </tr>
+            <tr>
+              <td>Accusative</td>
+              <td class="view-table-field singular accusative masculine"></td>
+              <td class="view-table-field singular accusative feminine"></td>
+              <td class="view-table-field singular accusative neuter"></td>
+            </tr>
+            <tr>
+              <td>Ablative</td>
+              <td class="view-table-field singular ablative masculine"></td>
+              <td class="view-table-field singular ablative feminine"></td>
+              <td class="view-table-field singular ablative neuter"></td>
+            </tr>
+          </table>
+          <h4 class="view-decl-super">Plural</h4>
+          <table class="view-decl-table plural">
+            <tr>
+              <th>Case</th>
+              <th class="view-table-head plural masculine">Masculine</th>
+              <th class="view-table-head plural feminine">Feminine</th>
+              <th class="view-table-head plural neuter">Neuter</th>
+            </tr>
+            <tr>
+              <td>Nominative</td>
+              <td class="view-table-field plural nominative masculine"></td>
+              <td class="view-table-field plural nominative feminine"></td>
+              <td class="view-table-field plural nominative neuter"></td>
+            </tr>
+            <tr>
+              <td>Genitive</td>
+              <td class="view-table-field plural genitive masculine"></td>
+              <td class="view-table-field plural genitive feminine"></td>
+              <td class="view-table-field plural genitive neuter"></td>
+            </tr>
+            <tr>
+              <td>Dative</td>
+              <td class="view-table-field plural dative masculine"></td>
+              <td class="view-table-field plural dative feminine"></td>
+              <td class="view-table-field plural dative neuter"></td>
+            </tr>
+            <tr>
+              <td>Accusative</td>
+              <td class="view-table-field plural accusative masculine"></td>
+              <td class="view-table-field plural accusative feminine"></td>
+              <td class="view-table-field plural accusative neuter"></td>
+            </tr>
+            <tr>
+              <td>Ablative</td>
+              <td class="view-table-field plural ablative masculine"></td>
+              <td class="view-table-field plural ablative feminine"></td>
+              <td class="view-table-field plural ablative neuter"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="view-pane view-vocab hidden" data-view-association="vocab"></div>
       </div>
-      <div class="view-vocab" data-type="vocab"></div>
-      <p class="view-note"></p>
     </div>
     <div class="pane" id="quiz-start">
       <button class="back pane-trigger" data-pane=".">Back</button>
@@ -139,30 +150,30 @@
       <h4>Quiz on conjugations...</h4>
       <div construction>
         <div class="quiz-option-select">
-        <div class="quiz-option quiz-conj-option" data-value="1">1st</div>
-        <div class="quiz-option quiz-conj-option" data-value="2">2nd</div>
-        <div class="quiz-option quiz-conj-option" data-value="3">3rd</div>
-        <div class="quiz-option quiz-conj-option" data-value="4">4th</div>
+          <div class="quiz-option quiz-conj-option" data-value="1">1st</div>
+          <div class="quiz-option quiz-conj-option" data-value="2">2nd</div>
+          <div class="quiz-option quiz-conj-option" data-value="3">3rd</div>
+          <div class="quiz-option quiz-conj-option" data-value="4">4th</div>
+        </div>
+        <fieldset id="quiz-conj-settings">
+          <p>Include voices...</p>
+          <div class="quiz-option-select">
+            <div class="quiz-option quiz-conj-option" data-value="1">Active</div>
+            <div class="quiz-option quiz-conj-option" data-value="2">Passive</div>
+          </div>
+          <p>Include moods...</p>
+          <div class="quiz-option-select">
+            <div class="quiz-option quiz-conj-mood-option" data-value="1">Indicative</div>
+            <div class="quiz-option quiz-conj-mood-option" data-value="2">Subjunctive</div>
+          </div>
+          <p>Include tenses...</p>
+          <div class="quiz-option-select">
+            <div class="quiz-option quiz-conj-tense-option" data-value="1">Present</div>
+            <div class="quiz-option quiz-conj-tense-option" data-value="2">Imperfect</div>
+            <div class="quiz-option quiz-conj-tense-option" data-value="3">Future</div>
+          </div>
+        </fieldset>
       </div>
-      <fieldset id="quiz-conj-settings">
-        <p>Include voices...</p>
-        <div class="quiz-option-select">
-          <div class="quiz-option quiz-conj-option" data-value="1">Active</div>
-          <div class="quiz-option quiz-conj-option" data-value="2">Passive</div>
-        </div>
-        <p>Include moods...</p>
-        <div class="quiz-option-select">
-          <div class="quiz-option quiz-conj-mood-option" data-value="1">Indicative</div>
-          <div class="quiz-option quiz-conj-mood-option" data-value="2">Subjunctive</div>
-        </div>
-        <p>Include tenses...</p>
-        <div class="quiz-option-select">
-          <div class="quiz-option quiz-conj-tense-option" data-value="1">Present</div>
-          <div class="quiz-option quiz-conj-tense-option" data-value="2">Imperfect</div>
-          <div class="quiz-option quiz-conj-tense-option" data-value="3">Future</div>
-        </div>
-      </fieldset>
-    </div>
       <h4>Vocabulary</h4>
       <div class="quiz-vocab-select">
         <p># of vocabulary words to quiz on (randomized)</p>
@@ -210,8 +221,8 @@
   </div>
   <!-- interested in the code? check out /build/ts/index.js OR the GitHub: -->
   <!-- https://github.com/pineapplerind/latinstudy -->
-  <script src="build/bundle.min.js"></script>
-  <!-- <script type="module" src="build/ts/index.js"></script> -->
+  <!-- <script src="build/bundle.min.js"></script> -->
+  <script type="module" src="build/ts/index.js"></script>
 </body>
 
 </html>

@@ -50,18 +50,19 @@ export function shuffleArray(array: any[]) {
 export function renderAnswer(str: string | string[]) {
   let res = createElement("span", "class:rendered-answer");
 
-  const process = (str: string[], answer: string, i: number) => {
+  str = str as string[];
+  if (!(str instanceof Array)) str = Array(1).fill(str);
+
+  str.forEach((answer, i) => {
+    console.log(answer)
     let [word, note] = answer.split("|");
 
     res.append(word);
     if (note)
-      res.append(createElement("span", "class:answer-note", `(${note})`));
+      res.append(createElement("span", "class:answer-note", ` (${note})`));
 
     if (i !== (str ?? answer).length - 1) res.append(", ");
-  };
-
-  if (str instanceof Array) str.forEach((a, i) => process(str, a, i));
-  else process([], str, -1);
+  });
 
   return res;
 }

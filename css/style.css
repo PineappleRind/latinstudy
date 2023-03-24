@@ -34,7 +34,9 @@ body {
   --rad-l: calc(var(--rad-m) * 2);
 
   --light-border: rgba(0, 0, 0, 0.2);
-  --shadowh: 0 5px 10px rgba(0, 0, 0, 0.2);
+  --shadow-s: 0 3px 4px rgba(0, 0, 0, 0.1);
+  --shadow-m: 0 5px 10px rgba(0, 0, 0, 0.2);
+  --shadow-l: 0 40px 70px rgba(0, 0, 0, 0.2);
   --tr: 0.2s;
   --tr-l: 0.4s;
 
@@ -139,7 +141,7 @@ button {
 }
 
 .btn:not([disabled]):hover {
-  box-shadow: var(--shadowh);
+  box-shadow: var(--shadow-m);
   background: var(--btn-bgh);
 }
 
@@ -191,9 +193,9 @@ button {
   padding: 20px;
   max-width: min(500px, 100vw);
   min-width: 300px;
-  max-height: 450px;
+  max-height: min(700px, 70vh);
   overflow-y: auto;
-  box-shadow: 0 40px 70px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-l);
   border-radius: 20px;
   pointer-events: none;
   translate: 0px 1px;
@@ -211,6 +213,11 @@ button {
 
 .pane#quiz-start {
   width: 600px;
+}
+
+[resizeable] {
+  resize: both;
+  overflow: auto;
 }
 
 .showing {
@@ -507,7 +514,7 @@ input[type="checkbox"]:focus {
 View 
 *******/
 select {
-  padding: 4px 9px;
+  padding: 6px 12px;
   border: 1px solid var(--light-border);
   background: var(--bg-l1);
   border-radius: var(--rad-m);
@@ -516,10 +523,23 @@ select {
   cursor: pointer;
 }
 
-select.hidden {
+select:hover {
+  box-shadow: var(--shadow-s);
+}
+
+select.hidden,
+[data-view-association].hidden {
   scale: 0.96;
   opacity: 0;
   pointer-events: none;
+}
+
+.view-panes {
+  position: relative;
+}
+.view-pane {
+  position: absolute;
+  width: 100%;
 }
 
 td,

@@ -23,7 +23,7 @@ export class Studier {
     this.initialize();
   }
   async initialize() {
-    this.data = await new DataHandler().initialize();
+    this.data = (await new DataHandler().initialize()).data;
     console.log(this.data);
     this.switcher.listen().showPane("begin");
     this.viewLoader.initialize(this.data);
