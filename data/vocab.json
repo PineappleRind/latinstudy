@@ -17,7 +17,9 @@
 {"word": "copiæ",    "type": "noun", "declension": "1", "units": "1-2", "dictionary": "-ārum", "gender": "f", "translation": ["troops", "forces"]}, 
 {"word": "grātiæ",   "type": "noun", "declension": "1", "units": "1-2", "dictionary": "-ārum", "gender": "f", "translation": "thanks"}, 
 
-{"word": "litteræ","type": "noun", "declension": "1", "units": "1-2", "dictionary": "litterarum", "gender": "f", "translation": ["letter|epistle", "dispatch"]}, 
+{"word": "litteræ","type": "noun", "declension": "1", "units": "3-4", "dictionary": "litterarum", "gender": "f", "translation": ["letter|epistle", "dispatch"]}, 
+{"word": "Italia", "type": "noun", "declension": "1", "units": "3-4", "dictionary": "æ", "gender": "f", "translation": "Italy"}, 
+{"word": "fortuna","type": "noun", "declension": "1", "units": "3-4", "dictionary": "æ", "gender": "f", "translation": "fortune"}, 
 
 {"word": "amīcus",     "type": "noun", "declension": "2", "units": "1-2", "dictionary": "-ī", "gender": "m", "translation": "friend"}, 
 {"word": "Chrīstiānus","type": "noun", "declension": "2", "units": "1-2", "dictionary": "-ī", "gender": "m", "translation": "Christian"}, 
@@ -45,11 +47,15 @@
 {"word": "castra",     "type": "noun", "declension": "2", "units": "1-2", "dictionary": "-ōrum", "gender": "n", "translation": "camp"}, 
 {"word": "impedīmenta","type": "noun", "declension": "2", "units": "1-2", "dictionary": "-ōrum", "gender": "n", "translation": ["baggage", "baggage train"]}, 
 
-{"word": "arma",   "type": "noun", "declension": "2", "units": "3-4", "dictionary": "-ōrum", "gender": "n", "translation": "winter quarters"}, 
-{"word": "hīberna","type": "noun", "declension": "2", "units": "3-4", "dictionary": "-ōrum", "gender": "n", "translation": "winter quarters"}, 
 {"word": "numerus","type": "noun", "declension": "2", "units": "3-4", "dictionary": "-ī",    "gender": "m", "translation": "number"}, 
 {"word": "locus",  "type": "noun", "declension": "2", "units": "3-4", "dictionary": "-ī (pl. loca, locōrum)", "gender": "m", "translation": "place"}, 
 {"word": "tēlum",  "type": "noun", "declension": "2", "units": "3-4", "dictionary": "-ī", "gender": "n", "translation": "dart"}, 
+{"word": "prœlium","type": "noun", "declension": "2", "units": "3-4", "dictionary": "-ī", "gender": "n", "translation": "battle"}, 
+{"word": "hīberna","type": "noun", "declension": "2", "units": "3-4", "dictionary": "-ōrum", "gender": "n", "translation": "winter quarters"}, 
+{"word": "arma",   "type": "noun", "declension": "2", "units": "3-4", "dictionary": "-ōrum", "gender": "n", "translation": "arms"}, 
+{"word": "puer",   "type": "noun", "declension": "2", "units": "3-4", "dictionary": "puerī", "gender": "m", "translation": "boy"}, 
+{"word": "vir",    "type": "noun", "declension": "2", "units": "3-4", "dictionary": "virī", "gender": "m", "translation": "man"}, 
+{"word": "ager",   "type": "noun", "declension": "2", "units": "3-4", "dictionary": "agrī", "gender": "m", "translation": "field"}, 
 
 {"word": "Cæsar",    "type": "noun", "declension": "3", "units": "1-2", "dictionary": "Cæsaris",    "gender": "m", "translation": "Cæsar"}, 
 {"word": "clāmor",   "type": "noun", "declension": "3", "units": "1-2", "dictionary": "clāmōris",   "gender": "m", "translation": ["shouting", "shout"]}, 
@@ -89,8 +95,8 @@
 {"word": "mors",    "type": "noun", "declension": "3", "units": "3-4", "dictionary": "mortis",      "gender": "f", "translation": "death"}, 
 {"word": "oratiō",  "type": "noun", "declension": "3", "units": "3-4", "dictionary": "oratiōnis",   "gender": "f", "translation": ["speech", "prayer|in Christian Latin"]}, 
 {"word": "centuriō","type": "noun", "declension": "3", "units": "3-4", "dictionary": "centuriōnis", "gender": "m", "translation": "a centurion"}, 
-
-{"word": "finēs","type": "noun", "declension": "3", "units": "3-4", "dictionary": "fīnium", "gender": "m", "translation": "territory"}, 
+{"word": "finēs",   "type": "noun", "declension": "3", "units": "3-4", "dictionary": "fīnium",      "gender": "m", "translation": "territory"}, 
+{"word": "cīvitās", "type": "noun", "declension": "3", "units": "3-4", "dictionary": "cīvitātis",   "gender": "f", "translation": "territory"}, 
 
 {"word": "adventus", "type": "noun", "declension": "4", "units": "1-2", "dictionary": "-ūs", "gender": "m",  "translation": ["arrival", "coming"]}, 
 {"word": "equitātus","type": "noun", "declension": "4", "units": "1-2", "dictionary": "-ūs", "gender": "m",  "translation": "cavalry"}, 
@@ -126,7 +132,10 @@
 {"word": "sānctus",    "type": "adjective", "declension": "1/2", "units": "1-2", "dictionary": "a, um",  "translation": ["holy", "saint"] },
 {"word": "tūtus",      "type": "adjective", "declension": "1/2", "units": "1-2", "dictionary": "a, um",  "translation": "safe" },
 
-{"word": "aliēnus",    "type": "adjective", "declension": "1/2", "units": "3-4", "dictionary": "a, um", "translation": ["unfavorable", "another's", "foreign"] },
+{"word": "aliēnus","type": "adjective", "declension": "1/2", "units": "3-4", "dictionary": "a, um", "translation": ["unfavorable", "another's", "foreign"] },
+{"word": "līber",  "type": "adjective", "declension": "1/2", "units": "3-4", "dictionary": "lībera, līberum", "translation": "free" },
+{"word": "miser",  "type": "adjective", "declension": "1/2", "units": "3-4", "dictionary": "misera, miserum", "translation": "wretched" },
+{"word": "integer","type": "adjective", "declension": "1/2", "units": "3-4", "dictionary": "integra, integrum", "translation": ["fresh", "uninjured", "whole"] },
 
 {"word": "brevis",     "type": "adjective", "declension": "3", "units": "1-2", "dictionary": "-e",  "translation": "short" },
 {"word": "commūnis",   "type": "adjective", "declension": "3", "units": "1-2", "dictionary": "-e",  "translation": "common" },
@@ -196,7 +205,8 @@
 {"word": "in", "type": "preposition", "units": "1-2", "dictionary": "prep. w. abl", "translation": ["in","on"]},
 {"word": "prō","type": "preposition", "units": "1-2", "dictionary": "prep. w. abl", "translation": ["in front of|before", "on behalf of|for"]},
 
-{"word": "per","type": "preposition", "units": "3-4", "dictionary": "prep. w. acc",  "translation": "through"},
+{"word": "per",  "type": "preposition", "units": "3-4", "dictionary": "prep. w. acc",  "translation": "through"},
+{"word": "trāns","type": "preposition", "units": "3-4", "dictionary": "prep. w. acc",  "translation": "across"},
 
 {"word": "dē","type": "preposition", "units": "3-4", "dictionary": "prep. w. abl", "translation": ["concering", "about"]},
 
@@ -231,6 +241,7 @@
 {"word": "tum",     "type": "adverb", "units": "3-4", "dictionary": "adv.", "translation": ["then", "at that time"]},
 {"word": "undique", "type": "adverb", "units": "3-4", "dictionary": "adv.", "translation": ["from all sides", "on all sides"]},
 {"word": "ubi",     "type": "adverb", "units": "3-4", "dictionary": "adv.", "translation": "where"},
+{"word": "ita",     "type": "adverb", "units": "3-4", "dictionary": "adv.", "translation": ["so", "thus"]},
 
 "———————————————————————————————————————————————————————————————————————— PRONOUNS ————————————————————————————————————————————————————————————————————————",
 
