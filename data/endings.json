@@ -25,7 +25,7 @@
       "m/p/dat": "īs",
       "m/p/acc": "ōs",
       "m/p/abl": "īs",
-      
+
       "n/s/nom": "um",
       "n/s/gen": "ī",
       "n/s/dat": "ō",
@@ -44,19 +44,19 @@
       "m/s/dat": "ī",
       "m/s/acc": "em",
       "m/s/abl": "e",
-      
+
       "m/p/nom": "ēs",
       "m/p/gen": "um",
       "m/p/dat": "ibus",
       "m/p/acc": "ēs",
       "m/p/abl": "ibus",
-      
+
       "f/s/nom": "-",
       "f/s/gen": "is",
       "f/s/dat": "ī",
       "f/s/acc": "em",
       "f/s/abl": "e",
-      
+
       "f/p/nom": "ēs",
       "f/p/gen": "ium",
       "f/p/dat": "ibus",
@@ -87,7 +87,7 @@
       "m/p/dat": "ibus",
       "m/p/acc": "ūs",
       "m/p/abl": "ibus",
-      
+
       "n/s/nom": "u",
       "n/s/gen": "ūs",
       "n/s/dat": "ū",
@@ -106,7 +106,7 @@
       "f/s/dat": "eī",
       "f/s/acc": "em",
       "f/s/abl": "ē",
-      
+
       "f/p/nom": "ēs",
       "f/p/gen": "ērum",
       "f/p/dat": "ēbus",
@@ -143,7 +143,28 @@
       "a/i/fut/s/3": "ābit",
       "a/i/fut/p/1": "ābimus",
       "a/i/fut/p/2": "ābitis",
-      "a/i/fut/p/3": "ābunt"
+      "a/i/fut/p/3": "ābunt",
+
+      "p/i/pre/s/1": "or",
+      "p/i/pre/s/2": "āris",
+      "p/i/pre/s/3": "ātur",
+      "p/i/pre/p/1": "āmur",
+      "p/i/pre/p/2": "āminī",
+      "p/i/pre/p/3": "antur",
+
+      "p/i/imp/s/1": "ābar",
+      "p/i/imp/s/2": "ābāris",
+      "p/i/imp/s/3": "ābātur",
+      "p/i/imp/p/1": "ābātur",
+      "p/i/imp/p/2": "ābāminī",
+      "p/i/imp/p/3": "ābantur",
+
+      "p/i/fut/s/1": "ābor",
+      "p/i/fut/s/2": "āberis",
+      "p/i/fut/s/3": "ābitur",
+      "p/i/fut/p/1": "ābimur",
+      "p/i/fut/p/2": "āibiminī",
+      "p/i/fut/p/3": "ābuntur"
     },
     "2": {
       "a/i/pre/s/1": "eō",
@@ -165,7 +186,28 @@
       "a/i/fut/s/3": "ēbit",
       "a/i/fut/p/1": "ēbimus",
       "a/i/fut/p/2": "ēbitis",
-      "a/i/fut/p/3": "ēbunt"
+      "a/i/fut/p/3": "ēbunt",
+
+      "p/i/pre/s/1": "eor",
+      "p/i/pre/s/2": "ēris",
+      "p/i/pre/s/3": "ētur",
+      "p/i/pre/p/1": "ēmur",
+      "p/i/pre/p/2": "ēminī",
+      "p/i/pre/p/3": "entur",
+
+      "p/i/imp/s/1": "ēbar",
+      "p/i/imp/s/2": "ēbāris",
+      "p/i/imp/s/3": "ēbātur",
+      "p/i/imp/p/1": "ēbātur",
+      "p/i/imp/p/2": "ēbāminī",
+      "p/i/imp/p/3": "ēbantur",
+
+      "p/i/fut/s/1": "ēbor",
+      "p/i/fut/s/2": "ēberis",
+      "p/i/fut/s/3": "ēbitur",
+      "p/i/fut/p/1": "ēbimur",
+      "p/i/fut/p/2": "ēibiminī",
+      "p/i/fut/p/3": "ēbuntur"
     },
     "3": {
       "a/i/pre/s/1": "ō",
@@ -187,7 +229,28 @@
       "a/i/fut/s/3": "ēt",
       "a/i/fut/p/1": "ēmus",
       "a/i/fut/p/2": "ētis",
-      "a/i/fut/p/3": "ent"
+      "a/i/fut/p/3": "ent",
+
+      "p/i/pre/s/1": "eor",
+      "p/i/pre/s/2": "eris",
+      "p/i/pre/s/3": "itur",
+      "p/i/pre/p/1": "imur",
+      "p/i/pre/p/2": "iminī",
+      "p/i/pre/p/3": "untur",
+
+      "p/i/imp/s/1": "ēbar",
+      "p/i/imp/s/2": "ēbāris",
+      "p/i/imp/s/3": "ēbātur",
+      "p/i/imp/p/1": "ēbātur",
+      "p/i/imp/p/2": "ēbāminī",
+      "p/i/imp/p/3": "ēbantur",
+
+      "p/i/fut/s/1": "ar",
+      "p/i/fut/s/2": "ēris",
+      "p/i/fut/s/3": "ētur",
+      "p/i/fut/p/1": "ēmur",
+      "p/i/fut/p/2": "ēminī",
+      "p/i/fut/p/3": "entur"
     },
     "4": {
       "a/i/pre/s/1": "iō",
@@ -209,7 +272,28 @@
       "a/i/fut/s/3": "iēt",
       "a/i/fut/p/1": "iēmus",
       "a/i/fut/p/2": "iētis",
-      "a/i/fut/p/3": "ient"
+      "a/i/fut/p/3": "ient",
+
+      "p/i/pre/s/1": "ior",
+      "p/i/pre/s/2": "īris",
+      "p/i/pre/s/3": "ītur",
+      "p/i/pre/p/1": "īmur",
+      "p/i/pre/p/2": "īminī",
+      "p/i/pre/p/3": "iuntur",
+
+      "p/i/imp/s/1": "iēbar",
+      "p/i/imp/s/2": "iēbāris",
+      "p/i/imp/s/3": "iēbātur",
+      "p/i/imp/p/1": "iēbātur",
+      "p/i/imp/p/2": "iēbāminī",
+      "p/i/imp/p/3": "iēbantur",
+
+      "p/i/fut/s/1": "iar",
+      "p/i/fut/s/2": "iēris",
+      "p/i/fut/s/3": "iētur",
+      "p/i/fut/p/1": "iēmur",
+      "p/i/fut/p/2": "iēminī",
+      "p/i/fut/p/3": "ientur"
     }
   },
   "pronouns": {
@@ -243,7 +327,7 @@
       "m/s/dat": "eī",
       "m/s/acc": "eum",
       "m/s/abl": "eō",
-      
+
       "m/p/nom": "eī",
       "m/p/gen": "eōrum",
       "m/p/dat": "eīs",
