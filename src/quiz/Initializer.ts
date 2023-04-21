@@ -1,4 +1,5 @@
 import Message from "../components/Message.js";
+import { StudierData } from "../dataHandlers/types.js";
 import { $, $$ } from "../utils.js";
 import { Formulator } from "./Formulator.js";
 import { QuizOptions } from "./types.js";
@@ -6,11 +7,11 @@ import { QuizOptions } from "./types.js";
 /**
  * Fetches data and gets the user's selected settings.
  * @category Quiz
-*/ 
+*/
 export class Initializer {
   optEls: { [key: string]: any };
   options: QuizOptions;
-  data: any;
+  data: StudierData;
 
   constructor() {
     this.optEls = {
@@ -59,9 +60,9 @@ export class Initializer {
   beginQuiz() {
     if (this.quizIsEmpty()) {
       new Message("No declensions and/or vocabulary question number specified.", 2, 4000);
-      // a bit of a hacky way to override Switcher.
-      // since Switcher already switched BEFORE beginQuiz is called,
-      // we have to switch back.
+      // a bit of a hacky way to override Switcher;
+      // since Switcher already switched BEFORE 
+      // beginQuiz is called, we have to switch back.
       window.latinstudier.switcher.showPane("quiz-start");
       return;
     }
@@ -69,12 +70,16 @@ export class Initializer {
     this.options.immediateGrade = this.optEls.immediateGrade.checked;
     this.options.vocabNum = this.optEls.vocabNum.value;
 
-    new Formulator(this.options).initialize(this.data[0], this.data[1]);
+    new Formulator(this.options).initialize({ 
+      conjugations: this.data.conjugations, 
+      declensions: this.data.declensions, 
+      pronouns: this.data.pronouns 
+    }, this.data.vocab);
   }
-  
+
   /**
    * @returns true if declension selection is empty AND vocab is set to off 
-   * */ 
-  quizIsEmpty = (): boolean => 
+   * */
+  quizIsEmpty = (): boolean =>
     !this.options.declensions && !this.optEls.vocabNum.value
 }

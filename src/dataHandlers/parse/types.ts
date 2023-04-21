@@ -1,5 +1,4 @@
-
-import { caseName, gender as genderType, grammaticalNumber } from "../../types";
+import { caseName, gender as genderType, grammaticalNumber, wordType } from "../../types";
 
 export interface CaseEnding {
   gender: genderType;
@@ -30,11 +29,28 @@ export interface Pronouns { [x: string]: Pronoun[] }
 export interface Conjugations { [x: string]: ConjugationEnding[] }
 export interface Declensions { [x: string]: CaseEnding[] };
 
-/** endings.json */
-export type JSONEndingData = {
-  [x: string]: Record<string, Record<string, string>>,
+export interface VocabWord {
+  word: string,
+  type: wordType,
+  declension: string,
+  units: string,
+  dictionary: string,
+  translation: string,
+  gender: genderType
 }
+
+/** endings.json */
+export type JSONEndingsData = {
+  declensions: Record<string, Record<string, string>>;
+  conjugations: Record<string, Record<string, string>>;
+  pronouns: Record<string, Record<string, string>>;
+}
+
 /** After being parsed by EndingParser. */
-export type ParsedEndingsData = Record<endingType, Declensions | Conjugations | Pronouns>;
+export type ParsedEndingsData = {
+  declensions: Declensions;
+  conjugations: Conjugations;
+  pronouns: Pronouns;
+}
 
 export type endingType = "declensions" | "conjugations" | "pronouns";

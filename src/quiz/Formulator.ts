@@ -6,7 +6,7 @@ import {
   formulateVocabQuestion as vocab 
 } from './formulators/index.js';
 
-import { JSONResource } from "../dataHandlers/JSONResource.js";
+import { ParsedEndingsData, VocabWord } from "../dataHandlers/parse/types.js";
 /**
  * Handles the formulation of the questions based on JSON data, and sends them to WalkthroughMan to start the quiz.
  * */
@@ -25,7 +25,7 @@ export class Formulator {
    * @param endings JSONResource containing arrays of conjugations, declensions, and personal pronouns. There should be a type for this!
    * @param vocab JSONResource containing an array of all vocab words.
    */
-  initialize(endings: JSONResource, vocab: JSONResource): void {
+  initialize(endings: ParsedEndingsData, vocab: VocabWord[]): void {
     this.generateQuestions(endings, vocab);
     new WalkthroughMan().initialize(this.questions, this.options);
   }
@@ -34,12 +34,12 @@ export class Formulator {
    * Same parameters as {@link Formulator.initialize}
    * @returns a list of quesitons.
    */
-  generateQuestions(endings, vocab: JSONResource) {
+  generateQuestions(endings: ParsedEndingsData, vocab: VocabWord[]) {
     // Only get from the declensions enabled
     let enabledDeclensions = this.enabledDeclensions(endings.declensions);
 
     this.questions.push(
-      ...this.questionFormulators.vocab(vocab.json, this.options.vocabNum)
+      ...this.questionFormulators.vocab(vocab, this.options.vocabNum)
     );
 
     for (let declnum in enabledDeclensions)

@@ -1,7 +1,7 @@
 import { expandKey } from "./expand.js";
-import type { Declensions, endingType, JSONEndingData, ParsedEndingsData } from "./types";
+import type { Declensions, endingType, JSONEndingsData, ParsedEndingsData } from "./types";
 
-export function parseEndingData(data: JSONEndingData) {
+export function parseEndingData(data: JSONEndingsData): ParsedEndingsData {
     let expanded: ParsedEndingsData = <any>{};
     for (const type in data) {
         expanded[type] = expandEndingData(data[type], type as endingType);
@@ -12,7 +12,7 @@ export function parseEndingData(data: JSONEndingData) {
 
 /** Takes in EndingData and returns Declensions | Conjugations | Pronouns. 
 * It extracts information from the key to convert it into an object. */
-function expandEndingData(data: JSONEndingData[keyof JSONEndingData], type: endingType): Declensions {
+function expandEndingData(data: JSONEndingsData[keyof JSONEndingsData], type: endingType): Declensions {
     let output = {};
     // for each conjugation number/declension number or similar
     for (const number in data) {

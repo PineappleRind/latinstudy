@@ -54,7 +54,6 @@ export function renderAnswer(str: string | string[]) {
   if (!(str instanceof Array)) str = Array(1).fill(str);
 
   str.forEach((answer, i) => {
-    console.log(answer)
     let [word, note] = answer.split("|");
 
     res.append(word);

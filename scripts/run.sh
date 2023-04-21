@@ -17,7 +17,7 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
 │     --help ${DIM}(-h) ${BOLD}prints this message$RESET       │
 │     -r ${DIM}${BOLD}disable rollup$RESET                     │
 │     -t ${DIM}${BOLD}disable typescript transpilation$RESET   │
-│     -m ${DIM}${BOLD}disable minification$RESET                │
+│     -m ${DIM}${BOLD}disable minification$RESET               │
 │     -s ${DIM}${BOLD}serve files on port 8000$RESET           │
 ╰───────────────────────────────────────────╯"
     exit 0

@@ -3,6 +3,7 @@ import Switcher from "./components/Switcher.js";
 import { Initializer } from "./quiz/index.js";
 import { Loader } from "./view/index.js";
 import { DataHandler } from "./dataHandlers/index.js";
+import { StudierData } from "./dataHandlers/types.js";
 
 /**
  * Base Studier class.
@@ -12,7 +13,7 @@ export class Studier {
   switcher: Switcher;
   quizInitializer: Initializer;
   viewLoader: Loader;
-  data: object; // have type for this later
+  data: StudierData; // have type for this later
 
   constructor() {
     this.switcher = new Switcher();

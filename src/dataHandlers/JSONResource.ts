@@ -2,11 +2,11 @@ let count = 0;
 /**
  * Fetches the specified URL and returns it as JSON.
  */
-export class JSONResource {
+export class JSONResource<T> {
   url: string;
   /** A unique ID for tagging purposes. */
   id: string;
-  json: any;
+  json: T;
 
   constructor(url: string, id?: string) {
     this.url = url;

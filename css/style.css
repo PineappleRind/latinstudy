@@ -529,9 +529,7 @@ select:hover {
 
 select.hidden,
 [data-view-association].hidden {
-  scale: 0.96;
-  opacity: 0;
-  pointer-events: none;
+  display: none; /* I wish there was an easy way to animate them in and out */
 }
 
 .view-panes {
