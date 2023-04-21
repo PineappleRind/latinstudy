@@ -1,4 +1,4 @@
-import { QuizQuestion, QuizQuestionGrade } from "./types.js";
+import { QuizQuestion, QuizQuestionScore } from "./types.js";
 import { $, createElement, purify, renderAnswer } from "../utils.js";
 
 /**
@@ -13,7 +13,7 @@ export class Grader {
 	 * @param question The question itself
 	 * @param userAnswer What the user answered the question with
 	 */
-	gradeQuestion(question: QuizQuestion, userAnswer: string): QuizQuestionGrade {
+	gradeQuestion(question: QuizQuestion, userAnswer: string): QuizQuestionScore {
 		// Remove accents to compare with correct answer
 		userAnswer = purify(userAnswer);
 		// If there are multiple answers
@@ -56,6 +56,7 @@ export class Grader {
 		let numCorrect = 0;
 		$("#quiz-results-questions-inner").innerHTML = "";
 		for (const [i, question] of questions.entries()) {
+			if (!question.grade) continue; // this should never happen
 			const qSum = createElement(
 				"div",
 				"class:quiz-results-q",
@@ -64,21 +65,22 @@ export class Grader {
 			const qWrong = createElement(
 				"span",
 				"class:quiz-results-q-wrong",
-				question.graded.userAnswer,
+				question.grade.userAnswer,
 			);
 			const qCorrect = createElement("span", "class:quiz-results-q-correct");
 
 			qCorrect.append(renderAnswer(question.answer));
 
-			if (question.graded.score > 0) numCorrect++;
+			if (question.grade.score > 0) numCorrect++;
 			else qSum.append(qWrong);
 			qSum.append(qCorrect);
 			$("#quiz-results-questions-inner").append(qSum);
 		}
 
-		$("#quiz-results-percentage").textContent =
-			Math.round((numCorrect / questions.length) * 1000) / 10;
-		$("#quiz-results-num-correct").textContent = numCorrect;
-		$("#quiz-results-total").textContent = questions.length;
+		$("#quiz-results-percentage").textContent = (
+			Math.round((numCorrect / questions.length) * 1000) / 10
+		).toString();
+		$("#quiz-results-num-correct").textContent = numCorrect.toString();
+		$("#quiz-results-total").textContent = questions.length.toString();
 	}
 }

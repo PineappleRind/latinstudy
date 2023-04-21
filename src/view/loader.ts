@@ -1,5 +1,5 @@
 import { StudierData } from "../dataHandlers/types.js";
-import { $, $$, createElement, renderAnswer } from "../utils.js";
+import { $, $$, createElement, renderAnswer, purify } from "../utils.js";
 
 export class Loader {
 	pane: Element;
@@ -12,9 +12,9 @@ export class Loader {
 	constructor() {
 		this.pane = $(".pane#view");
 		this.options = {
-			type: $("#view-type"),
-			declType: $("#view-declension-type"),
-			vocabType: $("#view-vocab-type"),
+			type: $("#view-type") as HTMLSelectElement,
+			declType: $("#view-declension-type") as HTMLSelectElement,
+			vocabType: $("#view-vocab-type") as HTMLSelectElement,
 		};
 		// this.note = $(".view-note");
 		this.trigger = $("#view-trigger");
@@ -27,16 +27,10 @@ export class Loader {
 			this.load[this.options.type.value].apply(this, [data]),
 		);
 
-		this.options.type.addEventListener(
-			"input",
-			this.events.selectedType,
-			false,
-		);
+		this.options.type.addEventListener("input", this.events.selectedType);
 		Object.entries(this.options).forEach(([_, el]) => {
-			el.addEventListener(
-				"input",
-				this.load[this.options.type.value].bind(this, data),
-				false,
+			el.addEventListener("input", () =>
+				this.load[this.options.type.value](data),
 			);
 		});
 	}
@@ -70,24 +64,23 @@ export class Loader {
 				genders.add(ending.gender);
 			}
 			// show every gender
-			Array.from(
-				$$(
-					".view-table-head, .view-table-field",
-				) as NodeListOf<HTMLTableElement>,
-			).forEach((e) => (e.style.display = "table-cell"));
+			$$(".view-table-head, .view-table-field").forEach(
+				(e) => (e.style.display = "table-cell"),
+			);
 			// hide every gender that isn't part of the declension
 			const genderArray: string[] = Array.from(genders);
-			Array.from(
-				$$(
-					`.view-table-head:not(.${genderArray.join(
-						"):not(.",
-					)}), .view-table-field:not(.${genderArray.join("):not(.")})`,
-				),
+			$$(
+				`.view-table-head:not(.${genderArray.join(
+					"):not(.",
+				)}), .view-table-field:not(.${genderArray.join("):not(.")})`,
 			).forEach((e) => ((e as HTMLTableElement).style.display = "none"));
 		},
 		vocab: ({ vocab }) => {
+			$(".view-vocab").innerHTML = "";
+			vocab = vocab.sort((a, b) => purify(a.word) > purify(b.word) ? 1 : -1)
 			for (const word of vocab) {
 				// Exclude words that are filtered out
+				if (this.options.vocabType.value !== "*" && word.type !== this.options.vocabType.value) continue;
 				const listItem = createElement(
 					"div",
 					"class:view-vocab-word",

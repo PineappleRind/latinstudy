@@ -1,7 +1,7 @@
 import { Grader } from "./Grader.js";
 import { $, createElement, shuffleArray, renderAnswer } from "../utils.js";
 import { Animator } from "./walkthroughHelpers/Animator.js";
-import { GradedQuizQuestion, QuizOptions, QuizQuestion } from "./types.js";
+import { QuizOptions, QuizQuestion } from "./types.js";
 
 /**
  * Handles the showing of the questions to the user, records the user's response, and sends them to Grader.
@@ -23,7 +23,7 @@ export class WalkthroughMan {
 	/** Instance of {@link quiz.<internal>.Animator}. */
 	animator: Animator;
 	/** List of questions formulated by {@link Formulator}. */
-	questions: (QuizQuestion | GradedQuizQuestion)[];
+	questions: QuizQuestion[];
 	/** User's options collected by {@link Initializer}. */
 	options: QuizOptions;
 	/**
@@ -192,7 +192,7 @@ export class WalkthroughMan {
 		if (this.options.immediateGrade) this.updateGrade(score, cur.answer);
 
 		// Finally set the current question to graded
-		(this.questions[this.currentIndex] as GradedQuizQuestion).grade = {
+		this.questions[this.currentIndex].grade = {
 			score,
 			answer: cur.answer,
 			userAnswer,
