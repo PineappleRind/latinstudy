@@ -1,5 +1,5 @@
 export const $ = (s: string): any => {
-  let el = document.querySelector(s);
+  const el = document.querySelector(s);
   if (!el) throw new Error('element not found');
   return el
 }
@@ -15,11 +15,11 @@ export const ord = (n: string) =>
 
 export const createElement = (tag: string, attrs: string, value?: string) => {
   // shorthand element function
-  let el = document.createElement(tag);
+  const el = document.createElement(tag);
   if (attrs)
     attrs.split(";").forEach((attr) => {
       if (!attr) return;
-      let vals = attr.split(":");
+      const vals = attr.split(":");
       el.setAttribute(vals[0].trim(), vals[1].trim());
     });
   el.innerHTML = value || "";
@@ -38,9 +38,9 @@ export const purify = (str: string) =>
 
 //https://stackoverflow.com/a/12646864
 export function shuffleArray(array: any[]) {
-  for (var i = array.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = array[i];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
     array[i] = array[j];
     array[j] = temp;
   }
@@ -48,13 +48,13 @@ export function shuffleArray(array: any[]) {
 }
 
 export function renderAnswer(str: string | string[]) {
-  let res = createElement("span", "class:rendered-answer");
+  const res = createElement("span", "class:rendered-answer");
 
   str = str as string[];
   if (!(str instanceof Array)) str = Array(1).fill(str);
 
   str.forEach((answer, i) => {
-    let [word, note] = answer.split("|");
+    const [word, note] = answer.split("|");
 
     res.append(word);
     if (note)

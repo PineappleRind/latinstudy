@@ -20,7 +20,7 @@ export default class Switcher {
     return this;
   }
   indexPanes() {
-    let indexed = {};
+    const indexed = {};
     for (const pane of this.panes) indexed[pane.id] = pane;
     this.panes = indexed;
   }

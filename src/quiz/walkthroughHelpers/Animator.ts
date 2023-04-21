@@ -26,7 +26,7 @@ export class Animator {
   /** Change {@link Animator.inner}'s content and animate {@link Animator.outer}'s width and height to fit it. */
   animateTo(newHTML: HTMLElement, delay: number) {
     // get dimensions
-    let dimensions = this.getHTMLDimensions(newHTML);
+    const dimensions = this.getHTMLDimensions(newHTML);
     // Hide the container's contents 
     this.outer.classList.add("hidden");
     this.outer.style.width = `${Math.max(dimensions.width, this.settings.minWidth || 0)}px`;
@@ -48,10 +48,10 @@ export class Animator {
   /** Append an element to {@link Animator.inner} and animate {@link Animator.outer}'s width and height to fit the new element. */
   animateAppend(toappend: HTMLElement) {
     // create a clone and add the element
-    let clone = this.inner.cloneNode(true) as HTMLElement;
+    const clone = this.inner.cloneNode(true) as HTMLElement;
     clone.append(toappend);
     // get hypothetical dimensions and update outer
-    let dimensions = this.getHTMLDimensions(clone);
+    const dimensions = this.getHTMLDimensions(clone);
     this.outer.style.width = `${dimensions.width}px`;
     this.outer.style.height = `${dimensions.height}px`;
     // append the content
@@ -66,7 +66,7 @@ export class Animator {
     // Clone the node & measure it, basically
     html.classList.add("invisible");
     document.body.append(html);
-    let size = html.getBoundingClientRect();
+    const size = html.getBoundingClientRect();
     html.classList.remove("invisible");
     html.remove();
     return size;

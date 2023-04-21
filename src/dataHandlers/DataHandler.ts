@@ -9,11 +9,11 @@ export class DataHandler {
 
   async initialize() {
     this.resources = await Promise.all([
-      new JSONResource<JSONEndingsData>(`/data/endings.json`, "endings").load(),
-      new JSONResource<VocabWord[]>(`/data/vocab.json`, "vocab").load()
+      new JSONResource<JSONEndingsData>("/data/endings.json", "endings").load(),
+      new JSONResource<VocabWord[]>("/data/vocab.json", "vocab").load()
     ]);
 
-    let parsedEndings = parseEndingData(this.resources[0].json);
+    const parsedEndings = parseEndingData(this.resources[0].json);
 
     this.data = {
       ...parsedEndings,

@@ -17,11 +17,11 @@ export class Grader {
     // Remove accents to compare with correct answer
     userAnswer = purify(userAnswer);
     // If there are multiple answers
-    let correct: string[] = ([] as string[]).concat(question.answer);
+    const correct: string[] = ([] as string[]).concat(question.answer);
     // if one of the correct answers directly matches user's answer
-    let directEquals = correct.some(el => purify(el) === userAnswer),
-      // if one of the correct answers fuzzily matches user's answer
-      fuzzyEquals = correct.some(el => this.fuzzyEquals(userAnswer, el));
+    const directEquals = correct.some(el => purify(el) === userAnswer);
+    // if one of the correct answers fuzzily matches user's answer
+    const fuzzyEquals = correct.some(el => this.fuzzyEquals(userAnswer, el));
 
     if (directEquals) return 2;
     else if (fuzzyEquals) return 1;
@@ -56,10 +56,10 @@ export class Grader {
     // count number correct
     let numCorrect = 0;
     $('#quiz-results-questions-inner').innerHTML = '';
-    for (let [i, question] of questions.entries()) {
-      let qSum = createElement("div", "class:quiz-results-q", `${i + 1}. ${question.question}: `),
-        qWrong = createElement("span", "class:quiz-results-q-wrong", question.graded.userAnswer),
-        qCorrect = createElement("span", "class:quiz-results-q-correct");
+    for (const [i, question] of questions.entries()) {
+      const qSum = createElement("div", "class:quiz-results-q", `${i + 1}. ${question.question}: `);
+      const qWrong = createElement("span", "class:quiz-results-q-wrong", question.graded.userAnswer);
+      const qCorrect = createElement("span", "class:quiz-results-q-correct");
 
       qCorrect.append(renderAnswer(question.answer));
 

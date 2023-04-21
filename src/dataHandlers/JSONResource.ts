@@ -15,7 +15,7 @@ export class JSONResource<T> {
   /** Does the actual work I said above. */
   async load() {
     if (!this.url) throw new Error("No url to load!");
-    let req = await fetch(this.url)
+    const req = await fetch(this.url)
     this.json = await req.json();
     
     return this;

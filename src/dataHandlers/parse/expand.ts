@@ -1,14 +1,14 @@
 import type { endingType } from "./types";
 
 export function expandKey(data: string[], type: endingType) {
-  let output: Record<keyof typeof maps, string> = {} as any;
+  const output: Record<keyof typeof maps, string> = {} as any;
   for (const [i, contraction] of data.entries()) {
-    let mapCategory = types[type][i];
+    const mapCategory = types[type][i];
     if (contraction === "-" || !maps[mapCategory]) {
       output[mapCategory] = contraction;
       continue;
     }
-    let expanded = maps[mapCategory][contraction];
+    const expanded = maps[mapCategory][contraction];
     if (!expanded) throw new Error(`Invalid key ${data.join("/")}! Could not find an expansion for ${contraction}.`)
 
     output[mapCategory] = expanded;

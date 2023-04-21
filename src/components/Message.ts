@@ -1,10 +1,10 @@
 import { $, createElement, wait } from "../utils.js";
 
-let typeMap: string[] = ["info", "success", "error"],
-  queue: Message[] = [],
-  showing: boolean = false,
-  id: number = 0,
-  container: HTMLElement = createElement("div", "class:toast-container");
+const typeMap: string[] = ["info", "success", "error"];
+const queue: Message[] = [];
+let showing: boolean = false;
+let id: number = 0;
+const container: HTMLElement = createElement("div", "class:toast-container");
 
 $("#app").append(container);
 
@@ -15,7 +15,7 @@ export default class Message {
 
   constructor(content: string, type: number, duration: number, title?: string) {
     // Create a message
-    let el = createElement("div", `class:toast ${typeMap[type]}`);
+    const el = createElement("div", `class:toast ${typeMap[type]}`);
     if (title) el.append(createElement("h3", "class:toast-header", title));
     el.append(
       createElement(

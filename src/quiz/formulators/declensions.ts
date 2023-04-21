@@ -9,14 +9,14 @@ import { QuizQuestion as Formulation } from "../types.js";
  * @returns An array of question Formulations.
  */
 export function formulateDeclensionQuestion(declnum, endings) {
-  let questions: Formulation[] = [];
+  const questions: Formulation[] = [];
   for (const [type, ending] of Object.entries(endings)) {
     if (ending === "-" || !ending) continue; // no ending? continue
 
-    let question = formatQuestionString(declnum, type),
-      answer = ending.toString();
+    const question = formatQuestionString(declnum, type);
+    const answer = ending.toString();
     // format the question
-    let formulation: Formulation = {
+    const formulation: Formulation = {
       type: "declension",
       question, answer,
       html: createQuizQuestion({ title: question, super: "what's the ending?" })
@@ -35,9 +35,9 @@ export function formulateDeclensionQuestion(declnum, endings) {
  */
 function formatQuestionString(declnum: number, type: string): string {
   // split the key into its information components
-  let [gender, gnumber, $case] = type.split("/");
+  const [gender, gnumber, $case] = type.split("/");
   // expand genders
-  let genders = gender
+  const genders = gender
     .split("")
     .map((g) => map[g])
     .join("/");

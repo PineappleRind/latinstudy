@@ -6,10 +6,10 @@ import { QuizQuestionHTMLOptions } from "../types.js";
  * @returns a quiz question wrapped in a div (.animator-inner).
 */
 export function createQuizQuestion(options: QuizQuestionHTMLOptions): HTMLElement {
-    let title = createElement("h3", "class:quiz-question-title", options.title),
-        input = createElement("input", "placeholder:What is it? Enter...;type:text;class:quiz-question-input"),
-        header = createElement("h4", "class:quiz-question-super", options.super),
-        container = createElement("div", "class:animator-inner");
+    const title = createElement("h3", "class:quiz-question-title", options.title);
+    const input = createElement("input", "placeholder:What is it? Enter...;type:text;class:quiz-question-input");
+    const header = createElement("h4", "class:quiz-question-super", options.super);
+    const container = createElement("div", "class:animator-inner");
 
     container.append(header, title, input);
     return container;

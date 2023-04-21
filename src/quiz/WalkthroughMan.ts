@@ -119,7 +119,7 @@ export class WalkthroughMan {
   }
 
   updateNextBtn() {
-    let map = ["Grade", "Next", "Finish"];
+    const map = ["Grade", "Next", "Finish"];
     this.btns.next.innerHTML = map[this.nextEvent - 1];
   }
 
@@ -165,12 +165,12 @@ export class WalkthroughMan {
 
   updateGrade(isCorrect: number, answer: string | string[]) {
     // get the result
-    let typeofAnswer = ["wrong", "partial-correct", "correct"][isCorrect];
+    const typeofAnswer = ["wrong", "partial-correct", "correct"][isCorrect];
 
     this.curInput.disabled = true;
     this.curInput.classList.add(typeofAnswer);
     // add correct answer
-    let correct = createElement("div", "class:quiz-correct-answer");
+    const correct = createElement("div", "class:quiz-correct-answer");
     correct.append(renderAnswer(answer));
     // Measure the new height once the correct answer is added
     // for a lovely animation. 😍
@@ -178,15 +178,15 @@ export class WalkthroughMan {
   }
 
   gradeQuestion() {
-    let cur = this.questions[this.currentIndex];
+    const cur = this.questions[this.currentIndex];
     // if the question is already graded AND shown as graded,
     if (cur.graded && !this.options.immediateGrade) return;
 
     // get grade
-    let userAnswer = this.userAnswers.map((m) => m.response)[
+    const userAnswer = this.userAnswers.map((m) => m.response)[
       this.currentIndex
     ];
-    let isCorrect = this.grader.gradeQuestion(cur, this.userAnswers.map((m) => m.response)[this.currentIndex]);
+    const isCorrect = this.grader.gradeQuestion(cur, this.userAnswers.map((m) => m.response)[this.currentIndex]);
 
     // only update visually if immediate grading was specified
     if (this.options.immediateGrade) this.updateGrade(isCorrect, cur.answer);

@@ -34,7 +34,7 @@ export class Loader {
 
   events = {
     selectedType(e: InputEvent) {
-      let selectedType = (e.target as HTMLInputElement).value;
+      const selectedType = (e.target as HTMLInputElement).value;
       // this.note.innerHTML = "";
       // Hide and show elements according to which
       // e.target.value they're associated with
@@ -48,11 +48,11 @@ export class Loader {
 
   load = {
     declensions: ({ declensions }) => {
-      let selectedDeclension = declensions[this.options.declType.value];
+      const selectedDeclension = declensions[this.options.declType.value];
       // store Set of genders (every element is unique)
       // this is used to determine the genders that
       // *aren't* part of the current declension and hide them accordingly
-      let genders: Set<string> = new Set();
+      const genders: Set<string> = new Set();
       for (const ending of selectedDeclension) {
         $(`.view-table-field.${ending.gender}.${ending.number}.${ending.case}`)
           .textContent = ending.ending;
@@ -60,11 +60,11 @@ export class Loader {
         genders.add(ending.gender);
       }
       // show every gender
-      Array.from($$(`.view-table-head, .view-table-field`) as NodeListOf<HTMLTableElement>).forEach(
+      Array.from($$(".view-table-head, .view-table-field") as NodeListOf<HTMLTableElement>).forEach(
         (e) => (e.style.display = "table-cell")
       );
       // hide every gender that isn't part of the declension
-      let genderArray: string[] = Array.from(genders);
+      const genderArray: string[] = Array.from(genders);
       Array
         .from($$(`.view-table-head:not(.${genderArray.join("):not(.")}), .view-table-field:not(.${genderArray.join("):not(.")})`))
         .forEach((e) => ((e as HTMLTableElement).style.display = "none"));
@@ -73,10 +73,10 @@ export class Loader {
 
       for (const word of vocab) {
         // Exclude words that are filtered out
-        let listItem = createElement(
+        const listItem = createElement(
           "div",
           "class:view-vocab-word",
-          `${word.word}${word.dictionary ? ", " + word.dictionary : ""}`
+          `${word.word}${word.dictionary ? `, ${word.dictionary}` : ""}`
         );
         listItem.dataset.declension = word.declension || "0";
         listItem.dataset.type = word.type || "other";
