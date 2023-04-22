@@ -26,6 +26,11 @@ export interface QuizQuestionHTMLOptions {
 /** 2 = correct, 1 = partially correct, 0 = wrong. */
 export type QuizQuestionScore = 2 | 1 | 0;
 
+export type QuizAnswer = {
+	response: string;
+	grade: QuizQuestionScore | null;
+};
+
 // for later
 type wordType =
 	| "noun"

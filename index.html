@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LatinStudier™</title>
-  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/app.css" />
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 </head>
 
@@ -139,36 +139,39 @@
       <h2>Quiz</h2>
       <h4>Quiz on declensions...</h4>
       <div class="quiz-option-select">
-        <div class="quiz-option quiz-declension-option" data-value="1">1st</div>
-        <div class="quiz-option quiz-declension-option" data-value="2">2nd</div>
-        <div class="quiz-option quiz-declension-option" data-value="3">3rd</div>
-        <div class="quiz-option quiz-declension-option" data-value="4">4th</div>
-        <div class="quiz-option quiz-declension-option" data-value="5">5th</div>
+        <div class="multitoggle-option" data-multitoggle-group="quiz-decl" data-value="1">1st</div>
+        <div class="multitoggle-option" data-multitoggle-group="quiz-decl" data-value="2">2nd</div>
+        <div class="multitoggle-option" data-multitoggle-group="quiz-decl" data-value="3">3rd</div>
+        <div class="multitoggle-option" data-multitoggle-group="quiz-decl" data-value="4">4th</div>
+        <div class="multitoggle-option" data-multitoggle-group="quiz-decl" data-value="5">5th</div>
       </div>
       <h4>Quiz on conjugations...</h4>
       <div construction>
         <div class="quiz-option-select">
-          <div class="quiz-option quiz-conj-option" data-value="1">1st</div>
-          <div class="quiz-option quiz-conj-option" data-value="2">2nd</div>
-          <div class="quiz-option quiz-conj-option" data-value="3">3rd</div>
-          <div class="quiz-option quiz-conj-option" data-value="4">4th</div>
+          <div class="multitoggle-option" data-multitoggle-group="quiz-conj" data-value="1">1st</div>
+          <div class="multitoggle-option" data-multitoggle-group="quiz-conj" data-value="2">2nd</div>
+          <div class="multitoggle-option" data-multitoggle-group="quiz-conj" data-value="3">3rd</div>
+          <div class="multitoggle-option" data-multitoggle-group="quiz-conj" data-value="4">4th</div>
         </div>
         <fieldset id="quiz-conj-settings">
           <p>Include voices...</p>
           <div class="quiz-option-select">
-            <div class="quiz-option quiz-conj-option" data-value="1">Active</div>
-            <div class="quiz-option quiz-conj-option" data-value="2">Passive</div>
+            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-voices" data-value="active">Active</div>
+            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-voices" data-value="passive">Passive</div>
           </div>
-          <p>Include moods...</p>
+          <!-- <p>Include moods...</p>
           <div class="quiz-option-select">
-            <div class="quiz-option quiz-conj-mood-option" data-value="1">Indicative</div>
-            <div class="quiz-option quiz-conj-mood-option" data-value="2">Subjunctive</div>
-          </div>
+            <div class="quiz-option" data-multitoggle-group="quiz-conj-moods" data-value="1">Indicative</div>
+            <div class="quiz-option" data-multitoggle-group="quiz-conj-moods" data-value="2">Subjunctive</div>
+          </div> -->
           <p>Include tenses...</p>
           <div class="quiz-option-select">
-            <div class="quiz-option quiz-conj-tense-option" data-value="1">Present</div>
-            <div class="quiz-option quiz-conj-tense-option" data-value="2">Imperfect</div>
-            <div class="quiz-option quiz-conj-tense-option" data-value="3">Future</div>
+            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="present">Present</div>
+            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="imperfect">Imperfect</div>
+            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="future">Future</div>
+            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="perfect">Perfect</div>
+            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="pluperfect">Pluperfect</div>
+            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="future perfect">Future Perfect</div>
           </div>
         </fieldset>
       </div>

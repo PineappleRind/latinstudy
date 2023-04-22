@@ -1,4 +1,4 @@
-import { expandKey } from "./expand.js";
+import { expandKey } from "./index.js";
 import type {
 	Declensions,
 	endingType,

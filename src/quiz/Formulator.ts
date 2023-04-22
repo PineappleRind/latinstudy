@@ -1,4 +1,4 @@
-import { WalkthroughMan } from "./WalkthroughMan.js";
+import { WalkthroughMan } from "./index.js";
 import { QuizOptions, QuizQuestion } from "./types.js";
 
 import {
@@ -6,7 +6,11 @@ import {
 	formulateVocabQuestion as vocab,
 } from "./formulators/index.js";
 
-import { ParsedEndingsData, VocabWord } from "../dataHandlers/parse/types.js";
+import type {
+	Declensions,
+	ParsedEndingsData,
+	VocabWord,
+} from "../dataHandlers/parse/types.js";
 /**
  * Handles the formulation of the questions based on JSON data, and sends them to WalkthroughMan to start the quiz.
  * */
@@ -54,7 +58,7 @@ export class Formulator {
 	 * @param declensions Object of declension endings (includes 1, 2, 3, 4, and 5).
 	 * @returns Object of declension endings — only includes what the user selected, if any.
 	 */
-	enabledDeclensions(declensions) {
+	enabledDeclensions(declensions: Declensions) {
 		const enabledDeclensions = {};
 		// For every declension enabled
 		// 5 declensions; base-2 logarithm of 16 = 4

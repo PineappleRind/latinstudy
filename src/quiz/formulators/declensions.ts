@@ -1,6 +1,7 @@
-import { map, ord } from "../../utils.js";
-import { createQuizQuestion } from "../components/QuizQuestion.js";
-import { QuizQuestion as Formulation } from "../types.js";
+import { ord } from "../../utils.js";
+import { createQuizQuestion } from "../components/index.js";
+import type { CaseEnding } from "../../dataHandlers/parse/types.js";
+import type { QuizQuestion as Formulation } from "../types.js";
 
 /**
  * Generates a list of questions about a certain declension.
@@ -8,13 +9,15 @@ import { QuizQuestion as Formulation } from "../types.js";
  * @param endings Data itself.
  * @returns An array of question Formulations.
  */
-export function formulateDeclensionQuestion(declnum, endings) {
+export function formulateDeclensionQuestion(
+	declnum: number,
+	declension: CaseEnding[],
+) {
 	const questions: Formulation[] = [];
-	for (const [type, ending] of Object.entries(endings)) {
-		if (ending === "-" || !ending) continue; // no ending? continue
-
-		const question = formatQuestionString(declnum, type);
-		const answer = ending.toString();
+	for (const ending of declension) {
+		if (ending.ending === "-" || !ending.ending) continue; // no ending? continue
+		const question = formatQuestionString(declnum, ending);
+		const answer = ending.ending;
 		// format the question
 		const formulation: Formulation = {
 			type: "declension",
@@ -34,19 +37,13 @@ export function formulateDeclensionQuestion(declnum, endings) {
 
 /**
  * @param declnum Current declension, to specify in the string.
- * @param type Encoded Magic Values™. This will be parsed and expanded by {@link EndingParser} in the future.
+ * @param type
  * @returns The formatted question string (to ask the user).
  */
-function formatQuestionString(declnum: number, type: string): string {
+function formatQuestionString(declnum: number, ending: CaseEnding): string {
 	// split the key into its information components
-	const [gender, gnumber, $case] = type.split("/");
 	// expand genders
-	const genders = gender
-		.split("")
-		.map((g) => map[g])
-		.join("/");
-
-	return `${ord(declnum.toString())} declension ${map[$case]} ${
-		map[gnumber]
-	} (${genders})`;
+	return `${ord(declnum.toString())} declension ${ending.case} ${
+		ending.number
+	} (${ending.gender})`;
 }

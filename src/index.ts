@@ -1,4 +1,4 @@
-import Switcher from "./components/Switcher.js";
+import { Switcher, MultitoggleManager } from "./components/index.js";
 import { Initializer } from "./quiz/index.js";
 import { Loader } from "./view/index.js";
 import { DataHandler } from "./dataHandlers/index.js";
@@ -9,12 +9,14 @@ import { StudierData } from "./dataHandlers/types.js";
  * Initializes all modules.
  */
 export class Studier {
+	multitoggleManager: MultitoggleManager;
 	switcher: Switcher;
 	quizInitializer: Initializer;
 	viewLoader: Loader;
 	data: StudierData; // have type for this later
 
 	constructor() {
+		this.multitoggleManager = new MultitoggleManager();
 		this.switcher = new Switcher();
 
 		this.quizInitializer = new Initializer();
@@ -24,7 +26,8 @@ export class Studier {
 	}
 	async initialize() {
 		this.data = (await new DataHandler().initialize()).data;
-		console.log(this.data);
+
+		this.multitoggleManager.initialize();
 		this.switcher.listen().showPane("begin");
 		this.viewLoader.initialize(this.data);
 		this.quizInitializer.initialize(this.data);

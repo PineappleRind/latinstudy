@@ -77,10 +77,14 @@ export class Loader {
 		},
 		vocab: ({ vocab }) => {
 			$(".view-vocab").innerHTML = "";
-			vocab = vocab.sort((a, b) => purify(a.word) > purify(b.word) ? 1 : -1)
+			vocab = vocab.sort((a, b) => (purify(a.word) > purify(b.word) ? 1 : -1));
 			for (const word of vocab) {
 				// Exclude words that are filtered out
-				if (this.options.vocabType.value !== "*" && word.type !== this.options.vocabType.value) continue;
+				if (
+					this.options.vocabType.value !== "*" &&
+					word.type !== this.options.vocabType.value
+				)
+					continue;
 				const listItem = createElement(
 					"div",
 					"class:view-vocab-word",

@@ -2,6 +2,7 @@ import { createElement, wait } from "../../utils.js";
 
 type AnimatorSettings = {
 	minWidth?: number;
+	transitionDuration?: number;
 };
 
 /**
@@ -14,6 +15,9 @@ export class Animator {
 	/** Inner container. This container will be measured, will store the content and its updates. */
 	inner: HTMLElement;
 	settings: AnimatorSettings;
+	observer: MutationObserver;
+	observerConfig: MutationObserverInit;
+
 	/** Creates an {@link Animator.inner} container if one's not already there. */
 	constructor(target: HTMLDivElement, settings: AnimatorSettings) {
 		this.outer = target; // outer container.
@@ -21,46 +25,57 @@ export class Animator {
 		// set outer's content to inner
 		this.inner = createElement("div", "class:animator-inner");
 		this.outer.replaceChildren(this.inner);
+
+		this.observer = new MutationObserver((mutationList) => {
+			console.log(mutationList);
+			this.animateTo(this.inner);
+		});
+		this.observerConfig = { childList: true, subtree: true };
 	}
 
 	/** Change {@link Animator.inner}'s content and animate {@link Animator.outer}'s width and height to fit it. */
-	animateTo(newHTML: HTMLElement, delay: number) {
+	async animateTo(
+		newHTML: HTMLElement,
+		transitionDuration: number = 0,
+		fade: boolean = false,
+	) {
 		// get dimensions
 		const dimensions = this.getHTMLDimensions(newHTML);
 		// Hide the container's contents
-		this.outer.classList.add("hidden");
+		if (fade) this.outer.classList.add("hidden");
 		this.outer.style.width = `${Math.max(
 			dimensions.width,
 			this.settings.minWidth || 0,
 		)}px`;
 		this.outer.style.height = `${dimensions.height}px`;
 
-		return new Promise((resolve) => {
-			// Wait a bit
-			wait(delay).then(() => {
-				// then replace the content and unhide
-				this.outer.replaceChild(newHTML, this.inner);
-				this.outer.classList.remove("hidden");
-				// save current inner
-				this.inner = newHTML;
-				resolve(newHTML);
-			});
-		});
+		// Wait a bit
+		if (transitionDuration) await wait(transitionDuration);
+		// then replace the content and unhide
+		this.inner.remove();
+		this.outer.append(newHTML);
+		this.inner = newHTML;
+
+		if (fade) this.outer.classList.remove("hidden");
+		// save current inner
+		this.inner = newHTML;
+		return newHTML;
 	}
 
-	/** Append an element to {@link Animator.inner} and animate {@link Animator.outer}'s width and height to fit the new element. */
-	animateAppend(toappend: HTMLElement) {
-		// create a clone and add the element
-		const clone = this.inner.cloneNode(true) as HTMLElement;
-		clone.append(toappend);
-		// get hypothetical dimensions and update outer
-		const dimensions = this.getHTMLDimensions(clone);
-		this.outer.style.width = `${dimensions.width}px`;
-		this.outer.style.height = `${dimensions.height}px`;
-		// append the content
-		this.inner.append(toappend);
+	async setInner(newHTML: HTMLElement) {
+		// this.observer.disconnect();
+
+		await this.animateTo(newHTML, this.settings.transitionDuration, true);
+		this.observer.observe(this.inner, this.observerConfig);
 	}
 
+	/**
+	 * Observe {@link Animator.inner}'s DOM mutations, calling {@link Animator.animateTo} if there are
+	 */
+	listen() {
+		this.observer.observe(this.inner, this.observerConfig);
+		return this;
+	}
 	/**
 	 * Helper function to measure the dimensions of an element. We're usually measuring {@link Animator.inner}.
 	 * @returns The dimensions of the element, in a DOMRect.

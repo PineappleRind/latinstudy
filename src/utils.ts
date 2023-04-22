@@ -13,9 +13,13 @@ export const ord = (n: string) =>
 		new Intl.PluralRules("en", { type: "ordinal" }).select(parseInt(n))[2]
 	];
 
-export const createElement = (tag: string, attrs: string, value?: string) => {
+export const createElement = <T extends HTMLElement = HTMLElement>(
+	tag: string,
+	attrs: string,
+	value?: string,
+) => {
 	// shorthand element function
-	const el = document.createElement(tag);
+	const el = document.createElement(tag) as T;
 	if (attrs)
 		attrs.split(";").forEach((attr) => {
 			if (!attr) return;
@@ -66,16 +70,3 @@ export function renderAnswer(str: string | string[]) {
 
 	return res;
 }
-
-export const map = {
-	n: "neuter",
-	m: "masculine",
-	f: "feminine",
-	s: "singular",
-	p: "plural",
-	nom: "nominative",
-	gen: "genitive",
-	dat: "dative",
-	acc: "accusative",
-	abl: "ablative",
-};

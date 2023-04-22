@@ -1,6 +1,6 @@
 import { $$ } from "../utils.js";
 
-export default class Switcher {
+export class Switcher {
 	panes: { [x: string]: HTMLElement };
 	triggers: HTMLElement[];
 	history: HTMLElement[];

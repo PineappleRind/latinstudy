@@ -1,9 +1,9 @@
 {
   "name": "latinstudier",
-  "type": "module",
   "devDependencies": {
+    "@ts-docs/default-docs-structure": "^0.4.4",
+    "@ts-docs/ts-docs": "^0.4.4",
     "rome": "^12.0.0",
-    "typedoc": "^0.23.24",
     "typedoc-plugin-missing-exports": "^1.0.0",
     "typescript": "^4.9.5",
     "uglify-js": "^3.17.4"

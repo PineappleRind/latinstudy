@@ -1,12 +1,15 @@
 import { QuizQuestion, QuizQuestionScore } from "./types.js";
 import { $, createElement, purify, renderAnswer } from "../utils.js";
 
+/** If the user makes more than ALLOWED_TYPOS, the question is marked wrong. */
+export const ALLOWED_TYPOS = 1;
+
 /**
  * Grader recieves the responses from WalkthroughMan, compares them to the questions, grades, and shows the grade to the user.
  * */
-
 export class Grader {
 	constructor() {}
+	/** Do I really need this empty initialize? */
 	initialize(userAnswers, questions) {}
 	/**
 	 * Grade the specified question
@@ -38,7 +41,7 @@ export class Grader {
 		// the user actually made a typo - so mark wrong
 		else if (original.length < 2) return false;
 
-		let foundMistakes = 1; // only allow 1 character difference
+		let foundMistakes = ALLOWED_TYPOS;
 		for (let i = 0; i < target.length; i++) {
 			if (target.charAt(i) === original.charAt(i)) continue;
 
@@ -48,39 +51,56 @@ export class Grader {
 
 		return true;
 	}
-	/** This function is purely HTML manipulation. I'm not sure I like it. Might switch to <template>s and <slot>s. */
+	/** Append all quiz question grades to the pane */
 	showResults(questions: QuizQuestion[]) {
 		// switch to results pane
 		window.latinstudier.switcher.showPane("quiz-results");
 		// count number correct
-		let numCorrect = 0;
 		$("#quiz-results-questions-inner").innerHTML = "";
 		for (const [i, question] of questions.entries()) {
-			if (!question.grade) continue; // this should never happen
-			const qSum = createElement(
-				"div",
-				"class:quiz-results-q",
-				`${i + 1}. ${question.question}: `,
-			);
-			const qWrong = createElement(
-				"span",
-				"class:quiz-results-q-wrong",
-				question.grade.userAnswer,
-			);
-			const qCorrect = createElement("span", "class:quiz-results-q-correct");
-
-			qCorrect.append(renderAnswer(question.answer));
-
-			if (question.grade.score > 0) numCorrect++;
-			else qSum.append(qWrong);
-			qSum.append(qCorrect);
+			const qSum = this.generateQuestionResult(i, question);
+			if (!qSum) continue;
 			$("#quiz-results-questions-inner").append(qSum);
 		}
+
+		// we know question.grade exists because
+		// generateQuestionResult would have thrown an error
+		const numCorrect = questions
+			.map((q) => q.grade!.score)
+			.reduce((acc, cur) => {
+				return acc + (cur > 0 ? 1 : 0);
+			}, 0);
 
 		$("#quiz-results-percentage").textContent = (
 			Math.round((numCorrect / questions.length) * 1000) / 10
 		).toString();
 		$("#quiz-results-num-correct").textContent = numCorrect.toString();
 		$("#quiz-results-total").textContent = questions.length.toString();
+	}
+
+	generateQuestionResult(
+		i: number,
+		question: QuizQuestion,
+	): void | HTMLDivElement {
+		if (!question.grade)
+			throw new Error(`Quiz question "${question.question}" is ungraded!`);
+		const qSum = createElement(
+			"div",
+			"class:quiz-results-q",
+			`${i + 1}. ${question.question}: `,
+		);
+		const correctAnswer = createElement("span", "class:quiz-results-q-correct");
+		correctAnswer.append(renderAnswer(question.answer));
+
+		if (question.grade.score <= 0)
+			qSum.append(
+				createElement(
+					"span",
+					"class:quiz-results-q-wrong",
+					question.grade.userAnswer,
+				),
+			);
+
+		qSum.append(correctAnswer);
 	}
 }

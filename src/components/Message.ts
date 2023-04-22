@@ -1,15 +1,11 @@
 import { $, createElement, wait } from "../utils.js";
 
-const typeMap: string[] = ["info", "success", "error"];
-const queue: Message[] = [];
-let showing: boolean = false;
-let id: number = 0;
-const container: HTMLElement = createElement("div", "class:toast-container");
+const typeMap = ["info", "success", "error"];
+let lastShown = Date.now();
 
-$("#app").append(container);
-
-export default class Message {
-	el: HTMLElement;
+/** A toast popup component used for info messages, successes, or errors. */
+export class Message {
+	element: HTMLElement;
 	duration: number;
 	id: string;
 
@@ -25,32 +21,64 @@ export default class Message {
 			),
 		);
 
-		this.el = el;
+		this.element = el;
 		this.duration = duration;
-		this.id = (id++).toString(16);
-		// Add it to the queue
-		queue.push(this);
-		// Call the manager 😡
-		wantToShow();
+	}
+
+	async show() {
+		if (Date.now() - lastShown < 200) return; // no spam thanks
+		lastShown = Date.now();
+		await MessageManager.instance.showMessage(this);
+		return this;
 	}
 }
 
-function wantToShow() {
-	if (!queue.length) return;
-	if (showing) return setTimeout(wantToShow, queue[0].duration);
-	showMessage(queue[0]).then(() => {
-		queue.shift();
-		showing = false;
-		wantToShow();
-	});
-}
+class MessageManager {
+	#container: HTMLDivElement;
+	#queue: Message[] = [];
 
-async function showMessage({ el, duration }) {
-	container.append(el);
-	showing = true;
-	await wait(duration);
-	el.classList.add("hidden");
-	await wait(200);
-	el.remove();
-	return;
+	public static instance: MessageManager = new MessageManager();
+	static readonly MAX_QUEUE_LENGTH = 5;
+	static readonly MESSAGE_PADDING = 4;
+
+	private constructor() {
+		const container: HTMLDivElement = createElement(
+			"div",
+			"class:toast-container",
+		);
+		$("#app").append(container);
+		this.#container = container;
+	}
+
+	async showMessage(message: Message) {
+		this.#queue.push(message);
+		const overflow = this.#queue.length - MessageManager.MAX_QUEUE_LENGTH;
+		for (let i = 0; i < overflow; i++) this.removeTopMessage();
+		this.#container.append(message.element);
+		this.animateContainerUp(message);
+		await wait(message.duration);
+		this.removeTopMessage();
+	}
+
+	async removeTopMessage() {
+		const message = this.#queue.shift();
+		if (!message) return;
+		message.element.classList.add("hidden");
+		await wait(200); // Transition length
+		message.element.remove();
+	}
+
+	async animateContainerUp(message: Message) {
+		const newMessageHeight =
+			MessageManager.MESSAGE_PADDING +
+			message.element.getBoundingClientRect().height;
+		this.#container.style.bottom = `-${newMessageHeight}px`;
+		// skip an event loop
+		await wait(0);
+
+		this.#container.style.transition = "0.2s";
+		this.#container.style.bottom = "0px";
+		await wait(200);
+		this.#container.style.transition = "0s";
+	}
 }

@@ -1,5 +1,5 @@
-import { JSONResource } from "./JSONResource.js";
-import { parseEndingData } from "./parse/parseEndingData.js";
+import { JSONResource } from "./index.js";
+import { parseEndingData } from "./parse/index.js";
 import { JSONEndingsData, VocabWord } from "./parse/types.js";
 import { StudierData } from "./types.js";
 

@@ -1,8 +1,8 @@
-import Message from "../components/Message.js";
+import { Message, MultitoggleManager } from "../components/index.js";
 import { StudierData } from "../dataHandlers/types.js";
 import { $, $$ } from "../utils.js";
-import { Formulator } from "./Formulator.js";
-import { QuizOptions } from "./types.js";
+import { Formulator } from "./index.js";
+import type { QuizOptions } from "./types.js";
 
 /**
  * Fetches data and gets the user's selected settings.
@@ -24,8 +24,6 @@ export class Initializer {
 			vocabNum: 0,
 			immediateGrade: true,
 		};
-
-		return this;
 	}
 	/**
 	 * It isn't necessary to pass the data straight through Initializer
@@ -43,12 +41,13 @@ export class Initializer {
 	 */
 	watchSettings() {
 		// Deal with selecting different declensions
-		for (const opt of this.optionElements.declensions) {
-			opt.addEventListener("click", () => {
-				opt.classList.toggle("selected");
-				this.options.declensions ^= 0b00001 << (+opt.dataset.value - 1);
-			});
-		}
+		MultitoggleManager.instance.subscribeToGroup("quiz-decl", (_, values) => {
+			this.options.declensions = values.reduce(
+				(acc, cur) => acc ^ (2 ** (+cur - 1)),
+				0b00000,
+			);
+			console.log(_, values);
+		});
 
 		$(".pane-trigger.quiz-begin").addEventListener(
 			"click",
@@ -66,7 +65,7 @@ export class Initializer {
 				"No declensions and/or vocabulary question number specified.",
 				2,
 				4000,
-			);
+			).show();
 			// a bit of a hacky way to override Switcher;
 			// since Switcher already switched BEFORE
 			// beginQuiz is called, we have to switch back.
