@@ -50,12 +50,10 @@ Example description:
 build: run script does not build anymore
 
 fs: move dataHandlers/index.ts to dataHandlers/DataHandler.ts
-—— this is because classes should not be in the index (except root)
+—— classes should not be in the index (except root)
 fs: Endings.ts -> EndingParser.ts (same with vocab)
 
 feat: begin MagicValue parser
 ```
 
-You don't actually need to follow this, it's just a guideline for consistency. :)
-
-**If your commit does not work,** like if you are working on a new feature, mark it as \[nonfunctional\]. Or just create another branch. I didn't think of that at the time I made some \[nonfunctional\] commits to main — a large open-source project would never have unfinished code in-use on the main branch!
+You don't actually need to follow this, it's just a guideline I follow for consistency. :)
