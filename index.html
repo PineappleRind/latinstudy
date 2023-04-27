@@ -20,12 +20,12 @@
       <p style="max-width:300px;">Study helper for vocabulary and declension endings</p>
       <br>
       <div class="flex">
-        <button class="btn pane-trigger" id="view-trigger" data-pane="view">Learn</button>
-        <button class="btn pane-trigger" data-pane="quiz-start">Quiz</button>
+        <button class="btn full-width pane-trigger" id="view-trigger" data-pane="view">Learn</button>
+        <button class="btn full-width pane-trigger" data-pane="quiz-start">Quiz</button>
       </div>
     </div>
     <div class="pane" style="height: 400px" id="view" resizeable>
-      <button class="back pane-trigger" data-pane=".">Back</button>
+      <button class="link back pane-trigger" data-pane="begin">Home</button>
       <h2>View</h2>
       <div class="flex">
         <select id="view-type">
@@ -135,8 +135,8 @@
       </div>
     </div>
     <div class="pane" id="quiz-start">
-      <button class="back pane-trigger" data-pane=".">Back</button>
-      <h2>Quiz</h2>
+      <button class="link back pane-trigger" data-pane="begin">Home</button>
+      <h2>Quiz Settings</h2>
       <h4>Quiz on declensions...</h4>
       <div class="quiz-option-select">
         <div class="multitoggle-option" data-multitoggle-group="quiz-decl" data-value="1">1st</div>
@@ -187,21 +187,22 @@
         <label for="quiz-immediate-grade">Grade each question after submit</label>
       </div>
       <br />
-      <button class="btn pane-trigger quiz-begin" data-pane="quiz">
+      <button class="btn full-width primary pane-trigger quiz-begin" data-pane="quiz">
         Begin
       </button>
     </div>
     <div class="pane" id="quiz">
+      <button class="link pane-trigger" id="end-quiz" data-pane=".">⊗ End quiz</button>
       <h2>Quiz <span style="font-size: 12px;opacity:0.6"><span id="count-current"></span>/<span
             id="count-total"></span></span></h2>
       <div class="quiz-content-outer"></div>
       <div class="flex">
-        <button disabled class="btn btn-gray quiz-prev">Previous</button>
-        <button disabled class="btn quiz-next">Next</button>
+        <button disabled class="btn quiz-prev">Previous</button>
+        <button disabled class="btn primary full-width quiz-next">Next</button>
       </div>
     </div>
     <div class="pane" id="quiz-results">
-      <button class="back pane-trigger" data-pane="begin">Home</button>
+      <button class="link back pane-trigger" data-pane="begin">Home</button>
       <div class="quiz-results-inner">
         <h2>Finish</h2>
         <h4>Your grade</h4>
@@ -215,15 +216,15 @@
       </div>
     </div>
     <div class="pane" id="404">
-      <button class="back pane-trigger" data-pane=".">Back</button>
+      <button class="link back pane-trigger" data-pane=".">Back</button>
       <h2>Error</h2>
       <p>Unknown pane</p>
     </div>
   </div>
   <!-- interested in the code? check out /build/ts/index.js OR the GitHub: -->
   <!-- https://github.com/pineapplerind/latinstudy -->
-  <script src="build/bundle.min.js"></script>
-  <!-- <script type="module" src="build/ts/index.js"></script> -->
+  <!-- <script src="build/bundle.min.js"></script> -->
+  <script type="module" src="build/ts/index.js"></script>
 </body>
 
 </html>

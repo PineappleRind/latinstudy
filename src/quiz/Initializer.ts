@@ -33,6 +33,8 @@ export class Initializer {
 	 */
 	async initialize(data) {
 		this.data = data;
+
+		// $("#end-quiz").onclick = this.events.quizEnd;
 		this.watchSettings();
 	}
 	/**
@@ -56,6 +58,7 @@ export class Initializer {
 
 		return this;
 	}
+
 	/**
 	 * Event handler for the .quiz-begin button. Sends options to Formulator.
 	 */
@@ -86,6 +89,21 @@ export class Initializer {
 		);
 	}
 
+	events = {
+		beginQuiz: this.beginQuiz,
+		// endQuiz: (e: MouseEvent) => {
+		// 	const btn = e.target as HTMLButtonElement;
+		// 	// say what you mean and mean what you say
+		// 	if (btn.dataset.confirming) actuallyEndQuiz();
+		// 	else {
+		// 		btn.dataset.confirming = "";
+		// 		let iAmSure = btn.querySelector("#quiz-end-confirm") as HTMLButtonElement;
+		// 		iAmSure.onclick = () => {
+
+		// 		}
+		// 	}
+		// }
+	}
 	/**
 	 * @returns true if declension selection is empty AND vocab is set to off
 	 * */

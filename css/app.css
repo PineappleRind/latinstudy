@@ -39,9 +39,9 @@ body {
 
   --light-border: rgba(0, 0, 0, 0.2);
   --shadow-s: 0 3px 4px rgba(0, 0, 0, 0.1);
-  --shadow-m: 0 5px 10px rgba(0, 0, 0, 0.2);
-  --shadow-l: 0 40px 70px rgba(0, 0, 0, 0.2);
-  --tr: 0.2s;
+  --shadow-m: 0 5px 10px rgba(0, 0, 0, 0.1);
+  --shadow-l: 0 40px 70px rgba(0, 0, 0, 0.1);
+  --tr: 0.15s;
   --tr-l: 0.4s;
 
   --wrong-bg: rgba(255, 0, 0, 0.2);
@@ -152,62 +152,73 @@ button {
 }
 
 .btn {
-  background: var(--btn-bg);
+  background: var(--bg-l2);
+  color: var(--txt-c1);
   border-radius: var(--rad-m);
+  border: 1px solid var(--light-border);
   padding: 8px 15px;
   font-weight: 700;
   font-size: var(--txt-m);
   cursor: pointer;
-  color: var(--txt-inv-c0);
   transition: var(--tr);
+  backface-visibility: hidden;
   margin: 5px;
 }
 
 .btn:not([disabled]):hover {
   box-shadow: var(--shadow-m);
   background: var(--btn-bgh);
-  scale: 1.01;
+  transform: scale(1.005);
 }
 
 .btn[disabled] {
   opacity: 0.7;
-  color: var(--txt-inv-c1);
+  color: var(--txt-c2);
   cursor: not-allowed;
 }
 
-.btn-gray {
-  background: var(--bg-l2);
-  color: var(--txt-c1);
-}
-
-.btn-gray:not([disabled]):hover {
+.btn:not([disabled]):hover {
   background: var(--bg-l3);
 }
 
 .btn:not([disabled]):active {
-  scale: 0.99;
+  transform: scale(0.995);
   opacity: 0.9;
 }
 
-.back {
+.btn.primary {
+  background: var(--btn-bg);
+  color: var(--txt-inv-c0);
+}
+
+.btn:not([disabled]).primary:hover {
+  background: var(--btn-bgh);
+  color: var(--txt-inv-c1);
+}
+
+.btn.full-width {
+  width: 100%;
+}
+
+.link {
   font-size: var(--txt-s);
   color: var(--txt-c2);
   cursor: pointer;
   transition: var(--tr);
 }
 
-.back:hover {
+.link:hover {
   color: var(--txt-c0);
 }
 
-.back::before {
+.link.back::before {
   content: "← ";
   transition: var(--tr);
   display: inline-block;
   translate: -2px 0;
 }
 
-.back:hover::before {
+.link.back:hover::before {
   translate: -4px 0;
 }
 
