@@ -164,12 +164,18 @@
 {"word": "servō",   "type": "verb", "conjugation": "1", "units": "3-4", "dictionary": "1, tr.", "translation": ["guard", "keep"]},
 {"word": "superō",  "type": "verb", "conjugation": "1", "units": "3-4", "dictionary": "1, tr.", "translation": ["overcome", "conquer", "surpass"]},
 {"word": "vocō",    "type": "verb", "conjugation": "1", "units": "3-4", "dictionary": "1, tr.", "translation": "call"},
+{"word": "administrō","type": "verb", "conjugation": "1", "units": "3-4", "dictionary": "1, tr.", "translation": ["manage", "attend to"]},
+{"word": "appellō","type": "verb", "conjugation": "1", "units": "3-4", "dictionary": "1, tr.", "translation": ["address", "call upon"]},
+{"word": "cōnfirmō","type": "verb", "conjugation": "1", "units": "3-4", "dictionary": "1, tr.", "translation": ["encourage", "strengthen"]},
+{"word": "cōnservō","type": "verb", "conjugation": "1", "units": "3-4", "dictionary": "1, tr.", "translation": ["preserve", "spare"]},
 
 {"word": "compleō", "type": "verb", "conjugation": "2", "units": "3-4", "dictionary": "complēre, complēvī, complērus, 2, tr.; w. abl.", "translation": "fill|with"},
+{"word": "contineō","type": "verb", "conjugation": "2", "units": "3-4", "dictionary": "continēre, continuī, contentus, 2, tr.", "translation": ["restrain", "hold"]},
 {"word": "habeō",   "type": "verb", "conjugation": "2", "units": "3-4", "dictionary": "2, tr.", "translation": "have"},
 {"word": "maneō",   "type": "verb", "conjugation": "2", "units": "3-4", "dictionary": "manēre, mānsī, mānsūrus, 2, intr.", "translation": "remain"},
 {"word": "moneō",   "type": "verb", "conjugation": "2", "units": "3-4", "dictionary": "2, tr.", "translation": ["warn", "advise"]},
 {"word": "moveō",   "type": "verb", "conjugation": "2", "units": "3-4", "dictionary": "movēre, mōvī, mōtus, 2, tr.", "translation": "move"},
+{"word": "obtineō", "type": "verb", "conjugation": "2", "units": "3-4", "dictionary": "obtinēre, obtinuī, obtentus, 2, tr.", "translation": ["hold", "occupy"]},
 {"word": "sustineō","type": "verb", "conjugation": "2", "units": "3-4", "dictionary": "sustinēre, sustinuī, sustentus, 2, tr.", "translation": ["sustain", "withstand"]},
 {"word": "teneō",   "type": "verb", "conjugation": "2", "units": "3-4", "dictionary": "tenēre, tenuī, tentus, 2, tr.", "translation": "hold"},
 {"word": "terreō",  "type": "verb", "conjugation": "2", "units": "3-4", "dictionary": "2, tr.", "translation": "terrify"},
@@ -178,14 +184,17 @@
 
 {"word": "agō",     "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "agere, ēgi, āctus, 3, tr.", "translation": ["drive", "do", "act", "treat"]},
 {"word": "defendō", "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "dēfendere, dēfendī, dēfēnsus, 3, tr.", "translation": "defend"},
+{"word": "dīmittō", "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "dīmittere, dīmīsī, dīmissus, 3, tr.", "translation": ["send away", "dismiss"]},
 {"word": "dūcō",    "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "dūcere, dūxī, ductus, 3, tr.", "translation": ["lead", "guide"]},
 {"word": "gerō",    "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "gerere, gessī, gestus, 3, tr.", "translation": ["carry", "carry on", "wage|w. bellum"]},
 {"word": "īncendō", "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "incendere, incendī, incensus, 3, tr.", "translation": ["set fire to", "burn"]},
 {"word": "īnstruō", "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "īnstruere, īnstrūxī, instrūctus, 3, tr.", "translation": ["draw up", "equip"]},
 {"word": "mittō",   "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "mittere, mīsī, missus, 3, tr.", "translation": "send"},
+{"word": "occido",  "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "occīdere, occīdī, occīsus, 3, tr.", "translation": "kill"},
 {"word": "pellō",   "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "pellere, pepulī, pulsus, 3, tr.", "translation": ["drive", "repulse", "rout"]},
 {"word": "petō",    "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "petere, petīvī, 3, tr.", "translation": ["seek", "beg", "request"]},
 {"word": "pōnō",    "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "pōnere, posuī, positus, 3, tr.", "translation": ["put", "place", "set", "pitch|w. castra"]},
+{"word": "trādō",   "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "trādere, trādidī, trāditus, 3, tr.", "translation": "hand over"},
 {"word": "vincō",   "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "vincere, vicī, victus, 3, tr.", "translation": "conquer"},
 {"word": "cēdō",    "type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "cedere, cessī, cessūrus, 3, intr.", "translation": ["give away", "yield"]},
 {"word": "contendō","type": "verb", "conjugation": "3", "units": "3-4", "dictionary": "contendere, contendī, 3, intr.", "translation": ["strive", "contend", "hasten"]},
@@ -208,7 +217,9 @@
 {"word": "per",  "type": "preposition", "units": "3-4", "dictionary": "prep. w. acc",  "translation": "through"},
 {"word": "trāns","type": "preposition", "units": "3-4", "dictionary": "prep. w. acc",  "translation": "across"},
 
-{"word": "dē","type": "preposition", "units": "3-4", "dictionary": "prep. w. abl", "translation": ["concering", "about"]},
+{"word": "dē",    "type": "preposition", "units": "3-4", "dictionary": "prep. w. abl", "translation": ["concering", "about"]},
+{"word": "āb (ā)","type": "preposition", "units": "3-4", "dictionary": "prep. w. abl", "translation": ["by|expressing agency", "from|w. absum"]},
+{"word": "sine",  "type": "preposition", "units": "3-4", "dictionary": "prep. w. abl", "translation": "without"},
 
 "———————————————————————————————————————————————————————————————————————— CONJUNCTIONS ————————————————————————————————————————————————————————————————————————",
 
@@ -222,7 +233,11 @@
 {"word": "sicut","type": "conjunction", "units": "3-4", "dictionary": "conj.",  "translation": "as"},
 {"word": "neque","type": "conjunction", "units": "3-4", "dictionary": "conj.",  "translation": ["nor", "and...not"]},
 {"word": "atque","type": "conjunction", "units": "3-4", "dictionary": "(ac), conj.",  "translation": "and"},
-{"word": "enim","type": "conjunction", "units": "3-4", "dictionary": "conj., postp.",  "translation": "for"},
+{"word": "enim", "type": "conjunction", "units": "3-4", "dictionary": "conj., postp.",  "translation": "for"},
+{"word": "nam",  "type": "conjunction", "units": "3-4", "dictionary": "conj.",  "translation": "for"},
+{"word": "aut",  "type": "conjunction", "units": "3-4", "dictionary": "conj.",  "translation": "or"},
+{"word": "aut ... aut",    "type": "conjunction", "units": "3-4", "dictionary": "conjs.",  "translation": "either ... or"},
+{"word": "neque ... neque","type": "conjunction", "units": "3-4", "dictionary": "conjs.",  "translation": "neither ... nor"},
 
 "———————————————————————————————————————————————————————————————————————— ADVERBS ————————————————————————————————————————————————————————————————————————",
 
@@ -242,6 +257,8 @@
 {"word": "undique", "type": "adverb", "units": "3-4", "dictionary": "adv.", "translation": ["from all sides", "on all sides"]},
 {"word": "ubi",     "type": "adverb", "units": "3-4", "dictionary": "adv.", "translation": "where"},
 {"word": "ita",     "type": "adverb", "units": "3-4", "dictionary": "adv.", "translation": ["so", "thus"]},
+{"word": "posteā",  "type": "adverb", "units": "3-4", "dictionary": "adv.", "translation": "afterwards"},
+{"word": "ferē",    "type": "adverb", "units": "3-4", "dictionary": "adv.", "translation": "almost"},
 
 "———————————————————————————————————————————————————————————————————————— PRONOUNS ————————————————————————————————————————————————————————————————————————",
 
@@ -260,5 +277,7 @@
 {"word": "prīma lūce", "type": "other",   "units": "1-2", "translation": "at dawn"},
 
 {"word": "in prīncipiō",        "type": "other", "units": "3-4", "translation": ["world without end", "forever"]},
-{"word": "in sæcula sæculōrum", "type": "other", "units": "3-4", "translation": "at dawn"}
+{"word": "in sæcula sæculōrum", "type": "other", "units": "3-4", "translation": "at dawn"},
+{"word": "grātiās agere",       "type": "other", "units": "3-4", "dictionary": "tr.", "translation": "to give thanks"}
+
 ]

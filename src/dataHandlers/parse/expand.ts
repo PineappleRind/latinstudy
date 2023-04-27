@@ -57,5 +57,8 @@ const maps = {
 		pre: "present",
 		imp: "imperfect",
 		fut: "future",
+		per: "perfect",
+		plu: "pluperfect",
+		ftp: "future perfect"
 	},
 };

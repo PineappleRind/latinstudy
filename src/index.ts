@@ -25,10 +25,11 @@ export class Studier {
 		this.initialize();
 	}
 	async initialize() {
-		this.data = (await new DataHandler().initialize()).data;
-
 		this.multitoggleManager.initialize();
 		this.switcher.listen().showPane("begin");
+		
+		this.data = (await new DataHandler().initialize()).data;
+
 		this.viewLoader.initialize(this.data);
 		this.quizInitializer.initialize(this.data);
 	}
