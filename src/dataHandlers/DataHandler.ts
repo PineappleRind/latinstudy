@@ -1,5 +1,5 @@
 import { JSONResource } from "./index.js";
-import { parseEndingData } from "./parse/index.js";
+import { parseEndingData, parseVocabData } from "./parse/index.js";
 import { JSONEndingsData, VocabWord } from "./parse/types.js";
 import { StudierData } from "./types.js";
 
@@ -14,10 +14,10 @@ export class DataHandler {
 		]);
 
 		const parsedEndings = parseEndingData(this.resources[0].json);
-
+		const parsedVocab = parseVocabData(this.resources[1].json);
 		this.data = {
 			...parsedEndings,
-			vocab: this.resources[1].json.filter((w: VocabWord) => w.word && true),
+			vocab: parsedVocab
 		};
 
 		return this;

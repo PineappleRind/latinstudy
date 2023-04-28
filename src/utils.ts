@@ -53,7 +53,7 @@ export function shuffleArray(array: any[]) {
 }
 
 export function renderAnswer(str: string | string[]) {
-	const res = createElement("span", "class:rendered-answer");
+	const res = createElement("span", "class:rendered-answer text-subtle");
 
 	str = str as string[];
 	if (!(str instanceof Array)) str = Array(1).fill(str);
@@ -63,7 +63,7 @@ export function renderAnswer(str: string | string[]) {
 
 		res.append(word);
 		if (note)
-			res.append(createElement("span", "class:answer-note", ` (${note})`));
+			res.append(createElement("span", "class:answer-note text-subtler", ` (${note})`));
 
 		if (i !== (str ?? answer).length - 1) res.append(", ");
 	});

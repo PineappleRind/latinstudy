@@ -43,9 +43,10 @@ export interface Declensions {
 export interface VocabWord {
 	word: string;
 	type: wordType;
+	full: string;
+	dictionary: string;
 	declension: string;
 	units: string;
-	dictionary: string;
 	translation: string;
 	gender: genderType;
 }

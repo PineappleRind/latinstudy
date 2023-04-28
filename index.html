@@ -24,22 +24,25 @@
         <button class="btn full-width pane-trigger" data-pane="quiz-start">Quiz</button>
       </div>
     </div>
-    <div class="pane" style="height: 400px" id="view" resizeable>
+    <div class="pane" style="height: 400px; width: 800px;" id="view" resizeable>
       <button class="link back pane-trigger" data-pane="begin">Home</button>
-      <h2>View</h2>
       <div class="flex">
+        <h2>View</h2>
         <select id="view-type">
           <option value="declensions" selected>Declension Endings</option>
           <option value="vocab">Vocabulary</option>
         </select>
-        <select id="view-declension-type" data-view-association="declensions">
+      </div>
+      <div class="flex">
+        <input id="view-vocab-search" type="text" class="hidden full-width" placeholder="Search..." data-view-association="vocab">
+        <select id="view-declension-type" style="max-width: 30%;" data-view-association="declensions">
           <option value="1" selected>1st</option>
           <option value="2">2nd</option>
           <option value="3">3rd</option>
           <option value="4">4th</option>
           <option value="5">5th</option>
         </select>
-        <select id="view-vocab-type" class="hidden" data-view-association="vocab">
+        <select id="view-vocab-type" style="max-width: 30%;" class="hidden" data-view-association="vocab">
           <option selected value="*">All</option>
           <option value="noun">Nouns</option>
           <option value="verb">Verbs</option>
@@ -167,11 +170,14 @@
           <p>Include tenses...</p>
           <div class="quiz-option-select">
             <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="present">Present</div>
-            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="imperfect">Imperfect</div>
+            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="imperfect">Imperfect
+            </div>
             <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="future">Future</div>
             <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="perfect">Perfect</div>
-            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="pluperfect">Pluperfect</div>
-            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="future perfect">Future Perfect</div>
+            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="pluperfect">Pluperfect
+            </div>
+            <div class="multitoggle-option" data-multitoggle-group="quiz-conj-tense" data-value="future perfect">Future
+              Perfect</div>
           </div>
         </fieldset>
       </div>

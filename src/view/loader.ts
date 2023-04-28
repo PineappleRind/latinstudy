@@ -3,7 +3,7 @@ import { $, $$, createElement, renderAnswer, purify } from "../utils.js";
 
 export class Loader {
 	pane: Element;
-	options: { [x: string]: HTMLSelectElement };
+	options: { [x: string]: HTMLSelectElement | HTMLInputElement };
 	note: Element;
 	vocabLoaded: boolean;
 	trigger: Element;
@@ -15,6 +15,7 @@ export class Loader {
 			type: $("#view-type") as HTMLSelectElement,
 			declType: $("#view-declension-type") as HTMLSelectElement,
 			vocabType: $("#view-vocab-type") as HTMLSelectElement,
+			vocabSearch: $("#view-vocab-search") as HTMLInputElement
 		};
 		// this.note = $(".view-note");
 		this.trigger = $("#view-trigger");
@@ -75,14 +76,17 @@ export class Loader {
 				)}), .view-table-field:not(.${genderArray.join("):not(.")})`,
 			).forEach((e) => ((e as HTMLTableElement).style.display = "none"));
 		},
-		vocab: ({ vocab }) => {
+		vocab: ({ vocab }: StudierData) => {
 			$(".view-vocab").innerHTML = "";
+
 			vocab = vocab.sort((a, b) => (purify(a.word) > purify(b.word) ? 1 : -1));
 			for (const word of vocab) {
 				// Exclude words that are filtered out
+				// or don't match the search input
 				if (
-					this.options.vocabType.value !== "*" &&
-					word.type !== this.options.vocabType.value
+					(this.options.vocabType.value !== "*" &&
+					word.type !== this.options.vocabType.value) 
+					|| !word.full.includes(this.options.vocabSearch.value)
 				)
 					continue;
 				const listItem = createElement(
