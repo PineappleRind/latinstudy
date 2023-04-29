@@ -1,5 +1,5 @@
-import { QuizQuestion, QuizQuestionScore } from "./types.js";
 import { $, createElement, purify, renderAnswer } from "../utils.js";
+import type { QuizQuestion, QuizQuestionScore } from "@/types/quiz";
 
 /** If the user makes more than ALLOWED_TYPOS, the question is marked wrong. */
 export const ALLOWED_TYPOS = 1;
@@ -63,11 +63,10 @@ export class Grader {
 			$("#quiz-results-questions-inner").append(qSum);
 		}
 
-		// we know question.grade exists because
-		// generateQuestionResult would have thrown an error
+		// we know question.grade.score exists because generateQuestionResult would have thrown an error
 		const numCorrect = questions
-			.map((q) => q.grade!.score)
-			.reduce((acc, cur) => {
+			.map((q) => q.grade?.score || 0)
+			.reduce((acc: number, cur) => {
 				return acc + (cur > 0 ? 1 : 0);
 			}, 0);
 
@@ -78,17 +77,14 @@ export class Grader {
 		$("#quiz-results-total").textContent = questions.length.toString();
 	}
 
-	generateQuestionResult(
-		i: number,
-		question: QuizQuestion,
-	): void | HTMLDivElement {
+	generateQuestionResult(i: number, question: QuizQuestion): HTMLDivElement {
 		if (!question.grade)
 			throw new Error(`Quiz question "${question.question}" is ungraded!`);
 		const qSum = createElement(
 			"div",
 			"class:quiz-results-q",
 			`${i + 1}. ${question.question}: `,
-		);
+		) as HTMLDivElement;
 		const correctAnswer = createElement("span", "class:quiz-results-q-correct");
 		correctAnswer.append(renderAnswer(question.answer));
 
@@ -102,5 +98,7 @@ export class Grader {
 			);
 
 		qSum.append(correctAnswer);
+
+		return qSum;
 	}
 }

@@ -26,8 +26,7 @@ export class Animator {
 		this.inner = createElement("div", "class:animator-inner");
 		this.outer.replaceChildren(this.inner);
 
-		this.observer = new MutationObserver((mutationList) => {
-			console.log(mutationList);
+		this.observer = new MutationObserver(() => {
 			this.animateTo(this.inner);
 		});
 		this.observerConfig = { childList: true, subtree: true };

@@ -1,7 +1,7 @@
 import { createElement } from "../../utils.js";
-import { QuizQuestionHTMLOptions } from "../types.js";
+import { QuizQuestionHTMLOptions } from "@/types/quiz";
 
-/** Creates a quiz question.
+/** Creates the HTML for a quiz question.
  * @param options parameters used for customizing certain titles.
  * @returns a quiz question wrapped in a div (.animator-inner).
  */

@@ -1,2 +1,2 @@
-export { formulateDeclensionQuestion } from "./declensions.js";
+export { formulateQuestionFromEndingGroup } from "./endings.js";
 export { formulateVocabQuestion } from "./vocab.js";

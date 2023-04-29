@@ -3,7 +3,7 @@ import type {
 	gender as genderType,
 	grammaticalNumber,
 	wordType,
-} from "../../types";
+} from "@/types/studier";
 
 export interface CaseEnding {
 	gender: genderType;
@@ -30,15 +30,9 @@ export interface Pronoun {
 	gender?: genderType;
 }
 
-export interface Pronouns {
-	[x: string]: Pronoun[];
-}
-export interface Conjugations {
-	[x: string]: ConjugationEnding[];
-}
-export interface Declensions {
-	[x: string]: CaseEnding[];
-}
+export type Pronouns = Record<string, Pronoun[]>;
+export type Conjugations = Record<string, ConjugationEnding[]>;
+export type Declensions = Record<string, CaseEnding[]>;
 
 export interface VocabWord {
 	word: string;

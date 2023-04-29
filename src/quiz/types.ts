@@ -1,6 +1,16 @@
+/** Only contain endings with these characteristics. */
+export interface ConjugationSettings {
+	voices: string[];
+	moods: string[];
+	tenses: string[];
+	persons: string[];
+}
+
 /** The user's specified options from the quiz-begin pane. */
 export interface QuizOptions {
 	declensions: number;
+	conjugations: number;
+	conjugationSettings?: ConjugationSettings;
 	vocabNum: number;
 	immediateGrade: boolean;
 }
@@ -28,15 +38,5 @@ export type QuizQuestionScore = 2 | 1 | 0;
 
 export type QuizAnswer = {
 	response: string;
-	grade: QuizQuestionScore | null;
+	score: QuizQuestionScore | null;
 };
-
-// for later
-type wordType =
-	| "noun"
-	| "verb"
-	| "adjective"
-	| "preposition"
-	| "conjunction"
-	| "adverb"
-	| "other";

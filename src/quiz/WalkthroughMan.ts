@@ -1,7 +1,7 @@
 import { Grader } from "./index.js";
 import { $, createElement, shuffleArray, renderAnswer } from "../utils.js";
 import { Animator } from "./helpers/index.js";
-import { QuizAnswer, QuizOptions, QuizQuestion } from "./types.js";
+import type { QuizAnswer, QuizOptions, QuizQuestion } from "@/types/quiz";
 
 /**
  * Handles the showing of the questions to the user, records the user's response, and sends them to Grader.
@@ -159,7 +159,7 @@ export class WalkthroughMan {
 				this.updateDisable();
 				this.userAnswers[this.currentIndex] = {
 					response: this.curInput.value,
-					grade: null,
+					score: null,
 				};
 			};
 		},
@@ -167,10 +167,10 @@ export class WalkthroughMan {
 
 	updateGrade(score: number, answer: string | string[]) {
 		// get the result
-		const typeofAnswer = ["wrong", "partial-correct", "correct"][score];
+		const typeOfAnswer = ["wrong", "partial-correct", "correct"][score];
 
 		this.curInput.disabled = true;
-		this.curInput.classList.add(typeofAnswer);
+		this.curInput.classList.add(typeOfAnswer);
 		// add correct answer
 		const correct = createElement("div", "class:quiz-correct-answer");
 		correct.append(renderAnswer(answer));
@@ -188,15 +188,14 @@ export class WalkthroughMan {
 		const userAnswer = this.userAnswers.map((m) => m.response)[
 			this.currentIndex
 		];
-		const score = this.grader.gradeQuestion(
-			cur,
-			this.userAnswers.map((m) => m.response)[this.currentIndex],
-		);
+
+		const score = this.grader.gradeQuestion(cur, userAnswer);
 
 		// only update visually if immediate grading was specified
 		if (this.options.immediateGrade) this.updateGrade(score, cur.answer);
 
 		// Finally set the current question to graded
+		this.userAnswers[this.currentIndex].score = score;
 		this.questions[this.currentIndex].grade = {
 			score,
 			answer: cur.answer,

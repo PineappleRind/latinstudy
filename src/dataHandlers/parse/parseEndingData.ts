@@ -4,10 +4,10 @@ import type {
 	endingType,
 	JSONEndingsData,
 	ParsedEndingsData,
-} from "./types";
+} from "@/types/parsedData";
 
 export function parseEndingData(data: JSONEndingsData): ParsedEndingsData {
-	const expanded: ParsedEndingsData = <any>{};
+	const expanded: ParsedEndingsData = <ParsedEndingsData>{};
 	for (const type in data) {
 		expanded[type] = expandEndingData(data[type], type as endingType);
 	}

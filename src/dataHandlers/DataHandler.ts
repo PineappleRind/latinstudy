@@ -1,7 +1,7 @@
 import { JSONResource } from "./index.js";
 import { parseEndingData, parseVocabData } from "./parse/index.js";
-import { JSONEndingsData, VocabWord } from "./parse/types.js";
-import { StudierData } from "./types.js";
+import type { JSONEndingsData, VocabWord } from "@/types/parsedData";
+import type { StudierData } from "@/types/data";
 
 export class DataHandler {
 	resources: [JSONResource<JSONEndingsData>, JSONResource<VocabWord[]>];
@@ -17,7 +17,7 @@ export class DataHandler {
 		const parsedVocab = parseVocabData(this.resources[1].json);
 		this.data = {
 			...parsedEndings,
-			vocab: parsedVocab
+			vocab: parsedVocab,
 		};
 
 		return this;

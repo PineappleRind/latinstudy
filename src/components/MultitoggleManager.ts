@@ -26,7 +26,6 @@ export class MultitoggleManager {
 			this.groups[group].elements.push(button);
 			button.dataset.multitoggleGroup = undefined;
 		}
-		console.log(this.groups);
 
 		MultitoggleManager.instance = this;
 	}
@@ -59,11 +58,13 @@ export class MultitoggleManager {
 			this.groups[groupID].selected.push(buttonValue);
 		} else {
 			button.classList.remove("selected");
+
 			this.groups[groupID].selected = selected.filter((b) => b !== buttonValue);
 		}
 
 		for (const { group: callbackGroup, callback } of this.subscriptions) {
-			if (callbackGroup === groupID) callback(groupID, selected);
+			if (callbackGroup === groupID)
+				callback(groupID, this.groups[groupID].selected);
 		}
 	}
 }

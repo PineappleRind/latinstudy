@@ -1,13 +1,24 @@
 {
-    "compileOnSave": true,
-    "compilerOptions": {
-        "module": "ES2022",
-        "lib": ["dom", "es2021"],
-        "target": "es2021",
-        "outDir": "build/ts/",
-        "moduleResolution": "node",
-        "skipLibCheck": true,
-        "esModuleInterop": true,
-        "strictNullChecks": true
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "ES2022",
+    "lib": ["dom", "es2021"],
+    "target": "es2021",
+    "outDir": "build/ts/",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+
+    "baseUrl": "./src/",
+    "paths": {
+      "@/types/studier": ["types.ts"],
+      "@/types/quiz": ["quiz/types.ts"],
+      "@/types/view": ["view/types.ts"],
+      "@/types/data": ["dataHandlers/types.ts"],
+      "@/types/parsedData": ["dataHandlers/parse/types.ts"]
     }
+  }
 }

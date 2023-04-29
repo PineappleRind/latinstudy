@@ -1,7 +1,9 @@
-import type { endingType } from "./types";
+import type { endingType } from "@/types/parsedData";
 
 export function expandKey(data: string[], type: endingType) {
-	const output: Record<keyof typeof maps, string> = <any>{};
+	const output: Record<keyof typeof maps, string> = <
+		Record<keyof typeof maps, string>
+	>{};
 	for (const [i, contraction] of data.entries()) {
 		const mapCategory = types[type][i];
 		if (contraction === "-" || !maps[mapCategory]) {
@@ -59,6 +61,6 @@ const maps = {
 		fut: "future",
 		per: "perfect",
 		plu: "pluperfect",
-		ftp: "future perfect"
+		ftp: "future perfect",
 	},
 };

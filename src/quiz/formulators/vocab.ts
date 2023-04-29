@@ -1,7 +1,7 @@
 import { shuffleArray } from "../../utils.js";
 import { createQuizQuestion } from "../components/index.js";
-import type { VocabWord } from "../../dataHandlers/parse/types.js";
-import type { QuizQuestion as Formulation } from "../types.js";
+import type { VocabWord } from "@/types/parsedData";
+import type { QuizQuestion as Formulation } from "@/types/quiz";
 
 /**
  * Generates a list of questions to quiz the user on vocabulary.
@@ -22,7 +22,7 @@ export function formulateVocabQuestion(vocab: VocabWord[], amount: number) {
 			question: randomWord.word,
 			answer: randomWord.translation,
 			html: createQuizQuestion({
-				title: randomWord.dictionary,
+				title: randomWord.full,
 				super: `translate the ${randomWord.type}`,
 			}),
 		});

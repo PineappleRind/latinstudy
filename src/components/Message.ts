@@ -8,6 +8,7 @@ export class Message {
 	element: HTMLElement;
 	duration: number;
 	id: string;
+	Manager: MessageManager = MessageManager.instance;
 
 	constructor(content: string, type: number, duration: number, title?: string) {
 		// Create a message
@@ -28,19 +29,26 @@ export class Message {
 	async show() {
 		if (Date.now() - lastShown < 200) return; // no spam thanks
 		lastShown = Date.now();
-		await MessageManager.instance.showMessage(this);
+		await this.Manager.showMessage(this);
 		return this;
 	}
 }
 
+/**
+ * Manages the message queue, and removes the oldest messages if the total message count overflows MAX_QUEUE_LENGTH.
+ *
+ * We don't export this as it's managed directly by {@link Message}.
+ */
 class MessageManager {
+	/** Where messages will appear */
 	#container: HTMLDivElement;
 	#queue: Message[] = [];
-
+	/** We don't want more than one MessageManager active at once */
 	public static instance: MessageManager = new MessageManager();
 	static readonly MAX_QUEUE_LENGTH = 5;
 	static readonly MESSAGE_PADDING = 4;
 
+	/** Create a message container, hopefully only once */
 	private constructor() {
 		const container: HTMLDivElement = createElement(
 			"div",
@@ -68,6 +76,7 @@ class MessageManager {
 		message.element.remove();
 	}
 
+	/** Animate all messages up when a message appears to make the UI smoother and less confusing */
 	async animateContainerUp(message: Message) {
 		const newMessageHeight =
 			MessageManager.MESSAGE_PADDING +

@@ -1,26 +1,27 @@
 import { Message, MultitoggleManager } from "../components/index.js";
-import { StudierData } from "../dataHandlers/types.js";
 import { $, $$ } from "../utils.js";
 import { Formulator } from "./index.js";
-import type { QuizOptions } from "./types.js";
+
+import type { StudierData } from "@/types/data";
+import type { QuizOptions } from "@/types/quiz";
 
 /**
  * Fetches data and gets the user's selected settings.
  * @category Quiz
  */
 export class Initializer {
-	optionElements: { [key: string]: any };
+	optionElements: Record<string, HTMLInputElement>;
 	options: QuizOptions;
 	data: StudierData;
 
 	constructor() {
 		this.optionElements = {
-			declensions: $$(".quiz-declension-option"),
-			vocabNum: $(".quiz-vocab-count"),
-			immediateGrade: $("#quiz-immediate-grade"),
+			vocabNum: $(".quiz-vocab-count") as HTMLInputElement,
+			immediateGrade: $("#quiz-immediate-grade") as HTMLInputElement,
 		};
 		this.options = {
 			declensions: 0b00000,
+			conjugations: 0b0000,
 			vocabNum: 0,
 			immediateGrade: true,
 		};
@@ -48,7 +49,12 @@ export class Initializer {
 				(acc, cur) => acc ^ (2 ** (+cur - 1)),
 				0b00000,
 			);
-			console.log(_, values);
+		});
+		MultitoggleManager.instance.subscribeToGroup("quiz-conj", (_, values) => {
+			this.options.conjugations = values.reduce(
+				(acc, cur) => acc ^ (2 ** (+cur - 1)),
+				0b00000,
+			);
 		});
 
 		$(".pane-trigger.quiz-begin").addEventListener(
@@ -65,7 +71,7 @@ export class Initializer {
 	beginQuiz() {
 		if (this.quizIsEmpty()) {
 			new Message(
-				"No declensions and/or vocabulary question number specified.",
+				"No declensions, conjugations, or vocabulary question number selected.",
 				2,
 				4000,
 			).show();
@@ -77,7 +83,7 @@ export class Initializer {
 		}
 		// get settings
 		this.options.immediateGrade = this.optionElements.immediateGrade.checked;
-		this.options.vocabNum = this.optionElements.vocabNum.value;
+		this.options.vocabNum = parseInt(this.optionElements.vocabNum.value);
 
 		new Formulator(this.options).initialize(
 			{
@@ -103,10 +109,12 @@ export class Initializer {
 		// 		}
 		// 	}
 		// }
-	}
+	};
 	/**
 	 * @returns true if declension selection is empty AND vocab is set to off
 	 * */
 	quizIsEmpty = (): boolean =>
-		!this.options.declensions && !this.optionElements.vocabNum.value;
+		!this.options.declensions &&
+		!this.options.conjugations &&
+		!this.optionElements.vocabNum.value;
 }

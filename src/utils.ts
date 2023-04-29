@@ -42,6 +42,7 @@ export const purify = (str: string) =>
 		.toLowerCase();
 
 //https://stackoverflow.com/a/12646864
+// rome-ignore lint/suspicious/noExplicitAny: it really doesn't matter what type is inside the array
 export function shuffleArray(array: any[]) {
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
@@ -63,7 +64,9 @@ export function renderAnswer(str: string | string[]) {
 
 		res.append(word);
 		if (note)
-			res.append(createElement("span", "class:answer-note text-subtler", ` (${note})`));
+			res.append(
+				createElement("span", "class:answer-note text-subtler", ` (${note})`),
+			);
 
 		if (i !== (str ?? answer).length - 1) res.append(", ");
 	});

@@ -2,7 +2,7 @@ import { Switcher, MultitoggleManager } from "./components/index.js";
 import { Initializer } from "./quiz/index.js";
 import { Loader } from "./view/index.js";
 import { DataHandler } from "./dataHandlers/index.js";
-import { StudierData } from "./dataHandlers/types.js";
+import type { StudierData } from "@/types/data";
 
 /**
  * Base Studier class.
@@ -13,7 +13,7 @@ export class Studier {
 	switcher: Switcher;
 	quizInitializer: Initializer;
 	viewLoader: Loader;
-	data: StudierData; // have type for this later
+	data: StudierData;
 
 	constructor() {
 		this.multitoggleManager = new MultitoggleManager();
@@ -27,7 +27,7 @@ export class Studier {
 	async initialize() {
 		this.multitoggleManager.initialize();
 		this.switcher.listen().showPane("begin");
-		
+
 		this.data = (await new DataHandler().initialize()).data;
 
 		this.viewLoader.initialize(this.data);

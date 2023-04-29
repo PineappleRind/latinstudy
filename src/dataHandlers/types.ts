@@ -1,4 +1,9 @@
-import { Conjugations, Declensions, Pronouns, VocabWord } from "./parse/types";
+import type {
+	Conjugations,
+	Declensions,
+	Pronouns,
+	VocabWord,
+} from "@/types/parsedData";
 
 export type StudierData = {
 	conjugations: Conjugations;

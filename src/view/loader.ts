@@ -1,9 +1,9 @@
-import { StudierData } from "../dataHandlers/types.js";
 import { $, $$, createElement, renderAnswer, purify } from "../utils.js";
+import type { StudierData } from "@/types/data";
 
 export class Loader {
 	pane: Element;
-	options: { [x: string]: HTMLSelectElement | HTMLInputElement };
+	options: Record<string, HTMLSelectElement | HTMLInputElement>;
 	note: Element;
 	vocabLoaded: boolean;
 	trigger: Element;
@@ -15,7 +15,7 @@ export class Loader {
 			type: $("#view-type") as HTMLSelectElement,
 			declType: $("#view-declension-type") as HTMLSelectElement,
 			vocabType: $("#view-vocab-type") as HTMLSelectElement,
-			vocabSearch: $("#view-vocab-search") as HTMLInputElement
+			vocabSearch: $("#view-vocab-search") as HTMLInputElement,
 		};
 		// this.note = $(".view-note");
 		this.trigger = $("#view-trigger");
@@ -29,6 +29,7 @@ export class Loader {
 		);
 
 		this.options.type.addEventListener("input", this.events.selectedType);
+		// refresh the data when any oprion changes
 		Object.entries(this.options).forEach(([_, el]) => {
 			el.addEventListener("input", () =>
 				this.load[this.options.type.value](data),
@@ -37,9 +38,8 @@ export class Loader {
 	}
 
 	events = {
-		selectedType(e: InputEvent) {
+		selectedType(e: Event) {
 			const selectedType = (e.target as HTMLInputElement).value;
-			// this.note.innerHTML = "";
 			// Hide and show elements according to which
 			// e.target.value they're associated with
 			Array.from($$("[data-view-association]")).forEach((el: HTMLElement) => {
@@ -85,8 +85,8 @@ export class Loader {
 				// or don't match the search input
 				if (
 					(this.options.vocabType.value !== "*" &&
-					word.type !== this.options.vocabType.value) 
-					|| !word.full.includes(this.options.vocabSearch.value)
+						word.type !== this.options.vocabType.value) ||
+					!word.full.includes(this.options.vocabSearch.value)
 				)
 					continue;
 				const listItem = createElement(
