@@ -3,12 +3,11 @@ import { $, createElement, shuffleArray, renderAnswer } from "../utils.js";
 import { ContainerAnimator } from "./helpers/index.js";
 import type { QuizAnswer, QuizOptions, QuizQuestion } from "@/types/quiz";
 
-
 enum NextEvent {
 	Idle = 0,
 	Grade = 1,
 	Next = 2,
-	Finish = 3
+	Finish = 3,
 }
 
 /**
@@ -20,7 +19,7 @@ export class WalkthroughMan {
 	currentIndex: number;
 	/** How long it takes for one question to animate to another. */
 	questionTransition: number;
-	/** animator-outer */
+	/** ContainerAnimator container */
 	container: HTMLDivElement;
 	/** Next and previous buttons. */
 	btns: { prev: HTMLButtonElement; next: HTMLButtonElement };
@@ -64,7 +63,9 @@ export class WalkthroughMan {
 	initialize(questions: QuizQuestion[]) {
 		this.questions = shuffleArray(questions);
 
-		this.nextEvent = this.options.immediateGrade ? NextEvent.Grade : NextEvent.Next;
+		this.nextEvent = this.options.immediateGrade
+			? NextEvent.Grade
+			: NextEvent.Next;
 
 		// If grading after each question is enabled
 		// change "Next" button to "Grade"
@@ -95,7 +96,8 @@ export class WalkthroughMan {
 		$("#count-current").textContent = (this.currentIndex + 1).toString();
 
 		// if question is already graded make sure the button says Next and not Grade
-		if (this.questions[this.currentIndex]?.grade) this.nextEvent = NextEvent.Next;
+		if (this.questions[this.currentIndex]?.grade)
+			this.nextEvent = NextEvent.Next;
 		this.updateNextBtn();
 
 		const input = this.questions[this.currentIndex].html.querySelector("input");
@@ -106,7 +108,7 @@ export class WalkthroughMan {
 		this.currentInput = input;
 		this.updateDisable();
 
-		this.animator.setContent(this.questions[this.currentIndex].html);
+		this.animator.setContent(this.questions[this.currentIndex].html, true);
 		this.events.input();
 	}
 
@@ -134,7 +136,9 @@ export class WalkthroughMan {
 			if (this.nextEvent === NextEvent.Grade) {
 				this.gradeQuestion();
 				this.nextEvent =
-					this.currentIndex === this.questions.length - 1 ? NextEvent.Finish : NextEvent.Next;
+					this.currentIndex === this.questions.length - 1
+						? NextEvent.Finish
+						: NextEvent.Next;
 			}
 
 			// expecting to go to the next question?
@@ -149,9 +153,7 @@ export class WalkthroughMan {
 					!this.questions[this.currentIndex].grade
 				)
 					this.nextEvent = 1;
-			}
-
-			else if (this.nextEvent === NextEvent.Finish) return this.finishQuiz();
+			} else if (this.nextEvent === NextEvent.Finish) return this.finishQuiz();
 
 			this.updateNextBtn();
 		},

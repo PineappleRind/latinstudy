@@ -24,7 +24,9 @@ export class Loader {
 		this.data = data;
 		// listen for view button clicks
 		this.trigger.addEventListener("click", () =>
-			this.load[this.options.type.value as keyof Loader["load"]].apply(this, [data]),
+			this.load[this.options.type.value as keyof Loader["load"]].apply(this, [
+				data,
+			]),
 		);
 
 		this.options.type.addEventListener("input", this.events.selectedType);

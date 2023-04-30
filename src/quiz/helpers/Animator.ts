@@ -19,6 +19,14 @@ type AnimatorSettings = {
 // 	shiftDownAfter: (startElement: HTMLElement, amount: number) => Promise<void>;
 // 	measureElement: (element: HTMLElement) => DOMRect;
 // }
+type RequireAtLeastOne<T> = {
+	[K in keyof T]: { [L in K]: T[L] } & { [L in Exclude<keyof T, K>]?: T[L] };
+}[keyof T];
+
+type AnimateDimensionsTarget = RequireAtLeastOne<{
+	height: number;
+	width: number;
+}>;
 
 /**
  * Animates the width and height of a container depending on its content.
@@ -36,45 +44,66 @@ export class ContainerAnimator {
 			minWidth: settings.minWidth || 0,
 			transitionDuration: settings.transitionDuration || 200,
 			padding: settings.padding || 0,
-		}
+		};
 	}
 
 	/** Append an element to ${@link container | the container}, animating the container to fit it. */
 	async append(newElement: HTMLElement): Promise<ContainerAnimator> {
-		const { height } = this.measureElement(newElement);
-		const { height: containerHeight } = this.measureElement(this.container);
+		const { height, width } = this.measureElement(newElement);
+		const { height: containerHeight, width: containerWidth } =
+			this.measureElement(this.container);
 
+		newElement.animate([{ opacity: 0 }, { opacity: 1 }], {
+			duration: this.settings.transitionDuration,
+		});
+		await this.animateDimensionsTo({
+			height: height + containerHeight,
+			width: Math.max(width, containerWidth),
+		});
 		this.container.append(newElement);
-
-		newElement.animate([{ opacity: 0 }, { opacity: 1 }], { duration: this.settings.transitionDuration });
-		this.container.animate([{}, { height: height + containerHeight }])
 
 		return this;
 	}
 
-	async setContent(newContent: DocumentFragment, fade?: boolean): Promise<ContainerAnimator> {
+	async setContent(
+		newContent: DocumentFragment,
+		fade?: boolean,
+	): Promise<ContainerAnimator> {
 		if (fade) {
 			for (const child of Array.from(this.container.children))
-				child.animate([{ opacity: 1 }, { opacity: 0 }], { duration: this.settings.transitionDuration });
+				child.animate([{ opacity: 1 }, { opacity: 0 }], {
+					duration: this.settings.transitionDuration,
+				});
 			await wait(this.settings.transitionDuration);
-		};
+		}
+		this.container.innerHTML = "";
 
 		const dummy = createElement("div");
 		dummy.append(newContent);
-		const { height } = this.measureElement(dummy);
-		const { height: containerHeight } = this.measureElement(this.container);
 
-		await this.animateHeightTo(height + containerHeight + this.settings.padding);
+		const { height, width } = this.measureElement(dummy);
 
-		this.container.append(newContent);
-		console.log(this.container,newContent.children)
+		await this.animateDimensionsTo({
+			height: height + this.settings.padding,
+			width,
+		});
+
+		this.container.append(...Array.from(dummy.children));
+
 		return this;
 	}
 
-	async animateHeightTo(height: number) {
-		const animation = this.container.animate([{}, { height: `${height}px` }]);
+	async animateDimensionsTo(target: AnimateDimensionsTarget) {
+		const finalKeyframe = {
+			...(target.height && { height: `${target.height}px` }),
+			...(target.width && { width: `${target.width}px` }),
+		};
+		console.log("animating to", finalKeyframe);
+		const animation = this.container.animate([{}, finalKeyframe]);
 		await animation.finished;
-		this.container.style.height = `${height}px`;
+
+		if (target.height) this.container.style.height = `${target.height}px`;
+		if (target.width) this.container.style.width = `${target.width}px`;
 	}
 
 	/**
@@ -82,9 +111,13 @@ export class ContainerAnimator {
 	 * @returns The dimensions of the element, in a DOMRect.
 	 */
 	measureElement(html: HTMLElement): DOMRect {
+		const parent = html.parentNode;
+		let index: number | null = null;
+		if (parent) index = Array.from(parent.children).indexOf(html) || 1;
+
 		document.body.append(html);
 		const size = html.getBoundingClientRect();
-		html.remove();
+		if (parent) parent.insertBefore(html, parent.children[index as number]);
 		return size;
 	}
 }

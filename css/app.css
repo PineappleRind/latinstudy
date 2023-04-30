@@ -52,7 +52,6 @@ body {
   --partial-correct-border: 1px solid rgba(255, 205, 0, 0.6);
 }
 
-
 @media (prefers-color-scheme: dark) {
   body {
     --bg-l0: rgb(19, 19, 19);
@@ -138,7 +137,7 @@ input[type="text"] {
 
 input::placeholder,
 input::-webkit-input-placeholder {
-  color: var(--txt-c2)
+  color: var(--txt-c2);
 }
 
 input,
@@ -298,13 +297,21 @@ fieldset {
   border-radius: var(--rad-l);
   padding: 10px;
   margin: 6px 3px;
-  background: var(--bg-l2)
+  background: var(--bg-l2);
 }
 
 @keyframes multitoggle-shake {
-  30% { translate: 1px 0px; }
-  50% { translate: -1px 0px; }
-  70% { translate: 0px 0px; }
+  30% {
+    translate: 2px 0px;
+  }
+
+  50% {
+    translate: -2px 0px;
+  }
+
+  70% {
+    translate: 0px 0px;
+  }
 }
 
 .animator-inner {
@@ -319,7 +326,7 @@ fieldset {
 }
 
 /* Custom checkbox styles! */
-input[type="checkbox"]+label {
+input[type="checkbox"] + label {
   cursor: pointer;
   font-size: 90%;
 }
@@ -362,7 +369,7 @@ input[type="checkbox"]:checked::before {
 
 input[type="checkbox"]:checked {
   border: 1px solid var(--light-border);
-  background: var(--btn-bg)
+  background: var(--btn-bg);
 }
 
 input[type="checkbox"]:focus {
@@ -421,7 +428,6 @@ input[type="checkbox"]:focus {
   }
 }
 
-
 /*******
 View 
 *******/
@@ -441,7 +447,8 @@ select:hover {
 
 select.hidden,
 [data-view-association].hidden {
-  display: none; /* I wish there was an easy way to animate them in and out */
+  display: none;
+  /* I wish there was an easy way to animate them in and out */
 }
 
 .view-panes {
@@ -453,49 +460,59 @@ select.hidden,
   width: 100%;
 }
 
+table {
+  background: var(--bg-l1);
+  width: 100%;
+  margin: 4px;
+  border-collapse: separate;
+  border-left: 0;
+  border-radius: var(--rad-l);
+  border-spacing: 0px;
+  border: 1px solid var(--light-border);
+}
+
 td,
 th {
-  padding: 5px 9px;
+  padding: 6px 9px;
+  vertical-align: top;
+}
+
+tr td:not(:nth-child(1 of :not([style*="none"]))),
+tr th:not(:nth-child(1 of :not([style*="none"]))) {
+  border-left: 1px solid var(--light-border);
 }
 
 th {
   padding: 5px;
   background: var(--bg-l0);
 }
-/* 
-tr :first-child {
-  border-left: 1px solid var(--light-border);
-}
-tr :last-child {
-  border-left: 1px solid var(--light-border);
-}
-tr:last-child :nth-last-child(1 of :not([style*=none])) {
-  border-bottom-right-radius: var(--rad-l);
-}
-tr:last-child :nth-child(1 of :not([style*=none])) {
-  border-bottom-left-radius: var(--rad-l);
-}
-tr:first-child :nth-last-child(1 of :not([style*=none])) {
-  border-top-right-radius: var(--rad-l);
-}
-tr:first-child  {
-  border-top-left-radius: var(--rad-l);
-} */
 
-tr:first-child th:nth-child(1 of :not([style*=none])), tr:first-child td:nth-child(1 of :not([style*=none])) {
+td {
+  border-top: 1px solid var(--light-border);
+}
+
+tr:first-child th:nth-child(1 of :not([style*="none"])),
+tr:first-child td:nth-child(1 of :not([style*="none"])) {
   border-radius: var(--rad-l) 0 0 0;
 }
-tr:last-child th:nth-child(1 of :not([style*=none])), tr:last-child td:nth-last-child(1 of :not([style*=none])) {
+
+tr:last-child th:nth-child(1 of :not([style*="none"])),
+tr:last-child td:nth-child(1 of :not([style*="none"])) {
   border-radius: 0 0 0 var(--rad-l);
 }
-/* (of [style*=table-cell]) */
 
-table {
-  background: var(--bg-l1);
-  width: 100%;
-  border-collapse: collapse;
-  margin: 4px;
-  padding: 5px 0;
+tr:first-child th:nth-last-child(1 of :not([style*="none"])),
+tr:first-child td:nth-last-child(1 of :not([style*="none"])) {
+  border-radius: 0 var(--rad-l) 0 0;
+}
+
+tr:last-child th:nth-last-child(1 of :not([style*="none"])),
+tr:last-child td:nth-last-child(1 of :not([style*="none"])) {
+  border-radius: 0 0 var(--rad-l) 0;
+}
+
+.table-row-shrunk {
+  width: 0;
 }
 
 .view-decl-super {
@@ -507,7 +524,7 @@ table {
 .view-vocab-word {
   margin: 1px;
   padding: 4px 8px;
-  border-bottom: 1px solid var(--light-border)
+  border-bottom: 1px solid var(--light-border);
 }
 
 .view-vocab-word:last-child {
@@ -519,7 +536,7 @@ table {
 }
 
 .view-vocab:empty::after {
-  content: "No words found"
+  content: "No words found";
 }
 
 .rendered-answer {
