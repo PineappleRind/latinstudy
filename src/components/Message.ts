@@ -7,7 +7,6 @@ let lastShown = Date.now();
 export class Message {
 	element: HTMLElement;
 	duration: number;
-	id: string;
 	Manager: MessageManager = MessageManager.instance;
 
 	constructor(content: string, type: number, duration: number, title?: string) {

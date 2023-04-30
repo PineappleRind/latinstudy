@@ -1,3 +1,11 @@
+#quiz-conj-settings {
+    opacity: 1;
+    transition: var(--tr);
+}
+#quiz-conj-settings.hidden {
+    opacity: 0;
+}
+
 .quiz-content-outer {
     opacity: 1;
     min-width: 300px;

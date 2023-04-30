@@ -1,7 +1,15 @@
 import { Grader } from "./index.js";
 import { $, createElement, shuffleArray, renderAnswer } from "../utils.js";
-import { Animator } from "./helpers/index.js";
+import { ContainerAnimator } from "./helpers/index.js";
 import type { QuizAnswer, QuizOptions, QuizQuestion } from "@/types/quiz";
+
+
+enum NextEvent {
+	Idle = 0,
+	Grade = 1,
+	Next = 2,
+	Finish = 3
+}
 
 /**
  * Handles the showing of the questions to the user, records the user's response, and sends them to Grader.
@@ -21,22 +29,22 @@ export class WalkthroughMan {
 	/** Instance of {@link Grader}. */
 	grader: Grader;
 	/** Instance of {@link quiz.<internal>.Animator}. */
-	animator: Animator;
+	animator: ContainerAnimator;
 	/** List of questions formulated by {@link Formulator}. */
-	questions: QuizQuestion[];
+	questions: QuizQuestion[] = [];
 	/** User's options collected by {@link Initializer}. */
 	options: QuizOptions;
 	/**
 	 * What will happen next when the user clicks the next button.
 	 * This needs a type! I don't know what to call it. I feel like this whole functionality should be in a walkthroughHelper.
 	 * 1 = grade then next, 2 = next question, 3 = finish */
-	nextEvent: number;
+	nextEvent: NextEvent = NextEvent.Idle;
 	/** The height of animator-outer in its default state, for {@link quiz.<internal>.Animator}. */
-	defaultHeight: number;
+	defaultHeight: null | number = null;
 	/** The input field of the current question. */
-	curInput: HTMLInputElement;
+	currentInput: HTMLInputElement | any; // Sorry Rome, not sure what to do here
 
-	constructor() {
+	constructor(options: QuizOptions) {
 		this.currentIndex = -1;
 		this.container = $(".quiz-content-outer") as HTMLDivElement;
 		this.btns = {
@@ -46,17 +54,17 @@ export class WalkthroughMan {
 		this.userAnswers = [];
 		this.questionTransition = 200; // ms
 		this.grader = new Grader();
-		this.animator = new Animator(this.container, {
+		this.animator = new ContainerAnimator(this.container, {
 			minWidth: 300,
 			transitionDuration: 200,
-		}).listen();
+		});
+		this.options = options;
 	}
 
-	initialize(questions: QuizQuestion[], options: QuizOptions) {
+	initialize(questions: QuizQuestion[]) {
 		this.questions = shuffleArray(questions);
-		this.options = options;
 
-		this.nextEvent = this.options.immediateGrade ? 1 : 2;
+		this.nextEvent = this.options.immediateGrade ? NextEvent.Grade : NextEvent.Next;
 
 		// If grading after each question is enabled
 		// change "Next" button to "Grade"
@@ -87,7 +95,7 @@ export class WalkthroughMan {
 		$("#count-current").textContent = (this.currentIndex + 1).toString();
 
 		// if question is already graded make sure the button says Next and not Grade
-		if (this.questions[this.currentIndex]?.grade) this.nextEvent = 2;
+		if (this.questions[this.currentIndex]?.grade) this.nextEvent = NextEvent.Next;
 		this.updateNextBtn();
 
 		const input = this.questions[this.currentIndex].html.querySelector("input");
@@ -95,10 +103,10 @@ export class WalkthroughMan {
 			throw new Error(
 				`Quiz question with index ${this.currentIndex} does not have an input`,
 			);
-		this.curInput = input;
+		this.currentInput = input;
 		this.updateDisable();
 
-		this.animator.setInner(this.questions[this.currentIndex].html);
+		this.animator.setContent(this.questions[this.currentIndex].html);
 		this.events.input();
 	}
 
@@ -108,7 +116,7 @@ export class WalkthroughMan {
 		else this.btns.prev.disabled = false;
 		// no input? disable next button
 		if (
-			!this.curInput?.value.replaceAll(" ", "") &&
+			!this.currentInput?.value.replaceAll(" ", "") &&
 			!this.questions[this.currentIndex]?.grade
 		)
 			this.btns.next.disabled = true;
@@ -123,10 +131,10 @@ export class WalkthroughMan {
 	events = {
 		next: () => {
 			// time to grade
-			if (this.nextEvent === 1) {
+			if (this.nextEvent === NextEvent.Grade) {
 				this.gradeQuestion();
 				this.nextEvent =
-					this.currentIndex === this.questions.length - 1 ? 3 : 2;
+					this.currentIndex === this.questions.length - 1 ? NextEvent.Finish : NextEvent.Next;
 			}
 
 			// expecting to go to the next question?
@@ -143,8 +151,7 @@ export class WalkthroughMan {
 					this.nextEvent = 1;
 			}
 
-			// finished grading and time to finish?
-			else if (this.nextEvent === 3) return this.finishQuiz();
+			else if (this.nextEvent === NextEvent.Finish) return this.finishQuiz();
 
 			this.updateNextBtn();
 		},
@@ -155,10 +162,10 @@ export class WalkthroughMan {
 			onkeyup = (e) => {
 				if (e.key === "Enter") return this.btns.next.click();
 			};
-			this.curInput.onkeyup = () => {
+			this.currentInput.onkeyup = () => {
 				this.updateDisable();
 				this.userAnswers[this.currentIndex] = {
-					response: this.curInput.value,
+					response: this.currentInput.value,
 					score: null,
 				};
 			};
@@ -169,14 +176,14 @@ export class WalkthroughMan {
 		// get the result
 		const typeOfAnswer = ["wrong", "partial-correct", "correct"][score];
 
-		this.curInput.disabled = true;
-		this.curInput.classList.add(typeOfAnswer);
+		this.currentInput.disabled = true;
+		this.currentInput.classList.add(typeOfAnswer);
 		// add correct answer
 		const correct = createElement("div", "class:quiz-correct-answer");
 		correct.append(renderAnswer(answer));
 		// Measure the new height once the correct answer is added
 		// for a lovely animation. 😍
-		this.animator.inner.append(correct);
+		this.animator.append(correct);
 	}
 
 	gradeQuestion() {
@@ -210,7 +217,7 @@ export class WalkthroughMan {
 
 		// reset
 		this.questions = [];
-		this.nextEvent = 1;
+		this.nextEvent = NextEvent.Grade;
 		this.userAnswers = [];
 		this.grader = new Grader();
 	}

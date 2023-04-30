@@ -11,6 +11,8 @@
     "strictNullChecks": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "useUnknownInCatchVariables": true,
 
     "baseUrl": "./src/",
     "paths": {

@@ -7,7 +7,7 @@ import { QuizQuestionHTMLOptions } from "@/types/quiz";
  */
 export function createQuizQuestion(
 	options: QuizQuestionHTMLOptions,
-): HTMLElement {
+): DocumentFragment {
 	const title = createElement("h3", "class:quiz-question-title", options.title);
 	const input = createElement(
 		"input",
@@ -18,7 +18,7 @@ export function createQuizQuestion(
 		"class:quiz-question-super",
 		options.super,
 	);
-	const container = createElement("div", "class:animator-inner");
+	const container = new DocumentFragment();
 
 	container.append(header, title, input);
 	return container;

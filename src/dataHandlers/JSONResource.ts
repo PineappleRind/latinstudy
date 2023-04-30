@@ -6,7 +6,7 @@ export class JSONResource<T> {
 	url: string;
 	/** A unique ID for tagging purposes. */
 	id: string;
-	json: T;
+	json: T | null = null;
 
 	constructor(url: string, id?: string) {
 		this.url = url;

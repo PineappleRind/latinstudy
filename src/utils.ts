@@ -15,7 +15,7 @@ export const ord = (n: string) =>
 
 export const createElement = <T extends HTMLElement = HTMLElement>(
 	tag: string,
-	attrs: string,
+	attrs?: string,
 	value?: string,
 ) => {
 	// shorthand element function

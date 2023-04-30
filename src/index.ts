@@ -13,7 +13,7 @@ export class Studier {
 	switcher: Switcher;
 	quizInitializer: Initializer;
 	viewLoader: Loader;
-	data: StudierData;
+	data: StudierData = <StudierData>{};
 
 	constructor() {
 		this.multitoggleManager = new MultitoggleManager();

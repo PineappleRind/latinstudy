@@ -4,10 +4,9 @@ import type { StudierData } from "@/types/data";
 export class Loader {
 	pane: Element;
 	options: Record<string, HTMLSelectElement | HTMLInputElement>;
-	note: Element;
-	vocabLoaded: boolean;
+	// note: Element;
 	trigger: Element;
-	data: StudierData;
+	data: StudierData = <StudierData>{};
 
 	constructor() {
 		this.pane = $(".pane#view");
@@ -25,14 +24,14 @@ export class Loader {
 		this.data = data;
 		// listen for view button clicks
 		this.trigger.addEventListener("click", () =>
-			this.load[this.options.type.value].apply(this, [data]),
+			this.load[this.options.type.value as keyof Loader["load"]].apply(this, [data]),
 		);
 
 		this.options.type.addEventListener("input", this.events.selectedType);
 		// refresh the data when any oprion changes
 		Object.entries(this.options).forEach(([_, el]) => {
 			el.addEventListener("input", () =>
-				this.load[this.options.type.value](data),
+				this.load[this.options.type.value as keyof Loader["load"]](data),
 			);
 		});
 	}
@@ -51,7 +50,7 @@ export class Loader {
 	};
 
 	load = {
-		declensions: ({ declensions }) => {
+		declensions: ({ declensions }: StudierData) => {
 			const selectedDeclension = declensions[this.options.declType.value];
 			// store Set of genders (every element is unique)
 			// this is used to determine the genders that
@@ -100,7 +99,6 @@ export class Loader {
 
 				$(".view-vocab").append(listItem);
 			}
-			this.vocabLoaded = true;
 		},
 	};
 }

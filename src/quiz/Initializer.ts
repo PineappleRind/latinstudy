@@ -12,7 +12,7 @@ import type { QuizOptions } from "@/types/quiz";
 export class Initializer {
 	optionElements: Record<string, HTMLInputElement>;
 	options: QuizOptions;
-	data: StudierData;
+	data: StudierData = <StudierData>{};
 
 	constructor() {
 		this.optionElements = {
@@ -32,7 +32,7 @@ export class Initializer {
 	 * But that's complicated and will require awaits and stuff. I haven't figured it out.
 	 * @param data JSON data from {@link dataHandlers.DataHandler}.
 	 */
-	async initialize(data) {
+	async initialize(data: StudierData) {
 		this.data = data;
 
 		// $("#end-quiz").onclick = this.events.quizEnd;
@@ -55,6 +55,7 @@ export class Initializer {
 				(acc, cur) => acc ^ (2 ** (+cur - 1)),
 				0b00000,
 			);
+			this.events.conjugationSelected();
 		});
 
 		$(".pane-trigger.quiz-begin").addEventListener(
@@ -108,7 +109,17 @@ export class Initializer {
 
 		// 		}
 		// 	}
-		// }
+		// },
+		conjugationSelected: () => {
+			const fieldset = $("#quiz-conj-settings");
+			if (this.options.conjugations <= 0) {
+				fieldset.inert = true;
+				fieldset.classList.add("hidden");
+			} else {
+				fieldset.inert = false;
+				fieldset.classList.remove("hidden");
+			}
+		},
 	};
 	/**
 	 * @returns true if declension selection is empty AND vocab is set to off

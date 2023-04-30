@@ -1,90 +1,89 @@
 import { createElement, wait } from "../../utils.js";
 
 type AnimatorSettings = {
-	minWidth?: number;
-	transitionDuration?: number;
+	minWidth: number;
+	transitionDuration: number;
+	padding: number;
 };
+
+// abstract class ContainerAnimatorAbstract {
+// 	container: HTMLDivElement;
+// 	settings: AnimatorSettings;
+
+// 	constructor: (container: HTMLElement, settings: AnimatorSettings) => ContainerAnimator;
+// 	append: (newElement: HTMLElement) => Promise<ContainerAnimator>;
+// 	appendAfter: (toAppend: HTMLElement, after: HTMLElement) => ContainerAnimator;
+// 	setContent: (newContent: DocumentFragment, fade?: boolean) => ContainerAnimator;
+
+// 	resizeContainerToFit: (newContent: HTMLElement) => void;
+// 	shiftDownAfter: (startElement: HTMLElement, amount: number) => Promise<void>;
+// 	measureElement: (element: HTMLElement) => DOMRect;
+// }
 
 /**
  * Animates the width and height of a container depending on its content.
  * Used by {@link WalkthroughMan}.
  */
-export class Animator {
+export class ContainerAnimator {
 	/** Outer container. This container will be animated. */
-	outer: HTMLElement;
-	/** Inner container. This container will be measured, will store the content and its updates. */
-	inner: HTMLElement;
+	container: HTMLDivElement;
 	settings: AnimatorSettings;
-	observer: MutationObserver;
-	observerConfig: MutationObserverInit;
 
 	/** Creates an {@link Animator.inner} container if one's not already there. */
-	constructor(target: HTMLDivElement, settings: AnimatorSettings) {
-		this.outer = target; // outer container.
-		this.settings = settings;
-		// set outer's content to inner
-		this.inner = createElement("div", "class:animator-inner");
-		this.outer.replaceChildren(this.inner);
-
-		this.observer = new MutationObserver(() => {
-			this.animateTo(this.inner);
-		});
-		this.observerConfig = { childList: true, subtree: true };
+	constructor(container: HTMLDivElement, settings: Partial<AnimatorSettings>) {
+		this.container = container;
+		this.settings = {
+			minWidth: settings.minWidth || 0,
+			transitionDuration: settings.transitionDuration || 200,
+			padding: settings.padding || 0,
+		}
 	}
 
-	/** Change {@link Animator.inner}'s content and animate {@link Animator.outer}'s width and height to fit it. */
-	async animateTo(
-		newHTML: HTMLElement,
-		transitionDuration: number = 0,
-		fade: boolean = false,
-	) {
-		// get dimensions
-		const dimensions = this.getHTMLDimensions(newHTML);
-		// Hide the container's contents
-		if (fade) this.outer.classList.add("hidden");
-		this.outer.style.width = `${Math.max(
-			dimensions.width,
-			this.settings.minWidth || 0,
-		)}px`;
-		this.outer.style.height = `${dimensions.height}px`;
+	/** Append an element to ${@link container | the container}, animating the container to fit it. */
+	async append(newElement: HTMLElement): Promise<ContainerAnimator> {
+		const { height } = this.measureElement(newElement);
+		const { height: containerHeight } = this.measureElement(this.container);
 
-		// Wait a bit
-		if (transitionDuration) await wait(transitionDuration);
-		// then replace the content and unhide
-		this.inner.remove();
-		this.outer.append(newHTML);
-		this.inner = newHTML;
+		this.container.append(newElement);
 
-		if (fade) this.outer.classList.remove("hidden");
-		// save current inner
-		this.inner = newHTML;
-		return newHTML;
-	}
+		newElement.animate([{ opacity: 0 }, { opacity: 1 }], { duration: this.settings.transitionDuration });
+		this.container.animate([{}, { height: height + containerHeight }])
 
-	async setInner(newHTML: HTMLElement) {
-		// this.observer.disconnect();
-
-		await this.animateTo(newHTML, this.settings.transitionDuration, true);
-		this.observer.observe(this.inner, this.observerConfig);
-	}
-
-	/**
-	 * Observe {@link Animator.inner}'s DOM mutations, calling {@link Animator.animateTo} if there are
-	 */
-	listen() {
-		this.observer.observe(this.inner, this.observerConfig);
 		return this;
 	}
+
+	async setContent(newContent: DocumentFragment, fade?: boolean): Promise<ContainerAnimator> {
+		if (fade) {
+			for (const child of Array.from(this.container.children))
+				child.animate([{ opacity: 1 }, { opacity: 0 }], { duration: this.settings.transitionDuration });
+			await wait(this.settings.transitionDuration);
+		};
+
+		const dummy = createElement("div");
+		dummy.append(newContent);
+		const { height } = this.measureElement(dummy);
+		const { height: containerHeight } = this.measureElement(this.container);
+
+		await this.animateHeightTo(height + containerHeight + this.settings.padding);
+
+		this.container.append(newContent);
+		console.log(this.container,newContent.children)
+		return this;
+	}
+
+	async animateHeightTo(height: number) {
+		const animation = this.container.animate([{}, { height: `${height}px` }]);
+		await animation.finished;
+		this.container.style.height = `${height}px`;
+	}
+
 	/**
-	 * Helper function to measure the dimensions of an element. We're usually measuring {@link Animator.inner}.
+	 * Helper function to measure the dimensions of an element
 	 * @returns The dimensions of the element, in a DOMRect.
 	 */
-	getHTMLDimensions(html: HTMLElement): DOMRect {
-		// Clone the node & measure it, basically
-		html.classList.add("invisible");
+	measureElement(html: HTMLElement): DOMRect {
 		document.body.append(html);
 		const size = html.getBoundingClientRect();
-		html.classList.remove("invisible");
 		html.remove();
 		return size;
 	}

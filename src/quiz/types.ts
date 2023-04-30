@@ -19,7 +19,7 @@ export interface QuizQuestion {
 	type: string;
 	question: string;
 	answer: string | string[];
-	html: HTMLElement;
+	html: DocumentFragment;
 	response?: string;
 	grade?: {
 		score: QuizQuestionScore;
