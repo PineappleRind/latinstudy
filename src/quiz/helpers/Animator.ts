@@ -4,21 +4,9 @@ type AnimatorSettings = {
 	minWidth: number;
 	transitionDuration: number;
 	padding: number;
+	easing: string;
 };
 
-// abstract class ContainerAnimatorAbstract {
-// 	container: HTMLDivElement;
-// 	settings: AnimatorSettings;
-
-// 	constructor: (container: HTMLElement, settings: AnimatorSettings) => ContainerAnimator;
-// 	append: (newElement: HTMLElement) => Promise<ContainerAnimator>;
-// 	appendAfter: (toAppend: HTMLElement, after: HTMLElement) => ContainerAnimator;
-// 	setContent: (newContent: DocumentFragment, fade?: boolean) => ContainerAnimator;
-
-// 	resizeContainerToFit: (newContent: HTMLElement) => void;
-// 	shiftDownAfter: (startElement: HTMLElement, amount: number) => Promise<void>;
-// 	measureElement: (element: HTMLElement) => DOMRect;
-// }
 type RequireAtLeastOne<T> = {
 	[K in keyof T]: { [L in K]: T[L] } & { [L in Exclude<keyof T, K>]?: T[L] };
 }[keyof T];
@@ -33,17 +21,27 @@ type AnimateDimensionsTarget = RequireAtLeastOne<{
  * Used by {@link WalkthroughMan}.
  */
 export class ContainerAnimator {
-	/** Outer container. This container will be animated. */
+	/** This container will be animated. It will contain the content container. */
+	wrapper: HTMLDivElement;
+	/** This container will only hold the content. */
 	container: HTMLDivElement;
 	settings: AnimatorSettings;
+	currentContainerDimensions?: DOMRect;
 
 	/** Creates an {@link Animator.inner} container if one's not already there. */
-	constructor(container: HTMLDivElement, settings: Partial<AnimatorSettings>) {
+	constructor(
+		wrapper: HTMLDivElement,
+		container: HTMLDivElement,
+		settings: Partial<AnimatorSettings>,
+	) {
+		this.wrapper = wrapper;
 		this.container = container;
+		this.container.dataset.animatorContainer = "";
 		this.settings = {
 			minWidth: settings.minWidth || 0,
-			transitionDuration: settings.transitionDuration || 200,
+			transitionDuration: settings.transitionDuration || 400,
 			padding: settings.padding || 0,
+			easing: settings.easing || "ease",
 		};
 	}
 
@@ -51,17 +49,20 @@ export class ContainerAnimator {
 	async append(newElement: HTMLElement): Promise<ContainerAnimator> {
 		const { height, width } = this.measureElement(newElement);
 		const { height: containerHeight, width: containerWidth } =
-			this.measureElement(this.container);
+			this.currentContainerDimensions || this.measureElement(this.container, this.wrapper);
 
-		newElement.animate([{ opacity: 0 }, { opacity: 1 }], {
-			duration: this.settings.transitionDuration,
-		});
 		await this.animateDimensionsTo({
 			height: height + containerHeight,
 			width: Math.max(width, containerWidth),
 		});
-		this.container.append(newElement);
 
+		this.container.append(newElement);
+		console.log("adding element");
+		const anim = newElement.animate([{ opacity: 0 }, { opacity: 1 }], {
+			duration: this.settings.transitionDuration,
+		});
+		await anim.finished;
+		console.log("animated new elemen");
 		return this;
 	}
 
@@ -69,26 +70,28 @@ export class ContainerAnimator {
 		newContent: DocumentFragment,
 		fade?: boolean,
 	): Promise<ContainerAnimator> {
-		if (fade) {
-			for (const child of Array.from(this.container.children))
-				child.animate([{ opacity: 1 }, { opacity: 0 }], {
-					duration: this.settings.transitionDuration,
-				});
-			await wait(this.settings.transitionDuration);
-		}
-		this.container.innerHTML = "";
-
-		const dummy = createElement("div");
+		const dummy = createElement("div", "style=max-width:fit-content;data-animator-container=");
 		dummy.append(newContent);
 
-		const { height, width } = this.measureElement(dummy);
+		const { height, width } = this.measureElement(dummy, this.wrapper);
 
-		await this.animateDimensionsTo({
+		this.animateDimensionsTo({
 			height: height + this.settings.padding,
 			width,
 		});
 
+		if (fade) {
+			this.container.classList.add("hidden");
+			for (const child of Array.from(this.container.children))
+				child.animate([{ opacity: 1 }, { opacity: 0 }], {
+					duration: this.settings.transitionDuration,
+				});
+		}
+		await wait(this.settings.transitionDuration);
+		this.container.innerHTML = "";
+
 		this.container.append(...Array.from(dummy.children));
+		this.container.classList.remove("hidden");
 
 		return this;
 	}
@@ -99,25 +102,50 @@ export class ContainerAnimator {
 			...(target.width && { width: `${target.width}px` }),
 		};
 		console.log("animating to", finalKeyframe);
-		const animation = this.container.animate([{}, finalKeyframe]);
+		const animation = this.wrapper.animate([{}, finalKeyframe], {
+			duration: this.settings.transitionDuration,
+			easing: this.settings.easing,
+		});
 		await animation.finished;
 
-		if (target.height) this.container.style.height = `${target.height}px`;
-		if (target.width) this.container.style.width = `${target.width}px`;
+		if (target.height) this.wrapper.style.height = `${target.height}px`;
+		if (target.width) this.wrapper.style.width = `${target.width}px`;
+
+		return 0;
 	}
 
+	/*
+	just some cases to help wrap our heads around this
+	  * Case: a parent is specified, meaning the
+	  * element does not exist in the DOM, but
+	  * will be appended to the parent.
+	  * Result: element is appended to the parent,
+	  * measured, then removed.
+	  * 
+	  * Case: a parent isn't specified, meaning
+	  * it doesn't matter where the element is 
+	  * measured from
+	  * Result: element is appended to document.body
+	  * then measured, then removed.
+	  */
 	/**
 	 * Helper function to measure the dimensions of an element
 	 * @returns The dimensions of the element, in a DOMRect.
 	 */
-	measureElement(html: HTMLElement): DOMRect {
-		const parent = html.parentNode;
-		let index: number | null = null;
-		if (parent) index = Array.from(parent.children).indexOf(html) || 1;
+	measureElement(html: HTMLElement, parent?: HTMLElement): DOMRect {
+		const el = <HTMLElement>(html.cloneNode(true));
+		el.classList.add("invisible");
 
-		document.body.append(html);
-		const size = html.getBoundingClientRect();
-		if (parent) parent.insertBefore(html, parent.children[index as number]);
+		if (!parent) document.body.append(el);
+		else parent.append(el);
+
+		const size = el.getBoundingClientRect();
+		debugger;
+		el.classList.remove("invisible");
+		// debugger;
+		el.remove();
+		if (el.dataset.animatorContainer) this.currentContainerDimensions = size;
 		return size;
 	}
 }
+

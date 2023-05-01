@@ -19,7 +19,9 @@ export class WalkthroughMan {
 	currentIndex: number;
 	/** How long it takes for one question to animate to another. */
 	questionTransition: number;
-	/** ContainerAnimator container */
+	/** {@link ContainerAnimator#wrapper | ContainerAnimator wrapper} */
+	wrapper: HTMLDivElement;
+	/** {@link ContainerAnimator#container | ContainerAnimator container} */
 	container: HTMLDivElement;
 	/** Next and previous buttons. */
 	btns: { prev: HTMLButtonElement; next: HTMLButtonElement };
@@ -45,7 +47,8 @@ export class WalkthroughMan {
 
 	constructor(options: QuizOptions) {
 		this.currentIndex = -1;
-		this.container = $(".quiz-content-outer") as HTMLDivElement;
+		this.wrapper = $(".quiz-content-wrapper") as HTMLDivElement;
+		this.container = $(".quiz-content") as HTMLDivElement;
 		this.btns = {
 			prev: $(".quiz-prev") as HTMLButtonElement,
 			next: $(".quiz-next") as HTMLButtonElement,
@@ -53,9 +56,8 @@ export class WalkthroughMan {
 		this.userAnswers = [];
 		this.questionTransition = 200; // ms
 		this.grader = new Grader();
-		this.animator = new ContainerAnimator(this.container, {
+		this.animator = new ContainerAnimator(this.wrapper, this.container, {
 			minWidth: 300,
-			transitionDuration: 200,
 		});
 		this.options = options;
 	}
@@ -181,7 +183,7 @@ export class WalkthroughMan {
 		this.currentInput.disabled = true;
 		this.currentInput.classList.add(typeOfAnswer);
 		// add correct answer
-		const correct = createElement("div", "class:quiz-correct-answer");
+		const correct = createElement("div", "class=quiz-correct-answer");
 		correct.append(renderAnswer(answer));
 		// Measure the new height once the correct answer is added
 		// for a lovely animation. 😍

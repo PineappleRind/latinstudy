@@ -11,12 +11,12 @@ export class Message {
 
 	constructor(content: string, type: number, duration: number, title?: string) {
 		// Create a message
-		const el = createElement("div", `class:toast ${typeMap[type]}`);
-		if (title) el.append(createElement("h3", "class:toast-header", title));
+		const el = createElement("div", `class=toast ${typeMap[type]}`);
+		if (title) el.append(createElement("h3", "class=toast-header", title));
 		el.append(
 			createElement(
 				"p",
-				`class:toast-description ${title ? "smaller" : ""}`,
+				`class=toast-description ${title ? "smaller" : ""}`,
 				content,
 			),
 		);
@@ -51,7 +51,7 @@ class MessageManager {
 	private constructor() {
 		const container: HTMLDivElement = createElement(
 			"div",
-			"class:toast-container",
+			"class=toast-container",
 		);
 		$("#app").append(container);
 		this.#container = container;

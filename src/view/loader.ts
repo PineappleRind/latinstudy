@@ -92,7 +92,7 @@ export class Loader {
 					continue;
 				const listItem = createElement(
 					"div",
-					"class:view-vocab-word",
+					"class=view-vocab-word",
 					`${word.word}${word.dictionary ? `, ${word.dictionary}` : ""}`,
 				);
 				listItem.dataset.declension = word.declension || "0";

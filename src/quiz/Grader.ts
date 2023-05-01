@@ -82,17 +82,17 @@ export class Grader {
 			throw new Error(`Quiz question "${question.question}" is ungraded!`);
 		const qSum = createElement(
 			"div",
-			"class:quiz-results-q",
+			"class=quiz-results-q",
 			`${i + 1}. ${question.question}: `,
 		) as HTMLDivElement;
-		const correctAnswer = createElement("span", "class:quiz-results-q-correct");
+		const correctAnswer = createElement("span", "class=quiz-results-q-correct");
 		correctAnswer.append(renderAnswer(question.answer));
 
 		if (question.grade.score <= 0)
 			qSum.append(
 				createElement(
 					"span",
-					"class:quiz-results-q-wrong",
+					"class=quiz-results-q-wrong",
 					question.grade.userAnswer,
 				),
 			);

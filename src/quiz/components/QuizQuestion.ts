@@ -8,14 +8,14 @@ import { QuizQuestionHTMLOptions } from "@/types/quiz";
 export function createQuizQuestion(
 	options: QuizQuestionHTMLOptions,
 ): DocumentFragment {
-	const title = createElement("h3", "class:quiz-question-title", options.title);
+	const title = createElement("h3", "class=quiz-question-title", options.title);
 	const input = createElement(
 		"input",
-		"placeholder:What is it? Enter...;type:text;class:quiz-question-input",
+		"placeholder=What is it? Enter...;type=text;class=quiz-question-input",
 	);
 	const header = createElement(
 		"h4",
-		"class:quiz-question-super",
+		"class=quiz-question-super",
 		options.super,
 	);
 	const container = new DocumentFragment();

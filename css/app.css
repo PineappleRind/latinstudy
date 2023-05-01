@@ -314,15 +314,16 @@ fieldset {
   }
 }
 
-.animator-inner {
+
+.animator-inner, .animator-outer {
   display: inline-block;
   width: fit-content;
 }
 
 .invisible {
-  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  position: fixed;
+  /* position: absolute; */
 }
 
 /* Custom checkbox styles! */
@@ -544,7 +545,7 @@ tr:last-child td:nth-last-child(1 of :not([style*="none"])) {
   display: inline-block;
 }
 
-.quiz-content-outer .rendered-answer {
+.quiz-content .rendered-answer {
   font-size: 13px;
   opacity: 1;
 }

@@ -23,7 +23,7 @@ export const createElement = <T extends HTMLElement = HTMLElement>(
 	if (attrs)
 		attrs.split(";").forEach((attr) => {
 			if (!attr) return;
-			const vals = attr.split(":");
+			const vals = attr.split("=");
 			el.setAttribute(vals[0].trim(), vals[1].trim());
 		});
 	el.innerHTML = value || "";
@@ -54,7 +54,7 @@ export function shuffleArray(array: any[]) {
 }
 
 export function renderAnswer(str: string | string[]) {
-	const res = createElement("span", "class:rendered-answer text-subtle");
+	const res = createElement("span", "class=rendered-answer text-subtle");
 
 	str = str as string[];
 	if (!(str instanceof Array)) str = Array(1).fill(str);
@@ -65,7 +65,7 @@ export function renderAnswer(str: string | string[]) {
 		res.append(word);
 		if (note)
 			res.append(
-				createElement("span", "class:answer-note text-subtler", ` (${note})`),
+				createElement("span", "class=answer-note text-subtler", ` (${note})`),
 			);
 
 		if (i !== (str ?? answer).length - 1) res.append(", ");
