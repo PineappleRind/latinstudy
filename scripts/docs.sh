@@ -1,1 +1,0 @@
-bunx ts-docs
