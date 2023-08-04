@@ -72,6 +72,32 @@ body {
     letter-spacing: -0.28px
 }
 
+h2 {
+    font-size: var(--txt-xl);
+    color: var(--txt-c0);
+}
+
+h3 {
+    font-weight: 300;
+}
+
+h4 {
+    text-transform: uppercase;
+    font-weight: 300;
+    position: relative;
+    color: var(--txt-c2);
+    font-size: var(--txt-l);
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+    margin-top: 2px;
+    border-bottom: 1px solid var(--light-border);
+}
+
+small {
+    font-style: italic;
+    color: var(--txt-c2);
+}
+
 .flex {
     display: flex;
 }
@@ -172,4 +198,12 @@ button {
 .full-width {
     display: inline-block;
     width: 100%;
+}
+
+fieldset {
+    border: 1px solid var(--light-border);
+    border-radius: var(--rad-l);
+    padding: 10px;
+    margin: 6px 3px;
+    background: var(--bg-l2);
 }

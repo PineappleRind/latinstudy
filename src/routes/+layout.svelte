@@ -1,3 +1,11 @@
+<script>
+  import { beforeNavigate } from "$app/navigation";
+  import { quadIn, cubicOut } from "svelte/easing";
+  import { scale } from "./animations";
+  let unique = {};
+  beforeNavigate(() => (unique = {}));
+</script>
+
 <header>
   LatinStudier™ v<span id="version">0.1</span> |
   <a href="https://github.com/pineapplerind/latinstudy">GitHub</a>
@@ -5,9 +13,11 @@
 </header>
 
 <main>
-  <div class="pane">
-    <slot />
-  </div>
+  {#key unique}
+    <div in:scale={{ ease: quadIn }} out:scale={{}} class="pane">
+      <slot />
+    </div>
+  {/key}
 </main>
 
 <style>

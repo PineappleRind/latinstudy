@@ -1,18 +1,15 @@
 <script lang="ts">
-  import { writable } from "svelte/store";
-
   type MultitoggleItem = {
     name: string;
     value: string | number;
   };
-
-  export const state = writable<MultitoggleItem["value"][]>([]);
+  export let state: MultitoggleItem["value"][] = [];
   export let items: MultitoggleItem[];
 
   function handleSelect(item: MultitoggleItem) {
-    $state.includes(item.value)
-      ? state.set($state.filter((i) => i !== item.value))
-      : state.set([...$state, item.value]);
+    state.includes(item.value)
+      ? (state = state.filter((i) => i !== item.value))
+      : (state = [...state, item.value]);
   }
 </script>
 
@@ -20,7 +17,7 @@
   {#each items as item}
     <div
       class="multitoggle-option"
-      class:selected={$state.includes(item.value)}
+      class:selected={state.includes(item.value)}
       on:click={() => handleSelect(item)}
       on:keydown={() => handleSelect(item)}
     >
@@ -46,7 +43,6 @@
     border-radius: var(--rad-m);
     animation: multitoggle-shake var(--tr-l);
   }
-
   .multitoggle-option.selected {
     background: var(--btn-bg);
     color: var(--txt-inv-c0);

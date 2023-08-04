@@ -50,15 +50,6 @@ small {
   pointer-events: all;
 }
 
-
-fieldset {
-  border: 1px solid var(--light-border);
-  border-radius: var(--rad-l);
-  padding: 10px;
-  margin: 6px 3px;
-  background: var(--bg-l2);
-}
-
 .invisible {
   visibility: hidden;
   pointer-events: none;
