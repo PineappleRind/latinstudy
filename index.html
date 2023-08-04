@@ -7,7 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LatinStudier™</title>
   <link rel="stylesheet" href="/css/app.css" />
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Flex:wdth,wght,GRAD,XTRA,YTDE@151,407,-200,456,-183;151,611,-200,353,-183;151,779,-200,353,-183;151,1000,-200,456,-183&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
@@ -34,7 +38,8 @@
         </select>
       </div>
       <div class="flex">
-        <input id="view-vocab-search" type="text" class="hidden full-width" placeholder="Search..." data-view-association="vocab">
+        <input id="view-vocab-search" type="text" class="hidden full-width" placeholder="Search..."
+          data-view-association="vocab">
         <select id="view-declension-type" style="max-width: 30%;" data-view-association="declensions">
           <option value="1" selected>1st</option>
           <option value="2">2nd</option>
@@ -204,7 +209,7 @@
       <div class="quiz-content-wrapper">
         <div class="quiz-content"></div>
       </div>
-      
+
       <div class="flex">
         <button disabled class="btn quiz-prev">Previous</button>
         <button disabled class="btn primary full-width quiz-next">Next</button>
@@ -232,8 +237,7 @@
   </div>
   <!-- interested in the code? check out /build/ts/index.js OR the GitHub: -->
   <!-- https://github.com/pineapplerind/latinstudy -->
-  <!-- <script src="build/bundle.min.js"></script> -->
-  <script type="module" src="build/ts/index.js"></script>
+  <script type="module" src="build/index.js"></script>
 </body>
 
 </html>

@@ -49,20 +49,19 @@ export class ContainerAnimator {
 	async append(newElement: HTMLElement): Promise<ContainerAnimator> {
 		const { height, width } = this.measureElement(newElement);
 		const { height: containerHeight, width: containerWidth } =
-			this.currentContainerDimensions || this.measureElement(this.container, this.wrapper);
+			this.currentContainerDimensions ||
+			this.measureElement(this.container, this.wrapper);
 
 		await this.animateDimensionsTo({
 			height: height + containerHeight,
-			width: Math.max(width, containerWidth),
+			width: Math.max(width, containerWidth) - this.settings.padding,
 		});
 
 		this.container.append(newElement);
-		console.log("adding element");
 		const anim = newElement.animate([{ opacity: 0 }, { opacity: 1 }], {
 			duration: this.settings.transitionDuration,
 		});
 		await anim.finished;
-		console.log("animated new elemen");
 		return this;
 	}
 
@@ -70,14 +69,17 @@ export class ContainerAnimator {
 		newContent: DocumentFragment,
 		fade?: boolean,
 	): Promise<ContainerAnimator> {
-		const dummy = createElement("div", "style=max-width:fit-content;data-animator-container=");
+		const dummy = createElement(
+			"div",
+			"class=animator-outer quiz-content;style=max-width:fit-content;data-animator-container=",
+		);
 		dummy.append(newContent);
 
 		const { height, width } = this.measureElement(dummy, this.wrapper);
 
 		this.animateDimensionsTo({
 			height: height + this.settings.padding,
-			width,
+			width: width - this.settings.padding,
 		});
 
 		if (fade) {
@@ -133,14 +135,14 @@ export class ContainerAnimator {
 	 * @returns The dimensions of the element, in a DOMRect.
 	 */
 	measureElement(html: HTMLElement, parent?: HTMLElement): DOMRect {
-		const el = <HTMLElement>(html.cloneNode(true));
+		const el = <HTMLElement>html.cloneNode(true);
 		el.classList.add("invisible");
 
 		if (!parent) document.body.append(el);
 		else parent.append(el);
 
 		const size = el.getBoundingClientRect();
-		debugger;
+		// debugger;
 		el.classList.remove("invisible");
 		// debugger;
 		el.remove();
@@ -148,4 +150,3 @@ export class ContainerAnimator {
 		return size;
 	}
 }
-

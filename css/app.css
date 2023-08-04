@@ -71,6 +71,7 @@ body {
   background: var(--bg-l0);
   color: var(--txt-c1);
   font-size: var(--txt-m);
+  letter-spacing: -0.28px
 }
 
 h2 {
@@ -314,10 +315,13 @@ fieldset {
   }
 }
 
+.animator-outer {
+  /* position: relative; */
+}
 
 .animator-inner, .animator-outer {
-  display: inline-block;
-  width: fit-content;
+  /* width: fit-content; */
+  /* height: fit-content; */
 }
 
 .invisible {

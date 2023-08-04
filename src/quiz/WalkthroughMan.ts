@@ -58,6 +58,7 @@ export class WalkthroughMan {
 		this.grader = new Grader();
 		this.animator = new ContainerAnimator(this.wrapper, this.container, {
 			minWidth: 300,
+			padding: 5,
 		});
 		this.options = options;
 	}
