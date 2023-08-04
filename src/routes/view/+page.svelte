@@ -1,3 +1,9 @@
+<script lang="ts">
+  const cases = ["Nominative", "Genitive", "Accusative", "Dative", "Ablative"];
+  const genders = ["Masculine", "Feminine", "Neuter"];
+  const numbers = ["Singular", "Plural"];
+</script>
+
 <a class="link back" href="/">Home</a>
 <div class="flex">
   <h2>View</h2>
@@ -43,84 +49,21 @@
 </div>
 <div class="view-panes">
   <div class="view-pane view-decl" data-view-association="declensions">
-    <h4 class="view-decl-super">singular</h4>
-    <table class="view-decl-table singular">
-      <tr>
-        <th>Case</th>
-        <th class="view-table-head singular masculine">Masculine</th>
-        <th class="view-table-head singular feminine">Feminine</th>
-        <th class="view-table-head singular neuter">Neuter</th>
-      </tr>
-      <tr>
-        <td class="table-row-shrunk text-subtle">Nominative</td>
-        <td class="view-table-field singular nominative masculine" />
-        <td class="view-table-field singular nominative feminine" />
-        <td class="view-table-field singular nominative neuter" />
-      </tr>
-      <tr>
-        <td class="table-row-shrunk text-subtle">Genitive</td>
-        <td class="view-table-field singular genitive masculine" />
-        <td class="view-table-field singular genitive feminine" />
-        <td class="view-table-field singular genitive neuter" />
-      </tr>
-      <tr>
-        <td class="table-row-shrunk text-subtle">Dative</td>
-        <td class="view-table-field singular dative masculine" />
-        <td class="view-table-field singular dative feminine" />
-        <td class="view-table-field singular dative neuter" />
-      </tr>
-      <tr>
-        <td class="table-row-shrunk text-subtle">Accusative</td>
-        <td class="view-table-field singular accusative masculine" />
-        <td class="view-table-field singular accusative feminine" />
-        <td class="view-table-field singular accusative neuter" />
-      </tr>
-      <tr>
-        <td class="table-row-shrunk text-subtle">Ablative</td>
-        <td class="view-table-field singular ablative masculine" />
-        <td class="view-table-field singular ablative feminine" />
-        <td class="view-table-field singular ablative neuter" />
-      </tr>
-    </table>
-    <h4 class="view-decl-super">Plural</h4>
-    <table class="view-decl-table plural">
-      <tr>
-        <th>Case</th>
-        <th class="view-table-head plural masculine">Masculine</th>
-        <th class="view-table-head plural feminine">Feminine</th>
-        <th class="view-table-head plural neuter">Neuter</th>
-      </tr>
-      <tr>
-        <td>Nominative</td>
-        <td class="view-table-field plural nominative masculine" />
-        <td class="view-table-field plural nominative feminine" />
-        <td class="view-table-field plural nominative neuter" />
-      </tr>
-      <tr>
-        <td>Genitive</td>
-        <td class="view-table-field plural genitive masculine" />
-        <td class="view-table-field plural genitive feminine" />
-        <td class="view-table-field plural genitive neuter" />
-      </tr>
-      <tr>
-        <td>Dative</td>
-        <td class="view-table-field plural dative masculine" />
-        <td class="view-table-field plural dative feminine" />
-        <td class="view-table-field plural dative neuter" />
-      </tr>
-      <tr>
-        <td>Accusative</td>
-        <td class="view-table-field plural accusative masculine" />
-        <td class="view-table-field plural accusative feminine" />
-        <td class="view-table-field plural accusative neuter" />
-      </tr>
-      <tr>
-        <td>Ablative</td>
-        <td class="view-table-field plural ablative masculine" />
-        <td class="view-table-field plural ablative feminine" />
-        <td class="view-table-field plural ablative neuter" />
-      </tr>
-    </table>
+    {#each numbers as number}
+      <h4 class="super">{number}</h4>
+      <table class="table">
+        <tr>
+          <th>Case</th>
+          {#each genders as gender}
+            <th class="table-head">{gender}</th>
+          {/each}
+        </tr>
+        {#each cases as case$}
+          <td class="row-shrunk text-subtle">{case$}</td>
+          <td class="table-field" />
+        {/each}
+      </table>
+    {/each}
   </div>
   <div class="view-pane view-vocab hidden" data-view-association="vocab" />
 </div>
