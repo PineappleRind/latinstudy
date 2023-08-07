@@ -1,0 +1,5 @@
+{
+	"formatter": {
+		"ignore": ["src/routes/api/data/*.json"]
+	}
+}

@@ -11,6 +11,9 @@ const config = {
 		adapter: adapter({
 			dynamic_origin: true,
 		}),
+		alias: {
+			"@/*": "src/*",
+		},
 	},
 };
 

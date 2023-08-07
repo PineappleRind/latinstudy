@@ -1,16 +1,37 @@
-<script>
-  import { goto } from "$app/navigation";
-  import Multitoggle from "../../../components/Multitoggle.svelte";
-  import { writable } from "svelte/store";
+<script context="module" lang="ts">
+  import type { tense, voice } from "@/types/data";
 
-  const options = writable({
+  export type QuizOptions = {
+    declensions: number[];
+    conjugations: number[];
+    conjugationSettings: {
+      voices: voice[];
+      tenses: tense[];
+      moods: string[];
+      persons: string[];
+    };
+    vocabCount: number;
+    immediateGrade: true;
+  };
+
+  export const options = storedWritable<QuizOptions>("quiz-options", {
     declensions: [],
     conjugations: [],
-    conjugationVoices: ["active"],
-    conjugationTenses: ["present"],
+    conjugationSettings: {
+      voices: ["active"],
+      tenses: ["present"],
+      moods: [],
+      persons: []
+    },
     vocabCount: -1,
     immediateGrade: true,
   });
+</script>
+
+<script>
+  import { goto } from "$app/navigation";
+  import Multitoggle from "@/components/Multitoggle.svelte";
+  import storedWritable from "@/routes/stores";
 
   function quizIsEmpty() {
     const noDeclensions = !$options.declensions.length;

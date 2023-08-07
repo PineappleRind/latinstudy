@@ -6,6 +6,13 @@ export type wordType =
 	| "conjunction"
 	| "adverb"
 	| "other";
+export type tense =
+	| "present"
+	| "imperfect"
+	| "future"
+	| "perfect"
+	| "pluperfect";
+export type voice = "active" | "passive";
 export type gender = "masculine" | "feminine" | "neuter";
 export type grammaticalNumber = "singular" | "plural";
 /** 1st, second, and third person */

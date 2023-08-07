@@ -1,9 +1,15 @@
-<script>
-  import { beforeNavigate } from "$app/navigation";
-  import { quadIn, cubicOut } from "svelte/easing";
+<script lang="ts">
+  import { afterNavigate, beforeNavigate } from "$app/navigation";
+  import { quadIn } from "svelte/easing";
   import { scale } from "./animations";
+  import { previousPage } from "./stores";
+
   let unique = {};
   beforeNavigate(() => (unique = {}));
+
+  afterNavigate(({ from }) => {
+    previousPage.set(from?.url?.pathname || $previousPage);
+  });
 </script>
 
 <header>
