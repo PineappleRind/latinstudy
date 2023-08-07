@@ -1,15 +1,8 @@
+import { purify } from "@/utils/purify";
 import {
 	QuizQuestionScore,
 	type QuizQuestion,
 } from "./generateQuizQuestions/types";
-
-const purify = (str: string) =>
-	str
-		.trim()
-		.normalize("NFKD")
-		.replace(/[\u0300-\u036f]/g, "")
-		.replace("æ", "ae")
-		.toLowerCase();
 
 /**
  * Grade the specified question

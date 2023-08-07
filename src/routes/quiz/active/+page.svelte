@@ -2,15 +2,15 @@
   import { quadIn } from "svelte/easing";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
-  
+
   import { scale } from "@/routes/animations";
   import { options } from "@/routes/quiz/settings/+page.svelte";
   import { generateQuestions } from "@/routes/quiz/active/generateQuizQuestions/main";
   import { gradeQuestion } from "@/routes/quiz/active/grade";
   import QuizQuestion from "@/components/QuizQuestion.svelte";
   import type { ParsedEndingsData, VocabWord } from "@/types/data";
-    import { page } from "$app/stores";
-    import { lastQuiz } from "@/routes/stores";
+  import { page } from "$app/stores";
+  import { lastQuiz } from "@/routes/stores";
 
   export let data: ParsedEndingsData & { vocabulary: VocabWord[] };
 
@@ -50,7 +50,7 @@
       };
       nextEvent = NextEvent.Next;
     } else if (nextEvent === NextEvent.Next) {
-      if (!questions[currentIndex+1]) return finish();
+      if (!questions[currentIndex + 1]) return finish();
       currentIndex += 1;
       if (!questions[currentIndex].grade) nextEvent = NextEvent.Grade;
     } else if (nextEvent === NextEvent.Finish) {
@@ -72,8 +72,8 @@
   function finish() {
     lastQuiz.set({
       date: new Date(),
-      questions
-    })
+      questions,
+    });
     return void goto("/quiz/results");
   }
 </script>
@@ -88,7 +88,9 @@
   {#key currentIndex}
     <div
       in:scale|local={{ delay: 200, ease: quadIn }}
-      out:scale|local={{ duration: $page.route.id?.includes("active") ? 200 : 0 }}
+      out:scale|local={{
+        duration: $page.route.id?.includes("active") ? 200 : 0,
+      }}
       bind:contentRect={contentDimensions}
       class="quiz-content-animator"
     >

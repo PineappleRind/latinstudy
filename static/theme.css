@@ -75,10 +75,12 @@ body {
 h2 {
     font-size: var(--txt-xl);
     color: var(--txt-c0);
+    letter-spacing: -0.05em;
 }
 
 h3 {
     font-weight: 300;
+    letter-spacing: -0.03em;
 }
 
 h4 {
@@ -89,8 +91,9 @@ h4 {
     font-size: var(--txt-l);
     padding-bottom: 3px;
     margin-bottom: 3px;
-    margin-top: 2px;
+    margin-top: 4px;
     border-bottom: 1px solid var(--light-border);
+    letter-spacing: -0.05em;
 }
 
 small {
@@ -142,6 +145,71 @@ input::-webkit-input-placeholder {
 input,
 select {
     color: var(--txt-c1);
+}
+
+/* Custom checkbox styles! */
+input[type="checkbox"]+label {
+    cursor: pointer;
+    font-size: 90%;
+}
+
+input[type="checkbox"] {
+    /* Remove most all native input styles */
+    appearance: none;
+    /* Not removed via appearance */
+    margin: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font: inherit;
+    color: white;
+    width: 1.15em;
+    height: 1.15em;
+    border: 1px solid var(--light-border);
+    margin-right: 5px;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    transition: var(--tr);
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 0.5em 0.5em white;
+    /* Windows High Contrast Mode */
+    background-color: CanvasText;
+}
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+input[type="checkbox"]:checked {
+    border: 1px solid var(--light-border);
+    background: var(--btn-bg);
+}
+
+input[type="checkbox"]:focus {
+    outline: 1px solid currentColor;
+}
+
+select {
+    padding: 6px 12px;
+    border: 1px solid var(--light-border);
+    background: var(--bg-l1);
+    border-radius: var(--rad-m);
+    margin: 3px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+select:hover {
+    box-shadow: var(--shadow-s);
 }
 
 button {
