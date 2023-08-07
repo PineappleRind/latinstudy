@@ -21,7 +21,7 @@
       voices: ["active"],
       tenses: ["present"],
       moods: [],
-      persons: []
+      persons: [],
     },
     vocabCount: -1,
     immediateGrade: true,
@@ -35,8 +35,9 @@
 
   function quizIsEmpty() {
     const noDeclensions = !$options.declensions.length;
-    const noConjugationCustomization =
-      !$options.conjugationVoices.length || !$options.conjugationTenses.length;
+    const noConjugationCustomization = Object.values(
+      $options.conjugationSettings
+    ).some((arr) => !arr.length);
     const noConjugations =
       !$options.conjugations.length ||
       ($options.conjugations.length && noConjugationCustomization);
@@ -88,7 +89,7 @@
           { name: "Active", value: "active" },
           { name: "Passive", value: "passive" },
         ]}
-        bind:state={$options.conjugationVoices}
+        bind:state={$options.conjugationSettings.voices}
       />
       <!-- <p>Include moods...</p>
       <div class="quiz-option-select">
@@ -105,7 +106,7 @@
           { name: "Pluperfect", value: "pluperfect" },
           { name: "Future Perfect", value: "future perfect" },
         ]}
-        bind:state={$options.conjugationTenses}
+        bind:state={$options.conjugationSettings.tenses}
       />
     </div>
   </fieldset>

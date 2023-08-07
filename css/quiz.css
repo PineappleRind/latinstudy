@@ -1,5 +1,3 @@
-
-
 .quiz-grade {
   display: inline-block;
   color: var(--txt-c2);
@@ -15,43 +13,6 @@
 }
 
 
-
-
-.quiz-question-input {
-  width: 100%;
-}
-
-.quiz-correct-answer {
-  padding: 3px;
-  margin: 2px;
-  background: var(--bg-l1);
-  border-radius: var(--rad-m);
-  width: fit-content;
-}
-
-.quiz-correct-answer::before {
-  content: "Correct answer: ";
-  color: var(--txt-c2);
-  font-style: italic;
-  font-size: var(--txt-s);
-}
-
-.quiz-results-q-wrong {
-  color: red;
-  font-weight: 300;
-  text-decoration: line-through;
-  margin-right: 4px;
-  display: inline-block;
-}
-
-.quiz-results-q-correct {
-  color: green;
-  font-weight: 600;
-}
-
-.quiz-results-q-correct::after {
-  content: "✓";
-}
 
 @keyframes correct-answer-load {
   from {

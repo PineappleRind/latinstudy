@@ -1,8 +1,11 @@
 import { cubicOut, quadOut } from "svelte/easing";
 
-export function scale(_node: HTMLElement, { delay = 0, ease = quadOut }) {
+export function scale(
+	_node: HTMLElement,
+	{ duration = 200, delay = 0, ease = quadOut },
+) {
 	return {
-		duration: 300,
+		duration,
 		delay,
 		css: (t: number) => {
 			const eased = ease(1 - t);

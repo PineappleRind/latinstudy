@@ -1,12 +1,61 @@
+<script lang="ts">
+  import { lastQuiz } from "@/routes/stores";
+  import { QuizQuestionScore } from "../active/generateQuizQuestions/types";
+  import AnswerRenderer from "@/components/AnswerRenderer.svelte";
+
+  const correctQuestions = $lastQuiz?.questions
+    .map((q) => q.grade?.score || 0)
+    .reduce((acc: number, cur) => {
+      return acc + (cur !== QuizQuestionScore.Wrong ? 1 : 0);
+    }, 0);
+</script>
+
 <a class="link back" href="/">Home</a>
-<div class="quiz-results-inner">
-  <h2>Finish</h2>
+
+<h2>Quiz Results</h2>
+{#if $lastQuiz}
+  <p>Taken {$lastQuiz.date.toLocaleString()}</p>
   <h4>Your grade</h4>
   <p>
-    <span id="quiz-results-percentage" />% |
-    <span id="quiz-results-num-correct" />/<span id="quiz-results-total" />
+    {((correctQuestions || 0) / $lastQuiz.questions.length * 100).toFixed(1)}% |
+    {correctQuestions}/{$lastQuiz.questions.length}
   </p>
   <h4>Questions</h4>
-  <div id="quiz-results-questions-inner" />
-  <button class="btn pane-trigger" data-pane="begin">Back home</button>
-</div>
+  {#each $lastQuiz.questions as question, index}
+    <div class="question">
+      {index + 1}. {question.question}:
+      <span class="question-correct-answer">
+        <AnswerRenderer answers={question.answer} />
+      </span>
+      {#if question.grade?.score === QuizQuestionScore.Wrong}
+        <span class="question-wrong-answer">
+          {question.grade?.userAnswer}
+        </span>
+      {/if}
+    </div>
+  {/each}
+  <a class="btn full-width" href="/">Back home</a>
+{:else}
+  <p>You've not completed any quizzes recently.</p>
+  <br />
+  <a href="/quiz/settings" class="btn full-width">Start a quiz</a>
+{/if}
+
+<style>
+  .question-wrong-answer {
+    color: red;
+    font-weight: 300;
+    text-decoration: line-through;
+    margin-right: 4px;
+    display: inline-block;
+  }
+
+  .question-correct-answer {
+    color: green;
+    font-weight: 600;
+  }
+
+  .question-correct-answer::after {
+    content: "✓";
+  }
+</style>

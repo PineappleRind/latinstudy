@@ -28,7 +28,7 @@
     value={question.grade?.userAnswer || null}
 />
 {#if question.grade}
-    <p>Correct answer: {question.grade.answer}</p>
+    <p class="quiz-correct-answer">{[question.grade.answer].flat().join(", ")}</p>
 {/if}
 
 <style>
@@ -36,6 +36,7 @@
         width: calc(100% - 6px);
         transition: background-color 0.2s, border 0.2s;
     }
+    
     .quiz-question-input.correct {
         background: var(--correct-bg);
         border: var(--correct-border);
@@ -61,5 +62,20 @@
 
     .quiz-question-title {
         font-weight: 500;
+    }
+
+    .quiz-correct-answer {
+        padding: 3px;
+        margin: 2px;
+        background: var(--bg-l1);
+        border-radius: var(--rad-m);
+        width: fit-content;
+        font-size: var(--txt-s);
+    }
+
+    .quiz-correct-answer::before {
+        content: "Correct answer: ";
+        color: var(--txt-c2);
+        font-style: italic;
     }
 </style>

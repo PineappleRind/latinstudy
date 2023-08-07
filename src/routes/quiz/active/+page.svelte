@@ -1,12 +1,16 @@
 <script lang="ts">
-  import { generateQuestions } from "./generateQuizQuestions/main";
-  import { options } from "../settings/+page.svelte";
+  import { quadIn } from "svelte/easing";
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+  
+  import { scale } from "@/routes/animations";
+  import { options } from "@/routes/quiz/settings/+page.svelte";
+  import { generateQuestions } from "@/routes/quiz/active/generateQuizQuestions/main";
+  import { gradeQuestion } from "@/routes/quiz/active/grade";
   import QuizQuestion from "@/components/QuizQuestion.svelte";
   import type { ParsedEndingsData, VocabWord } from "@/types/data";
-  import { scale } from "@/routes/animations";
-  import { quadIn } from "svelte/easing";
-  import { gradeQuestion } from "./grade";
-  import { onMount } from "svelte/internal";
+    import { page } from "$app/stores";
+    import { lastQuiz } from "@/routes/stores";
 
   export let data: ParsedEndingsData & { vocabulary: VocabWord[] };
 
@@ -32,7 +36,7 @@
   }
 
   let currentIndex: number = 0;
-
+  $: if (!questions[currentIndex]) goto("/quiz/results");
   let nextEvent = $options.immediateGrade ? NextEvent.Grade : NextEvent.Next;
 
   let currentInput: HTMLInputElement;
@@ -46,6 +50,7 @@
       };
       nextEvent = NextEvent.Next;
     } else if (nextEvent === NextEvent.Next) {
+      if (!questions[currentIndex+1]) return finish();
       currentIndex += 1;
       if (!questions[currentIndex].grade) nextEvent = NextEvent.Grade;
     } else if (nextEvent === NextEvent.Finish) {
@@ -63,23 +68,34 @@
       if (e.key === "Enter") handleNext();
     };
   });
+
+  function finish() {
+    lastQuiz.set({
+      date: new Date(),
+      questions
+    })
+    return void goto("/quiz/results");
+  }
 </script>
 
 <a class="link pane-trigger" href="/quiz/settings">⊗ End quiz</a>
 <h2>
   Quiz <span style="font-size: 12px;opacity:0.6"
-    ><span id="count-current" />/<span id="count-total" /></span
+    >{currentIndex + 1}/{questions.length}</span
   >
 </h2>
 <div style={dimensionsCSS} class="quiz-content-wrapper">
   {#key currentIndex}
     <div
-      in:scale={{ delay: 200, ease: quadIn }}
-      out:scale={{}}
+      in:scale|local={{ delay: 200, ease: quadIn }}
+      out:scale|local={{ duration: $page.route.id?.includes("active") ? 200 : 0 }}
       bind:contentRect={contentDimensions}
       class="quiz-content-animator"
     >
-      <QuizQuestion bind:input={currentInput} question={questions[currentIndex]} />
+      <QuizQuestion
+        bind:input={currentInput}
+        question={questions[currentIndex]}
+      />
     </div>
   {/key}
 </div>
@@ -102,6 +118,7 @@
   .quiz-content-wrapper {
     transition: width 0.4s, height 0.4s;
     position: relative;
+    overflow: hidden;
   }
 
   .quiz-content-animator {

@@ -1,4 +1,5 @@
 import { get, writable, type Writable } from "svelte/store";
+import type { QuizQuestion } from "./quiz/active/generateQuizQuestions/types";
 
 /**
  * An extension of Svelte's `writable` that also saves its state to localStorage and
@@ -47,3 +48,9 @@ export default function storedWritable<T>(
 }
 
 export const previousPage = writable<string | null>(null);
+
+type QuizHistoryEntry = {
+	date: Date;
+	questions: QuizQuestion[];
+};
+export const lastQuiz = writable<QuizHistoryEntry | null>(null);

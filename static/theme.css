@@ -106,6 +106,7 @@ small {
     font-size: var(--txt-s);
     color: var(--txt-c2);
     cursor: pointer;
+    text-decoration: none;
     transition: var(--tr);
 }
 
