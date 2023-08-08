@@ -27,10 +27,12 @@ export function generateQuestions(
 
 	const enabledEndings = endings.conjugations.filter((ending) => {
 		const { voices, moods, tenses } = options.conjugationSettings;
+
 		return (
 			voices.includes(ending.voice as voice) &&
 			moods.includes(ending.mood) &&
-			tenses.includes(ending.tense as tense)
+			tenses.includes(ending.tense as tense) &&
+			options.conjugations.includes(ending.conjugation)
 		);
 	});
 

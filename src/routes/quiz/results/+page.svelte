@@ -17,21 +17,30 @@
   <p>Taken {$lastQuiz.date.toLocaleString()}</p>
   <h4>Your grade</h4>
   <p>
-    {((correctQuestions || 0) / $lastQuiz.questions.length * 100).toFixed(1)}% |
+    {(((correctQuestions || 0) / $lastQuiz.questions.length) * 100).toFixed(1)}%
+    |
     {correctQuestions}/{$lastQuiz.questions.length}
   </p>
   <h4>Questions</h4>
   {#each $lastQuiz.questions as question, index}
     <div class="question">
       {index + 1}. {question.question}:&nbsp;
-      <span class="question-correct-answer">
-        <AnswerRenderer answers={question.answer} />
-      </span>
       {#if question.grade?.score === QuizQuestionScore.Wrong}
         <span class="question-wrong-answer">
           {question.grade?.userAnswer}
-        </span>
-      {/if}
+        </span>—
+      {:else if question.grade?.score === QuizQuestionScore.Partial}
+        <span class="question-partial-answer">
+          {question.grade?.userAnswer} 
+        </span>—
+      {/if} 
+      <span
+        class={(question.grade?.score === QuizQuestionScore.Correct &&
+          "question-correct-answer") ||
+          null}
+      >
+        <AnswerRenderer answers={question.answer} />
+      </span>
     </div>
   {/each}
   <a class="btn full-width" href="/">Back home</a>
@@ -62,4 +71,10 @@
   .question-correct-answer::after {
     content: "✓";
   }
+
+  .question-partial-answer {
+    color: var(--partial-correct-border);
+    filter: brightness(50%) hue-rotate(170deg) invert(1) saturate(2);
+  }
+
 </style>

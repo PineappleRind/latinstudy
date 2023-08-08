@@ -42,18 +42,18 @@
 
     .quiz-question-input.correct {
         background: var(--correct-bg);
-        border: var(--correct-border);
+        border: 1px solid var(--correct-border);
     }
 
     .quiz-question-input.wrong {
         background: var(--wrong-bg);
-        border: var(--wrong-border);
+        border: 1px solid var(--wrong-border);
         color: red;
     }
 
     .quiz-question-input.partial-correct {
         background: var(--partial-correct-bg);
-        border: var(--partial-correct-border);
+        border: 1px solid var(--partial-correct-border);
     }
 
     .quiz-question-super {

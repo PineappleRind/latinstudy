@@ -43,11 +43,11 @@ body {
     --tr-l: 0.4s;
 
     --wrong-bg: rgba(255, 0, 0, 0.2);
-    --wrong-border: 1px solid rgba(255, 0, 0, 0.6);
+    --wrong-border: rgba(255, 0, 0, 0.6);
     --correct-bg: rgba(0, 255, 0, 0.2);
-    --correct-border: 1px solid rgba(0, 255, 0, 0.6);
+    --correct-border: rgba(0, 255, 0, 0.6);
     --partial-correct-bg: rgba(255, 205, 0, 0.2);
-    --partial-correct-border: 1px solid rgba(255, 205, 0, 0.6);
+    --partial-correct-border: rgba(255, 205, 0, 0.6);
 }
 
 @media (prefers-color-scheme: dark) {

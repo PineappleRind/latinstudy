@@ -4,18 +4,24 @@
     export let answers: string | string[];
     $: if (!Array.isArray(answers)) answers = [answers];
 
+    let text = "";
+    onMount(() => {
+        for (const [i, answer] of (answers as string[]).entries()) {
+            const [word, note] = answer.split("|");
+            text += word;
+            if (note)
+                text += `<span class="answer-note text-subtler">(${note})</span>`;
+            if (i !== answers.length - 1) text += ", ";
+        }
+    });
 </script>
 
 <span class="rendered-answer">
-    {#each answers as answer, index}{answer.split("|")[0]}
-        {#if answer.split("|")[1]}<span class="answer-note text-subtler"
-                >({answer.split("|")[1]})</span
-            >
-        {/if}{#if index !== answers.length - 1}, {/if}{/each}
+    {@html text}
 </span>
 
 <style>
-    .answer-note {
+    :global(.answer-note) {
         font-style: italic;
         font-size: 12px;
         opacity: 0.4;
