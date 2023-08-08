@@ -8,7 +8,6 @@
       voices: voice[];
       tenses: tense[];
       moods: string[];
-      persons: string[];
     };
     vocabCount: number;
     immediateGrade: true;
@@ -21,7 +20,6 @@
       voices: ["active"],
       tenses: ["present"],
       moods: [],
-      persons: [],
     },
     vocabCount: -1,
     immediateGrade: true,
@@ -91,11 +89,14 @@
         ]}
         bind:state={$options.conjugationSettings.voices}
       />
-      <!-- <p>Include moods...</p>
-      <div class="quiz-option-select">
-        <div class="quiz-option" data-multitoggle-group="quiz-conj-moods" data-value="1">Indicative</div>
-        <div class="quiz-option" data-multitoggle-group="quiz-conj-moods" data-value="2">Subjunctive</div>
-      </div> -->
+      <p>Include moods...</p>
+      <Multitoggle
+        items={[
+          { name: "Indicative", value: "indicative" },
+          { name: "Subjunctive", value: "subjunctive" },
+        ]}
+        bind:state={$options.conjugationSettings.moods}
+      />
       <p>Include tenses...</p>
       <Multitoggle
         items={[
@@ -145,9 +146,9 @@
   }
   fieldset .fieldset-inner {
     min-height: 0;
-    overflow: hidden;
   }
   fieldset.open {
+    overflow: hidden;
     padding-block: 10px;
     opacity: 1;
     grid-template-rows: 1fr;

@@ -8,9 +8,8 @@ export function generateVocabQuestions(
 ) {
 	const result: QuizQuestion[] = [];
 
-	if (amount === 0) amount = vocabulary.length;
 	shuffleArray(vocabulary);
-	for (let i = 0; i < amount; i++) {
+	for (let i = 0; i < amount || vocabulary.length; i++) {
 		const randomWord = vocabulary[i];
 
 		result.push({

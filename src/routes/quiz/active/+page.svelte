@@ -1,7 +1,9 @@
 <script lang="ts">
+  import type { Writable } from "svelte/store";
   import { quadIn } from "svelte/easing";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
 
   import { scale } from "@/routes/animations";
   import { options } from "@/routes/quiz/settings/+page.svelte";
@@ -9,7 +11,6 @@
   import { gradeQuestion } from "@/routes/quiz/active/grade";
   import QuizQuestion from "@/components/QuizQuestion.svelte";
   import type { ParsedEndingsData, VocabWord } from "@/types/data";
-  import { page } from "$app/stores";
   import { lastQuiz } from "@/routes/stores";
 
   export let data: ParsedEndingsData & { vocabulary: VocabWord[] };
@@ -39,21 +40,26 @@
   $: if (!questions[currentIndex]) goto("/quiz/results");
   let nextEvent = $options.immediateGrade ? NextEvent.Grade : NextEvent.Next;
 
-  let currentInput: HTMLInputElement;
+  let inputValue: Writable<string | null>;
+  let nextButtonDisabled = false;
+  $: nextButtonDisabled =
+    !$inputValue?.replaceAll(" ", "") && !questions[currentIndex].grade;
+
   function handleNext() {
     if (nextEvent === NextEvent.Grade) {
-      const score = gradeQuestion(questions[currentIndex], currentInput?.value);
+      const score = gradeQuestion(questions[currentIndex], $inputValue || "");
       questions[currentIndex].grade = {
         score,
-        userAnswer: currentInput?.value,
+        userAnswer: $inputValue || "",
         answer: questions[currentIndex].answer,
       };
       nextEvent = NextEvent.Next;
     } else if (nextEvent === NextEvent.Next) {
       if (!questions[currentIndex + 1]) return finish();
+      if (!questions[currentIndex + 2]) nextEvent = NextEvent.Finish;
       currentIndex += 1;
       if (!questions[currentIndex].grade) nextEvent = NextEvent.Grade;
-    } else if (nextEvent === NextEvent.Finish) {
+      inputValue.set("");
     }
   }
 
@@ -94,10 +100,7 @@
       bind:contentRect={contentDimensions}
       class="quiz-content-animator"
     >
-      <QuizQuestion
-        bind:input={currentInput}
-        question={questions[currentIndex]}
-      />
+      <QuizQuestion bind:inputValue question={questions[currentIndex]} />
     </div>
   {/key}
 </div>
@@ -109,8 +112,7 @@
     class="btn quiz-prev">Previous</button
   >
   <button
-    disabled={!currentInput?.value.replaceAll(" ", "") &&
-      !questions[currentIndex].grade}
+    disabled={nextButtonDisabled}
     class="btn primary full-width quiz-next"
     on:click={handleNext}>{["Grade", "Next", "Finish"][nextEvent - 1]}</button
   >

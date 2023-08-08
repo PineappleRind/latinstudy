@@ -8,7 +8,7 @@ export function preprocessEndings(data: JSONEndingsData): ParsedEndingsData {
 		expanded[typeName as keyof ParsedEndingsData] = expandEndingData(
 			type,
 			typeName as keyof JSONEndingsData,
-		) as any;
+		);
 	}
 	return expanded;
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { lastQuiz } from "@/routes/stores";
-  import { QuizQuestionScore } from "../active/generateQuizQuestions/types";
+  import { QuizQuestionScore } from "@/routes/quiz/active/generateQuizQuestions/types";
   import AnswerRenderer from "@/components/AnswerRenderer.svelte";
 
   const correctQuestions = $lastQuiz?.questions
@@ -23,7 +23,7 @@
   <h4>Questions</h4>
   {#each $lastQuiz.questions as question, index}
     <div class="question">
-      {index + 1}. {question.question}:
+      {index + 1}. {question.question}:&nbsp;
       <span class="question-correct-answer">
         <AnswerRenderer answers={question.answer} />
       </span>
@@ -42,6 +42,9 @@
 {/if}
 
 <style>
+  .question {
+    white-space: break-word;
+  }
   .question-wrong-answer {
     color: red;
     font-weight: 300;
@@ -53,6 +56,7 @@
   .question-correct-answer {
     color: green;
     font-weight: 600;
+    white-space: nowrap;
   }
 
   .question-correct-answer::after {

@@ -1,12 +1,14 @@
 <script lang="ts">
+    import { writable, type Writable } from "svelte/store";
     import {
         QuizQuestionScore,
         type QuizQuestion,
     } from "@/routes/quiz/active/generateQuizQuestions/types";
 
-    export let input: HTMLInputElement | null = null;
-
     export let question: QuizQuestion;
+    export let inputValue: Writable<string | null> = writable(
+        question.grade?.userAnswer || null
+    );
     function getSuper() {
         if (question.type === "vocab")
             return `translate the ${question.word?.type}`;
@@ -17,7 +19,7 @@
 <h4 class="quiz-question-super">{getSuper()}</h4>
 <h3 class="quiz-question-title">{question.question}</h3>
 <input
-    bind:this={input}
+    bind:value={$inputValue}
     class:wrong={question.grade?.score === QuizQuestionScore.Wrong}
     class:correct={question.grade?.score === QuizQuestionScore.Correct}
     class:partial-correct={question.grade?.score === QuizQuestionScore.Partial}
@@ -25,10 +27,11 @@
     placeholder="What is it? Enter..."
     type="text"
     class="quiz-question-input"
-    value={question.grade?.userAnswer || null}
 />
 {#if question.grade}
-    <p class="quiz-correct-answer">{[question.grade.answer].flat().join(", ")}</p>
+    <p class="quiz-correct-answer">
+        {[question.grade.answer].flat().join(", ")}
+    </p>
 {/if}
 
 <style>
@@ -36,7 +39,7 @@
         width: calc(100% - 6px);
         transition: background-color 0.2s, border 0.2s;
     }
-    
+
     .quiz-question-input.correct {
         background: var(--correct-bg);
         border: var(--correct-border);

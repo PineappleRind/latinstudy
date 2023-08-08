@@ -1,11 +1,4 @@
-import type {
-	CaseEnding,
-	ConjugationEnding,
-	ParsedEndingsData,
-	VocabWord,
-	tense,
-	voice,
-} from "@/types/data";
+import type { ParsedEndingsData, VocabWord, tense, voice } from "@/types/data";
 import type { QuizOptions } from "../../settings/+page.svelte";
 import { generateVocabQuestions } from "./vocabulary";
 import { generateEndingQuestions } from "./endings";
@@ -33,11 +26,10 @@ export function generateQuestions(
 	);
 
 	const enabledEndings = endings.conjugations.filter((ending) => {
-		const { voices, moods, persons, tenses } = options.conjugationSettings;
+		const { voices, moods, tenses } = options.conjugationSettings;
 		return (
 			voices.includes(ending.voice as voice) &&
 			moods.includes(ending.mood) &&
-			persons.includes(ending.person) &&
 			tenses.includes(ending.tense as tense)
 		);
 	});
