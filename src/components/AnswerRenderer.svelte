@@ -1,6 +1,9 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+
     export let answers: string | string[];
-    if (typeof answers === "string") answers = [answers];
+    $: if (!Array.isArray(answers)) answers = [answers];
+
 </script>
 
 <span class="rendered-answer">

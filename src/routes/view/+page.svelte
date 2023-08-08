@@ -9,7 +9,7 @@
     Declensions = 1,
     Vocabulary = 2,
   }
-  let selectedPane: Pane = Pane.Vocabulary;
+  let selectedPane: Pane = Pane.Declensions;
 
   function handlePaneSelect({
     currentTarget,
@@ -28,7 +28,7 @@
 </div>
 
 {#if selectedPane === Pane.Declensions}
-  <Declensions />
+  <Declensions endings={data.declensions} />
 {:else if selectedPane === Pane.Vocabulary}
   <Vocabulary {data} />
 {/if}

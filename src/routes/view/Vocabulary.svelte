@@ -12,17 +12,21 @@
     }
     let vocabulary = sort(data.vocabulary);
     let typeFilter: string;
+    let searchFilter: string = "";
     $: {
         if (typeFilter === "*") vocabulary = data.vocabulary.sort();
         else
             vocabulary = data.vocabulary.filter(
                 (word: VocabWord) => word.type === typeFilter
             );
+        vocabulary = vocabulary.filter((word: VocabWord) =>
+            word.word.includes(searchFilter)
+        );
     }
 </script>
 
 <div class="flex">
-    <input type="text" class="hidden full-width" placeholder="Search..." />
+    <input type="text" bind:value={searchFilter} class="hidden full-width" placeholder="Search..." />
     <select
         id="view-vocab-type"
         style="max-width: 30%;"
