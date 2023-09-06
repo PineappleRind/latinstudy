@@ -4,6 +4,7 @@
         QuizQuestionScore,
         type QuizQuestion,
     } from "@/routes/quiz/active/generateQuizQuestions/types";
+    import AnswerRenderer from "./AnswerRenderer.svelte";
 
     export let question: QuizQuestion;
     export let inputValue: Writable<string | null> = writable(
@@ -30,7 +31,7 @@
 />
 {#if question.grade}
     <p class="quiz-correct-answer">
-        {[question.grade.answer].flat().join(", ")}
+        <AnswerRenderer answers={question.grade.answer} />
     </p>
 {/if}
 

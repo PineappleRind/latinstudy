@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { CaseEnding, caseName, gender } from "@/types/data";
+    import { onMount } from "svelte";
 
     export let endings: CaseEnding[];
 
@@ -13,25 +14,28 @@
     const genders = ["Masculine", "Feminine", "Neuter"];
     const numbers = ["Singular", "Plural"];
 
-    let selectedDeclension = "1";
+    let selectedDeclension: HTMLSelectElement;
     let gendersInDeclension: Set<gender> = new Set(["feminine"]);
-    $: {
-        // since bind:value sends back a string
-        selectedDeclension = +selectedDeclension;
-        gendersInDeclension = endings
-            .filter((e) => e.declension === selectedDeclension)
-            .reduce((acc, cur) => {
-                acc.add(cur.gender);
-                return acc;
-            }, new Set<gender>());
-    }
+    onMount(() => {
+        selectedDeclension.oninput = () => {
+            // since bind:value sends back a string
+            gendersInDeclension = endings
+                .filter(
+                    (e) => e.declension === (+selectedDeclension?.value || 1)
+                )
+                .reduce((acc, cur) => {
+                    acc.add(cur.gender);
+                    return acc;
+                }, new Set<gender>());
+        };
+    });
 
     function findEnding(number: string, case$: string, genderColumn: number) {
         const gender = genders[genderColumn];
         return endings.find(
             (ending) =>
                 ending.case === case$.toLowerCase() &&
-                ending.declension === selectedDeclension &&
+                ending.declension === (+selectedDeclension?.value || 1) &&
                 ending.gender === gender.toLowerCase() &&
                 ending.number === number.toLowerCase()
         );
@@ -41,7 +45,7 @@
 <select
     id="view-declension-type"
     style="max-width: 30%;"
-    bind:value={selectedDeclension}
+    bind:this={selectedDeclension}
 >
     <option value="1">1st</option>
     <option value="2">2nd</option>
@@ -78,7 +82,6 @@
 <style>
     table {
         background: var(--bg-l1);
-        width: 100%;
         min-width: 400px;
         margin: 4px;
         border-collapse: separate;
