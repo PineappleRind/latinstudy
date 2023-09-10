@@ -1,11 +1,6 @@
 <script lang="ts">
     import AnimatedDimensionProvider from "@/components/AnimatedDimensionProvider.svelte";
-    import type {
-        ConjugationEnding,
-        gender,
-        tense as Tense,
-        voice,
-    } from "@/types/data";
+    import type { ConjugationEnding } from "@/types/data";
     import { onMount } from "svelte";
 
     export let conjugations: ConjugationEnding[];
@@ -35,14 +30,6 @@
         voice,
         mood,
     }: Omit<ConjugationEnding, "ending">) {
-        console.log(
-            person,
-            number,
-            tense,
-            voice,
-            mood,
-            +selectedConjugation?.value?.slice(0, 1) || 1
-        );
         return conjugations.find(
             (ending) =>
                 ending.conjugation === (+selectedConjugation?.value || 1) &&
