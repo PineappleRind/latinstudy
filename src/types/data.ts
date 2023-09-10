@@ -41,11 +41,11 @@ export interface ConjugationEnding {
 	mood: string;
 	tense: string;
 	number: string;
-	person: string;
+	person: number;
 }
 
 export interface Pronoun {
-	person: string;
+	person: number;
 	number: grammaticalNumber;
 	case: caseName;
 	gender?: gender;

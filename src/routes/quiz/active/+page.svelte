@@ -1,24 +1,17 @@
 <script lang="ts">
     import type { Writable } from "svelte/store";
-    import { quadIn } from "svelte/easing";
     import { onMount } from "svelte";
     import { goto } from "$app/navigation";
-    import { page } from "$app/stores";
 
-    import { scale } from "@/routes/animations";
     import { options } from "@/routes/quiz/settings/+page.svelte";
     import { generateQuestions } from "@/routes/quiz/active/generateQuizQuestions/main";
     import { gradeQuestion } from "@/routes/quiz/active/grade";
     import QuizQuestion from "@/components/QuizQuestion.svelte";
     import type { ParsedEndingsData, VocabWord } from "@/types/data";
     import { lastQuiz } from "@/routes/stores";
+    import AnimatedDimensionProvider from "@/components/AnimatedDimensionProvider.svelte";
 
     export let data: ParsedEndingsData & { vocabulary: VocabWord[] };
-
-    let contentDimensions: DOMRectReadOnly;
-    let dimensionsCSS: string;
-    $: if (contentDimensions)
-        dimensionsCSS = `width: ${contentDimensions.width}px; height: ${contentDimensions.height}px`;
 
     const questions = generateQuestions(
         {
@@ -93,20 +86,9 @@
         >{currentIndex + 1}/{questions.length}</span
     >
 </h2>
-<div style={dimensionsCSS} class="quiz-content-wrapper">
-    {#key currentIndex}
-        <div
-            in:scale|local={{ delay: 200, ease: quadIn }}
-            out:scale|local={{
-                duration: $page.route.id?.includes("active") ? 200 : 0,
-            }}
-            bind:contentRect={contentDimensions}
-            class="quiz-content-animator"
-        >
-            <QuizQuestion bind:inputValue question={questions[currentIndex]} />
-        </div>
-    {/key}
-</div>
+<AnimatedDimensionProvider key={currentIndex}>
+    <QuizQuestion bind:inputValue question={questions[currentIndex]} />
+</AnimatedDimensionProvider>
 
 <div class="flex">
     <button
@@ -121,17 +103,3 @@
         >{["Grade", "Next", "Finish"][nextEvent - 1]}</button
     >
 </div>
-
-<style>
-    .quiz-content-wrapper {
-        transition: width 0.4s, height 0.4s;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .quiz-content-animator {
-        width: max-content;
-        min-width: 300px;
-        position: absolute;
-    }
-</style>

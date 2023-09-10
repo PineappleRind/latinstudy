@@ -44,6 +44,6 @@ const formatQuestionString = {
 	conjugations(conjugation: number, ending: ConjugationEnding): string {
 		return `${ord(conjugation.toString())} conjugation ${ending.voice} ${
 			ending.tense
-		} tense ${ord(ending.person)} person ${ending.number}`;
+		} tense ${ord(ending.person.toString())} person ${ending.number}`;
 	},
 };
