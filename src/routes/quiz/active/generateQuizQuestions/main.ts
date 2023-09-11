@@ -1,5 +1,5 @@
 import type { ParsedEndingsData, VocabWord, tense, voice } from "@/types/data";
-import type { QuizOptions } from "../../settings/+page.svelte";
+import type { QuizOptions } from "../../settings/fine-tune/+page.svelte";
 import { generateVocabQuestions } from "./vocabulary";
 import { generateEndingQuestions } from "./endings";
 import { shuffleArray } from "@/utils/shuffleArray";

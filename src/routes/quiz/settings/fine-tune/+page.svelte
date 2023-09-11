@@ -1,17 +1,6 @@
 <script context="module" lang="ts">
-    import type { tense, voice } from "@/types/data";
-
-    export type QuizOptions = {
-        declensions: number[];
-        conjugations: number[];
-        conjugationSettings: {
-            voices: voice[];
-            tenses: tense[];
-            moods: string[];
-        };
-        vocabCount: number;
-        immediateGrade: true;
-    };
+    import type { QuizOptions } from "../types";
+    import { enabledCategories } from "../stores";
 
     export const options = storedWritable<QuizOptions>("quiz-options", {
         declensions: [],
@@ -30,6 +19,7 @@
     import { goto } from "$app/navigation";
     import Multitoggle from "@/components/Multitoggle.svelte";
     import storedWritable from "@/routes/stores";
+    import { formatList } from "@/utils/format";
 
     function quizIsEmpty() {
         const noDeclensions = !$options.declensions.length;
@@ -50,9 +40,12 @@
 </script>
 
 <a class="link back" href="/">Home</a>
-<h2>Quiz Settings</h2>
-<h4>Quiz on declensions...</h4>
-<div class="quiz-option-select">
+<h2>Settings for {formatList($enabledCategories)}</h2>
+<div
+    style={$enabledCategories.includes("Declensions") ? "display: none" : null}
+    class="quiz-option-select"
+>
+    <h4>Include these declensions...</h4>
     <Multitoggle
         bind:state={$options.declensions}
         items={[
@@ -64,9 +57,10 @@
         ]}
     />
 </div>
-<h4>Quiz on conjugations...</h4>
 <div>
+    <h4>Include these conjugations...</h4>
     <Multitoggle
+        min={1}
         bind:state={$options.conjugations}
         items={[
             { name: "1st", value: 1 },

@@ -54,7 +54,7 @@
     .word {
         margin: 1px;
         padding: 4px 8px;
-        border-bottom: 1px solid var(--light-border);
+        border-bottom: 1px solid var(--border-light);
     }
 
     .word:last-child {

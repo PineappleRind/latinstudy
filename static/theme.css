@@ -35,7 +35,8 @@ body {
     --rad-m: 12px;
     --rad-l: calc(var(--rad-m) * 2);
 
-    --light-border: rgba(0, 0, 0, 0.2);
+    --border-light: rgba(0, 0, 0, 0.2);
+    --border-strong: rgba(0, 0, 0, 0.5);
     --shadow-s: 0 3px 4px rgba(0, 0, 0, 0.1);
     --shadow-m: 0 5px 10px rgba(0, 0, 0, 0.1);
     --shadow-l: 0 40px 70px rgba(0, 0, 0, 0.1);
@@ -61,7 +62,7 @@ body {
         --txt-c1: rgb(195, 195, 195);
         --txt-c2: #777;
 
-        --light-border: rgb(84, 84, 84);
+        --border-light: rgb(84, 84, 84);
     }
 }
 
@@ -92,7 +93,7 @@ h4 {
     padding-bottom: 3px;
     margin-bottom: 3px;
     margin-top: 4px;
-    border-bottom: 1px solid var(--light-border);
+    border-bottom: 1px solid var(--border-light);
     letter-spacing: -0.05em;
 }
 
@@ -132,7 +133,7 @@ input[type="number"],
 input[type="text"] {
     padding: 8px 15px;
     margin: 2px;
-    border: 1px solid var(--light-border);
+    border: 1px solid var(--border-light);
     background: var(--bg-l0);
     border-radius: var(--rad-m);
 }
@@ -166,7 +167,7 @@ input[type="checkbox"] {
     color: white;
     width: 1.15em;
     height: 1.15em;
-    border: 1px solid var(--light-border);
+    border: 1px solid var(--border-light);
     margin-right: 5px;
     border-radius: 0.15em;
     transform: translateY(-0.075em);
@@ -190,7 +191,7 @@ input[type="checkbox"]:checked::before {
 }
 
 input[type="checkbox"]:checked {
-    border: 1px solid var(--light-border);
+    border: 1px solid var(--border-light);
     background: var(--btn-bg);
 }
 
@@ -200,7 +201,7 @@ input[type="checkbox"]:focus {
 
 select {
     padding: 6px 12px;
-    border: 1px solid var(--light-border);
+    border: 1px solid var(--border-light);
     background: var(--bg-l1);
     border-radius: var(--rad-m);
     margin: 3px;
@@ -221,7 +222,7 @@ button {
     background: var(--bg-l2);
     color: var(--txt-c1);
     border-radius: var(--rad-m);
-    border: 1px solid var(--light-border);
+    border: 1px solid var(--border-light);
     padding: 8px 15px;
     font-weight: 700;
     font-size: var(--txt-m);
@@ -270,7 +271,7 @@ button {
 }
 
 fieldset {
-    border: 1px solid var(--light-border);
+    border: 1px solid var(--border-light);
     border-radius: var(--rad-l);
     padding: 10px;
     margin: 6px 3px;

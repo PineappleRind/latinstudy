@@ -3,7 +3,7 @@
     import { onMount } from "svelte";
     import { goto } from "$app/navigation";
 
-    import { options } from "@/routes/quiz/settings/+page.svelte";
+    import { options } from "@/routes/quiz/settings/fine-tune/+page.svelte";
     import { generateQuestions } from "@/routes/quiz/active/generateQuizQuestions/main";
     import { gradeQuestion } from "@/routes/quiz/active/grade";
     import QuizQuestion from "@/components/QuizQuestion.svelte";

@@ -88,7 +88,7 @@
         border-left: 0;
         border-radius: var(--rad-m);
         border-spacing: 0px;
-        border: 1px solid var(--light-border);
+        border: 1px solid var(--border-light);
     }
 
     td,
@@ -99,7 +99,7 @@
 
     tr td:not(:nth-child(1 of :not([style*="none"]))),
     tr th:not(:nth-child(1 of :not([style*="none"]))) {
-        border-left: 1px solid var(--light-border);
+        border-left: 1px solid var(--border-light);
     }
 
     th {
@@ -108,7 +108,7 @@
     }
 
     td {
-        border-top: 1px solid var(--light-border);
+        border-top: 1px solid var(--border-light);
     }
 
     tr:first-child th:nth-child(1 of :not([style*="none"])),

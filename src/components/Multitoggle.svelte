@@ -1,17 +1,39 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+
     type MultitoggleItem = {
         name: string;
         value: string | number;
     };
+    export let min = 0;
     export let state: MultitoggleItem["value"][] = [];
     export let items: MultitoggleItem[];
+    let multitoggleContainer: HTMLDivElement;
     let itemElements: HTMLDivElement[] = [];
+    onMount(() => {
+        itemElements = Array.from(
+            multitoggleContainer.querySelectorAll(
+                "[data-multitoggle-option]"
+            ) || []
+        );
+    });
 
+    const removeFromState = (value: MultitoggleItem["value"]) => {
+        state = state.filter((i) => i !== value);
+    };
+    const addToState = (value: MultitoggleItem["value"]) => {
+        // reassign array so svelte knows
+        state = [...state, value];
+    };
     function handleSelect(item: MultitoggleItem) {
-        state.includes(item.value)
-            ? (state = state.filter((i) => i !== item.value))
-            : (state = [...state, item.value]);
         const index = items.findIndex((c) => item.value === c.value);
+        if (state.includes(item.value)) {
+            console.log(index, itemElements);
+            if (state.length <= min)
+                return (itemElements[index].style.animation =
+                    "multitoggle-shake 0.2s both running");
+            removeFromState(item.value);
+        } else addToState(item.value);
         const element = itemElements[index];
         element.style.animationPlayState = "running";
         element.onanimationend = () => {
@@ -20,17 +42,24 @@
     }
 </script>
 
-<div class="multitoggle">
+<div bind:this={multitoggleContainer} class="multitoggle">
     {#each items as item, index}
-        <div
-            class="multitoggle-option"
-            bind:this={itemElements[index]}
-            class:selected={state.includes(item.value)}
-            on:click={() => handleSelect(item)}
-            on:keydown={() => handleSelect(item)}
-        >
-            {item.name}
-        </div>
+        {#if !$$slots.default}
+            <div
+                data-multitoggle-option
+                class="multitoggle-option"
+                bind:this={itemElements[index]}
+                class:selected={state.includes(item.value)}
+                on:click={() => handleSelect(item)}
+                on:keydown={() => handleSelect(item)}
+            >
+                {item.name}
+            </div>
+        {:else}
+            <div data-multitoggle-option>
+                <slot {handleSelect} {state} {item} />
+            </div>
+        {/if}
     {/each}
 </div>
 
@@ -47,7 +76,7 @@
         cursor: pointer;
         min-width: 45px;
         text-align: center;
-        border: 1px solid var(--light-border);
+        border: 1px solid var(--border-light);
         border-radius: var(--rad-m);
         animation: multitoggle-shake var(--tr-l) paused;
     }

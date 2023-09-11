@@ -18,7 +18,7 @@ h4 {
   padding-bottom: 3px;
   margin-bottom: 3px;
   margin-top: 2px;
-  border-bottom: 1px solid var(--light-border);
+  border-bottom: 1px solid var(--border-light);
 }
 
 small {
@@ -74,7 +74,7 @@ small {
   margin: 4px;
   padding: 7px 14px;
   background: var(--bg-l1);
-  border: 1px solid var(--light-border);
+  border: 1px solid var(--border-light);
   border-radius: var(--rad-m);
   transform-origin: bottom center;
   transition: var(--tr);
