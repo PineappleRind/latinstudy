@@ -10,5 +10,5 @@
 <br />
 <div class="flex">
   <a class="btn full-width" href="/view">Learn</a>
-  <a class="btn full-width" href="/quiz/settings">Quiz</a>
+  <a class="btn full-width" href="/quiz/settings/categories">Quiz</a>
 </div>
