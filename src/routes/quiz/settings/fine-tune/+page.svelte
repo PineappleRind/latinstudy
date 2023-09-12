@@ -19,7 +19,6 @@
     import { goto } from "$app/navigation";
     import Multitoggle from "@/components/Multitoggle.svelte";
     import storedWritable from "@/routes/stores";
-    import { formatList } from "@/utils/format";
 
     function quizIsEmpty() {
         const noDeclensions = !$options.declensions.length;
@@ -39,10 +38,10 @@
     }
 </script>
 
-<a class="link back" href="/">Home</a>
-<h2>Settings for {formatList($enabledCategories)}</h2>
+<a class="link back" href="/quiz/settings/categories">Back</a>
+<h2>Fine-tune your quiz</h2>
 <div
-    style={$enabledCategories.includes("Declensions") ? "display: none" : null}
+    style={!$enabledCategories.includes("Declensions") ? "display: none" : null}
     class="quiz-option-select"
 >
     <h4>Include these declensions...</h4>
@@ -57,7 +56,11 @@
         ]}
     />
 </div>
-<div>
+<div
+    style={!$enabledCategories.includes("Conjugations")
+        ? "display: none"
+        : null}
+>
     <h4>Include these conjugations...</h4>
     <Multitoggle
         min={1}
@@ -106,15 +109,19 @@
         </div>
     </fieldset>
 </div>
-<h4>Vocabulary</h4>
-<div class="quiz-vocab-select">
-    <p># of vocabulary words to quiz on (randomized)</p>
-    <input
-        type="number"
-        placeholder="Enter..."
-        class="quiz-vocab-count"
-        bind:value={$options.vocabCount}
-    /><small> (0 for all, -1 for none)</small>
+<div
+    style={!$enabledCategories.includes("Vocabulary") ? "display: none" : null}
+>
+    <h4>Vocabulary</h4>
+    <div class="quiz-vocab-select">
+        <p># of vocabulary words to quiz on (randomized)</p>
+        <input
+            type="number"
+            placeholder="Enter..."
+            class="quiz-vocab-count"
+            bind:value={$options.vocabCount}
+        /><small> (0 for all, -1 for none)</small>
+    </div>
 </div>
 <h4>More settings</h4>
 <div class="quiz-immediate-grade-select">

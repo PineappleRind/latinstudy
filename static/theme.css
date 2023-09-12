@@ -28,10 +28,12 @@ body {
     --txt-l: 1.1em;
     --txt-xl: 2em;
 
-    --btn-bg: #2d5be4;
-    --btn-bgh: #4874f9;
+    --btn-bg-base: 225, 77%;
+    --btn-bg: hsl(var(--btn-bg-base), 54%);
+    --btn-bgh: hsl(var(--btn-bg-base), 63%);
     --btn-rad: var(--rad-m);
 
+    --rad-s: calc(var(--rad-m) / 2);
     --rad-m: 12px;
     --rad-l: calc(var(--rad-m) * 2);
 
@@ -229,7 +231,7 @@ button {
     cursor: pointer;
     transition: var(--tr);
     backface-visibility: hidden;
-    margin: 5px;
+    margin-block: 5px;
     text-align: center;
     text-decoration: none;
 }

@@ -56,7 +56,7 @@
                 {item.name}
             </div>
         {:else}
-            <div data-multitoggle-option>
+            <div data-multitoggle-option data-unstyled>
                 <slot {handleSelect} {state} {item} />
             </div>
         {/if}
@@ -69,6 +69,10 @@
         flex-wrap: wrap;
         padding: 2px;
         gap: 2px;
+        max-width: 100%;
+    }
+    [data-unstyled] {
+        display: contents;
     }
     .multitoggle-option {
         padding: 3px 6px;
