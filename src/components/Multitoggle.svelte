@@ -44,22 +44,9 @@
 
 <div bind:this={multitoggleContainer} class="multitoggle">
     {#each items as item, index}
-        {#if !$$slots.default}
-            <div
-                data-multitoggle-option
-                class="multitoggle-option"
-                bind:this={itemElements[index]}
-                class:selected={state.includes(item.value)}
-                on:click={() => handleSelect(item)}
-                on:keydown={() => handleSelect(item)}
-            >
-                {item.name}
-            </div>
-        {:else}
-            <div data-multitoggle-option data-unstyled>
-                <slot {handleSelect} {state} {item} />
-            </div>
-        {/if}
+        <div data-multitoggle-option>
+            <slot {handleSelect} {state} {item} />
+        </div>
     {/each}
 </div>
 
@@ -71,43 +58,7 @@
         gap: 2px;
         max-width: 100%;
     }
-    [data-unstyled] {
+    [data-multitoggle-option] {
         display: contents;
-    }
-    .multitoggle-option {
-        padding: 3px 6px;
-        transition: var(--tr);
-        cursor: pointer;
-        min-width: 45px;
-        text-align: center;
-        border: 1px solid var(--border-light);
-        border-radius: var(--rad-m);
-        animation: multitoggle-shake var(--tr-l) paused;
-    }
-    .multitoggle-option.selected {
-        background: var(--btn-bg);
-        color: var(--txt-inv-c0);
-        animation: scale-bigger var(--tr-l) paused;
-    }
-    @keyframes scale-bigger {
-        50% {
-            scale: 1.1;
-            rotate: 2deg;
-            box-shadow: 0 0 20px -3px rgba(43, 0, 255, 0.2);
-        }
-    }
-
-    @keyframes multitoggle-shake {
-        30% {
-            translate: 2px 0px;
-        }
-
-        50% {
-            translate: -2px 0px;
-        }
-
-        70% {
-            translate: 0px 0px;
-        }
     }
 </style>
