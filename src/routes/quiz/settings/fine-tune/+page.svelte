@@ -3,15 +3,29 @@
     import { enabledCategories } from "../stores";
 
     export const options = storedWritable<QuizOptions>("quiz-options", {
-        declensions: [],
-        conjugations: [],
-        conjugationSettings: {
-            voices: ["active"],
-            tenses: ["present"],
-            moods: [],
+        declensionEndings: {
+            gender: [],
+            number: [],
+            case: [],
+            ending: [],
+            declension: []
         },
-        vocabCount: -1,
-        immediateGrade: true,
+        conjugationEndings: {
+            ending: [],
+            conjugation: [],
+            voice: [],
+            mood: [],
+            tense: [],
+            number: [],
+            person: []
+        },
+        vocabulary: {
+            amount: -1,
+            type: []
+        },
+        settings: {
+            immediateGrade: true,
+        },
     });
 </script>
 
@@ -19,21 +33,23 @@
     import { goto } from "$app/navigation";
     import Multitoggle from "@/components/Multitoggle.svelte";
     import storedWritable from "@/routes/stores";
+    import MultitoggleDropdown from "./components/MultitoggleDropdown.svelte";
 
-    function quizIsEmpty() {
-        const noDeclensions = !$options.declensions.length;
-        const noConjugationCustomization = Object.values(
-            $options.conjugationSettings
-        ).some((arr) => !arr.length);
+    function isQuizEmpty() {
+        // User set a category but no filter options selected for it
+        const noDeclensions =
+            $enabledCategories.includes("Declensions") &&
+            !$options.declensionEndings;
         const noConjugations =
-            !$options.conjugations.length ||
-            ($options.conjugations.length && noConjugationCustomization);
-        const noVocab = $options.vocabCount < 0;
-        return noDeclensions && noConjugations && noVocab;
+            $enabledCategories.includes("Conjugations") &&
+            !$options.conjugationEndings;
+        const noVocabulary =
+            $enabledCategories.includes("Vocabulary") && !$options.vocabulary;
+        return noDeclensions && noConjugations && noVocabulary;
     }
 
     function handleBegin() {
-        if (quizIsEmpty()) return;
+        if (isQuizEmpty()) return;
         goto("/quiz/active");
     }
 </script>
@@ -45,8 +61,8 @@
     class="quiz-option-select"
 >
     <h4>Include these declensions...</h4>
-    <Multitoggle
-        bind:state={$options.declensions}
+    <MultitoggleDropdown
+        bind:state={$options.declensionEndings.declension}
         items={[
             { name: "1st", value: 1 },
             { name: "2nd", value: 2 },
@@ -54,6 +70,7 @@
             { name: "4th", value: 4 },
             { name: "5th", value: 5 },
         ]}
+        title="Declensions"
     />
 </div>
 <div
@@ -64,7 +81,7 @@
     <h4>Include these conjugations...</h4>
     <Multitoggle
         min={1}
-        bind:state={$options.conjugations}
+        bind:state={$options.conjugationEndings.conjugation}
         items={[
             { name: "1st", value: 1 },
             { name: "2nd", value: 2 },
@@ -73,41 +90,34 @@
         ]}
     />
 
-    <fieldset
-        class:open={$options.conjugations.length > 0}
-        id="quiz-conj-settings"
-    >
-        <div class="fieldset-inner">
-            <p>Include voices...</p>
-            <Multitoggle
-                items={[
-                    { name: "Active", value: "active" },
-                    { name: "Passive", value: "passive" },
-                ]}
-                bind:state={$options.conjugationSettings.voices}
-            />
-            <p>Include moods...</p>
-            <Multitoggle
-                items={[
-                    { name: "Indicative", value: "indicative" },
-                    { name: "Subjunctive", value: "subjunctive" },
-                ]}
-                bind:state={$options.conjugationSettings.moods}
-            />
-            <p>Include tenses...</p>
-            <Multitoggle
-                items={[
-                    { name: "Present", value: "present" },
-                    { name: "Imperfect", value: "imperfect" },
-                    { name: "Future", value: "future" },
-                    { name: "Perfect", value: "perfect" },
-                    { name: "Pluperfect", value: "pluperfect" },
-                    { name: "Future Perfect", value: "future perfect" },
-                ]}
-                bind:state={$options.conjugationSettings.tenses}
-            />
-        </div>
-    </fieldset>
+    <p>Voices</p>
+    <Multitoggle
+        items={[
+            { name: "Active", value: "active" },
+            { name: "Passive", value: "passive" },
+        ]}
+        bind:state={$options.conjugationEndings.voice}
+    />
+    <p>Moods</p>
+    <Multitoggle
+        items={[
+            { name: "Indicative", value: "indicative" },
+            { name: "Subjunctive", value: "subjunctive" },
+        ]}
+        bind:state={$options.conjugationEndings.mood}
+    />
+    <p>Tenses</p>
+    <Multitoggle
+        items={[
+            { name: "Present", value: "present" },
+            { name: "Imperfect", value: "imperfect" },
+            { name: "Future", value: "future" },
+            { name: "Perfect", value: "perfect" },
+            { name: "Pluperfect", value: "pluperfect" },
+            { name: "Future Perfect", value: "future perfect" },
+        ]}
+        bind:state={$options.conjugationEndings.tense}
+    />
 </div>
 <div
     style={!$enabledCategories.includes("Vocabulary") ? "display: none" : null}
@@ -119,7 +129,7 @@
             type="number"
             placeholder="Enter..."
             class="quiz-vocab-count"
-            bind:value={$options.vocabCount}
+            bind:value={$options.vocabulary.amount}
         /><small> (0 for all, -1 for none)</small>
     </div>
 </div>
@@ -127,7 +137,7 @@
 <div class="quiz-immediate-grade-select">
     <input
         checked
-        bind:value={$options.immediateGrade}
+        bind:value={$options.settings.immediateGrade}
         type="checkbox"
         id="quiz-immediate-grade"
     />
@@ -135,25 +145,3 @@
 </div>
 <br />
 <button class="btn full-width primary" on:click={handleBegin}> Begin </button>
-
-<style>
-    fieldset {
-        display: grid;
-        grid-template-rows: 0fr;
-        transition: grid-template-rows var(--tr-l), opacity var(--tr),
-            padding var(--tr);
-        opacity: 0;
-        padding-block: 0px;
-        pointer-events: none;
-    }
-    fieldset .fieldset-inner {
-        min-height: 0;
-    }
-    fieldset.open {
-        overflow: hidden;
-        pointer-events: all;
-        padding-block: 10px;
-        opacity: 1;
-        grid-template-rows: 1fr;
-    }
-</style>

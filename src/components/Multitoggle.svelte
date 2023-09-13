@@ -1,18 +1,21 @@
-<script lang="ts">
-    import { onMount } from "svelte";
-
-    type MultitoggleItem = {
+<script lang="ts" context="module">
+    export type MultitoggleItem = {
         name: string;
         value: string | number;
     };
+</script>
+
+<script lang="ts">
+    import { onMount } from "svelte";
+
     export let min = 0;
     export let state: MultitoggleItem["value"][] = [];
     export let items: MultitoggleItem[];
-    let multitoggleContainer: HTMLDivElement;
+    export let multitoggleContainer: HTMLDivElement | undefined = undefined;
     let itemElements: HTMLDivElement[] = [];
     onMount(() => {
         itemElements = Array.from(
-            multitoggleContainer.querySelectorAll(
+            multitoggleContainer?.querySelectorAll(
                 "[data-multitoggle-option]"
             ) || []
         );
