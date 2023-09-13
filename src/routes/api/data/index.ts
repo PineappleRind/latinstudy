@@ -1,7 +1,7 @@
-import endings from "./endings.json";
-import vocab from "./vocab.json";
-import { preprocessEndings } from "./transform";
 import type { ParsedEndingsData, VocabWord } from "../../../types/data";
+import endings from "./endings.json";
+import { preprocessEndings } from "./transform";
+import vocab from "./vocab.json";
 
 export type JSONEndingsData = {
 	declensions: Record<string, Record<string, string>>;

@@ -1,9 +1,9 @@
 import type { ParsedEndingsData, VocabWord, tense, voice } from "@/types/data";
-import type { QuizOptions } from "../../settings/fine-tune/+page.svelte";
-import { generateVocabQuestions } from "./vocabulary";
-import { generateEndingQuestions } from "./endings";
 import { shuffleArray } from "@/utils/shuffleArray";
+import type { QuizOptions } from "../../settings/types";
+import { generateEndingQuestions } from "./endings";
 import type { QuizQuestion } from "./types";
+import { generateVocabQuestions } from "./vocabulary";
 
 export function generateQuestions(
 	endings: ParsedEndingsData,
@@ -12,33 +12,43 @@ export function generateQuestions(
 ): QuizQuestion[] {
 	const questions: QuizQuestion[] = [];
 
-	questions.push(...generateVocabQuestions(vocab, options.vocabCount));
+	if (options.enabled.includes("Vocabulary"))
+		questions.push(...generateVocabQuestions(vocab, options.vocabulary.amount));
 
-	const filteredDeclensions = endings.declensions.filter((x) =>
-		options.declensions.includes(x.declension),
+	const filteredDeclensions = endings.declensions.filter(
+		(x) =>
+			options.declensionEndings.declension.includes(x.declension) &&
+			options.declensionEndings.case.includes(x.case) &&
+			options.declensionEndings.gender.includes(x.gender) &&
+			options.declensionEndings.number.includes(x.number),
 	);
 
-	questions.push(
-		...generateEndingQuestions<"declensions">(
-			"declensions",
-			filteredDeclensions,
-		),
-	);
+	if (options.enabled.includes("Declensions"))
+		questions.push(
+			...generateEndingQuestions<"declensions">(
+				"declensions",
+				filteredDeclensions,
+			),
+		);
 
 	const enabledEndings = endings.conjugations.filter((ending) => {
-		const { voices, moods, tenses } = options.conjugationSettings;
+		const { voice, mood, tense, conjugation } = options.conjugationEndings;
 
 		return (
-			voices.includes(ending.voice as voice) &&
-			moods.includes(ending.mood) &&
-			tenses.includes(ending.tense as tense) &&
-			options.conjugations.includes(ending.conjugation)
+			voice.includes(ending.voice as voice) &&
+			mood.includes(ending.mood) &&
+			tense.includes(ending.tense as tense) &&
+			conjugation.includes(ending.conjugation)
 		);
 	});
 
-	questions.push(
-		...generateEndingQuestions<"conjugations">("conjugations", enabledEndings),
-	);
+	if (options.enabled.includes("Conjugations"))
+		questions.push(
+			...generateEndingQuestions<"conjugations">(
+				"conjugations",
+				enabledEndings,
+			),
+		);
 
 	return shuffleArray<QuizQuestion>(questions);
 }

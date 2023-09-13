@@ -1,13 +1,17 @@
-import type { tense, voice } from "@/types/data";
+import type { CaseEnding, ConjugationEnding, wordType } from "@/types/data";
+
+type AllPropertiesArrays<T> = {
+	[P in keyof T]: T[P][];
+};
 
 export type QuizOptions = {
-	declensions: number[];
-	conjugations: number[];
-	conjugationSettings: {
-		voices: voice[];
-		tenses: tense[];
-		moods: string[];
+	declensionEndings: AllPropertiesArrays<Omit<CaseEnding, "ending">>;
+	conjugationEndings: AllPropertiesArrays<Omit<ConjugationEnding, "ending">>;
+	vocabulary: { type: wordType[] } & {
+		amount: number;
 	};
-	vocabCount: number;
-	immediateGrade: boolean;
+	enabled: string[];
+	settings: {
+		immediateGrade: boolean;
+	};
 };

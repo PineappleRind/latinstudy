@@ -38,7 +38,7 @@ body {
     --rad-l: calc(var(--rad-m) * 2);
 
     --border-light: rgba(0, 0, 0, 0.2);
-    --border-strong: rgba(0, 0, 0, 0.5);
+
     --shadow-s: 0 3px 4px rgba(0, 0, 0, 0.1);
     --shadow-m: 0 5px 10px rgba(0, 0, 0, 0.1);
     --shadow-l: 0 40px 70px rgba(0, 0, 0, 0.1);
@@ -81,13 +81,13 @@ h2 {
     letter-spacing: -0.05em;
 }
 
-h3 {
+h3,
+h4 {
     font-weight: 300;
     letter-spacing: -0.03em;
 }
 
 h4 {
-    text-transform: uppercase;
     font-weight: 300;
     position: relative;
     color: var(--txt-c2);
@@ -95,8 +95,6 @@ h4 {
     padding-bottom: 3px;
     margin-bottom: 3px;
     margin-top: 4px;
-    border-bottom: 1px solid var(--border-light);
-    letter-spacing: -0.05em;
 }
 
 small {

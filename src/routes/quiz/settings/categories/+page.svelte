@@ -1,36 +1,39 @@
 <script lang="ts">
-    import Multitoggle from "@/components/Multitoggle.svelte";
-    import { enabledCategories } from "../stores";
     import { goto } from "$app/navigation";
+    import Checkbox from "@/routes/quiz/settings/components/Checkbox.svelte";
+    import { options } from "@/routes/quiz/settings/stores";
+
+    function handleSelect(value: string) {
+        if ($options.enabled.includes(value))
+            options.set({
+                ...$options,
+                enabled: $options.enabled.filter((i) => i !== value),
+            });
+        else
+            options.set({
+                ...$options,
+                enabled: [...$options.enabled, value],
+            });
+    }
 </script>
 
+<a class="link back" href="/">Home</a>
+
 <h2>Quiz on...</h2>
-<Multitoggle
-    items={[
-        { name: "Declension Endings", value: "Declensions" },
-        { name: "Conjugation Endings", value: "Conjugations" },
-        { name: "Vocabulary", value: "Vocabulary" },
-    ]}
-    let:item
-    let:handleSelect
-    let:state
-    bind:state={$enabledCategories}
->
+{#each ["Declensions", "Conjugations", "Vocabulary"] as item}
     <div
-        class="multitoggle-item category"
-        class:selected={state.includes(item.value)}
+        class="category"
+        class:selected={$options.enabled.includes(item)}
         on:click={() => handleSelect(item)}
         on:keydown={() => handleSelect(item)}
     >
-        <div class="category-name">{item.name}</div>
-        <div class="category-checkbox">
-            <div class="category-checkbox-checkmark" />
-        </div>
+        <div class="category-name">{item}</div>
+        <Checkbox selected={$options.enabled.includes(item)} />
     </div>
-</Multitoggle>
+{/each}
 <button
     on:click={() => goto("/quiz/settings/fine-tune")}
-    disabled={$enabledCategories.length < 1}
+    disabled={$options.enabled.length < 1}
     class="btn primary full-width"
 >
     Next
@@ -41,6 +44,7 @@
         border: 1px solid var(--border-light);
         border-radius: var(--rad-m);
         padding: 6px 8px;
+        margin: 2px 0;
         min-width: 100%;
         max-width: 300px;
         display: inline-flex;
@@ -48,44 +52,24 @@
         align-items: center;
         transition: background-color var(--tr), border var(--tr);
     }
-    .category-checkbox {
-        width: 18px;
-        height: 18px;
-        border: 1px solid var(--border-light);
-        border-radius: var(--rad-s);
-        position: relative;
-    }
-    .category-checkbox::after {
-        content: "";
-        background-color: transparent;
-        position: absolute;
-        width: 3px;
-        left: 6px;
-        top: 2px;
-        border-bottom: 2px solid white;
-        height: 8px;
-        border-right: 2px solid white;
-        rotate: 45deg;
-        scale: 0.5;
-        opacity: 0;
-        transition: opacity var(--tr), scale var(--tr);
-    }
+
     .selected {
-        color: hsl(var(--btn-bg-base), 40%);
+        --text-lightness: 50%;
+        --background-alpha: 0.2;
+        color: hsl(var(--btn-bg-base), var(--text-lightness));
         border: 1px solid hsl(var(--btn-bg-base), 70%);
-        background: hsl(var(--btn-bg-base), 90%);
+        background: hsla(var(--btn-bg-base), 50%, var(--background-alpha));
         animation: category-select 0.4s;
     }
-    .selected .category-checkbox {
-        background: var(--btn-bg);
-    }
-    .selected .category-checkbox::after {
-        opacity: 1;
-        scale: 1;
+    @media (prefers-color-scheme: dark) {
+        .selected {
+            --text-lightness: 70%;
+            --background-alpha: 0.4;
+        }
     }
     @keyframes category-select {
         30% {
-            box-shadow: 0 0 0 0px hsla(var(--btn-bg-base), 50%, 1);
+            box-shadow: 0 0 0 0px hsla(var(--btn-bg-base), 80%, 1);
             scale: 0.98;
         }
         100% {

@@ -1,8 +1,8 @@
-import { purify } from "@/utils/purify";
 import {
-	QuizQuestionScore,
 	type QuizQuestion,
+	QuizQuestionScore,
 } from "@/routes/quiz/active/generateQuizQuestions/types";
+import { purify } from "@/utils/purify";
 
 /**
  * Grade the specified question
