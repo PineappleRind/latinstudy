@@ -1,9 +1,9 @@
 import type { ParsedEndingsData, VocabWord, tense, voice } from "@/types/data";
-import type { QuizOptions } from "../../settings/fine-tune/+page.svelte";
-import { generateVocabQuestions } from "./vocabulary";
-import { generateEndingQuestions } from "./endings";
 import { shuffleArray } from "@/utils/shuffleArray";
+import type { QuizOptions } from "../../settings/types";
+import { generateEndingQuestions } from "./endings";
 import type { QuizQuestion } from "./types";
+import { generateVocabQuestions } from "./vocabulary";
 
 export function generateQuestions(
 	endings: ParsedEndingsData,
@@ -12,10 +12,10 @@ export function generateQuestions(
 ): QuizQuestion[] {
 	const questions: QuizQuestion[] = [];
 
-	questions.push(...generateVocabQuestions(vocab, options.vocabCount));
+	questions.push(...generateVocabQuestions(vocab, options.vocabulary.amount));
 
 	const filteredDeclensions = endings.declensions.filter((x) =>
-		options.declensions.includes(x.declension),
+		options.declensionEndings.declension.includes(x.declension),
 	);
 
 	questions.push(
@@ -26,13 +26,13 @@ export function generateQuestions(
 	);
 
 	const enabledEndings = endings.conjugations.filter((ending) => {
-		const { voices, moods, tenses } = options.conjugationSettings;
+		const { voice, mood, tense, conjugation } = options.conjugationEndings;
 
 		return (
-			voices.includes(ending.voice as voice) &&
-			moods.includes(ending.mood) &&
-			tenses.includes(ending.tense as tense) &&
-			options.conjugations.includes(ending.conjugation)
+			voice.includes(ending.voice as voice) &&
+			mood.includes(ending.mood) &&
+			tense.includes(ending.tense as tense) &&
+			conjugation.includes(ending.conjugation)
 		);
 	});
 

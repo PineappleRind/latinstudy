@@ -8,7 +8,7 @@
             number: [],
             case: [],
             ending: [],
-            declension: []
+            declension: [],
         },
         conjugationEndings: {
             ending: [],
@@ -17,11 +17,11 @@
             mood: [],
             tense: [],
             number: [],
-            person: []
+            person: [],
         },
         vocabulary: {
             amount: -1,
-            type: []
+            type: [],
         },
         settings: {
             immediateGrade: true,
@@ -31,7 +31,6 @@
 
 <script>
     import { goto } from "$app/navigation";
-    import Multitoggle from "@/components/Multitoggle.svelte";
     import storedWritable from "@/routes/stores";
     import MultitoggleDropdown from "./components/MultitoggleDropdown.svelte";
     function isQuizEmpty() {
@@ -55,24 +54,43 @@
 
 <a class="link back" href="/quiz/settings/categories">Back</a>
 <h2>Fine-tune your quiz</h2>
-<div
-    style={!$enabledCategories.includes("Declensions") ? "display: none" : null}
-    class="quiz-option-select"
->
-    <h4>Include these declensions...</h4>
-    <MultitoggleDropdown
-        bind:state={$options.declensionEndings.declension}
-        items={[
-            { name: "1st", value: 1 },
-            { name: "2nd", value: 2 },
-            { name: "3rd", value: 3 },
-            { name: "4th", value: 4 },
-            { name: "5th", value: 5 },
-        ]}
-        title="Declensions"
-    />
-</div>
-<div
+{#if $enabledCategories.includes("Declensions")}
+    <div class="quiz-option-select">
+        <h4>Filter declension endings by</h4>
+        <MultitoggleDropdown
+            bind:state={$options.declensionEndings.declension}
+            items={[
+                { name: "1st", value: 1 },
+                { name: "2nd", value: 2 },
+                { name: "3rd", value: 3 },
+                { name: "4th", value: 4 },
+                { name: "5th", value: 5 },
+            ]}
+            title="Declension"
+        />
+        <MultitoggleDropdown
+            bind:state={$options.declensionEndings.case}
+            items={[
+                { name: "Nominative", value: "nominative" },
+                { name: "Genitive", value: "genitive" },
+                { name: "Dative", value: "dative" },
+                { name: "Accusative", value: "accusative" },
+                { name: "Ablative", value: "ablative" },
+            ]}
+            title="Case"
+        />
+        <MultitoggleDropdown
+            bind:state={$options.declensionEndings.gender}
+            items={[
+                { name: "Masculine", value: "masculine" },
+                { name: "Feminine", value: "feminine" },
+                { name: "Neuter", value: "neuter" },
+            ]}
+            title="Gender"
+        />
+    </div>
+{/if}
+<!-- <div
     style={!$enabledCategories.includes("Conjugations")
         ? "display: none"
         : null}
@@ -117,7 +135,7 @@
         ]}
         bind:state={$options.conjugationEndings.tense}
     />
-</div>
+</div> -->
 <div
     style={!$enabledCategories.includes("Vocabulary") ? "display: none" : null}
 >

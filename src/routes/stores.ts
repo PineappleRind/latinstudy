@@ -1,4 +1,4 @@
-import { get, writable, type Writable } from "svelte/store";
+import { type Writable, get, writable } from "svelte/store";
 import type { QuizQuestion } from "./quiz/active/generateQuizQuestions/types";
 
 /**

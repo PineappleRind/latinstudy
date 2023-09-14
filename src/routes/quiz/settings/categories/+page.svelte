@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import Checkbox from "../components/Checkbox.svelte";
     import { enabledCategories } from "../stores";
 
     function handleSelect(value: string) {
@@ -20,9 +21,7 @@
         on:keydown={() => handleSelect(item)}
     >
         <div class="category-name">{item}</div>
-        <div class="category-checkbox">
-            <div class="category-checkbox-checkmark" />
-        </div>
+        <Checkbox selected={$enabledCategories.includes(item)} />
     </div>
 {/each}
 <button
@@ -46,28 +45,7 @@
         align-items: center;
         transition: background-color var(--tr), border var(--tr);
     }
-    .category-checkbox {
-        width: 18px;
-        height: 18px;
-        border: 1px solid var(--border-light);
-        border-radius: var(--rad-s);
-        position: relative;
-    }
-    .category-checkbox::after {
-        content: "";
-        background-color: transparent;
-        position: absolute;
-        width: 3px;
-        left: 6px;
-        top: 2px;
-        border-bottom: 2px solid white;
-        height: 8px;
-        border-right: 2px solid white;
-        rotate: 45deg;
-        scale: 0.5;
-        opacity: 0;
-        transition: opacity var(--tr), scale var(--tr);
-    }
+
     .selected {
         --text-lightness: 50%;
         color: hsl(var(--btn-bg-base), var(--text-lightness));
@@ -79,13 +57,6 @@
         .selected {
             --text-lightness: 80%;
         }
-    }
-    .selected .category-checkbox {
-        background: var(--btn-bg);
-    }
-    .selected .category-checkbox::after {
-        opacity: 1;
-        scale: 1;
     }
     @keyframes category-select {
         30% {

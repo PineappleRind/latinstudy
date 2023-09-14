@@ -1,6 +1,6 @@
 import type { VocabWord as VocabularyWord } from "@/types/data";
-import type { QuizQuestion } from "./types";
 import { shuffleArray } from "@/utils/shuffleArray";
+import type { QuizQuestion } from "./types";
 
 export function generateVocabQuestions(
 	vocabulary: VocabularyWord[],
