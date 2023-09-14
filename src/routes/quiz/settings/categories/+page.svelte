@@ -1,33 +1,30 @@
 <script lang="ts">
-    import Multitoggle from "@/components/Multitoggle.svelte";
-    import { enabledCategories } from "../stores";
     import { goto } from "$app/navigation";
+    import { enabledCategories } from "../stores";
+
+    function handleSelect(value: string) {
+        if ($enabledCategories.includes(value))
+            enabledCategories.set(
+                $enabledCategories.filter((i) => i !== value)
+            );
+        else enabledCategories.set([...$enabledCategories, value]);
+    }
 </script>
 
 <h2>Quiz on...</h2>
-<Multitoggle
-    items={[
-        { name: "Declension Endings", value: "Declensions" },
-        { name: "Conjugation Endings", value: "Conjugations" },
-        { name: "Vocabulary", value: "Vocabulary" },
-    ]}
-    let:item
-    let:handleSelect
-    let:state
-    bind:state={$enabledCategories}
->
+{#each ["Declensions", "Conjugations", "Vocabulary"] as item}
     <div
-        class="multitoggle-item category"
-        class:selected={state.includes(item.value)}
+        class="category"
+        class:selected={$enabledCategories.includes(item)}
         on:click={() => handleSelect(item)}
         on:keydown={() => handleSelect(item)}
     >
-        <div class="category-name">{item.name}</div>
+        <div class="category-name">{item}</div>
         <div class="category-checkbox">
             <div class="category-checkbox-checkmark" />
         </div>
     </div>
-</Multitoggle>
+{/each}
 <button
     on:click={() => goto("/quiz/settings/fine-tune")}
     disabled={$enabledCategories.length < 1}
@@ -41,6 +38,7 @@
         border: 1px solid var(--border-light);
         border-radius: var(--rad-m);
         padding: 6px 8px;
+        margin: 2px 0;
         min-width: 100%;
         max-width: 300px;
         display: inline-flex;
@@ -71,10 +69,16 @@
         transition: opacity var(--tr), scale var(--tr);
     }
     .selected {
-        color: hsl(var(--btn-bg-base), 40%);
+        --text-lightness: 50%;
+        color: hsl(var(--btn-bg-base), var(--text-lightness));
         border: 1px solid hsl(var(--btn-bg-base), 70%);
-        background: hsl(var(--btn-bg-base), 90%);
+        background: hsla(var(--btn-bg-base), 50%, 0.2);
         animation: category-select 0.4s;
+    }
+    @media (prefers-color-scheme: dark) {
+        .selected {
+            --text-lightness: 80%;
+        }
     }
     .selected .category-checkbox {
         background: var(--btn-bg);
@@ -85,7 +89,7 @@
     }
     @keyframes category-select {
         30% {
-            box-shadow: 0 0 0 0px hsla(var(--btn-bg-base), 50%, 1);
+            box-shadow: 0 0 0 0px hsla(var(--btn-bg-base), 80%, 1);
             scale: 0.98;
         }
         100% {

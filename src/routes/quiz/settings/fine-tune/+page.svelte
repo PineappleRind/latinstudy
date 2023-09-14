@@ -34,7 +34,6 @@
     import Multitoggle from "@/components/Multitoggle.svelte";
     import storedWritable from "@/routes/stores";
     import MultitoggleDropdown from "./components/MultitoggleDropdown.svelte";
-
     function isQuizEmpty() {
         // User set a category but no filter options selected for it
         const noDeclensions =

@@ -5,6 +5,8 @@ export const ord = (n: string) =>
 		new Intl.PluralRules("en", { type: "ordinal" }).select(parseInt(n))[2]
 	];
 
-/** ["Pink", "Red", "Purple"] → "Pink, Red, & Purple" */
-export const formatList = (list: string[]) =>
-	new Intl.ListFormat("en", { style: "short" }).format(list);
+export const titleCase = (str: string) =>
+	str
+		.split(" ")
+		.map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
+		.join(" ");

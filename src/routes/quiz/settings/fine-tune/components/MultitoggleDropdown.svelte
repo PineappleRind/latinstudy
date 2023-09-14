@@ -1,28 +1,18 @@
 <script lang="ts">
-    import Multitoggle, {
-        type MultitoggleItem,
-    } from "@/components/Multitoggle.svelte";
     import { onMount } from "svelte";
     let dropdown: HTMLDivElement;
     onMount(() => {
         document.body.append(dropdown);
     });
     export let title: string;
-    export let items: MultitoggleItem[];
-    export let state: MultitoggleItem["value"][];
+    // export let items: string[];
+    // export let state: string[];
 </script>
 
 <div style="position: relative">
     <div class="select">
         <div class="select-title">{title}</div>
-        <Multitoggle
-            bind:multitoggleContainer={dropdown}
-            bind:state
-            {items}
-            let:item
-        >
-            <div class="select-item" data-value={item.value}>{item.name}</div>
-        </Multitoggle>
+            <!-- <div class="select-item" data-value={item.value}>{item.name}</div> -->
     </div>
 </div>
 
