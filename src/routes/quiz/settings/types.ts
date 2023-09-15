@@ -1,9 +1,4 @@
-import type {
-	CaseEnding,
-	ConjugationEnding,
-	VocabWord,
-	wordType,
-} from "@/types/data";
+import type { CaseEnding, ConjugationEnding, wordType } from "@/types/data";
 
 type AllPropertiesArrays<T> = {
 	[P in keyof T]: T[P][];
@@ -15,6 +10,7 @@ export type QuizOptions = {
 	vocabulary: { type: wordType[] } & {
 		amount: number;
 	};
+	enabled: string[];
 	settings: {
 		immediateGrade: boolean;
 	};

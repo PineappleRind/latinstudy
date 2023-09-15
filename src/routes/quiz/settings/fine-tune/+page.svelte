@@ -1,48 +1,19 @@
-<script context="module" lang="ts">
-    import type { QuizOptions } from "../types";
-    import { enabledCategories } from "../stores";
-
-    export const options = storedWritable<QuizOptions>("quiz-options", {
-        declensionEndings: {
-            gender: [],
-            number: [],
-            case: [],
-            ending: [],
-            declension: [],
-        },
-        conjugationEndings: {
-            ending: [],
-            conjugation: [],
-            voice: [],
-            mood: [],
-            tense: [],
-            number: [],
-            person: [],
-        },
-        vocabulary: {
-            amount: -1,
-            type: [],
-        },
-        settings: {
-            immediateGrade: true,
-        },
-    });
-</script>
-
 <script>
     import { goto } from "$app/navigation";
-    import storedWritable from "@/routes/stores";
-    import MultitoggleDropdown from "./components/MultitoggleDropdown.svelte";
+
+    import MultitoggleDropdown from "@/routes/quiz/settings/fine-tune/components/MultitoggleDropdown.svelte";
+    import { options } from "@/routes/quiz/settings/stores";
+
     function isQuizEmpty() {
         // User set a category but no filter options selected for it
         const noDeclensions =
-            $enabledCategories.includes("Declensions") &&
+            $options.enabled.includes("Declensions") &&
             !$options.declensionEndings;
         const noConjugations =
-            $enabledCategories.includes("Conjugations") &&
+            $options.enabled.includes("Conjugations") &&
             !$options.conjugationEndings;
         const noVocabulary =
-            $enabledCategories.includes("Vocabulary") && !$options.vocabulary;
+            $options.enabled.includes("Vocabulary") && !$options.vocabulary;
         return noDeclensions && noConjugations && noVocabulary;
     }
 
@@ -54,7 +25,7 @@
 
 <a class="link back" href="/quiz/settings/categories">Back</a>
 <h2>Fine-tune your quiz</h2>
-{#if $enabledCategories.includes("Declensions")}
+{#if $options.enabled.includes("Declensions")}
     <div class="quiz-option-select">
         <h4>Filter declension endings by</h4>
         <MultitoggleDropdown
@@ -68,7 +39,7 @@
             ]}
             title="Declension"
         />
-        <MultitoggleDropdown
+        <!-- <MultitoggleDropdown
             bind:state={$options.declensionEndings.case}
             items={[
                 { name: "Nominative", value: "nominative" },
@@ -87,69 +58,66 @@
                 { name: "Neuter", value: "neuter" },
             ]}
             title="Gender"
+        /> -->
+    </div>
+{/if}
+{#if $options.enabled.includes("Conjugations")}
+    <h4>Filter conjugation endings by</h4>
+    <div class="dropdown-flex">
+        <MultitoggleDropdown
+            bind:state={$options.conjugationEndings.conjugation}
+            items={[
+                { name: "1st", value: 1 },
+                { name: "2nd", value: 2 },
+                { name: "3rd", value: 3 },
+                { name: "4th", value: 4 },
+            ]}
+            title="Conjugation"
+        />
+
+        <MultitoggleDropdown
+            bind:state={$options.conjugationEndings.voice}
+            items={[
+                { name: "Active", value: "active" },
+                { name: "Passive", value: "passive" },
+            ]}
+            title="Voice"
+        />
+        <MultitoggleDropdown
+            bind:state={$options.conjugationEndings.mood}
+            items={[
+                { name: "Indicative", value: "indicative" },
+                { name: "Subjunctive", value: "subjunctive" },
+            ]}
+            title="Mood"
+        />
+        <MultitoggleDropdown
+            bind:state={$options.conjugationEndings.tense}
+            items={[
+                { name: "Present", value: "present" },
+                { name: "Imperfect", value: "imperfect" },
+                { name: "Future", value: "future" },
+                { name: "Perfect", value: "perfect" },
+                { name: "Pluperfect", value: "pluperfect" },
+                { name: "Future Perfect", value: "future perfect" },
+            ]}
+            title="Tense"
         />
     </div>
 {/if}
-<!-- <div
-    style={!$enabledCategories.includes("Conjugations")
-        ? "display: none"
-        : null}
->
-    <h4>Include these conjugations...</h4>
-    <Multitoggle
-        min={1}
-        bind:state={$options.conjugationEndings.conjugation}
-        items={[
-            { name: "1st", value: 1 },
-            { name: "2nd", value: 2 },
-            { name: "3rd", value: 3 },
-            { name: "4th", value: 4 },
-        ]}
-    />
-
-    <p>Voices</p>
-    <Multitoggle
-        items={[
-            { name: "Active", value: "active" },
-            { name: "Passive", value: "passive" },
-        ]}
-        bind:state={$options.conjugationEndings.voice}
-    />
-    <p>Moods</p>
-    <Multitoggle
-        items={[
-            { name: "Indicative", value: "indicative" },
-            { name: "Subjunctive", value: "subjunctive" },
-        ]}
-        bind:state={$options.conjugationEndings.mood}
-    />
-    <p>Tenses</p>
-    <Multitoggle
-        items={[
-            { name: "Present", value: "present" },
-            { name: "Imperfect", value: "imperfect" },
-            { name: "Future", value: "future" },
-            { name: "Perfect", value: "perfect" },
-            { name: "Pluperfect", value: "pluperfect" },
-            { name: "Future Perfect", value: "future perfect" },
-        ]}
-        bind:state={$options.conjugationEndings.tense}
-    />
-</div> -->
-<div
-    style={!$enabledCategories.includes("Vocabulary") ? "display: none" : null}
->
-    <h4>Vocabulary</h4>
-    <div class="quiz-vocab-select">
-        <p># of vocabulary words to quiz on (randomized)</p>
-        <input
-            type="number"
-            placeholder="Enter..."
-            class="quiz-vocab-count"
-            bind:value={$options.vocabulary.amount}
-        /><small> (0 for all, -1 for none)</small>
+{#if $options.enabled.includes("Vocabulary")}<div>
+        <h4>Vocabulary</h4>
+        <div class="quiz-vocab-select">
+            <p># of vocabulary words to quiz on (randomized)</p>
+            <input
+                type="number"
+                placeholder="Enter..."
+                class="quiz-vocab-count"
+                bind:value={$options.vocabulary.amount}
+            /><small> (0 for all, -1 for none)</small>
+        </div>
     </div>
-</div>
+{/if}
 <h4>More settings</h4>
 <div class="quiz-immediate-grade-select">
     <input
@@ -162,3 +130,17 @@
 </div>
 <br />
 <button class="btn full-width primary" on:click={handleBegin}> Begin </button>
+
+<style>
+    h4 {
+        margin-top: 0.6em;
+    }
+    .dropdown-flex {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 5px;
+    }
+    :global(.dropdown-flex > *) {
+        flex: 1 0 30%;
+    }
+</style>

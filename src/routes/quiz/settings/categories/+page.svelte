@@ -1,32 +1,39 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import Checkbox from "../components/Checkbox.svelte";
-    import { enabledCategories } from "../stores";
+    import Checkbox from "@/routes/quiz/settings/components/Checkbox.svelte";
+    import { options } from "@/routes/quiz/settings/stores";
 
     function handleSelect(value: string) {
-        if ($enabledCategories.includes(value))
-            enabledCategories.set(
-                $enabledCategories.filter((i) => i !== value)
-            );
-        else enabledCategories.set([...$enabledCategories, value]);
+        if ($options.enabled.includes(value))
+            options.set({
+                ...$options,
+                enabled: $options.enabled.filter((i) => i !== value),
+            });
+        else
+            options.set({
+                ...$options,
+                enabled: [...$options.enabled, value],
+            });
     }
 </script>
+
+<a class="link back" href="/">Home</a>
 
 <h2>Quiz on...</h2>
 {#each ["Declensions", "Conjugations", "Vocabulary"] as item}
     <div
         class="category"
-        class:selected={$enabledCategories.includes(item)}
+        class:selected={$options.enabled.includes(item)}
         on:click={() => handleSelect(item)}
         on:keydown={() => handleSelect(item)}
     >
         <div class="category-name">{item}</div>
-        <Checkbox selected={$enabledCategories.includes(item)} />
+        <Checkbox selected={$options.enabled.includes(item)} />
     </div>
 {/each}
 <button
     on:click={() => goto("/quiz/settings/fine-tune")}
-    disabled={$enabledCategories.length < 1}
+    disabled={$options.enabled.length < 1}
     class="btn primary full-width"
 >
     Next

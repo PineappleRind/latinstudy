@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { lastQuiz } from "@/routes/stores";
-    import { QuizQuestionScore } from "@/routes/quiz/active/generateQuizQuestions/types";
     import AnswerRenderer from "@/components/AnswerRenderer.svelte";
+    import { QuizQuestionScore } from "@/routes/quiz/active/generateQuizQuestions/types";
+    import { lastQuiz } from "@/routes/stores";
 
     const correctQuestions = $lastQuiz?.questions
         .map((q) => q.grade?.score || 0)

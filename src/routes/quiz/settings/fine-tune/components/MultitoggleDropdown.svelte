@@ -4,18 +4,21 @@
 </script>
 
 <script lang="ts">
-    import { onMount } from "svelte";
-    import Checkbox from "../../components/Checkbox.svelte";
     import { beforeNavigate } from "$app/navigation";
+    import { onMount } from "svelte";
+
+    import Checkbox from "@/routes/quiz/settings/components/Checkbox.svelte";
 
     let dropdown: HTMLDivElement;
     let titleElement: HTMLDivElement;
 
     function recalculate() {
         const rect = titleElement.getBoundingClientRect();
+
         dropdown.style.left = rect.x + "px";
         dropdown.style.top = rect.bottom + "px";
         dropdown.style.minWidth = rect.width + "px";
+
         dropdown.dataset.isWiderThanTitle = (
             Math.sign(dropdown.clientWidth - rect.width) === 1
         ).toString();
@@ -44,11 +47,14 @@
         value: string | number;
     };
     export let title: string;
+    export let showSelected: boolean = true;
     export let items: SelectItem[];
     export let state: SelectItem["value"][];
     let open = false;
 
     async function onOpen(e: Event) {
+        recalculate();
+
         const isArrowDown =
             e instanceof KeyboardEvent && e.code === "ArrowDown" && !open;
 
@@ -56,7 +62,6 @@
             open = !open;
         }
         // if we've just opened one, make sure the other one closes
-        console.log(openDropdown, open);
         if (open && openDropdown?.[0] !== title) {
             await openDropdown?.[1]();
 
@@ -87,7 +92,10 @@
     class="select-title"
     tabindex="0"
 >
-    <p>{title}</p>
+    <div>
+        <p>{title}</p>
+        {#if showSelected} <p class="subtitle">{state.length} selected</p>{/if}
+    </div>
     <div class="chevron" class:upside-down={open} />
 </div>
 
@@ -116,7 +124,7 @@
         border-radius: var(--rad-m);
         border: 1px solid var(--border-light);
         display: inline-flex;
-        gap: 10px;
+        gap: 15px;
         align-items: center;
         justify-content: space-between;
         transition: border var(--tr), border-radius var(--tr),
@@ -127,6 +135,11 @@
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         box-shadow: inset 0 -1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .select-title p.subtitle {
+        font-size: 0.8em;
+        font-style: italic;
+        color: var(--txt-c2);
     }
 
     .select-container {
@@ -151,10 +164,10 @@
         opacity: 1;
         pointer-events: all;
         scale: 1;
-        translate: 0 0px;
+        translate: 0 -1px;
     }
     :global(.select-container[data-is-wider-than-title="false"]) {
-        border-top-right-radius: 0;
+        border-top-right-radius: 0 !important;
     }
     .select-item {
         display: flex;
@@ -173,8 +186,8 @@
         border-right: var(--thickness) solid var(--txt-c1);
         border-bottom: var(--thickness) solid var(--txt-c1);
         rotate: 45deg;
-        width: var(--size);
-        height: var(--size);
+        min-width: var(--size);
+        min-height: var(--size);
         margin-top: -0.15em;
         transition: margin-top var(--tr), rotate var(--tr);
     }

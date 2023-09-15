@@ -12,18 +12,20 @@ export function generateQuestions(
 ): QuizQuestion[] {
 	const questions: QuizQuestion[] = [];
 
-	questions.push(...generateVocabQuestions(vocab, options.vocabulary.amount));
+	if (options.enabled.includes("Vocabulary"))
+		questions.push(...generateVocabQuestions(vocab, options.vocabulary.amount));
 
 	const filteredDeclensions = endings.declensions.filter((x) =>
 		options.declensionEndings.declension.includes(x.declension),
 	);
 
-	questions.push(
-		...generateEndingQuestions<"declensions">(
-			"declensions",
-			filteredDeclensions,
-		),
-	);
+	if (options.enabled.includes("Declensions"))
+		questions.push(
+			...generateEndingQuestions<"declensions">(
+				"declensions",
+				filteredDeclensions,
+			),
+		);
 
 	const enabledEndings = endings.conjugations.filter((ending) => {
 		const { voice, mood, tense, conjugation } = options.conjugationEndings;
@@ -36,9 +38,13 @@ export function generateQuestions(
 		);
 	});
 
-	questions.push(
-		...generateEndingQuestions<"conjugations">("conjugations", enabledEndings),
-	);
+	if (options.enabled.includes("Conjugations"))
+		questions.push(
+			...generateEndingQuestions<"conjugations">(
+				"conjugations",
+				enabledEndings,
+			),
+		);
 
 	return shuffleArray<QuizQuestion>(questions);
 }
