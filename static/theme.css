@@ -38,7 +38,7 @@ body {
     --rad-l: calc(var(--rad-m) * 2);
 
     --border-light: rgba(0, 0, 0, 0.2);
-    --border-strong: rgba(0, 0, 0, 0.5);
+
     --shadow-s: 0 3px 4px rgba(0, 0, 0, 0.1);
     --shadow-m: 0 5px 10px rgba(0, 0, 0, 0.1);
     --shadow-l: 0 40px 70px rgba(0, 0, 0, 0.1);
