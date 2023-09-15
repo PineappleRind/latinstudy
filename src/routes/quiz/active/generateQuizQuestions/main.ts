@@ -15,8 +15,12 @@ export function generateQuestions(
 	if (options.enabled.includes("Vocabulary"))
 		questions.push(...generateVocabQuestions(vocab, options.vocabulary.amount));
 
-	const filteredDeclensions = endings.declensions.filter((x) =>
-		options.declensionEndings.declension.includes(x.declension),
+	const filteredDeclensions = endings.declensions.filter(
+		(x) =>
+			options.declensionEndings.declension.includes(x.declension) &&
+			options.declensionEndings.case.includes(x.case) &&
+			options.declensionEndings.gender.includes(x.gender) &&
+			options.declensionEndings.number.includes(x.number),
 	);
 
 	if (options.enabled.includes("Declensions"))

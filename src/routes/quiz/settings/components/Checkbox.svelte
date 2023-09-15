@@ -11,6 +11,7 @@
         border: 1px solid var(--border-light);
         border-radius: var(--rad-s);
         position: relative;
+        transition: background-color var(--tr);
     }
     .checkbox::after {
         content: "";

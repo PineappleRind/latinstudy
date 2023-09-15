@@ -5,8 +5,8 @@ type AllPropertiesArrays<T> = {
 };
 
 export type QuizOptions = {
-	declensionEndings: AllPropertiesArrays<CaseEnding>;
-	conjugationEndings: AllPropertiesArrays<ConjugationEnding>;
+	declensionEndings: AllPropertiesArrays<Omit<CaseEnding, "ending">>;
+	conjugationEndings: AllPropertiesArrays<Omit<ConjugationEnding, "ending">>;
 	vocabulary: { type: wordType[] } & {
 		amount: number;
 	};

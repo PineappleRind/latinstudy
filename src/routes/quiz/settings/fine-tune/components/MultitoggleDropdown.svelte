@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
-    export let openDropdown: [string, () => Promise<void>] | undefined =
+    export let openDropdown: [number, () => Promise<void>] | undefined =
         undefined;
+    export let uniqueId: number = 1;
 </script>
 
 <script lang="ts">
@@ -11,6 +12,7 @@
 
     let dropdown: HTMLDivElement;
     let titleElement: HTMLDivElement;
+    let id = uniqueId++;
 
     function recalculate() {
         const rect = titleElement.getBoundingClientRect();
@@ -26,7 +28,9 @@
     window.addEventListener("resize", recalculate);
 
     onMount(async () => {
-        // Teleport dropdown to the body
+        // Make sure there's no item selected that the user can't see
+        state = state.filter((x) => items.some((item) => item.value === x));
+
         document.body.append(dropdown);
         // wait until dom updates
         await new Promise((r) => setTimeout(r));
@@ -54,7 +58,7 @@
 
     async function onOpen(e: Event) {
         recalculate();
-
+        console.log(state);
         const isArrowDown =
             e instanceof KeyboardEvent && e.code === "ArrowDown" && !open;
 
@@ -62,11 +66,11 @@
             open = !open;
         }
         // if we've just opened one, make sure the other one closes
-        if (open && openDropdown?.[0] !== title) {
+        if (open && openDropdown?.[0] !== id) {
             await openDropdown?.[1]();
 
             openDropdown = [
-                title,
+                id,
                 async () => {
                     open = false;
                 },
@@ -138,8 +142,8 @@
     }
     .select-title p.subtitle {
         font-size: 0.8em;
-        font-style: italic;
         color: var(--txt-c2);
+        font-variant-numeric: tabular-nums;
     }
 
     .select-container {

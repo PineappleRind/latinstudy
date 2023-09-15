@@ -1,33 +1,44 @@
-<script>
+<script lang="ts">
     import { goto } from "$app/navigation";
 
     import MultitoggleDropdown from "@/routes/quiz/settings/fine-tune/components/MultitoggleDropdown.svelte";
     import { options } from "@/routes/quiz/settings/stores";
 
     function isQuizEmpty() {
+        function findEmptyProperty(object: Record<string, unknown[]>) {
+            return Object.entries(object).find(
+                ([_, x]) => !x || x?.length === 0
+            )?.[0];
+        }
         // User set a category but no filter options selected for it
         const noDeclensions =
             $options.enabled.includes("Declensions") &&
-            !$options.declensionEndings;
+            findEmptyProperty($options.declensionEndings);
         const noConjugations =
             $options.enabled.includes("Conjugations") &&
-            !$options.conjugationEndings;
+            findEmptyProperty($options.conjugationEndings);
         const noVocabulary =
-            $options.enabled.includes("Vocabulary") && !$options.vocabulary;
-        return noDeclensions && noConjugations && noVocabulary;
+            $options.enabled.includes("Vocabulary") &&
+            $options.vocabulary.amount === -1 &&
+            !$options.vocabulary.type.length;
+
+        return noDeclensions || noConjugations || noVocabulary;
     }
 
     function handleBegin() {
-        if (isQuizEmpty()) return;
+        const empty = isQuizEmpty();
+        if (empty) {
+            return;
+        }
         goto("/quiz/active");
     }
 </script>
 
 <a class="link back" href="/quiz/settings/categories">Back</a>
 <h2>Fine-tune your quiz</h2>
-{#if $options.enabled.includes("Declensions")}
-    <div class="quiz-option-select">
-        <h4>Filter declension endings by</h4>
+{#if !$options.enabled.includes("Declensions")}
+    <h4>Filter declension endings by</h4>
+    <div class="dropdown-flex">
         <MultitoggleDropdown
             bind:state={$options.declensionEndings.declension}
             items={[
@@ -39,7 +50,7 @@
             ]}
             title="Declension"
         />
-        <!-- <MultitoggleDropdown
+        <MultitoggleDropdown
             bind:state={$options.declensionEndings.case}
             items={[
                 { name: "Nominative", value: "nominative" },
@@ -58,7 +69,15 @@
                 { name: "Neuter", value: "neuter" },
             ]}
             title="Gender"
-        /> -->
+        />
+        <MultitoggleDropdown
+            bind:state={$options.declensionEndings.number}
+            items={[
+                { name: "Singular", value: "singular" },
+                { name: "Plural", value: "plural" },
+            ]}
+            title="Number"
+        />
     </div>
 {/if}
 {#if $options.enabled.includes("Conjugations")}
@@ -102,6 +121,23 @@
                 { name: "Future Perfect", value: "future perfect" },
             ]}
             title="Tense"
+        />
+        <MultitoggleDropdown
+            bind:state={$options.conjugationEndings.number}
+            items={[
+                { name: "Singular", value: "singular" },
+                { name: "Plural", value: "plural" },
+            ]}
+            title="Number"
+        />
+        <MultitoggleDropdown
+            bind:state={$options.conjugationEndings.person}
+            items={[
+                { name: "1st", value: 1 },
+                { name: "2nd", value: 2 },
+                { name: "3rd", value: 23 },
+            ]}
+            title="Person"
         />
     </div>
 {/if}
