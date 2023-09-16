@@ -39,6 +39,15 @@
                 ending.mood === mood.toLowerCase()
         );
     }
+    function group(acc: string, cur: string, i: number, x: string[]) {
+        const actualEnding = " " + cur.split(" ")[1];
+        const endingOrComma =
+            (i !== x.length - 1 && ", ") ||
+            (actualEnding.trim() !== "undefined" ? actualEnding : "");
+
+        acc += `${cur.split(" ")[0]}${endingOrComma} `;
+        return acc;
+    }
 </script>
 
 <select
@@ -76,12 +85,14 @@
                                         person: persons[index],
                                         number:
                                             index === 0 ? "Singular" : "Plural",
-                                        conjugation:
-                                            +selectedConjugation?.value,
+                                        conjugation: +selectedConjugation,
                                         voice,
                                         mood: "Indicative",
                                         tense,
-                                    })?.ending}</td
+                                    })
+                                        ?.ending.split(",")
+                                        .reduce(group, "")
+                                        .trim()}</td
                                 >
                             {/each}
                         </tr>

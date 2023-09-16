@@ -176,8 +176,29 @@
 		"p/i/fut/s/2": "āberis",
 		"p/i/fut/s/3": "ābitur",
 		"p/i/fut/p/1": "ābimur",
-		"p/i/fut/p/2": "āibiminī",
-		"p/i/fut/p/3": "ābuntur"
+		"p/i/fut/p/2": "ābiminī",
+		"p/i/fut/p/3": "ābuntur",
+
+		"p/i/per/s/1": "us sum,a sum,um sum",
+		"p/i/per/s/2": "us es,a es,um es",
+		"p/i/per/s/3": "us est,a est,um est",
+		"p/i/per/p/1": "ī sumus,æ sumus,a sumus",
+		"p/i/per/p/2": "ī estis,æ estis,a estis",
+		"p/i/per/p/3": "ī sunt,æ sunt,a sunt",
+		
+		"p/i/plu/s/1": "us eram,a eram,um eram",
+		"p/i/plu/s/2": "us erās,a eras,um erās",
+		"p/i/plu/s/3": "us erat,a erat,um erat",
+		"p/i/plu/p/1": "ī eramus,æ eramus,a eramus",
+		"p/i/plu/p/2": "ī erātus,æ erātus,a erātus",
+		"p/i/plu/p/3": "ī erant,æ erant,a erant",
+		
+		"p/i/ftp/s/1": "us erō,a erō,um erō",
+		"p/i/ftp/s/2": "us eris,a eris,um eris",
+		"p/i/ftp/s/3": "us erit,a erit,um erit",
+		"p/i/ftp/p/1": "ī erimus,æ erimus,a erimus",
+		"p/i/ftp/p/2": "ī eritis,æ eritis,a eritis",
+		"p/i/ftp/p/3": "ī erunt,æ erunt,a erunt"
 	  },
 	  "2": {
 		"a/i/pre/s/1": "eō",
@@ -241,7 +262,28 @@
 		"p/i/fut/s/3": "ēbitur",
 		"p/i/fut/p/1": "ēbimur",
 		"p/i/fut/p/2": "ēibiminī",
-		"p/i/fut/p/3": "ēbuntur"
+		"p/i/fut/p/3": "ēbuntur",
+
+		"p/i/per/s/1": "us sum,a sum,um sum",
+		"p/i/per/s/2": "us es,a es,um es",
+		"p/i/per/s/3": "us est,a est,um est",
+		"p/i/per/p/1": "ī sumus,æ sumus,a sumus",
+		"p/i/per/p/2": "ī estis,æ estis,a estis",
+		"p/i/per/p/3": "ī sunt,æ sunt,a sunt",
+		
+		"p/i/plu/s/1": "us eram,a eram,um eram",
+		"p/i/plu/s/2": "us erās,a eras,um erās",
+		"p/i/plu/s/3": "us erat,a erat,um erat",
+		"p/i/plu/p/1": "ī eramus,æ eramus,a eramus",
+		"p/i/plu/p/2": "ī erātus,æ erātus,a erātus",
+		"p/i/plu/p/3": "ī erant,æ erant,a erant",
+		
+		"p/i/ftp/s/1": "us erō,a erō,um erō",
+		"p/i/ftp/s/2": "us eris,a eris,um eris",
+		"p/i/ftp/s/3": "us erit,a erit,um erit",
+		"p/i/ftp/p/1": "ī erimus,æ erimus,a erimus",
+		"p/i/ftp/p/2": "ī eritis,æ eritis,a eritis",
+		"p/i/ftp/p/3": "ī erunt,æ erunt,a erunt"
 	  },
 	  "3": {
 		"a/i/pre/s/1": "ō",
@@ -305,7 +347,28 @@
 		"p/i/fut/s/3": "ētur",
 		"p/i/fut/p/1": "ēmur",
 		"p/i/fut/p/2": "ēminī",
-		"p/i/fut/p/3": "entur"
+		"p/i/fut/p/3": "entur",
+
+		"p/i/per/s/1": "us sum,a sum,um sum",
+		"p/i/per/s/2": "us es,a es,um es",
+		"p/i/per/s/3": "us est,a est,um est",
+		"p/i/per/p/1": "ī sumus,æ sumus,a sumus",
+		"p/i/per/p/2": "ī estis,æ estis,a estis",
+		"p/i/per/p/3": "ī sunt,æ sunt,a sunt",
+		
+		"p/i/plu/s/1": "us eram,a eram,um eram",
+		"p/i/plu/s/2": "us erās,a eras,um erās",
+		"p/i/plu/s/3": "us erat,a erat,um erat",
+		"p/i/plu/p/1": "ī eramus,æ eramus,a eramus",
+		"p/i/plu/p/2": "ī erātus,æ erātus,a erātus",
+		"p/i/plu/p/3": "ī erant,æ erant,a erant",
+		
+		"p/i/ftp/s/1": "us erō,a erō,um erō",
+		"p/i/ftp/s/2": "us eris,a eris,um eris",
+		"p/i/ftp/s/3": "us erit,a erit,um erit",
+		"p/i/ftp/p/1": "ī erimus,æ erimus,a erimus",
+		"p/i/ftp/p/2": "ī eritis,æ eritis,a eritis",
+		"p/i/ftp/p/3": "ī erunt,æ erunt,a erunt"
 	  },
 	  "4": {
 		"a/i/pre/s/1": "iō",
@@ -369,7 +432,28 @@
 		"p/i/fut/s/3": "iētur",
 		"p/i/fut/p/1": "iēmur",
 		"p/i/fut/p/2": "iēminī",
-		"p/i/fut/p/3": "ientur"
+		"p/i/fut/p/3": "ientur",
+
+		"p/i/per/s/1": "us sum,a sum,um sum",
+		"p/i/per/s/2": "us es,a es,um es",
+		"p/i/per/s/3": "us est,a est,um est",
+		"p/i/per/p/1": "ī sumus,æ sumus,a sumus",
+		"p/i/per/p/2": "ī estis,æ estis,a estis",
+		"p/i/per/p/3": "ī sunt,æ sunt,a sunt",
+		
+		"p/i/plu/s/1": "us eram,a eram,um eram",
+		"p/i/plu/s/2": "us erās,a eras,um erās",
+		"p/i/plu/s/3": "us erat,a erat,um erat",
+		"p/i/plu/p/1": "ī eramus,æ eramus,a eramus",
+		"p/i/plu/p/2": "ī erātus,æ erātus,a erātus",
+		"p/i/plu/p/3": "ī erant,æ erant,a erant",
+		
+		"p/i/ftp/s/1": "us erō,a erō,um erō",
+		"p/i/ftp/s/2": "us eris,a eris,um eris",
+		"p/i/ftp/s/3": "us erit,a erit,um erit",
+		"p/i/ftp/p/1": "ī erimus,æ erimus,a erimus",
+		"p/i/ftp/p/2": "ī eritis,æ eritis,a eritis",
+		"p/i/ftp/p/3": "ī erunt,æ erunt,a erunt"
 	  }
 	},
 	"pronouns": {
