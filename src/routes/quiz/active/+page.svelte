@@ -1,15 +1,15 @@
 <script lang="ts">
-    import type { Writable } from "svelte/store";
-    import { onMount } from "svelte";
     import { goto } from "$app/navigation";
+    import { onMount } from "svelte";
+    import type { Writable } from "svelte/store";
 
-    import { options } from "@/routes/quiz/settings/+page.svelte";
+    import AnimatedDimensionProvider from "@/components/AnimatedDimensionProvider.svelte";
+    import QuizQuestion from "@/components/QuizQuestion.svelte";
     import { generateQuestions } from "@/routes/quiz/active/generateQuizQuestions/main";
     import { gradeQuestion } from "@/routes/quiz/active/grade";
-    import QuizQuestion from "@/components/QuizQuestion.svelte";
-    import type { ParsedEndingsData, VocabWord } from "@/types/data";
+    import { options } from "@/routes/quiz/settings/stores";
     import { lastQuiz } from "@/routes/stores";
-    import AnimatedDimensionProvider from "@/components/AnimatedDimensionProvider.svelte";
+    import type { ParsedEndingsData, VocabWord } from "@/types/data";
 
     export let data: ParsedEndingsData & { vocabulary: VocabWord[] };
 
@@ -31,7 +31,9 @@
 
     let currentIndex: number = 0;
     $: if (!questions[currentIndex]) goto("/quiz/results");
-    let nextEvent = $options.immediateGrade ? NextEvent.Grade : NextEvent.Next;
+    let nextEvent = $options.settings.immediateGrade
+        ? NextEvent.Grade
+        : NextEvent.Next;
 
     let inputValue: Writable<string | null>;
     let nextButtonDisabled = false;
@@ -82,7 +84,7 @@
 
 <a class="link pane-trigger" href="/quiz/settings">⊗ End quiz</a>
 <h2>
-    Quiz <span style="font-size: 12px;opacity:0.6"
+    Quiz <span style="letter-spacing: normal; font-size: 12px; opacity: 0.6"
         >{currentIndex + 1}/{questions.length}</span
     >
 </h2>
@@ -90,7 +92,7 @@
     <QuizQuestion bind:inputValue question={questions[currentIndex]} />
 </AnimatedDimensionProvider>
 
-<div class="flex">
+<div class="flex" style="gap: 10px">
     <button
         disabled={currentIndex === 0}
         on:click={handlePrevious}

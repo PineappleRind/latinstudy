@@ -5,10 +5,10 @@
 
 <h2>LatinStudier™</h2>
 <p style="max-width:300px;">
-  Study helper for vocabulary and declension endings
+    Study helper for vocabulary and declension endings
 </p>
 <br />
-<div class="flex">
-  <a class="btn full-width" href="/view">Learn</a>
-  <a class="btn full-width" href="/quiz/settings">Quiz</a>
+<div class="flex" style="gap: 10px">
+    <a class="btn full-width" href="/view">Learn</a>
+    <a class="btn full-width" href="/quiz/settings/categories">Quiz</a>
 </div>

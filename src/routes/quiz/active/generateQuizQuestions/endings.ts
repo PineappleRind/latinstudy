@@ -1,5 +1,5 @@
 import type { CaseEnding, ConjugationEnding } from "@/types/data";
-import { ord } from "@/utils/ord.js";
+import { ord } from "@/utils/format.js";
 import type { QuizQuestion } from "./types";
 
 // This was copied from the original. The underlying architecture

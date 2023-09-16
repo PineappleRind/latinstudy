@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { page } from "$app/stores";
     import { scale } from "@/routes/animations";
     import { quadIn } from "svelte/easing";
 
@@ -9,13 +8,10 @@
     let dimensionsCSS: string;
 
     $: {
-        if (contentDimensions) {
-            dimensionsCSS = `width: ${contentDimensions.width}px; height: ${contentDimensions.height}px`;
-            animator.ontransitionstart = () =>
-                animator.classList.add("animating");
-            animator.ontransitionend = () =>
-                animator.classList.remove("animating");
-        }
+        if (!contentDimensions) break $;
+        dimensionsCSS = `width: ${contentDimensions.width}px; height: ${contentDimensions.height}px`;
+        animator.ontransitionstart = () => animator.classList.add("animating");
+        animator.ontransitionend = () => animator.classList.remove("animating");
     }
 </script>
 
@@ -24,7 +20,7 @@
         <div
             in:scale|local={{ delay: 200, ease: quadIn }}
             out:scale|local={{
-                duration: $page.route.id?.includes("active") ? 200 : 0,
+                duration: 200,
             }}
             bind:contentRect={contentDimensions}
             class="content-animator"
@@ -39,13 +35,15 @@
         transition: width 0.4s, height 0.4s;
         position: relative;
         overflow: hidden;
+        min-width: 100%;
+        max-width: 100%;
     }
     :global(.content-wrapper:has(.animating)) {
         transition: 0s all !important;
     }
     .content-animator {
         width: max-content;
-        min-width: 300px;
+        max-width: fit-content;
         position: absolute;
     }
 </style>

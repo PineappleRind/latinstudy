@@ -47,7 +47,7 @@
     box-shadow: var(--shadow-l);
     border-radius: 20px;
     translate: 0px 1px;
-    border: 1px solid var(--light-border);
+    border: 1px solid var(--border-light);
     background: var(--bg-l1);
   }
 
