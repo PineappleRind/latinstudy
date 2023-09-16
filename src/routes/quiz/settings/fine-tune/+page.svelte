@@ -36,7 +36,7 @@
 
 <a class="link back" href="/quiz/settings/categories">Back</a>
 <h2>Fine-tune your quiz</h2>
-{#if !$options.enabled.includes("Declensions")}
+{#if $options.enabled.includes("Declensions")}
     <h4>Filter declension endings by</h4>
     <div class="dropdown-flex">
         <MultitoggleDropdown
@@ -82,7 +82,7 @@
 {/if}
 {#if $options.enabled.includes("Conjugations")}
     <h4>Filter conjugation endings by</h4>
-    <div class="dropdown-flex">
+    <div class="dropdown-flex" style="--max-width: 1fr">
         <MultitoggleDropdown
             bind:state={$options.conjugationEndings.conjugation}
             items={[
@@ -135,7 +135,7 @@
             items={[
                 { name: "1st", value: 1 },
                 { name: "2nd", value: 2 },
-                { name: "3rd", value: 23 },
+                { name: "3rd", value: 3 },
             ]}
             title="Person"
         />
@@ -173,10 +173,12 @@
     }
     .dropdown-flex {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        --max-width: 205px;
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(120px, var(--max-width))
+        );
+        min-width: min(300px, 100vw);
         gap: 5px;
-    }
-    :global(.dropdown-flex > *) {
-        flex: 1 0 30%;
     }
 </style>

@@ -55,14 +55,16 @@
 
     .selected {
         --text-lightness: 50%;
+        --background-alpha: 0.2;
         color: hsl(var(--btn-bg-base), var(--text-lightness));
         border: 1px solid hsl(var(--btn-bg-base), 70%);
-        background: hsla(var(--btn-bg-base), 50%, 0.2);
+        background: hsla(var(--btn-bg-base), 50%, var(--background-alpha));
         animation: category-select 0.4s;
     }
     @media (prefers-color-scheme: dark) {
         .selected {
-            --text-lightness: 80%;
+            --text-lightness: 70%;
+            --background-alpha: 0.4;
         }
     }
     @keyframes category-select {
