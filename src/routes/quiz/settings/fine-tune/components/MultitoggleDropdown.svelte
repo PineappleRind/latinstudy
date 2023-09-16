@@ -58,7 +58,7 @@
 
     async function onOpen(e: Event) {
         recalculate();
-        console.log(state);
+
         const isArrowDown =
             e instanceof KeyboardEvent && e.code === "ArrowDown" && !open;
 
