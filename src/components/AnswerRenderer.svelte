@@ -24,6 +24,7 @@
     :global(.answer-note) {
         font-style: italic;
         font-size: 12px;
-        opacity: 0.4;
+        margin-left: 0.3em;
+        opacity: 0.6;
     }
 </style>

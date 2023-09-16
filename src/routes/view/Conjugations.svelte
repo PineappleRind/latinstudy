@@ -39,7 +39,7 @@
                 ending.mood === mood.toLowerCase()
         );
     }
-    function group(acc: string, cur: string, i: number, x: string[]) {
+    function reduceToGroup(acc: string, cur: string, i: number, x: string[]) {
         const actualEnding = " " + cur.split(" ")[1];
         const endingOrComma =
             (i !== x.length - 1 && ", ") ||
@@ -91,7 +91,7 @@
                                         tense,
                                     })
                                         ?.ending.split(",")
-                                        .reduce(group, "")
+                                        .reduce(reduceToGroup, "")
                                         .trim()}</td
                                 >
                             {/each}

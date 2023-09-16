@@ -12,19 +12,23 @@
     });
 </script>
 
-<header>
-    LatinStudier™ v<span id="version">0.1</span> |
-    <a href="https://github.com/pineapplerind/latinstudy">GitHub</a>
-    | by <a href="https://pineapplerind.xyz">PineappleRind</a>
-</header>
-
 <main>
     {#key unique}
-        <div in:scale={{ ease: quadIn }} out:scale={{}} class="pane">
+        <div
+            in:scale={{ duration: 300, ease: quadIn }}
+            out:scale={{ duration: 300 }}
+            class="pane"
+        >
             <slot />
         </div>
     {/key}
 </main>
+
+<footer>
+    LatinStudier™ v<span id="version">0.2</span> |
+    <a href="https://github.com/pineapplerind/latinstudy">GitHub</a>
+    | by <a href="https://pineapplerind.xyz">PineappleRind</a>
+</footer>
 
 <style>
     main {
@@ -39,7 +43,7 @@
     .pane {
         position: absolute;
         transition: var(--tr-l) all;
-        padding: 20px 10px;
+        padding: 20px;
         max-width: min(500px, 100vw);
         min-width: 300px;
         max-height: min(700px, 70vh);
@@ -48,13 +52,18 @@
         border-radius: 20px;
         translate: 0px 1px;
         border: 1px solid var(--border-light);
-        background: var(--bg-l1);
-        scrollbar-gutter: stable both-edges;
+        background: var(--bg-l0);
+    }
+    @supports (scrollbar-gutter: stable) {
+        .pane {
+            scrollbar-gutter: stable;
+            padding: 20px 5px 20px 20px;
+        }
     }
 
-    header {
+    footer {
         position: fixed;
-        top: 10px;
+        bottom: 10px;
         text-align: center;
         width: 100vw;
         color: var(--txt-c2);
@@ -62,11 +71,11 @@
         z-index: 2;
     }
 
-    header a {
+    footer a {
         color: var(--txt-c2);
     }
 
-    header a:hover {
+    footer a:hover {
         color: var(--txt-c1);
     }
 </style>

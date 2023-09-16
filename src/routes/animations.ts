@@ -9,7 +9,7 @@ export function scale(
 		delay,
 		css: (t: number) => {
 			const eased = ease(1 - t);
-			const computedScale = (1 - eased) * 0.03 + 0.97;
+			const computedScale = (1 - eased) * 0.04 + 0.96;
 			return `opacity: ${t}; transform: scale(${computedScale})`;
 		},
 	};

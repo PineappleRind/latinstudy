@@ -3,6 +3,7 @@
     import Checkbox from "@/routes/quiz/settings/components/Checkbox.svelte";
     import { options } from "@/routes/quiz/settings/stores";
 
+    $options.enabled ??= [];
     function handleSelect(value: string) {
         if ($options.enabled.includes(value))
             options.set({

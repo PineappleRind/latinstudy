@@ -124,7 +124,7 @@
 <style>
     .select-title {
         padding: 7px 10px;
-        background: var(--bg-l2);
+        background: var(--bg-l1);
         border-radius: var(--rad-m);
         border: 1px solid var(--border-light);
         display: inline-flex;
@@ -150,8 +150,8 @@
         position: absolute;
         display: flex;
         flex-direction: column;
-        padding: 7px;
-        background: var(--bg-l2);
+        padding: 4px;
+        background: var(--bg-l1);
         border-radius: var(--rad-m);
         border-top-left-radius: 0;
         border: 1px solid var(--border-light);
@@ -177,7 +177,7 @@
         display: flex;
         justify-content: space-between;
         gap: 10px;
-        padding: 5px 8px;
+        padding: 5px 10px;
         border-radius: var(--rad-s);
         margin: 0;
     }

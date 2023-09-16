@@ -7,6 +7,9 @@
     import AnswerRenderer from "./AnswerRenderer.svelte";
 
     export let question: QuizQuestion;
+    $: if (question.grade) {
+        $inputValue = question.grade?.userAnswer;
+    }
     export let inputValue: Writable<string | null> = writable(
         question.grade?.userAnswer || null
     );
@@ -71,8 +74,6 @@
     .quiz-correct-answer {
         padding: 3px;
         margin: 2px;
-        background: var(--bg-l1);
-        border-radius: var(--rad-m);
         width: fit-content;
         font-size: var(--txt-s);
     }

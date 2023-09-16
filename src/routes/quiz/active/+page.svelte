@@ -64,12 +64,17 @@
     function handlePrevious() {
         if (currentIndex === 0) return;
         currentIndex -= 1;
+
         nextEvent = NextEvent.Next;
     }
 
     onMount(() => {
         onkeydown = (e) => {
-            if (e.key === "Enter") handleNext();
+            if (
+                e.key === "Enter" &&
+                document.activeElement?.tagName.toUpperCase() !== "BUTTON"
+            )
+                handleNext();
         };
     });
 
@@ -96,7 +101,7 @@
     <button
         disabled={currentIndex === 0}
         on:click={handlePrevious}
-        class="btn quiz-prev">Previous</button
+        class="btn quiz-previous">Previous</button
     >
     <button
         disabled={nextButtonDisabled}

@@ -23,6 +23,7 @@
     }
     .details {
         align-items: center;
+        cursor: default;
     }
     .details-marker {
         width: 0.5em;

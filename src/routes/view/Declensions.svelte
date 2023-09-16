@@ -14,28 +14,22 @@
     const genders = ["Masculine", "Feminine", "Neuter"];
     const numbers = ["Singular", "Plural"];
 
-    let selectedDeclension: HTMLSelectElement;
+    let selectedDeclension: string;
     let gendersInDeclension: Set<gender> = new Set(["feminine"]);
-    onMount(() => {
-        selectedDeclension.oninput = () => {
-            // since bind:value sends back a string
-            gendersInDeclension = endings
-                .filter(
-                    (e) => e.declension === (+selectedDeclension?.value || 1)
-                )
-                .reduce((acc, cur) => {
-                    acc.add(cur.gender);
-                    return acc;
-                }, new Set<gender>());
-        };
-    });
+    // since bind:value sends back a string
+    $: gendersInDeclension = endings
+        .filter((e) => e.declension === (+selectedDeclension ?? 1))
+        .reduce((acc, cur) => {
+            acc.add(cur.gender);
+            return acc;
+        }, new Set<gender>());
 
     function findEnding(number: string, case$: string, genderColumn: number) {
         const gender = genders[genderColumn];
         return endings.find(
             (ending) =>
                 ending.case === case$.toLowerCase() &&
-                ending.declension === (+selectedDeclension?.value || 1) &&
+                ending.declension === (+selectedDeclension ?? 1) &&
                 ending.gender === gender.toLowerCase() &&
                 ending.number === number.toLowerCase()
         );
@@ -45,7 +39,7 @@
 <select
     id="view-declension-type"
     style="max-width: 30%;"
-    bind:this={selectedDeclension}
+    bind:value={selectedDeclension}
 >
     <option value="1">1st</option>
     <option value="2">2nd</option>
@@ -81,7 +75,7 @@
 
 <style>
     table {
-        background: var(--bg-l1);
+        background: var(--bg-l0);
         min-width: 400px;
         margin: 4px;
         border-collapse: separate;
@@ -104,7 +98,7 @@
 
     th {
         padding: 5px;
-        background: var(--bg-l0);
+        background: var(--bg-l1);
     }
 
     td {

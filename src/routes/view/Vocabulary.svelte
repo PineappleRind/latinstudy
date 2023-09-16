@@ -11,22 +11,28 @@
         );
     }
     let vocabulary = sort(data.vocabulary);
-    let typeFilter: string;
+    let typeFilter: string = "*";
     let searchFilter: string = "";
-    $: {
-        if (typeFilter === "*") vocabulary = data.vocabulary.sort();
-        else
-            vocabulary = data.vocabulary.filter(
-                (word: VocabWord) => word.type === typeFilter
-            );
-        vocabulary = vocabulary.filter((word: VocabWord) =>
-            word.word.includes(searchFilter)
+    $: searchFilter, typeFilter, (vocabulary = [...vocabulary]);
+    
+    function isWordHidden(word: VocabWord) {
+        const hasSearchTerm = purify(`${word.full} ${word.translation}`)
+            .toLowerCase()
+            .includes(searchFilter.toLowerCase());
+
+        return (
+            (typeFilter !== "*" && word.type !== typeFilter) || !hasSearchTerm
         );
     }
 </script>
 
 <div class="flex">
-    <input type="text" bind:value={searchFilter} class="hidden full-width" placeholder="Search..." />
+    <input
+        type="text"
+        bind:value={searchFilter}
+        class="hidden full-width"
+        placeholder="Search..."
+    />
     <select
         id="view-vocab-type"
         style="max-width: 30%;"
@@ -43,8 +49,9 @@
         <option value="other">Sayings & Miscellanous</option>
     </select>
 </div>
+
 {#each vocabulary as word}
-    <div class="word">
+    <div class="word" class:hidden={isWordHidden(word)}>
         {word.word}{word.dictionary ? `, ${word.dictionary}` : ""}
         <AnswerRenderer answers={word.translation} />
     </div>
@@ -55,6 +62,7 @@
         margin: 1px;
         padding: 4px 8px;
         border-bottom: 1px solid var(--border-light);
+        overflow: hidden;
     }
 
     .word:last-child {
@@ -64,5 +72,13 @@
     .word :global(.rendered-answer) {
         margin-left: 10px;
         color: var(--txt-c2);
+    }
+
+    .word.hidden {
+        height: 0px;
+        opacity: 0;
+        padding-block: 0px;
+        border: 0px solid transparent;
+        margin: 0px;
     }
 </style>
