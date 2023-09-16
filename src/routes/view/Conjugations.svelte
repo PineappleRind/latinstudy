@@ -1,7 +1,7 @@
 <script lang="ts">
-    import AnimatedDimensionProvider from "@/components/AnimatedDimensionProvider.svelte";
     import type { ConjugationEnding } from "@/types/data";
     import { onMount } from "svelte";
+    import Details from "@/routes/view/components/Details.svelte";
 
     export let conjugations: ConjugationEnding[];
 
@@ -17,11 +17,9 @@
     ];
     // const moods = ["Indicative"];
 
-    let selectedConjugation: HTMLSelectElement;
+    let selectedConjugation: string;
 
-    onMount(() => {
-        selectedConjugation.oninput = () => {};
-    });
+    onMount(() => {});
 
     function findEnding({
         person,
@@ -32,7 +30,7 @@
     }: Omit<ConjugationEnding, "ending">) {
         return conjugations.find(
             (ending) =>
-                ending.conjugation === (+selectedConjugation?.value || 1) &&
+                ending.conjugation === (+selectedConjugation || 1) &&
                 ending.person.toString() ===
                     person.toString().toLowerCase()?.slice(0, 1) &&
                 ending.number === number.toLowerCase() &&
@@ -46,60 +44,55 @@
 <select
     id="view-declension-type"
     style="max-width: 30%;"
-    bind:this={selectedConjugation}
+    bind:value={selectedConjugation}
 >
     <option value="1">1st</option>
     <option value="2">2nd</option>
     <option value="3">3rd</option>
     <option value="4">4th</option>
 </select>
-{#key selectedConjugation}
-    {#each voices as voice}
-        <AnimatedDimensionProvider key={"voice"}
-            ><details>
-                <summary><h3>{voice}</h3></summary>
-                {#each tenses as tense}
-                    <AnimatedDimensionProvider key={null}
-                        ><details>
-                            <summary>{tense}</summary>
-                            <table class="table">
-                                <tr>
-                                    <th />
-                                    {#each ["Singular", "Plural"] as number}
-                                        <th class="table-head">{number}</th>
-                                    {/each}
-                                </tr>
-                                {#each persons as person}
-                                    <tr>
-                                        <td class="row-shrunk text-subtle"
-                                            >{person}</td
-                                        >
-                                        {#each new Array(2) as _, index}
-                                            <td
-                                                >{findEnding({
-                                                    person: persons[index],
-                                                    number:
-                                                        index === 0
-                                                            ? "Singular"
-                                                            : "Plural",
-                                                    conjugation:
-                                                        +selectedConjugation?.value,
-                                                    voice,
-                                                    mood: "Indicative",
-                                                    tense,
-                                                })?.ending}</td
-                                            >
-                                        {/each}
-                                    </tr>
-                                {/each}
-                            </table>
-                        </details>
-                    </AnimatedDimensionProvider>
-                {/each}
-            </details>
-        </AnimatedDimensionProvider>
-    {/each}
-{/key}
+
+{#each voices as voice}
+    <!-- <AnimatedDimensionProvider key={"voice"}> -->
+    <Details>
+        <h3 slot="summary">{voice}</h3>
+        {#each tenses as tense}
+            <!-- <AnimatedDimensionProvider key={null}> -->
+            <Details>
+                <p slot="summary">{tense}</p>
+                <table class="table">
+                    <tr>
+                        <th />
+                        {#each ["Singular", "Plural"] as number}
+                            <th class="table-head">{number}</th>
+                        {/each}
+                    </tr>
+                    {#each persons as person}
+                        <tr>
+                            <td class="row-shrunk text-subtle">{person}</td>
+                            {#each new Array(2) as _, index}
+                                <td
+                                    >{findEnding({
+                                        person: persons[index],
+                                        number:
+                                            index === 0 ? "Singular" : "Plural",
+                                        conjugation:
+                                            +selectedConjugation?.value,
+                                        voice,
+                                        mood: "Indicative",
+                                        tense,
+                                    })?.ending}</td
+                                >
+                            {/each}
+                        </tr>
+                    {/each}
+                </table>
+            </Details>
+            <!-- </AnimatedDimensionProvider> -->
+        {/each}
+    </Details>
+    <!-- </AnimatedDimensionProvider> -->
+{/each}
 
 <style>
     table {
@@ -156,7 +149,8 @@
     summary h3 {
         display: inline-block;
     }
-    details > :global(:not(summary)) {
-        margin-left: 1em;
+
+    details {
+        min-width: max-content;
     }
 </style>
