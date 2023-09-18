@@ -19,12 +19,12 @@ export function generateEndingQuestions<
 				: (ending as ConjugationEnding).conjugation,
 			ending as CaseEnding & ConjugationEnding,
 		);
-		const answer = ending.ending;
+		const answers = ending.ending.split(",");
 
 		const formulation: QuizQuestion = {
 			type,
 			question,
-			answer,
+			answer: answers,
 		};
 
 		questions.push(formulation);
