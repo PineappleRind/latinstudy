@@ -31,8 +31,7 @@
         return conjugations.find(
             (ending) =>
                 ending.conjugation === (+selectedConjugation || 1) &&
-                ending.person.toString() ===
-                    person.toString().toLowerCase()?.slice(0, 1) &&
+                +ending.person === person &&
                 ending.number === number.toLowerCase() &&
                 ending.tense === tense.toLowerCase() &&
                 ending.voice === voice.toLowerCase() &&
@@ -76,13 +75,13 @@
                             <th class="table-head">{number}</th>
                         {/each}
                     </tr>
-                    {#each persons as person}
+                    {#each persons as person, personIndex}
                         <tr>
                             <td class="row-shrunk text-subtle">{person}</td>
                             {#each new Array(2) as _, index}
                                 <td
                                     >{findEnding({
-                                        person: persons[index],
+                                        person: personIndex + 1,
                                         number:
                                             index === 0 ? "Singular" : "Plural",
                                         conjugation: +selectedConjugation,
