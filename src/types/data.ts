@@ -63,7 +63,7 @@ export interface VocabWord {
 	full: string;
 	dictionary: string;
 	declension: string;
-	units: string;
+	lesson: number;
 	translation: string;
 	gender: gender;
 }
