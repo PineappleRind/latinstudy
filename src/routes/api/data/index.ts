@@ -1,5 +1,7 @@
 import type { ParsedEndingsData, VocabWord } from "../../../types/data";
-import endings from "./endings.json";
+import declensions from "./endings/declensions.json";
+import conjugations from "./endings/conjugations.json";
+import pronouns from "./endings/pronouns.json";
 import { preprocessEndings } from "./transform";
 import vocab from "./vocab.json";
 
@@ -10,7 +12,11 @@ export type JSONEndingsData = {
 };
 
 export default {
-	endings: preprocessEndings(endings) as ParsedEndingsData,
+	endings: preprocessEndings({
+		declensions,
+		conjugations,
+		pronouns,
+	}) as ParsedEndingsData,
 	vocab: (vocab as VocabWord[])
 		.filter((w: VocabWord) => w.word && true)
 		.map((w) => {

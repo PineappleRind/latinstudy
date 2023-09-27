@@ -1,0 +1,115 @@
+{
+    "1": {
+        "f/s/nom": "a",
+        "f/s/gen": "æ",
+        "f/s/dat": "æ",
+        "f/s/acc": "am",
+        "f/s/abl": "ā",
+
+        "f/p/nom": "æ",
+        "f/p/gen": "arum",
+        "f/p/dat": "īs",
+        "f/p/acc": "as",
+        "f/p/abl": "īs"
+    },
+    "2": {
+        "m/s/nom": "us",
+        "m/s/gen": "ī",
+        "m/s/dat": "ō",
+        "m/s/acc": "um",
+        "m/s/abl": "ō",
+
+        "m/p/nom": "ī",
+        "m/p/gen": "ōrum",
+        "m/p/dat": "īs",
+        "m/p/acc": "ōs",
+        "m/p/abl": "īs",
+
+        "n/s/nom": "um",
+        "n/s/gen": "ī",
+        "n/s/dat": "ō",
+        "n/s/acc": "um",
+        "n/s/abl": "ō",
+
+        "n/p/gen": "ōrum",
+        "n/p/dat": "īs",
+        "n/p/abl": "īs",
+        "n/p/nom": "a",
+        "n/p/acc": "a"
+    },
+    "3": {
+        "m/s/nom": "-",
+        "m/s/gen": "is",
+        "m/s/dat": "ī",
+        "m/s/acc": "em",
+        "m/s/abl": "e",
+
+        "m/p/nom": "ēs",
+        "m/p/gen": "um",
+        "m/p/dat": "ibus",
+        "m/p/acc": "ēs",
+        "m/p/abl": "ibus",
+
+        "f/s/nom": "-",
+        "f/s/gen": "is",
+        "f/s/dat": "ī",
+        "f/s/acc": "em",
+        "f/s/abl": "e",
+
+        "f/p/nom": "ēs",
+        "f/p/gen": "ium",
+        "f/p/dat": "ibus",
+        "f/p/acc": "ēs",
+        "f/p/abl": "ibus",
+
+        "n/s/nom": "-",
+        "n/s/gen": "is",
+        "n/s/dat": "ī",
+        "n/s/acc": "-",
+        "n/s/abl": "e",
+
+        "n/p/nom": "a",
+        "n/p/gen": "um",
+        "n/p/dat": "ibus",
+        "n/p/acc": "a",
+        "n/p/abl": "ibus"
+    },
+    "4": {
+        "m/s/nom": "us",
+        "m/s/gen": "ūs",
+        "m/s/dat": "uī",
+        "m/s/acc": "um",
+        "m/s/abl": "ū",
+
+        "m/p/nom": "ūs",
+        "m/p/gen": "uum",
+        "m/p/dat": "ibus",
+        "m/p/acc": "ūs",
+        "m/p/abl": "ibus",
+
+        "n/s/nom": "u",
+        "n/s/gen": "ūs",
+        "n/s/dat": "ū",
+        "n/s/acc": "ū",
+        "n/s/abl": "ū",
+
+        "n/p/nom": "ū",
+        "n/p/gen": "uum",
+        "n/p/dat": "ibus",
+        "n/p/acc": "ua",
+        "n/p/abl": "ibus"
+    },
+    "5": {
+        "f/s/nom": "-",
+        "f/s/gen": "eī",
+        "f/s/dat": "eī",
+        "f/s/acc": "em",
+        "f/s/abl": "ē",
+
+        "f/p/nom": "ēs",
+        "f/p/gen": "ērum",
+        "f/p/dat": "ēbus",
+        "f/p/acc": "ēs",
+        "f/p/abl": "ēbus"
+    }
+}

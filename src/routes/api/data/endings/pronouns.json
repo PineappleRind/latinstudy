@@ -1,0 +1,60 @@
+{
+    "1": {
+        "-/s/nom": "ego",
+        "-/s/gen": "meī",
+        "-/s/dat": "mihi",
+        "-/s/acc": "mē",
+        "-/s/abl": "mē",
+        "-/p/nom": "nōs",
+        "-/p/gen": "nostrī|objective,nostrum|partitive",
+        "-/p/dat": "nōbīs",
+        "-/p/acc": "nōs",
+        "-/p/abl": "nōbīs"
+    },
+    "2": {
+        "-/s/nom": "tū",
+        "-/s/gen": "tuī",
+        "-/s/dat": "tibi",
+        "-/s/acc": "tē",
+        "-/s/abl": "tē",
+        "-/p/nom": "vōs",
+        "-/p/gen": "vestrī|objective,vestrum|partitive",
+        "-/p/dat": "vōbīs",
+        "-/p/acc": "vōs",
+        "-/p/abl": "vōbīs"
+    },
+    "3": {
+        "m/s/nom": "is",
+        "m/s/gen": "ējus",
+        "m/s/dat": "eī",
+        "m/s/acc": "eum",
+        "m/s/abl": "eō",
+        "m/p/nom": "eī",
+        "m/p/gen": "eōrum",
+        "m/p/dat": "eīs",
+        "m/p/acc": "eōs",
+        "m/p/abl": "eīs",
+
+        "f/s/nom": "ea",
+        "f/s/gen": "ējus",
+        "f/s/dat": "eī",
+        "f/s/acc": "eam",
+        "f/s/abl": "eā",
+        "f/p/nom": "eae",
+        "f/p/gen": "eārum",
+        "f/p/dat": "eīs",
+        "f/p/acc": "eās",
+        "f/p/abl": "eīs",
+
+        "n/s/nom": "id",
+        "n/s/gen": "ējus",
+        "n/s/dat": "eī",
+        "n/s/acc": "id",
+        "n/s/abl": "eō",
+        "n/p/nom": "ea",
+        "n/p/gen": "eōrum",
+        "n/p/dat": "eīs",
+        "n/p/acc": "ea",
+        "n/p/abl": "eīs"
+    }
+}
