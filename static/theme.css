@@ -99,7 +99,8 @@ h4 {
     margin-top: 4px;
 }
 
-p,label {
+p,
+label {
     font-size: 0.9rem;
 }
 
@@ -142,6 +143,11 @@ input[type="text"] {
     border: 1px solid var(--border-light);
     background: var(--bg-l0);
     border-radius: var(--rad-m);
+}
+
+:is(input[type="number"], input[type="text"]):invalid {
+    border: 1px solid var(--wrong-border);
+    background: var(--wrong-bg);
 }
 
 input::placeholder,

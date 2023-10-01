@@ -6,7 +6,11 @@
 </script>
 
 <div class="details" class:open>
-    <div class="details-trigger" on:click={handleOpen}>
+    <div
+        class="details-trigger"
+        on:click={handleOpen}
+        on:keydown={(e) => e.code === "Space" && handleOpen()}
+    >
         <div class="details-marker" />
         <slot name="summary" />
     </div>

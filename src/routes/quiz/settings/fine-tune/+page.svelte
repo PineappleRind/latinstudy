@@ -34,7 +34,6 @@
     }
 </script>
 
-<!-- <a class="link back" href="/quiz/settings/categories">Back</a> -->
 <h2>Fine-tune your quiz</h2>
 {#if $options.enabled.includes("Declensions")}
     <h4>Filter declension endings by</h4>

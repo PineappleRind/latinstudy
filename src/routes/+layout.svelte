@@ -3,19 +3,20 @@
     import { quadIn } from "svelte/easing";
     import { scale } from "./animations";
     import { previousPage } from "./stores";
+    import { page } from "$app/stores";
 
     let backlink: { url: string; name: string } | null = null;
 
     let unique = {};
-    beforeNavigate(({to}) => {
+    beforeNavigate(() => {
         unique = {};
-        console.log(to?.url)
-
-        if (to?.url?.pathname !== "/") backlink = { url: "/", name: "Home" };
-        else backlink = null;
     });
-
     afterNavigate(({ from }) => {
+        if ($page.data.backlink) backlink = $page.data.backlink;
+        else if ($page.url.pathname !== "/")
+            backlink = { url: "/", name: "Home" };
+        else backlink = null;
+
         previousPage.set(from?.url?.pathname || $previousPage);
     });
 </script>

@@ -5,4 +5,11 @@ import { get } from "svelte/store";
 export function load() {
 	if (!get(options).enabled.length)
 		throw redirect(307, "/quiz/settings/categories");
+
+	return {
+		backlink: {
+			url: "/quiz/settings/categories",
+			name: "Back",
+		},
+	};
 }

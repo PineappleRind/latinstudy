@@ -10,8 +10,6 @@
         }, 0);
 </script>
 
-<!-- <a class="link back" href="/">Home</a> -->
-
 <h2>Quiz Results</h2>
 {#if $lastQuiz}
     <p>Taken {$lastQuiz.date.toLocaleString()}</p>

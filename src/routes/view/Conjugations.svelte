@@ -155,12 +155,4 @@
     tr:last-child td:nth-last-child(1 of :not([style*="none"])) {
         border-radius: 0 0 var(--rad-m) 0;
     }
-
-    summary h3 {
-        display: inline-block;
-    }
-
-    details {
-        min-width: max-content;
-    }
 </style>
