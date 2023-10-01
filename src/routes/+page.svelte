@@ -11,13 +11,13 @@
 <div class="flex" style="gap: 10px">
     <a class="btn full-width home-link" href="/view">Learn</a>
     <a class="btn full-width home-link" href="/quiz/settings/categories">Quiz</a>
-    <a class="btn full-width home-link" href="/config">Configure</a>
+    <!-- <a class="btn full-width home-link" href="/config">Configure</a> -->
 </div>
 
 <style>
     .home-link {
-        padding: 20px;
-        min-width: 120px;
+        /* padding: 20px; */
+        /* min-width: 120px; */
 
         background: transparent;
     }
