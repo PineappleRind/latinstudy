@@ -4,11 +4,21 @@
 <script type="module" src="build/index.js"></script>
 
 <h2>LatinStudier™</h2>
-<p style="max-width:300px;">
+<p>
     Study helper for vocabulary and declension endings
 </p>
 <br />
 <div class="flex" style="gap: 10px">
-    <a class="btn full-width" href="/view">Learn</a>
-    <a class="btn full-width" href="/quiz/settings/categories">Quiz</a>
+    <a class="btn full-width home-link" href="/view">Learn</a>
+    <a class="btn full-width home-link" href="/quiz/settings/categories">Quiz</a>
+    <a class="btn full-width home-link" href="/config">Configure</a>
 </div>
+
+<style>
+    .home-link {
+        padding: 20px;
+        min-width: 120px;
+
+        background: transparent;
+    }
+</style>

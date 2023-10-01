@@ -3,11 +3,20 @@
     import { quadIn } from "svelte/easing";
     import { scale } from "./animations";
     import { previousPage } from "./stores";
+    import { page } from "$app/stores";
+
+    let backlink: { url: string; name: string } | null = null;
 
     let unique = {};
-    beforeNavigate(() => (unique = {}));
-
+    beforeNavigate(() => {
+        unique = {};
+    });
     afterNavigate(({ from }) => {
+        if ($page.data.backlink) backlink = $page.data.backlink;
+        else if ($page.url.pathname !== "/")
+            backlink = { url: "/", name: "Home" };
+        else backlink = null;
+
         previousPage.set(from?.url?.pathname || $previousPage);
     });
 </script>
@@ -17,9 +26,13 @@
         <div
             in:scale={{ duration: 300, ease: quadIn }}
             out:scale={{ duration: 300 }}
-            class="pane"
+            class="pane-wrap"
         >
-            <slot />
+            {#if backlink}
+                <a class="link back" href={backlink.url}>{backlink.name}</a>
+                <br />
+            {/if}
+            <div class="pane"><slot /></div>
         </div>
     {/key}
 </main>
@@ -39,9 +52,10 @@
         width: 100vw;
         height: 100vh;
     }
-
-    .pane {
+    .pane-wrap {
         position: absolute;
+    }
+    .pane {
         transition: var(--tr-l) all;
         padding: 20px;
         max-width: min(500px, 100vw);

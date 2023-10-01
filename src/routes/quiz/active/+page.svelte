@@ -87,7 +87,6 @@
     }
 </script>
 
-<a class="link pane-trigger" href="/quiz/settings">⊗ End quiz</a>
 <h2>
     Quiz <span style="letter-spacing: normal; font-size: 12px; opacity: 0.6"
         >{currentIndex + 1}/{questions.length}</span

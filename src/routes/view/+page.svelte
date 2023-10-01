@@ -20,7 +20,6 @@
     }
 </script>
 
-<a class="link back" href="/">Home</a>
 <div class="flex">
     <h2>View</h2>
     <select id="view-type" on:input={handlePaneSelect}>

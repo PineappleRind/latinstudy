@@ -18,8 +18,6 @@
     }
 </script>
 
-<a class="link back" href="/">Home</a>
-
 <h2>Quiz on...</h2>
 {#each ["Declensions", "Conjugations", "Vocabulary"] as item}
     <div
