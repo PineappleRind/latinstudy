@@ -5,7 +5,7 @@
     import { previousPage } from "./stores";
     import { page } from "$app/stores";
 
-    let backlink: { url: string; name: string } | null = null;
+    let backlink: App.PageData["backlink"] | null = null;
 
     let unique = {};
     beforeNavigate(() => {
@@ -32,6 +32,8 @@
                 <a class="link back" href={backlink.url}>{backlink.name}</a>
                 <br />
             {/if}
+            <!-- <slot name="title" />
+            <br /> -->
             <div class="pane"><slot /></div>
         </div>
     {/key}
