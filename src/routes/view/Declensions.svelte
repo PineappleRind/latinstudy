@@ -1,39 +1,33 @@
 <script lang="ts">
-    import type { CaseEnding, caseName, gender } from "@/types/data";
-    import { onMount } from "svelte";
+import type { CaseEnding, caseName, gender } from "@/types/data";
+import { onMount } from "svelte";
 
-    export let endings: CaseEnding[];
+export let endings: CaseEnding[];
 
-    const cases = [
-        "Nominative",
-        "Genitive",
-        "Accusative",
-        "Dative",
-        "Ablative",
-    ];
-    const genders = ["Masculine", "Feminine", "Neuter"];
-    const numbers = ["Singular", "Plural"];
+const cases = ["Nominative", "Genitive", "Accusative", "Dative", "Ablative"];
+const genders = ["Masculine", "Feminine", "Neuter"];
+const numbers = ["Singular", "Plural"];
 
-    let selectedDeclension: string;
-    let gendersInDeclension: Set<gender> = new Set(["feminine"]);
-    // since bind:value sends back a string
-    $: gendersInDeclension = endings
-        .filter((e) => e.declension === (+selectedDeclension ?? 1))
-        .reduce((acc, cur) => {
-            acc.add(cur.gender);
-            return acc;
-        }, new Set<gender>());
+let selectedDeclension: string;
+let gendersInDeclension: Set<gender> = new Set(["feminine"]);
+// since bind:value sends back a string
+$: gendersInDeclension = endings
+	.filter((e) => e.declension === (+selectedDeclension ?? 1))
+	.reduce((acc, cur) => {
+		acc.add(cur.gender);
+		return acc;
+	}, new Set<gender>());
 
-    function findEnding(number: string, case$: string, genderColumn: number) {
-        const gender = genders[genderColumn];
-        return endings.find(
-            (ending) =>
-                ending.case === case$.toLowerCase() &&
-                ending.declension === (+selectedDeclension ?? 1) &&
-                ending.gender === gender.toLowerCase() &&
-                ending.number === number.toLowerCase()
-        );
-    }
+function findEnding(number: string, case$: string, genderColumn: number) {
+	const gender = genders[genderColumn];
+	return endings.find(
+		(ending) =>
+			ending.case === case$.toLowerCase() &&
+			ending.declension === (+selectedDeclension ?? 1) &&
+			ending.gender === gender.toLowerCase() &&
+			ending.number === number.toLowerCase(),
+	);
+}
 </script>
 
 <select

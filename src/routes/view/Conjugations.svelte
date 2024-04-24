@@ -1,52 +1,68 @@
 <script lang="ts">
-    import type { ConjugationEnding } from "@/types/data";
-    import { onMount } from "svelte";
-    import Details from "@/routes/view/components/Details.svelte";
+import Details from "@/routes/view/components/Details.svelte";
+import type { ConjugationEnding, mood, voice } from "@/types/data";
+import { capitalize } from "@/utils/format";
+import { onMount } from "svelte";
 
-    export let conjugations: ConjugationEnding[];
+export let conjugations: ConjugationEnding[];
 
-    const persons = ["1st", "2nd", "3rd"];
-    const voices = ["Active", "Passive"];
-    const tenses = [
-        "Present",
-        "Imperfect",
-        "Future",
-        "Perfect",
-        "Pluperfect",
-        "Future Perfect",
-    ];
-    // const moods = ["Indicative"];
+const persons = ["1st", "2nd", "3rd"];
 
-    let selectedConjugation: string;
+const tenses = [
+	"Present",
+	"Imperfect",
+	"Future",
+	"Perfect",
+	"Pluperfect",
+	"Future Perfect",
+];
 
-    onMount(() => {});
+let selectedConjugation = "1";
+let selectedMood: mood = "indicative";
+let selectedVoice: voice = "active";
+let availableVoices = ["active", "passive"];
+$: selectedMood,
+	(availableVoices = Array.from(possibleValuesForKey<"voice">("voice")));
 
-    function findEnding({
-        person,
-        number,
-        tense,
-        voice,
-        mood,
-    }: Omit<ConjugationEnding, "ending">) {
-        return conjugations.find(
-            (ending) =>
-                ending.conjugation === (+selectedConjugation || 1) &&
-                +ending.person === person &&
-                ending.number === number.toLowerCase() &&
-                ending.tense === tense.toLowerCase() &&
-                ending.voice === voice.toLowerCase() &&
-                ending.mood === mood.toLowerCase()
-        );
-    }
-    function reduceToGroup(acc: string, cur: string, i: number, x: string[]) {
-        const actualEnding = " " + cur.split(" ")[1];
-        const endingOrComma =
-            (i !== x.length - 1 && ", ") ||
-            (actualEnding.trim() !== "undefined" ? actualEnding : "");
+function findEnding({
+	person,
+	number,
+	tense,
+	voice,
+	mood,
+}: Omit<ConjugationEnding, "ending">) {
+	return conjugations.find(
+		(ending) =>
+			ending.conjugation === (+selectedConjugation || 1) &&
+			+ending.person === person &&
+			ending.number === number.toLowerCase() &&
+			ending.tense === tense.toLowerCase() &&
+			ending.voice === voice.toLowerCase() &&
+			ending.mood === mood.toLowerCase(),
+	);
+}
+function reduceToGroup(acc: string, cur: string, i: number, x: string[]) {
+	const actualEnding = ` ${cur.split(" ")[1]}`;
+	const endingOrComma =
+		(i !== x.length - 1 && ", ") ||
+		(actualEnding.trim() !== "undefined" ? actualEnding : "");
 
-        acc += `${cur.split(" ")[0]}${endingOrComma} `;
-        return acc;
-    }
+	acc += `${cur.split(" ")[0]}${endingOrComma} `;
+	return acc;
+}
+function possibleValuesForKey<T extends keyof ConjugationEnding>(
+	key: keyof ConjugationEnding,
+): Set<ConjugationEnding[T]> {
+	const r = conjugations
+		.filter(
+			(c) => c.mood === selectedMood && c.conjugation === +selectedConjugation,
+		)
+		.reduce(
+			(possible, ending) => possible.add(ending[key as T]),
+			new Set<ConjugationEnding[T]>(),
+		);
+	return r;
+}
 </script>
 
 <select
@@ -60,49 +76,62 @@
     <option value="4">4th</option>
 </select>
 
-{#each voices as voice}
-    <!-- <AnimatedDimensionProvider key={"voice"}> -->
+<select
+    id="view-declension-type"
+    style="max-width: 30%;"
+    bind:value={selectedMood}
+>
+    <option selected value="indicative">Indicative</option>
+    <option value="subjunctive">Subjunctive</option>
+</select>
+
+<select
+    id="view-declension-type"
+    style="max-width: 30%;"
+    bind:value={selectedVoice}
+>
+    {#each availableVoices as voice}
+        <option value={voice}>{capitalize(voice)}</option>
+    {/each}
+</select>
+
+{#each selectedMood && Array.from(possibleValuesForKey("tense")) as tense}
+    <!-- <AnimatedDimensionProvider key={null}> -->
     <Details>
-        <h3 slot="summary">{voice}</h3>
-        {#each tenses as tense}
-            <!-- <AnimatedDimensionProvider key={null}> -->
-            <Details>
-                <p slot="summary">{tense}</p>
-                <table class="table">
-                    <tr>
-                        <th />
-                        {#each ["Singular", "Plural"] as number}
-                            <th class="table-head">{number}</th>
-                        {/each}
-                    </tr>
-                    {#each persons as person, personIndex}
-                        <tr>
-                            <td class="row-shrunk text-subtle">{person}</td>
-                            {#each new Array(2) as _, index}
-                                <td
-                                    >{findEnding({
-                                        person: personIndex + 1,
-                                        number:
-                                            index === 0 ? "Singular" : "Plural",
-                                        conjugation: +selectedConjugation,
-                                        voice,
-                                        mood: "Indicative",
-                                        tense,
-                                    })
-                                        ?.ending.split(",")
-                                        .reduce(reduceToGroup, "")
-                                        .trim()}</td
-                                >
-                            {/each}
-                        </tr>
+        <h3 slot="summary">{capitalize(tense)}</h3>
+        <table class="table">
+            <tr>
+                <th>Person</th>
+                {#each ["Singular", "Plural"] as number}
+                    <th class="table-head">{number}</th>
+                {/each}
+            </tr>
+            {#each persons as person, personIndex}
+                <tr>
+                    <td class="row-shrunk text-subtle">{person}</td>
+                    {#each new Array(2) as _, index}
+                        <td
+                            >{findEnding({
+                                person: personIndex + 1,
+                                number: index === 0 ? "Singular" : "Plural",
+                                conjugation: +selectedConjugation,
+                                voice: selectedVoice,
+                                mood: selectedMood,
+                                tense,
+                            })
+                                ?.ending.split(",")
+                                .reduce(reduceToGroup, "")
+                                .trim()}</td
+                        >
                     {/each}
-                </table>
-            </Details>
-            <!-- </AnimatedDimensionProvider> -->
-        {/each}
+                </tr>
+            {/each}
+        </table>
     </Details>
     <!-- </AnimatedDimensionProvider> -->
 {/each}
+
+<!-- </AnimatedDimensionProvider> -->
 
 <style>
     table {

@@ -1,0 +1,19 @@
+[
+{"word": "autem",    "type": "conjunction", "lesson": 4, "dictionary": "conj., postp.",  "translation": "however"},
+{"word": "et",       "type": "conjunction", "lesson": 2, "dictionary": "conj.",  "translation": "and"},
+{"word": "et ... et","type": "conjunction", "lesson": 8, "dictionary": "conj.",  "translation": "both...and"},
+{"word": "itaque",   "type": "conjunction", "lesson": 2, "dictionary": "conj.",  "translation": ["therefore", "and so"]},
+{"word": "quod",     "type": "conjunction", "lesson": 2, "dictionary": "conj.",  "translation": "because"},
+{"word": "sed",      "type": "conjunction", "lesson": 2, "dictionary": "conj.",  "translation": "but"},
+
+{"word": "-que", "type": "conjunction", "lesson": 24, "dictionary": "conj.",  "translation": "and"},
+{"word": "atque","type": "conjunction", "lesson": 15, "dictionary": "(ac), conj.",  "translation": "and"},
+{"word": "at",   "type": "conjunction", "lesson": 27, "dictionary": "conj.",  "translation": "but"},
+{"word": "aut",  "type": "conjunction", "lesson": 18, "dictionary": "conj.",  "translation": "or"},
+{"word": "enim", "type": "conjunction", "lesson": 11, "dictionary": "conj., postp.",  "translation": "for"},
+{"word": "sicut","type": "conjunction", "lesson":  9, "dictionary": "conj.",  "translation": "as"},
+{"word": "neque","type": "conjunction", "lesson": 11, "dictionary": "conj.",  "translation": ["nor", "and...not"]},
+{"word": "nam",  "type": "conjunction", "lesson": 17, "dictionary": "conj.",  "translation": "for"},
+{"word": "aut ... aut",    "type": "conjunction", "lesson": 18, "dictionary": "conjs.",  "translation": "either ... or"},
+{"word": "neque ... neque","type": "conjunction", "lesson": 18, "dictionary": "conjs.",  "translation": "neither ... nor"}
+]

@@ -1,8 +1,8 @@
 <script lang="ts">
-    let open = false;
-    function handleOpen() {
-        open = !open;
-    }
+let open = false;
+function handleOpen() {
+	open = !open;
+}
 </script>
 
 <div class="details" class:open>

@@ -19,12 +19,17 @@ In this folder you'll find endings.json and vocab.json.
   {
     "word": "trāns",
     "type": "preposition",
-    "units": "3-4",
+    "lesson": 16,
     "dictionary": "prep. w. acc",
     "translation": "across"
   }
   ```
-  Where `units` is which unit the word is first shown in the Henle Latin book.
+  Where `lesson` is which lesson the word is first shown in the Henle Latin book.
+
+Strings are used for "comments" and are stripped out before being served on the API.
+
+If there is an asterisk before the translation, that translation was added by me and not in the book to aid people guessing translations in the quiz.
+
 - When contributing, don't mess up the formatting! Because I'm proud of it...and it also helps with readability and categorization. <sub>"oh, but `endings.json` isn't 'readable', you have all these silly abbreviations" fair but still</sub>
 
 ## Ending String (`endings.json`)
@@ -106,3 +111,8 @@ Self-explanatory, a number from 1-3
 | ------- | -------------- |
 | active  | a              |
 | passive | p              |
+
+
+
+
+TODO support multiple genders. Latin...

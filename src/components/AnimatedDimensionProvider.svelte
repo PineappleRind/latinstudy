@@ -1,18 +1,18 @@
 <script lang="ts">
-    import { scale } from "@/routes/animations";
-    import { quadIn } from "svelte/easing";
+import { scale } from "@/routes/animations";
+import { quadIn } from "svelte/easing";
 
-    export let key: unknown;
-    let animator: HTMLDivElement;
-    let contentDimensions: DOMRectReadOnly;
-    let dimensionsCSS: string;
+export let key: unknown;
+let animator: HTMLDivElement;
+let contentDimensions: DOMRectReadOnly;
+let dimensionsCSS: string;
 
-    $: {
-        if (!contentDimensions) break $;
-        dimensionsCSS = `width: ${contentDimensions.width}px; height: ${contentDimensions.height}px`;
-        animator.ontransitionstart = () => animator.classList.add("animating");
-        animator.ontransitionend = () => animator.classList.remove("animating");
-    }
+$: {
+	if (!contentDimensions) break $;
+	dimensionsCSS = `width: ${contentDimensions.width}px; height: ${contentDimensions.height}px`;
+	animator.ontransitionstart = () => animator.classList.add("animating");
+	animator.ontransitionend = () => animator.classList.remove("animating");
+}
 </script>
 
 <div style={dimensionsCSS} bind:this={animator} class="content-wrapper">

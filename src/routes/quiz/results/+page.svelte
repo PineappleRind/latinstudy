@@ -1,13 +1,13 @@
 <script lang="ts">
-    import AnswerRenderer from "@/components/AnswerRenderer.svelte";
-    import { QuizQuestionScore } from "@/routes/quiz/active/generateQuizQuestions/types";
-    import { lastQuiz } from "@/routes/stores";
+import AnswerRenderer from "@/components/AnswerRenderer.svelte";
+import { QuizQuestionScore } from "@/routes/quiz/active/generateQuizQuestions/types";
+import { lastQuiz } from "@/routes/stores";
 
-    const correctQuestions = $lastQuiz?.questions
-        .map((q) => q.grade?.score || 0)
-        .reduce((acc: number, cur) => {
-            return acc + (cur !== QuizQuestionScore.Wrong ? 1 : 0);
-        }, 0);
+const correctQuestions = $lastQuiz?.questions
+	.map((q) => q.grade?.score || 0)
+	.reduce((acc: number, cur) => {
+		return acc + (cur !== QuizQuestionScore.Wrong ? 1 : 0);
+	}, 0);
 </script>
 
 <h2>Quiz Results</h2>

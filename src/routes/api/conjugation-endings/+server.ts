@@ -4,7 +4,7 @@ import { filterForRoute } from "../filterRoute";
 
 export async function GET({ url: { searchParams } }) {
 	const conjugation = searchParams.get("conjugation");
-	if (conjugation && isNaN(parseInt(conjugation)))
+	if (conjugation && Number.isNaN(Number.parseInt(conjugation)))
 		return new Response("Conjugation number not a number", { status: 400 });
 
 	const endings = filterForRoute(searchParams, data.endings.conjugations);

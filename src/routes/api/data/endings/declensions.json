@@ -111,5 +111,24 @@
         "f/p/dat": "ēbus",
         "f/p/acc": "ēs",
         "f/p/abl": "ēbus"
+    },
+    "unus": {
+        "m/s/nom": "us",
+        "m/s/gen": "īus",
+        "m/s/dat": "ī",
+        "m/s/acc": "um",
+        "m/s/abl": "ō",
+
+        "f/s/nom": "a",
+        "f/s/gen": "īus",
+        "f/s/dat": "ī",
+        "f/s/acc": "am",
+        "f/s/abl": "ā",
+        
+        "n/s/nom": "um",
+        "n/s/gen": "īus",
+        "n/s/dat": "ī",
+        "n/s/acc": "um",
+        "n/s/abl": "ō"
     }
 }

@@ -1,5 +1,7 @@
+import { maxLesson } from "@/routes/stores";
 import type { VocabWord as VocabularyWord } from "@/types/data";
 import { shuffleArray } from "@/utils/shuffleArray";
+import { get } from "svelte/store";
 import type { QuizQuestion } from "./types";
 
 export function generateVocabQuestions(
@@ -12,6 +14,11 @@ export function generateVocabQuestions(
 
 	for (let i = 0; i < (amount || vocabulary.length); i++) {
 		const randomWord = vocabulary[i];
+		if (
+			randomWord.lesson > (get(maxLesson) || Number.POSITIVE_INFINITY) ||
+			randomWord.lesson <= 27
+		)
+			continue;
 
 		result.push({
 			type: "vocab",

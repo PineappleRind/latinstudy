@@ -1,29 +1,30 @@
 <script lang="ts">
-    import AnswerRenderer from "@/components/AnswerRenderer.svelte";
-    import type { VocabWord } from "@/types/data";
-    import { purify } from "@/utils/purify";
+import AnswerRenderer from "@/components/AnswerRenderer.svelte";
+import type { VocabWord } from "@/types/data";
+import { purify } from "@/utils/purify";
+import { maxLesson } from "../stores";
 
-    export let data;
+export let data;
 
-    function sort(words: VocabWord[]) {
-        return words.sort((a, b) =>
-            purify(a.word).toLowerCase() > purify(b.word).toLowerCase() ? 1 : -1
-        );
-    }
-    let vocabulary = sort(data.vocabulary);
-    let typeFilter: string = "*";
-    let searchFilter: string = "";
-    $: searchFilter, typeFilter, (vocabulary = [...vocabulary]);
-    
-    function isWordHidden(word: VocabWord) {
-        const hasSearchTerm = purify(`${word.full} ${word.translation}`)
-            .toLowerCase()
-            .includes(searchFilter.toLowerCase());
+function sort(words: VocabWord[]) {
+	return words.sort((a, b) =>
+		purify(a.word).toLowerCase() > purify(b.word).toLowerCase() ? 1 : -1,
+	);
+}
+let vocabulary = sort(
+	data.vocabulary.filter((v: VocabWord) => v.lesson <= $maxLesson),
+);
+let typeFilter = "*";
+let searchFilter = "";
+$: searchFilter, typeFilter, (vocabulary = [...vocabulary]);
 
-        return (
-            (typeFilter !== "*" && word.type !== typeFilter) || !hasSearchTerm
-        );
-    }
+function isWordHidden(word: VocabWord) {
+	const hasSearchTerm = purify(`${word.full} ${word.translation}`)
+		.toLowerCase()
+		.includes(searchFilter.toLowerCase());
+
+	return (typeFilter !== "*" && word.type !== typeFilter) || !hasSearchTerm;
+}
 </script>
 
 <div class="flex">

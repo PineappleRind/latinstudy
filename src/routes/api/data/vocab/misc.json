@@ -1,0 +1,29 @@
+[
+"———————————————————————————————————————————————————————————————————————— PRONOUNS ————————————————————————————————————————————————————————————————————————",
+
+{"word": "quid", "type": "pronoun", "lesson": 8, "dictionary": "pronoun", "translation": "what"},
+
+{"word": "ego", "type": "pronoun", "lesson": 11, "dictionary": "meī", "translation": "I"},
+{"word": "is",  "type": "pronoun", "lesson": 11, "dictionary": "ea, id", "translation": ["he", "she", "it"]},
+{"word": "nōs", "type": "pronoun", "lesson": 11, "dictionary": "nostrī", "translation": "we"},
+{"word": "quis","type": "pronoun", "lesson":  9, "dictionary": "pronoun", "translation": "who"},
+{"word": "quī", "type": "pronoun", "lesson":  9, "dictionary": "quæ, quod", "translation": ["who|whose, whom", "which", "that"]},
+{"word": "suī", "type": "pronoun", "lesson": 11, "translation": ["himself", "herself", "itself", "themselves"]},
+{"word": "tū",  "type": "pronoun", "lesson": 11, "dictionary": "tuī", "translation": "you|singular"},
+{"word": "vōs", "type": "pronoun", "lesson": 11, "dictionary": "vestrī", "translation": "you|plural"},
+
+"———————————————————————————————————————————————————————————————————————— SAYINGS and MISC WORDS ————————————————————————————————————————————————————————————————————————",
+
+{"word": "prīma lūce", "type": "other", "lesson": 8, "translation": "at dawn"},
+
+{"word": "ā tergō",            "type": "other", "lesson": 31, "translation": ["in the rear", "from the rear"]},
+{"word": "ā fronte",           "type": "other", "lesson": 31, "translation": ["in the front", "from the front"]},
+{"word": "ave!",               "type": "other", "lesson": 27, "dictionary": "interjection", "translation": "hail!"},
+{"word": "grātiās agere",      "type": "other", "lesson": 19, "dictionary": "tr.", "translation": "give thanks"},
+{"word": "inquit",             "type": "other", "lesson": 26, "translation": ["he says", "he said"]},
+{"word": "in prīncipiō",       "type": "other", "lesson":  9, "translation": "in the beginning"},
+{"word": "in sæcula sæculōrum","type": "other", "lesson":  9, "translation": ["world without end", "forever"]},
+{"word": "miserēre nōbīs",     "type": "other", "lesson": 27, "translation": "have mercy on us"},
+{"word": "mīlle passūs",       "type": "other", "lesson": 37, "translation": "a mile|1000 paces"},
+{"word": "mīlle passuum",      "type": "other", "lesson": 37, "translation": "miles"}
+]

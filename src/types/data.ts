@@ -17,6 +17,8 @@ export type gender = "masculine" | "feminine" | "neuter";
 export type grammaticalNumber = "singular" | "plural";
 /** 1st, second, and third person */
 export type person = 1 | 2 | 3;
+export type mood = "indicative" | "subjunctive";
+
 export type caseName =
 	| "nominative"
 	| "genitive"

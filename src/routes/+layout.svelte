@@ -1,24 +1,23 @@
 <script lang="ts">
-    import { afterNavigate, beforeNavigate } from "$app/navigation";
-    import { quadIn } from "svelte/easing";
-    import { scale } from "./animations";
-    import { previousPage } from "./stores";
-    import { page } from "$app/stores";
+import { afterNavigate, beforeNavigate } from "$app/navigation";
+import { page } from "$app/stores";
+import { quadIn } from "svelte/easing";
+import { scale } from "./animations";
+import { previousPage } from "./stores";
 
-    let backlink: { url: string; name: string } | null = null;
+let backlink: { url: string; name: string } | null = null;
 
-    let unique = {};
-    beforeNavigate(() => {
-        unique = {};
-    });
-    afterNavigate(({ from }) => {
-        if ($page.data.backlink) backlink = $page.data.backlink;
-        else if ($page.url.pathname !== "/")
-            backlink = { url: "/", name: "Home" };
-        else backlink = null;
+let unique = {};
+beforeNavigate(() => {
+	unique = {};
+});
+afterNavigate(({ from }) => {
+	if ($page.data.backlink) backlink = $page.data.backlink;
+	else if ($page.url.pathname !== "/") backlink = { url: "/", name: "Home" };
+	else backlink = null;
 
-        previousPage.set(from?.url?.pathname || $previousPage);
-    });
+	previousPage.set(from?.url?.pathname || $previousPage);
+});
 </script>
 
 <main>
@@ -38,9 +37,9 @@
 </main>
 
 <footer>
-    LatinStudier™ v<span id="version">0.2</span> |
-    <a href="https://github.com/pineapplerind/latinstudy">GitHub</a>
-    | by <a href="https://pineapplerind.xyz">PineappleRind</a>
+    LatinStudier™ v<span id="version">{APP_VERSION}</span> |
+    <a class="link" href="https://github.com/pineapplerind/latinstudy">GitHub</a>
+    | by <a class="link" href="https://pineapplerind.xyz">PineappleRind</a>
 </footer>
 
 <style>
@@ -87,6 +86,8 @@
 
     footer a {
         color: var(--txt-c2);
+        font-size: 1em;
+        text-decoration: underline;
     }
 
     footer a:hover {

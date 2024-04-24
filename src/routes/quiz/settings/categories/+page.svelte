@@ -1,33 +1,37 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import Checkbox from "@/routes/quiz/settings/components/Checkbox.svelte";
-    import { options } from "@/routes/quiz/settings/stores";
+import { goto } from "$app/navigation";
+import Checkbox from "@/routes/quiz/settings/components/Checkbox.svelte";
+import { options } from "@/routes/quiz/settings/stores";
 
-    $options.enabled ??= [];
-    function handleSelect(value: string) {
-        if ($options.enabled.includes(value))
-            options.set({
-                ...$options,
-                enabled: $options.enabled.filter((i) => i !== value),
-            });
-        else
-            options.set({
-                ...$options,
-                enabled: [...$options.enabled, value],
-            });
-    }
+$options.enabled ??= [];
+function handleSelect(value: string) {
+	if ($options.enabled.includes(value))
+		options.set({
+			...$options,
+			enabled: $options.enabled.filter((i) => i !== value),
+		});
+	else
+		options.set({
+			...$options,
+			enabled: [...$options.enabled, value],
+		});
+}
 </script>
+
+<svelte:head>
+    <title>LatinStudier - Quiz on...</title>
+</svelte:head>
 
 <h2>Quiz on...</h2>
 {#each ["Declensions", "Conjugations", "Vocabulary"] as item}
+    <!-- svelte-ignore a11y-click-events-have-key-events as we have a checkbox for screen readers -->
     <div
         class="category"
         class:selected={$options.enabled.includes(item)}
         on:click={() => handleSelect(item)}
-        on:keydown={() => handleSelect(item)}
     >
         <div class="category-name">{item}</div>
-        <Checkbox selected={$options.enabled.includes(item)} />
+        <Checkbox label={item} selected={$options.enabled.includes(item)} />
     </div>
 {/each}
 <button
@@ -49,7 +53,9 @@
         display: inline-flex;
         justify-content: space-between;
         align-items: center;
-        transition: background-color var(--tr), border var(--tr);
+        transition:
+            background-color var(--tr),
+            border var(--tr);
     }
 
     .selected {

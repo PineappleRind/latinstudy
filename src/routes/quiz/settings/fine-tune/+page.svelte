@@ -1,38 +1,41 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
+import { goto } from "$app/navigation";
 
-    import MultitoggleDropdown from "@/routes/quiz/settings/fine-tune/components/MultitoggleDropdown.svelte";
-    import { options } from "@/routes/quiz/settings/stores";
+import MultitoggleDropdown from "@/routes/quiz/settings/fine-tune/components/MultitoggleDropdown.svelte";
+import { options } from "@/routes/quiz/settings/stores";
+import Checkbox from "../components/Checkbox.svelte";
 
-    function isQuizEmpty() {
-        function findEmptyProperty(object: Record<string, unknown[]>) {
-            return Object.entries(object).find(
-                ([_, x]) => !x || x?.length === 0
-            )?.[0];
-        }
-        // User set a category but no filter options selected for it
-        const noDeclensions =
-            $options.enabled.includes("Declensions") &&
-            findEmptyProperty($options.declensionEndings);
-        const noConjugations =
-            $options.enabled.includes("Conjugations") &&
-            findEmptyProperty($options.conjugationEndings);
-        const noVocabulary =
-            $options.enabled.includes("Vocabulary") &&
-            $options.vocabulary.amount === -1 &&
-            !$options.vocabulary.type.length;
+function isQuizEmpty() {
+	function findEmptyProperty(object: Record<string, unknown[]>) {
+		return Object.entries(object).find(([_, x]) => !x || x?.length === 0)?.[0];
+	}
+	// User set a category but no filter options selected for it
+	const noDeclensions =
+		$options.enabled.includes("Declensions") &&
+		findEmptyProperty($options.declensionEndings);
+	const noConjugations =
+		$options.enabled.includes("Conjugations") &&
+		findEmptyProperty($options.conjugationEndings);
+	const noVocabulary =
+		$options.enabled.includes("Vocabulary") &&
+		$options.vocabulary.amount === -1 &&
+		!$options.vocabulary.type.length;
 
-        return noDeclensions || noConjugations || noVocabulary;
-    }
+	return noDeclensions || noConjugations || noVocabulary;
+}
 
-    function handleBegin() {
-        const empty = isQuizEmpty();
-        if (empty) {
-            return;
-        }
-        goto("/quiz/active");
-    }
+function handleBegin() {
+	const empty = isQuizEmpty();
+	if (empty) {
+		return;
+	}
+	goto("/quiz/active");
+}
 </script>
+
+<svelte:head>
+    <title>LatinStudier - Fine-tune your quiz</title>
+</svelte:head>
 
 <h2>Fine-tune your quiz</h2>
 {#if $options.enabled.includes("Declensions")}
@@ -155,13 +158,10 @@
 {/if}
 <h4>More settings</h4>
 <div class="quiz-immediate-grade-select">
-    <input
-        checked
-        bind:value={$options.settings.immediateGrade}
-        type="checkbox"
-        id="quiz-immediate-grade"
+    <Checkbox
+        bind:selected={$options.settings.immediateGrade}
+        label="Grade each question after submit"
     />
-    <label for="quiz-immediate-grade">Grade each question after submit</label>
 </div>
 <br />
 <button class="btn full-width primary" on:click={handleBegin}> Begin </button>

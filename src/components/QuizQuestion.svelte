@@ -1,27 +1,26 @@
 <script lang="ts">
-    import { writable, type Writable } from "svelte/store";
-    import {
-        QuizQuestionScore,
-        type QuizQuestion,
-    } from "@/routes/quiz/active/generateQuizQuestions/types";
-    import AnswerRenderer from "./AnswerRenderer.svelte";
+import {
+	type QuizQuestion,
+	QuizQuestionScore,
+} from "@/routes/quiz/active/generateQuizQuestions/types";
+import { type Writable, writable } from "svelte/store";
+import AnswerRenderer from "./AnswerRenderer.svelte";
 
-    export let question: QuizQuestion;
-    $: if (question.grade) {
-        $inputValue = question.grade?.userAnswer;
-    }
-    export let inputValue: Writable<string | null> = writable(
-        question.grade?.userAnswer || null
-    );
-    function getSuper() {
-        if (question.type === "vocab")
-            return `translate the ${question.word?.type}`;
-        return `what's the ending?`;
-    }
+export let question: QuizQuestion;
+$: if (question.grade) {
+	$inputValue = question.grade?.userAnswer;
+}
+export let inputValue: Writable<string | null> = writable(
+	question.grade?.userAnswer || null,
+);
+function getSuper() {
+	if (question.type === "vocab") return `translate the ${question.word?.type}`;
+	return `what's the ending?`;
+}
 </script>
 
 <h4 class="quiz-question-super">{getSuper()}</h4>
-<h3 class="quiz-question-title">{question.question}</h3>
+<p class="quiz-question-title">{question.question}</p>
 <input
     bind:value={$inputValue}
     class:wrong={question.grade?.score === QuizQuestionScore.Wrong}
@@ -61,7 +60,7 @@
     }
 
     .quiz-question-super {
-        margin-bottom: 3px;
+        margin-bottom: 0;
         font-size: 1rem;
         border-bottom: 0 !important;
         padding-bottom: 0;
@@ -69,6 +68,9 @@
 
     .quiz-question-title {
         font-weight: 500;
+        font-size: 1.2em;
+        margin-bottom: 0.4em;
+        letter-spacing: -0.04em;
     }
 
     .quiz-correct-answer {

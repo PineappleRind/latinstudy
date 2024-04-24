@@ -1,0 +1,22 @@
+[
+{"word": "ad",     "type": "preposition", "lesson": 24, "dictionary": "prep. w. acc",  "translation": ["to", "until", "at", "for|with adjectives"]},
+{"word": "ante",   "type": "preposition", "lesson": 28, "dictionary": "prep. w. acc",  "translation": "before"},
+{"word": "apud",   "type": "preposition", "lesson": 25, "dictionary": "prep. w. acc",  "translation": ["among", "in the presence of"]},
+{"word": "contrā",   "type": "preposition", "lesson": 25, "dictionary": "prep. w. acc",  "translation": ["among", "in the presence of"]},
+{"word": "in",     "type": "preposition", "lesson":  4, "dictionary": "prep. w. acc",  "translation": ["in", "into", "against", "upon", "on"]},
+{"word": "inter",  "type": "preposition", "lesson": 23, "dictionary": "prep. w. acc",  "translation": ["between", "among"]},
+{"word": "post",   "type": "preposition", "lesson":  2, "dictionary": "prep. w. acc",  "translation": ["after", "behind"]},
+{"word": "propter","type": "preposition", "lesson":  2, "dictionary": "prep. w. acc",  "translation": "on account of"},
+{"word": "per",    "type": "preposition", "lesson": 13, "dictionary": "prep. w. acc",  "translation": "through"},
+{"word": "trāns",  "type": "preposition", "lesson": 16, "dictionary": "prep. w. acc",  "translation": "across"},
+
+{"word": "āb (ā)","type": "preposition", "lesson": 17, "dictionary": "prep. w. abl", "translation": ["by|expressing agency", "from|w. absum"]},
+{"word": "āb (ā)","type": "preposition", "lesson": 32, "dictionary": "prep. w. abl", "translation": ["away from", "from"]},
+{"word": "cum",   "type": "preposition", "lesson":  2, "dictionary": "prep. w. abl", "translation": "with"},
+{"word": "dē",    "type": "preposition", "lesson": 12, "dictionary": "prep. w. abl", "translation": ["concerning", "about"]},
+{"word": "dē",    "type": "preposition", "lesson": 32, "dictionary": "prep. w. abl", "translation": ["down from", "from"]},
+{"word": "ex",    "type": "preposition", "lesson": 32, "dictionary": "prep. w. abl", "translation": ["out of", "from"]},
+{"word": "in",    "type": "preposition", "lesson":  4, "dictionary": "prep. w. abl", "translation": ["in","on"]},
+{"word": "prō",   "type": "preposition", "lesson":  7, "dictionary": "prep. w. abl", "translation": ["in front of|before", "on behalf of|for"]},
+{"word": "sine",  "type": "preposition", "lesson": 19, "dictionary": "prep. w. abl", "translation": "without"}
+]

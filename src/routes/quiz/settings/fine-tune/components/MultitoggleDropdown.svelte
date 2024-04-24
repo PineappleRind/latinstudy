@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
-    export let openDropdown: [number, () => Promise<void>] | undefined =
-        undefined;
-    export let uniqueId: number = 1;
+export let openDropdown: [number, () => Promise<void>] | undefined =
+	undefined;
+export let uniqueId = 1;
 </script>
 
 <script lang="ts">
@@ -10,7 +10,7 @@
 
     import Checkbox from "@/routes/quiz/settings/components/Checkbox.svelte";
 
-    let dropdown: HTMLDivElement;
+    let dropdown: HTMLUListElement;
     let titleElement: HTMLDivElement;
     let id = uniqueId++;
 
@@ -64,6 +64,13 @@
 
         if (isArrowDown || e instanceof MouseEvent) {
             open = !open;
+            if (isArrowDown) {
+                (
+                    document
+                        .getElementById(`selectContainer-${id.toString(16)}`)
+                        ?.querySelector("[type=checkbox]") as HTMLElement
+                )?.focus();
+            }
         }
         // if we've just opened one, make sure the other one closes
         if (open && openDropdown?.[0] !== id) {
@@ -82,13 +89,35 @@
             state = state.filter((x) => x !== item.value);
         else state = [...state, item.value];
     }
+    function checkboxHandler(
+        key: string,
+        index: number,
+        length: number,
+        item: SelectItem,
+    ) {
+        function focus(n: number) {
+            (
+                document
+                    .getElementById(`selectContainer-${id.toString(16)}-${n}`)
+                    ?.querySelector("[type=checkbox]") as HTMLElement
+            )?.focus();
+        }
+        if (key === "Escape") {
+            titleElement.focus();
+            open = false;
+        } else if (key === "ArrowDown" && index + 1 >= length) focus(0);
+        else if (key === "ArrowDown") focus(index + 1);
+        else if (key === "ArrowUp" && index - 1 < 0) focus(length - 1);
+        else if (key === "ArrowUp") focus(index - 1);
+        else if (key === " ") onSelect(item);
+    }
 </script>
 
 <div
     bind:this={titleElement}
     class:open
     role="combobox"
-    aria-controls="selectContainer"
+    aria-controls={`selectContainer-${id.toString(16)}`}
     aria-expanded={open}
     aria-haspopup="listbox"
     on:mousedown={onOpen}
@@ -98,28 +127,38 @@
 >
     <div>
         <p>{title}</p>
-        {#if showSelected} <p class="subtitle">{state.length} selected</p>{/if}
+        {#if showSelected}
+            <p class="subtitle">{state.length} selected</p>{/if}
     </div>
     <div class="chevron" class:upside-down={open} />
 </div>
 
-<div
+<ul
     class="select-container"
-    id="selectContainer"
+    id={`selectContainer-${id.toString(16)}`}
     class:open
+    aria-hidden={!open}
     bind:this={dropdown}
 >
-    {#each items as item}
-        <div
+    {#each items as item, index}
+        <li
             class="select-item"
             on:mouseup={() => onSelect(item)}
+            on:keydown={({ key }) =>
+                checkboxHandler(key, index, items.length, item)}
             data-value={item.value}
+            id={`selectContainer-${id.toString(16)}-${index.toString(16)}`}
         >
             <p>{item.name}</p>
-            <Checkbox selected={state.includes(item.value)} />
-        </div>
+            <Checkbox
+                tabindex={open ? null : "-1"}
+                label={item.name}
+                nointeractive
+                selected={state.includes(item.value)}
+            />
+        </li>
     {/each}
-</div>
+</ul>
 
 <style>
     .select-title {
@@ -131,7 +170,9 @@
         gap: 15px;
         align-items: center;
         justify-content: space-between;
-        transition: border var(--tr), border-radius var(--tr),
+        transition:
+            border var(--tr),
+            border-radius var(--tr),
             box-shadow var(--tr);
     }
     .select-title.open {
@@ -162,7 +203,10 @@
         scale: 0.99;
         translate: 0 3px;
         pointer-events: none;
-        transition: opacity var(--tr), scale var(--tr), translate var(--tr);
+        transition:
+            opacity var(--tr),
+            scale var(--tr),
+            translate var(--tr);
     }
     .select-container.open {
         opacity: 1;
@@ -193,7 +237,9 @@
         min-width: var(--size);
         min-height: var(--size);
         margin-top: -0.15em;
-        transition: margin-top var(--tr), rotate var(--tr);
+        transition:
+            margin-top var(--tr),
+            rotate var(--tr);
     }
     .chevron.upside-down {
         rotate: 225deg;

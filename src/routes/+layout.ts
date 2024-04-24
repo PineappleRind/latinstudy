@@ -1,3 +1,7 @@
+import type { ParsedEndingsData, VocabWord } from "@/types/data";
+import { derived, get } from "svelte/store";
+import { maxLesson } from "./stores";
+
 export const ssr = false;
 
 const objectZip = (keys: string[], values: unknown[]) =>
@@ -19,7 +23,23 @@ export async function load() {
 		pronouns: fetch("/api/pronouns").then((a) => a.json()),
 		vocabulary: fetch("/api/vocab").then((a) => a.json()),
 	};
-	const promise = await objectPromise(requests);
+	const data = (await objectPromise(requests)) as ParsedEndingsData & {
+		vocabulary: VocabWord[];
+	};
 
-	return promise;
+	maxLesson.set(
+		data.vocabulary.reduce(
+			(prev, cur) => (prev < cur.lesson ? (prev = cur.lesson) : prev),
+			0,
+		),
+	);
+
+	const enabledEndingProperties = derived(maxLesson, (values, set) => {
+		const eligibleEndings = [
+			...data.conjugations,
+			...data.declensions,
+			...data.pronouns,
+		].filter((a) => a.lesson <= get(maxLesson));
+	});
+	return data;
 }

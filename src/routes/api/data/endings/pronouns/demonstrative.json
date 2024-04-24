@@ -1,0 +1,76 @@
+{
+    "hic": {
+        "m/s/nom": "hic",
+        "m/s/gen": "hūjus",
+        "m/s/dat": "huic",
+        "m/s/acc": "hunc",
+        "m/s/abl": "hōc",
+        
+        "f/s/nom": "hæc",
+        "f/s/gen": "hūjus",
+        "f/s/dat": "huic",
+        "f/s/acc": "hanc",
+        "f/s/abl": "hāc",
+        
+        "n/s/nom": "hoc",
+        "n/s/gen": "hūjus",
+        "n/s/dat": "huic",
+        "n/s/acc": "hoc",
+        "n/s/abl": "hōc",
+
+        "m/p/nom": "hī",
+        "m/p/gen": "hōrum",
+        "m/p/dat": "hīs",
+        "m/p/acc": "hōs",
+        "m/p/abl": "hīs",
+
+        "f/p/nom": "hæ",
+        "f/p/gen": "hārum",
+        "f/p/dat": "hīs",
+        "f/p/acc": "hās",
+        "f/p/abl": "hīs",
+        
+        "n/p/nom": "hæc",
+        "n/p/gen": "hōrum",
+        "n/p/dat": "hīs",
+        "n/p/acc": "hæc",
+        "n/p/abl": "hīs"
+    },
+    "ille": {
+        "m/s/nom": "ille",
+        "m/s/gen": "illīus",
+        "m/s/dat": "illī",
+        "m/s/acc": "illum",
+        "m/s/abl": "illō",
+        
+        "f/s/nom": "illa",
+        "f/s/gen": "illīus",
+        "f/s/dat": "illī",
+        "f/s/acc": "illam",
+        "f/s/abl": "illä",
+
+        "n/s/nom": "illud",
+        "n/s/gen": "illīus",
+        "n/s/dat": "illī",
+        "n/s/acc": "illud",
+        "n/s/abl": "illō",
+
+        "m/p/nom": "illī",
+        "m/p/gen": "illōrum",
+        "m/p/dat": "illīs",
+        "m/p/acc": "illōs",
+        "m/p/abl": "illīs",
+        
+        "f/p/nom": "illæ",
+        "f/p/gen": "illārum",
+        "f/p/dat": "illīs",
+        "f/p/acc": "illās",
+        "f/p/abl": "illīs",
+
+        "n/p/nom": "illa",
+        "n/p/gen": "illōrum",
+        "n/p/dat": "illīs",
+        "n/p/acc": "illa",
+        "n/p/abl": "illīs"
+    }
+}

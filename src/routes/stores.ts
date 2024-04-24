@@ -59,3 +59,8 @@ type QuizHistoryEntry = {
 	questions: QuizQuestion[];
 };
 export const lastQuiz = writable<QuizHistoryEntry | null>(null);
+
+export const maxLesson = storedWritable<number>(
+	"maxLesson",
+	Number.POSITIVE_INFINITY,
+);
