@@ -18,8 +18,8 @@ $: {
 <div style={dimensionsCSS} bind:this={animator} class="content-wrapper">
     {#key key}
         <div
-            in:scale|local={{ delay: 200, ease: quadIn }}
-            out:scale|local={{
+            in:scale={{ delay: 200, ease: quadIn }}
+            out:scale={{
                 duration: 200,
             }}
             bind:contentRect={contentDimensions}

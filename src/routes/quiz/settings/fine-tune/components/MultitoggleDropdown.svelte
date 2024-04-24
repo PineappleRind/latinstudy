@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
-export let openDropdown: [number, () => Promise<void>] | undefined =
-	undefined;
+export let openDropdown: [number, () => Promise<void>] | undefined = undefined;
 export let uniqueId = 1;
 </script>
 

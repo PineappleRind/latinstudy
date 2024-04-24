@@ -23,8 +23,8 @@ afterNavigate(({ from }) => {
 <main>
     {#key unique}
         <div
-            in:scale={{ duration: 300, ease: quadIn }}
-            out:scale={{ duration: 300 }}
+            in:scale|global={{ duration: 300, ease: quadIn }}
+            out:scale|global={{ duration: 300 }}
             class="pane-wrap"
         >
             {#if backlink}
