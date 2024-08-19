@@ -1,0 +1,37 @@
+// data for when it's ready to be integrated
+{
+    "relative": {
+        "m/s/nom": "quī",
+        "m/s/gen": "cūjus",
+        "m/s/dat": "cui",
+        "m/s/acc": "quem",
+        "m/s/abl": "quō",
+        "m/p/nom": "quī",
+        "m/p/gen": "quōrum",
+        "m/p/dat": "quibus",
+        "m/p/acc": "quōs",
+        "m/p/abl": "quibus",
+
+        "f/s/nom": "quae",
+        "f/s/gen": "cūjus",
+        "f/s/dat": "cui",
+        "f/s/acc": "quam",
+        "f/s/abl": "quā",
+        "f/p/nom": "quae",
+        "f/p/gen": "quārum",
+        "f/p/dat": "quibus",
+        "f/p/acc": "quās",
+        "f/p/abl": "quibus",
+
+        "n/s/nom": "quod",
+        "n/s/gen": "cūjus",
+        "n/s/dat": "cui",
+        "n/s/acc": "quod",
+        "n/s/abl": "quō",
+        "n/p/nom": "quae",
+        "n/p/gen": "quōrum",
+        "n/p/dat": "quibus",
+        "n/p/acc": "quae",
+        "n/p/abl": "quibus"
+    }
+}
