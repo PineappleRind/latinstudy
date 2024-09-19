@@ -1,6 +1,4 @@
 [    
-"TODO add all of L39 verbs",
-
 {"word": "æstimō",      "type": "verb", "conjugation": "1", "lesson": 40, "dictionary": "1, tr.; acc. w. infin.", "translation": "think"},
 {"word": "adjuvō",      "type": "verb", "conjugation": "1", "lesson": 15, "dictionary": "adjuvāre, adjūvī, adjūtus, 1, tr.", "translation": ["help", "aid"]},
 {"word": "administrō",  "type": "verb", "conjugation": "1", "lesson": 17, "dictionary": "1, tr.", "translation": ["manage", "attend to"]},
@@ -13,6 +11,7 @@
 {"word": "cōnor",       "type": "verb", "conjugation": "1", "lesson": 41, "dictionary": "cōnārī, cõnātus sum, 1, tr.; w. infin.", "translation":["try", "attempt"]},
 {"word": "cōnservō",    "type": "verb", "conjugation": "1", "lesson": 17, "dictionary": "1, tr.", "translation": ["preserve", "spare"]},
 {"word": "explōrō",     "type": "verb", "conjugation": "1", "lesson": 21, "dictionary": "1, tr.", "translation":["reconnoiter", "find out"]},
+{"word": "exīstimō",    "type": "verb", "conjugation": "1", "lesson": 39, "dictionary": "1, tr.; acc. w. infin", "translation": "think"},
 {"word": "exspectō",    "type": "verb", "conjugation": "1", "lesson": 22, "dictionary": "1, tr.", "translation":["wait for", "wait"]},
 {"word": "expugnō",     "type": "verb", "conjugation": "1", "lesson": 22, "dictionary": "1, tr.", "translation":["storm", "take by storm"]},
 {"word": "collocō",     "type": "verb", "conjugation": "1", "lesson": 15, "dictionary": "1, tr.", "translation": ["place", "station"]},
@@ -98,12 +97,13 @@
 {"word": "ēgredior",   "type": "verb", "conjugation": "3", "lesson": 41, "dictionary": "ēgredī, ēgressus sum, 3, intr.", "translation": "go out"},
 {"word": "ēripiō",     "type": "verb", "conjugation": "3", "lesson": 37, "dictionary": "ēripere, ēripuī, ēreptus, 3, tr.", "translation": ["take away", "save|from"]},
 {"word": "faciō",      "type": "verb", "conjugation": "3", "lesson": 37, "dictionary": "facere, fēcī, factus, 3, tr.", "translation": ["do", "make"]},
-{"word": "fugiō",      "type": "verb", "conjugation": "3", "lesson": 37, "dictionary": "fugere, fūgī, fugitūrus, 3, tr.", "translation": "flee"},
+{"word": "fugiō",      "type": "verb", "conjugation": "3", "lesson": 37, "dictionary": "fugere, fūgī, fugitūrus, 3, intr.", "translation": "flee"},
 {"word": "gerō",       "type": "verb", "conjugation": "3", "lesson": 12, "dictionary": "gerere, gessī, gestus, 3, tr.", "translation": ["carry", "carry on", "wage|w. bellum"]},
 {"word": "īncendō",    "type": "verb", "conjugation": "3", "lesson": 15, "dictionary": "incendere, incendī, incensus, 3, tr.", "translation": ["set fire to", "burn"]},
 {"word": "īncolō",     "type": "verb", "conjugation": "3", "lesson": 26, "dictionary": "incolere, incoluī, 3, tr.", "translation": ["inhabit", "dwell in"]},
 {"word": "īnstruō",    "type": "verb", "conjugation": "3", "lesson": 12, "dictionary": "īnstruere, īnstrūxī, instrūctus, 3, tr.", "translation": ["draw up", "equip"]},
 {"word": "interficiō", "type": "verb", "conjugation": "3", "lesson": 37, "dictionary": "interficere, interfēcī, interfectus, 3, tr.", "translation": "kill"},
+{"word": "jaciō",      "type": "verb", "conjugation": "3", "lesson": 45, "dictionary": "jacere, jēcī, jactus, 3, tr.", "translation": ["throw", "hurl"]},
 {"word": "loquor",     "type": "verb", "conjugation": "3", "lesson": 41, "dictionary": "loquī, locūtus sum, 3, tr.", "translation": ["speak", "talk"]},
 {"word": "mittō",      "type": "verb", "conjugation": "3", "lesson": 12, "dictionary": "mittere, mīsī, missus, 3, tr.", "translation": "send"},
 {"word": "occido",     "type": "verb", "conjugation": "3", "lesson": 19, "dictionary": "occīdere, occīdī, occīsus, 3, tr.", "translation": "kill"},
@@ -125,6 +125,8 @@
 {"word": "tollō",      "type": "verb", "conjugation": "3", "lesson": 27, "dictionary": "tollere, sustulī, sublātus, 3, tr.", "translation": ["raise|up", "take away"]},
 {"word": "vincō",      "type": "verb", "conjugation": "3", "lesson": 12, "dictionary": "vincere, vicī, victus, 3, tr.", "translation": "conquer"},
 {"word": "certiōrem (-ēs) facere", "type": "verb", "conjugation": "3", "lesson": 40, "dictionary": "acc. w. infin.; dē w. abl., or an indirect question", "translation": "to inform"},
+{"word": "cōnsilium capere", "type": "verb", "conjugation": "3", "lesson": 45, "dictionary": "", "translation": "to make a plan"},
+{"word": "iter facere", "type": "verb", "conjugation": "3", "lesson": 45, "dictionary": "", "translation": ["to march", "to make a journey"]},
 
 {"word": "audiō",    "type": "verb", "conjugation": "4", "lesson": 13, "dictionary": "4, tr.", "translation": "hear"},
 {"word": "conveniō", "type": "verb", "conjugation": "4", "lesson": 13, "dictionary": "convenīre, convēnī, conventum, 4, tr.", "translation": ["come together", "assemble"]},
@@ -133,6 +135,7 @@
 {"word": "orior",    "type": "verb", "conjugation": "4", "lesson": 41, "dictionary": "orīrī, ortus sum, 4, intr.", "translation": ["rise", "arise"]},
 {"word": "perveniō", "type": "verb", "conjugation": "4", "lesson": 24, "dictionary": "pervenīre, pervēnī, perventum, 4, intr.; in or ad w. acc.", "translation": "arrive"},
 {"word": "sciō",     "type": "verb", "conjugation": "4", "lesson": 29, "dictionary": "scīre, scīvī, scītus, 4, tr.", "translation": "know"},
+{"word": "sentiō",   "type": "verb", "conjugation": "4", "lesson": 39, "dictionary": "sentīre, sēnsī, sēnsus, 4, tr.; acc. w. infin.", "translation": ["feel", "perceive", "think"]},
 {"word": "veniō",    "type": "verb", "conjugation": "4", "lesson": 13, "dictionary": "venīre, vēnī, ventum, 4, tr.", "translation": "come"},
 
 {"word": "adeō",   "type": "verb", "conjugation": "irreg", "lesson": 42, "dictionary": "adīre, adiī, aditus, irreg., tr.", "translation": ["go to", "approach", "visit"]},

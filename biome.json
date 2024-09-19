@@ -1,6 +1,25 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
 	"formatter": {
-		"ignore": ["src/routes/api/data/*.json"]
-	}
+		"ignore": [
+			"src/routes/api/data/*.json"
+		]
+	},
+	"overrides": [
+		{
+			"include": [
+				"*.svelte"
+			],
+			"linter": {
+				"rules": {
+					"style": {
+						"useConst": "off"
+					},
+					"suspicious": {
+						"noConfusingLabels": "off"
+					}
+				}
+			}
+		}
+	]
 }

@@ -1,13 +1,13 @@
 <script lang="ts">
-import AnswerRenderer from "@/components/AnswerRenderer.svelte";
-import { QuizQuestionScore } from "@/routes/quiz/active/generateQuizQuestions/types";
-import { lastQuiz } from "@/routes/stores";
+    import AnswerRenderer from "@/components/AnswerRenderer.svelte";
+    import { QuizQuestionScore } from "@/routes/quiz/active/generateQuizQuestions/types";
+    import { lastQuiz } from "@/routes/stores";
 
-const correctQuestions = $lastQuiz?.questions
-	.map((q) => q.grade?.score || 0)
-	.reduce((acc: number, cur) => {
-		return acc + (cur !== QuizQuestionScore.Wrong ? 1 : 0);
-	}, 0);
+    const correctQuestions = $lastQuiz?.questions
+        .map((q) => q.grade?.score || 0)
+        .reduce((acc: number, cur) => {
+            return acc + (cur !== QuizQuestionScore.Wrong ? 1 : 0);
+        }, 0);
 </script>
 
 <h2>Quiz Results</h2>
@@ -16,32 +16,35 @@ const correctQuestions = $lastQuiz?.questions
     <h4>Your grade</h4>
     <p>
         {(((correctQuestions || 0) / $lastQuiz.questions.length) * 100).toFixed(
-            1
+            1,
         )}% |
         {correctQuestions}/{$lastQuiz.questions.length}
     </p>
     <h4>Questions</h4>
-    {#each $lastQuiz.questions as question, index}
-        <div class="question">
-            {index + 1}. {question.question}:&nbsp;
-            {#if question.grade?.score === QuizQuestionScore.Wrong}
-                <span class="question-wrong-answer">
-                    {question.grade?.userAnswer}
-                </span>—
-            {:else if question.grade?.score === QuizQuestionScore.Partial}
-                <span class="question-partial-answer">
-                    {question.grade?.userAnswer}
-                </span>—
-            {/if}
-            <span
-                class={(question.grade?.score === QuizQuestionScore.Correct &&
-                    "question-correct-answer") ||
-                    null}
-            >
-                <AnswerRenderer answers={question.answer} />
-            </span>
-        </div>
-    {/each}
+    <ol class="question-list">
+        {#each $lastQuiz.questions as question}
+            <li class="question">
+                {question.question}:&nbsp;
+                {#if question.grade?.score === QuizQuestionScore.Wrong}
+                    <span class="question-wrong-answer">
+                        {question.grade?.userAnswer}
+                    </span>—
+                {:else if question.grade?.score === QuizQuestionScore.Partial}
+                    <span class="question-partial-answer">
+                        {question.grade?.userAnswer}
+                    </span>—
+                {/if}
+                <span
+                    class={(question.grade?.score ===
+                        QuizQuestionScore.Correct &&
+                        "question-correct-answer") ||
+                        null}
+                >
+                    <AnswerRenderer answers={question.answer} />
+                </span>
+            </li>
+        {/each}
+    </ol>
     <a class="btn full-width" href="/">Back home</a>
 {:else}
     <p>You've not completed any quizzes recently.</p>
@@ -50,8 +53,19 @@ const correctQuestions = $lastQuiz?.questions
 {/if}
 
 <style>
+    .question-list {
+        padding-inline-start: 1.8rem;
+        list-style-type: none;
+        counter-reset: question-counter;
+    }
+    .question::marker {
+        content: counter(question-counter) ". ";
+        margin-right: 2em;
+        color: var(--txt-c3);
+    }
     .question {
         white-space: break-word;
+        counter-increment: question-counter;
     }
     .question-wrong-answer {
         color: red;

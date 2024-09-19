@@ -1,36 +1,44 @@
 <script lang="ts">
-import { goto } from "$app/navigation";
+    import { goto } from "$app/navigation";
 
-import MultitoggleDropdown from "@/routes/quiz/settings/fine-tune/components/MultitoggleDropdown.svelte";
-import { options } from "@/routes/quiz/settings/stores";
-import Checkbox from "../components/Checkbox.svelte";
+    import MultitoggleDropdown from "@/routes/quiz/settings/fine-tune/components/MultitoggleDropdown.svelte";
+    import { options } from "@/routes/quiz/settings/stores";
+    import Checkbox from "../components/Checkbox.svelte";
 
-function isQuizEmpty() {
-	function findEmptyProperty(object: Record<string, unknown[]>) {
-		return Object.entries(object).find(([_, x]) => !x || x?.length === 0)?.[0];
-	}
-	// User set a category but no filter options selected for it
-	const noDeclensions =
-		$options.enabled.includes("Declensions") &&
-		findEmptyProperty($options.declensionEndings);
-	const noConjugations =
-		$options.enabled.includes("Conjugations") &&
-		findEmptyProperty($options.conjugationEndings);
-	const noVocabulary =
-		$options.enabled.includes("Vocabulary") &&
-		$options.vocabulary.amount === -1 &&
-		!$options.vocabulary.type.length;
+    let quizErrorNotice = "";
+    function isQuizEmpty() {
+        function findEmptyProperty(object: Record<string, unknown[]>) {
+            return Object.entries(object).find(
+                ([_, x]) => !x || x?.length === 0,
+            )?.[0];
+        }
+        // User set a category but no filter options selected for it
+        const noDeclensions =
+            $options.enabled.includes("Declensions") &&
+            findEmptyProperty($options.declensionEndings);
+        const noConjugations =
+            $options.enabled.includes("Conjugations") &&
+            findEmptyProperty($options.conjugationEndings);
+        const noVocabulary =
+            $options.enabled.includes("Vocabulary") &&
+            $options.vocabulary.amount === -1 &&
+            !$options.vocabulary.type.length;
 
-	return noDeclensions || noConjugations || noVocabulary;
-}
+        return (
+            (noDeclensions && `declension.${noDeclensions}`) ||
+            (noConjugations && `conjugation.${noConjugations}`) ||
+            (noVocabulary && `vocab.${noVocabulary}`)
+        );
+    }
 
-function handleBegin() {
-	const empty = isQuizEmpty();
-	if (empty) {
-		return;
-	}
-	goto("/quiz/active");
-}
+    function handleBegin() {
+        const empty = isQuizEmpty();
+        if (empty) {
+            alert(`Missing field: ${empty}`);
+            return;
+        }
+        goto("/quiz/active");
+    }
 </script>
 
 <svelte:head>
@@ -161,9 +169,11 @@ function handleBegin() {
     <Checkbox
         bind:selected={$options.settings.immediateGrade}
         label="Grade each question after submit"
+        showLabel
     />
 </div>
 <br />
+{#if quizErrorNotice}<p>{quizErrorNotice}</p>{/if}
 <button class="btn full-width primary" on:click={handleBegin}> Begin </button>
 
 <style>

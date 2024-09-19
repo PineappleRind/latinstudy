@@ -1,11 +1,14 @@
 <script lang="ts">
-export let selected: boolean;
-export let label: string;
-export const nointeractive = false;
-export const showLabel = false;
-function interruptSelect(e: KeyboardEvent) {
-	if (nointeractive) e.preventDefault();
-}
+    export let selected: boolean;
+    export let label: string;
+    export let nointeractive: boolean = false;
+    export let showLabel = false;
+    function interruptSelect(e: KeyboardEvent) {
+        if (nointeractive) {
+            e.preventDefault();
+            return false;
+        }
+    }
 </script>
 
 <label>

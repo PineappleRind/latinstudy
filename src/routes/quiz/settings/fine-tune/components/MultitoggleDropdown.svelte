@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
-export let openDropdown: [number, () => Promise<void>] | undefined = undefined;
-export let uniqueId = 1;
+    export let openDropdown: [number, () => Promise<void>] | undefined =
+        undefined;
+    export let uniqueId = 1;
 </script>
 
 <script lang="ts">
@@ -127,15 +128,19 @@ export let uniqueId = 1;
     <div>
         <p>{title}</p>
         {#if showSelected}
-            <p class="subtitle">{state.length} selected</p>{/if}
+            <p class="subtitle">
+                {state.length
+                    ? state.length + " selected"
+                    : `Any ${title.toLowerCase()}`}
+            </p>{/if}
     </div>
     <div class="chevron" class:upside-down={open} />
 </div>
 
 <ul
     class="select-container"
-    id={`selectContainer-${id.toString(16)}`}
     class:open
+    id={`selectContainer-${id.toString(16)}`}
     aria-hidden={!open}
     bind:this={dropdown}
 >
@@ -221,7 +226,7 @@ export let uniqueId = 1;
         justify-content: space-between;
         gap: 10px;
         padding: 5px 10px;
-        border-radius: var(--rad-s);
+        border-radius: var(--rad-m);
         margin: 0;
     }
     .select-item:hover {

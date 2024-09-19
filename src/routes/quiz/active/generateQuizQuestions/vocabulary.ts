@@ -5,27 +5,27 @@ import { get } from "svelte/store";
 import type { QuizQuestion } from "./types";
 
 export function generateVocabQuestions(
-	vocabulary: VocabularyWord[],
-	amount: number,
+    vocabulary: VocabularyWord[],
+    amount: number,
 ) {
-	const result: QuizQuestion[] = [];
+    const result: QuizQuestion[] = [];
 
-	shuffleArray(vocabulary);
+    shuffleArray(vocabulary);
 
-	for (let i = 0; i < (amount || vocabulary.length); i++) {
-		const randomWord = vocabulary[i];
-		if (
-			randomWord.lesson > (get(maxLesson) || Number.POSITIVE_INFINITY) ||
-			randomWord.lesson <= 27
-		)
-			continue;
+    for (let i = 0; i < (amount || vocabulary.length); i++) {
+        const randomWord = vocabulary[i];
+        if (
+            randomWord.lesson > (get(maxLesson) || Number.POSITIVE_INFINITY) //||
+            // randomWord.lesson <= 41
+        )
+            continue;
 
-		result.push({
-			type: "vocab",
-			question: randomWord.word,
-			answer: randomWord.translation,
-			word: randomWord,
-		});
-	}
-	return result;
+        result.push({
+            type: "vocab",
+            question: randomWord.word,
+            answer: randomWord.translation,
+            word: randomWord,
+        });
+    }
+    return result;
 }

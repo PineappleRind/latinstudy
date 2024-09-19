@@ -8,21 +8,13 @@ export let conjugations: ConjugationEnding[];
 
 const persons = ["1st", "2nd", "3rd"];
 
-const tenses = [
-	"Present",
-	"Imperfect",
-	"Future",
-	"Perfect",
-	"Pluperfect",
-	"Future Perfect",
-];
-
 let selectedConjugation = "1";
 let selectedMood: mood = "indicative";
 let selectedVoice: voice = "active";
 let availableVoices = ["active", "passive"];
-$: selectedMood,
+$: if (selectedMood) {
 	(availableVoices = Array.from(possibleValuesForKey<"voice">("voice")));
+}
 
 function findEnding({
 	person,
