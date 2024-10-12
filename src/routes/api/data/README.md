@@ -24,7 +24,8 @@ In this folder you'll find endings.json and vocab.json.
     "translation": "across"
   }
   ```
-  Where `lesson` is which lesson the word is first shown in the Henle Latin book.
+  Where `lesson` is which lesson the word is first shown in the Henle Latin First Year book. 
+  `lesson` 43 equals Lesson 1 in the Henle Latin Second Year book.
 
 Strings are used for "comments" and are stripped out before being served on the API.
 
